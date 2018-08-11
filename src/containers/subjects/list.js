@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SubjectsListComponent from '../components/SubjectsList';
+import SubjectsListComponent from '../../components/subjects/list';
 
 const mockSubjects = [
   {
@@ -22,9 +22,11 @@ class SubjectsList extends Component {
   }
 
   handlePressSubject(id) {
-    // TODO: get subject and navigate
-    console.log('NAVIGATING SUBJECT: ', id);
-    console.log('PROPS: ', this.props);
+    const subject = mockSubjects.find(subj => subj.id === id);
+    if (subject) {
+      const { navigation } = this.props;
+      navigation.navigate('subject', { subject });
+    }
   }
 
   render() {
