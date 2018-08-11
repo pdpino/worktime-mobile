@@ -1,37 +1,24 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
+import MenuContainer from './Menu';
+import SubjectsListContainer from './SubjectsList';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+const Root = createStackNavigator({
+  menu: {
+    screen: MenuContainer,
+    navigationOptions: () => ({
+      title: 'Worktime', // DICTIONARY
+    }),
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  subjects: {
+    screen: SubjectsListContainer,
+    navigationOptions: () => ({
+      // title: `${navigation.state.params.name}'s Profile'`,
+      title: 'Subjects', // DICTIONARY
+    }),
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+},
+{
+  initialRouteName: 'menu',
 });
-
-const Root = () => (
-  <View style={styles.container}>
-    <Text style={styles.welcome}>
-      Welcome to React Native!
-    </Text>
-    <Text style={styles.instructions}>
-      To get started, edit Root.js
-    </Text>
-    <Text style={styles.instructions}>
-      Example
-    </Text>
-  </View>
-);
 
 export default Root;
