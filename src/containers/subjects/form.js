@@ -19,6 +19,10 @@ class SubjectForm extends React.Component {
     this.handleSubmitSubject = this.handleSubmitSubject.bind(this);
   }
 
+  validChanges() {
+    return this.state.name;
+  }
+
   handleChange(key) {
     return (value) => {
       this.setState({ [key]: value });
@@ -39,6 +43,7 @@ class SubjectForm extends React.Component {
 
   render() {
     const { name, description } = this.state;
+    const canSubmit = this.validChanges();
 
     return (
       <SubjectFormComponent
@@ -47,6 +52,7 @@ class SubjectForm extends React.Component {
         onChangeName={this.handleChange('name')}
         onChangeDescription={this.handleChange('description')}
         onSubmit={this.handleSubmitSubject}
+        canSubmit={canSubmit}
       />
     );
   }

@@ -20,7 +20,7 @@ const namePlaceholder = 'Name';
 const descriptionPlaceholder = 'Description';
 
 const SubjectForm = ({
-  name, description, onChangeName, onChangeDescription, onSubmit,
+  name, description, onChangeName, onChangeDescription, onSubmit, canSubmit,
 }) => {
   const nameInput = (
     <TextInput
@@ -45,6 +45,7 @@ const SubjectForm = ({
     <Button
       title={submitText}
       onPress={onSubmit}
+      disabled={!canSubmit}
     />
   );
 
