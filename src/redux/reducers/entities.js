@@ -3,15 +3,6 @@ const entities = orm => (state, action) => {
   const { Subject } = session;
 
   switch (action.type) {
-    case 'CREATE_SUBJECT':
-      Subject.create(action.payload.attributes);
-      break;
-    case 'UPDATE_SUBJECT':
-      if (Subject.idExists(action.payload.id)) {
-        const instance = Subject.withId(action.payload.id);
-        instance.update(action.payload.attributes);
-      }
-      break;
     case 'UPSERT_SUBJECT':
       Subject.upsert(action.payload.attributes);
       break;
