@@ -8,7 +8,7 @@ class SubjectForm extends React.Component {
   constructor(props) {
     super(props);
 
-    const { name, description } = this.props.subject;
+    const { name, description } = this.props.subject || {};
 
     this.state = {
       name,
@@ -33,7 +33,7 @@ class SubjectForm extends React.Component {
     const data = {
       ...this.state,
     };
-    if (this.props.subject.id) {
+    if (this.props.subject) {
       data.id = this.props.subject.id;
     }
 
@@ -59,7 +59,7 @@ class SubjectForm extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  subject: ownProps.navigation.getParam('subject', {}),
+  subject: ownProps.navigation.getParam('subject'),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
