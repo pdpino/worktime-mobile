@@ -1,29 +1,36 @@
 import { createStackNavigator } from 'react-navigation';
-import MenuContainer from './Menu';
-import SubjectsListContainer from './subjects/list';
-import SubjectFormContainer from './subjects/form';
+import Menu from './Menu';
+import SubjectsList from './subjects/list';
+import SubjectForm from './subjects/form';
+import WorkSelectSubject from './work/SubjectsList';
 
 const Root = createStackNavigator({
   menu: {
-    screen: MenuContainer,
+    screen: Menu,
     navigationOptions: () => ({
       title: 'Worktime', // DICTIONARY
     }),
   },
   subjects: {
-    screen: SubjectsListContainer,
+    screen: SubjectsList,
     navigationOptions: () => ({
       title: 'Subjects', // DICTIONARY
     }),
   },
   subject: {
-    screen: SubjectFormContainer,
+    screen: SubjectForm,
     navigationOptions: ({ navigation }) => ({
       title: `${navigation.state.params.subject.name}`,
     }),
   },
   newSubject: {
-    screen: SubjectFormContainer,
+    screen: SubjectForm,
+    navigationOptions: () => ({
+      title: 'New Subject', // DICTIONARY
+    }),
+  },
+  workSelectSubject: {
+    screen: WorkSelectSubject,
     navigationOptions: () => ({
       title: 'New Subject', // DICTIONARY
     }),
