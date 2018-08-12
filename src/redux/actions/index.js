@@ -1,6 +1,6 @@
-import { upsertSubject, removeSubject } from './subjects';
+import { upsertSubject, deleteSubject } from './subjects';
 
 export {
   upsertSubject,
-  removeSubject,
+  deleteSubject,
 };

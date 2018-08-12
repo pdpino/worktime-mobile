@@ -15,15 +15,18 @@ const styles = StyleSheet.create({
 
 const noSubjects = 'No subjects'; // DICTIONARY
 
-const SubjectsList = ({ subjects, onPressEdit, onPressDetail }) => (
+const SubjectsList = ({
+  subjects, onPressDetail, onPressEdit, onPressDelete,
+}) => (
   <View style={styles.container}>
     <FlatList
       data={subjects}
       renderItem={({ item }) => (
         <SubjectItem
           subject={item}
-          onPressEdit={onPressEdit}
           onPressDetail={onPressDetail}
+          onPressEdit={onPressEdit}
+          onPressDelete={onPressDelete}
         />
       )}
       keyExtractor={(item, index) => index.toString()}

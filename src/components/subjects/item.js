@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
 });
 
 
-const SubjectItem = ({ subject, onPressEdit, onPressDetail }) => {
+const SubjectItem = ({
+  subject, onPressDetail, onPressEdit, onPressDelete,
+}) => {
   const name = (
     <Text style={styles.name}>
       {subject.name}
@@ -50,6 +52,10 @@ const SubjectItem = ({ subject, onPressEdit, onPressDetail }) => {
       <Button
         icon={{ name: 'edit' }}
         onPress={() => onPressEdit(subject.id)}
+      />
+      <Button
+        icon={{ name: 'delete' }}
+        onPress={() => onPressDelete(subject.id)}
       />
     </View>
   );

@@ -6,7 +6,7 @@ const entities = orm => (state, action) => {
     case 'UPSERT_SUBJECT':
       Subject.upsert(action.payload.attributes);
       break;
-    case 'REMOVE_SUBJECT':
+    case 'DELETE_SUBJECT':
       if (Subject.idExists(action.payload.id)) {
         const instance = Subject.withId(action.payload.id);
         instance.delete();
