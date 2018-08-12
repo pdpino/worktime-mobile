@@ -7,7 +7,7 @@ const options = [
     title: 'Manage Subjects', // DICTIONARY
   },
   {
-    key: 'work',
+    key: 'workSelectSubject',
     title: 'Work', // DICTIONARY
   },
 ];

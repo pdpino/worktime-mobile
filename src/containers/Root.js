@@ -32,7 +32,7 @@ const Root = createStackNavigator({
   workSelectSubject: {
     screen: WorkSelectSubject,
     navigationOptions: () => ({
-      title: 'New Subject', // DICTIONARY
+      title: 'Work in:', // DICTIONARY
     }),
   },
 },
