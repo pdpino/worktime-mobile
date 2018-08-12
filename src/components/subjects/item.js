@@ -1,8 +1,14 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import {
+  StyleSheet, View, TouchableOpacity, Text,
+} from 'react-native';
+import { Button } from 'react-native-elements';
 
 const styles = StyleSheet.create({
-  button: {
+  container: {
+    flex: 1,
+  },
+  detail: {
     flex: 1,
     margin: 1,
     // DEBUG:
@@ -19,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 
-const SubjectItem = ({ subject, onPressSubject }) => {
+const SubjectItem = ({ subject, onPressEdit, onPressDetail }) => {
   const name = (
     <Text style={styles.name}>
       {subject.name}
@@ -33,13 +39,19 @@ const SubjectItem = ({ subject, onPressSubject }) => {
   );
 
   return (
-    <TouchableOpacity
-      style={styles.button}
-      onPress={() => onPressSubject(subject.id)}
-    >
-      {name}
-      {description}
-    </TouchableOpacity>
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.detail}
+        onPress={() => onPressDetail(subject.id)}
+      >
+        {name}
+        {description}
+      </TouchableOpacity>
+      <Button
+        icon={{ name: 'edit' }}
+        onPress={() => onPressEdit(subject.id)}
+      />
+    </View>
   );
 };
 

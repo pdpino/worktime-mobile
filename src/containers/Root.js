@@ -18,7 +18,7 @@ const Root = createStackNavigator({
       title: 'Subjects', // DICTIONARY
     }),
   },
-  subject: {
+  editSubject: {
     screen: SubjectForm,
     navigationOptions: ({ navigation }) => ({
       title: `${navigation.state.params.subject.name}`,

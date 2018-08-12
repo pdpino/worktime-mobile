@@ -8,18 +8,31 @@ class SubjectsList extends Component {
   constructor(props) {
     super(props);
 
-    this.handlePressSubject = this.handlePressSubject.bind(this);
-    this.handleNewSubject = this.handleNewSubject.bind(this);
+    this.findSubject = this.findSubject.bind(this);
+    this.handlePressEditSubject = this.handlePressEditSubject.bind(this);
+    this.handlePressDetailSubject = this.handlePressDetailSubject.bind(this);
+    this.handlePressNewSubject = this.handlePressNewSubject.bind(this);
   }
 
-  handlePressSubject(id) {
-    const subject = this.props.subjects.find(subj => subj.id === id);
+  findSubject(id) {
+    return this.props.subjects.find(subj => subj.id === id);
+  }
+
+  handlePressEditSubject(id) {
+    const subject = this.findSubject(id);
+    if (subject) {
+      this.props.navigation.navigate('editSubject', { subject });
+    }
+  }
+
+  handlePressDetailSubject(id) {
+    const subject = this.findSubject(id);
     if (subject) {
       this.props.navigation.navigate('workSessions', { subject });
     }
   }
 
-  handleNewSubject() {
+  handlePressNewSubject() {
     this.props.navigation.navigate('newSubject');
   }
 
@@ -32,11 +45,12 @@ class SubjectsList extends Component {
       <View style={{ flex: 1 }}>
         <SubjectsListComponent
           subjects={subjects}
-          onPressSubject={this.handlePressSubject}
+          onPressDetail={this.handlePressDetailSubject}
+          onPressEdit={this.handlePressEditSubject}
         />
         <Button
           title={newButtonText}
-          onPress={this.handleNewSubject}
+          onPress={this.handlePressNewSubject}
         />
       </View>
     );
