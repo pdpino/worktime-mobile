@@ -1,20 +1,16 @@
 import { fk, attr, Model } from 'redux-orm';
 
-class WorkSession extends Model {
-  toString() {
-    return `WorkSession: ${this.id}`;
-  }
-}
+class WorkSession extends Model { }
 
 WorkSession.modelName = 'WorkSession';
 
 WorkSession.fields = {
   id: attr(),
+  datetimeStart: attr(),
+  datetimeEnd: attr(),
+  info: attr(),
+  status: attr(),
   subject: fk('Subject'),
-  // name: attr(),
-  // description: attr(),
-  // authors: many('Author', 'books'),
-  // publisher: fk('Publisher', 'books'),
 };
 
 export default WorkSession;
