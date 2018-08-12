@@ -1,4 +1,6 @@
-import { fk, attr, Model } from 'redux-orm';
+import {
+  fk, attr, Model, many,
+} from 'redux-orm';
 
 class WorkSession extends Model { }
 
@@ -11,6 +13,7 @@ WorkSession.fields = {
   info: attr(),
   status: attr(),
   subject: fk('Subject'),
+  sprints: many('Sprint', 'workSession'),
 };
 
 export default WorkSession;

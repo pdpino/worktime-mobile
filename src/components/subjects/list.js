@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const noSubject = 'No subjects'; // DICTIONARY
+const noSubjects = 'No subjects'; // DICTIONARY
 
 const SubjectsList = ({ subjects, onPressSubject }) => (
   <View style={styles.container}>
@@ -28,7 +28,7 @@ const SubjectsList = ({ subjects, onPressSubject }) => (
       keyExtractor={(item, index) => index.toString()}
       ListEmptyComponent={(
         <Text>
-          {noSubject}
+          {noSubjects}
         </Text>
       )}
     />

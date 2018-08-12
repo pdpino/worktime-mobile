@@ -9,7 +9,7 @@ Sprint.fields = {
   order: attr(),
   status: attr(),
   duration: attr(),
-  session: fk('WorkSession'),
+  workSession: fk('WorkSession'),
 };
 
 export default Sprint;
