@@ -3,6 +3,7 @@ import Menu from './Menu';
 import SubjectsList from './subjects/list';
 import SubjectForm from './subjects/form';
 import WorkSelectSubject from './work/SubjectsList';
+import WorkSessionsList from './workSessions/list';
 
 const Root = createStackNavigator({
   menu: {
@@ -33,6 +34,12 @@ const Root = createStackNavigator({
     screen: WorkSelectSubject,
     navigationOptions: () => ({
       title: 'Work in:', // DICTIONARY
+    }),
+  },
+  workSessions: {
+    screen: WorkSessionsList,
+    navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.params.subject.name}'s sessions`, // DICTIONARY
     }),
   },
 },

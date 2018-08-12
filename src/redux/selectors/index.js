@@ -1,5 +1,7 @@
 import subjectsSelector from './subjects';
+import workSessionsSelector from './workSessions';
 
 export {
-  subjectsSelector, // eslint-disable-line import/prefer-default-export
+  subjectsSelector,
+  workSessionsSelector,
 };

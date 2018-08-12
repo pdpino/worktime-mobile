@@ -15,7 +15,7 @@ class SubjectsList extends Component {
   handlePressSubject(id) {
     const subject = this.props.subjects.find(subj => subj.id === id);
     if (subject) {
-      this.props.navigation.navigate('subject', { subject });
+      this.props.navigation.navigate('workSessions', { subject });
     }
   }
 

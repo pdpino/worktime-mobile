@@ -1,7 +1,6 @@
 import { createSelector } from 'redux-orm';
 import orm from '../models/orm';
-
-const ormSessionSelector = state => state.orm;
+import ormSessionSelector from './orm';
 
 const subjectsSelector = createSelector(
   orm,
