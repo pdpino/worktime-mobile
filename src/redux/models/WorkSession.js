@@ -1,5 +1,6 @@
 import {
-  fk, attr, Model, many,
+  // many, fk,
+  attr, Model,
 } from 'redux-orm';
 
 class WorkSession extends Model { }
@@ -12,8 +13,10 @@ WorkSession.fields = {
   datetimeEnd: attr(),
   info: attr(),
   status: attr(),
-  subject: fk('Subject'),
-  sprints: many('Sprint', 'workSession'),
+  // FIXME: Any of these two lines throws:
+  // "Attempting to change the setter of an unconfigurable property"
+  // subject: fk('Subject'),
+  // sprints: many('Sprint', 'workSession'),
 };
 
 export default WorkSession;
