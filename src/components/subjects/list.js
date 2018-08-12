@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import {
+  StyleSheet, View, FlatList, Text,
+} from 'react-native';
 import SubjectItem from './item';
 
 const styles = StyleSheet.create({
@@ -10,6 +12,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
 });
+
+const noSubject = 'No subjects'; // DICTIONARY
 
 const SubjectsList = ({ subjects, onPressSubject }) => (
   <View style={styles.container}>
@@ -22,6 +26,11 @@ const SubjectsList = ({ subjects, onPressSubject }) => (
         />
       )}
       keyExtractor={(item, index) => index.toString()}
+      ListEmptyComponent={(
+        <Text>
+          {noSubject}
+        </Text>
+      )}
     />
   </View>
 );

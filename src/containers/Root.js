@@ -1,7 +1,7 @@
 import { createStackNavigator } from 'react-navigation';
 import MenuContainer from './Menu';
 import SubjectsListContainer from './subjects/list';
-import SubjectShowContainer from './subjects/show';
+import SubjectFormContainer from './subjects/form';
 
 const Root = createStackNavigator({
   menu: {
@@ -17,9 +17,15 @@ const Root = createStackNavigator({
     }),
   },
   subject: {
-    screen: SubjectShowContainer,
+    screen: SubjectFormContainer,
     navigationOptions: ({ navigation }) => ({
       title: `${navigation.state.params.subject.name}`,
+    }),
+  },
+  newSubject: {
+    screen: SubjectFormContainer,
+    navigationOptions: () => ({
+      title: 'New Subject', // DICTIONARY
     }),
   },
 },

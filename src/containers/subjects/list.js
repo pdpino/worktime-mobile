@@ -1,42 +1,50 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { View, Button } from 'react-native';
 import SubjectsListComponent from '../../components/subjects/list';
-
-const mockSubjects = [
-  {
-    id: 1,
-    name: 'subject 1',
-    description: 'working on subject 1',
-  },
-  {
-    id: 2,
-    name: 'subject 2',
-    description: 'this is a very long description. It should use more than just one line. Hopefully it will use a couple of lines',
-  },
-];
+import { subjectsSelector } from '../../redux/selectors';
 
 class SubjectsList extends Component {
   constructor(props) {
     super(props);
 
     this.handlePressSubject = this.handlePressSubject.bind(this);
+    this.handleNewSubject = this.handleNewSubject.bind(this);
   }
 
   handlePressSubject(id) {
-    const subject = mockSubjects.find(subj => subj.id === id);
+    const subject = this.props.subjects.find(subj => subj.id === id);
     if (subject) {
-      const { navigation } = this.props;
-      navigation.navigate('subject', { subject });
+      this.props.navigation.navigate('subject', { subject });
     }
   }
 
+  handleNewSubject() {
+    this.props.navigation.navigate('newSubject');
+  }
+
   render() {
+    const { subjects } = this.props;
+
+    const newButtonText = 'New Subject'; // DICTIONARY
+
     return (
-      <SubjectsListComponent
-        subjects={mockSubjects}
-        onPressSubject={this.handlePressSubject}
-      />
+      <View style={{ flex: 1 }}>
+        <SubjectsListComponent
+          subjects={subjects}
+          onPressSubject={this.handlePressSubject}
+        />
+        <Button
+          title={newButtonText}
+          onPress={this.handleNewSubject}
+        />
+      </View>
     );
   }
 }
 
-export default SubjectsList;
+const mapStateToProps = state => ({
+  subjects: subjectsSelector(state),
+});
+
+export default connect(mapStateToProps)(SubjectsList);
