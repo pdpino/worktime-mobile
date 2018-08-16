@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, View, FlatList, TouchableOpacity, Text,
+  StyleSheet, View, FlatList, TouchableOpacity, Text, Dimensions,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -9,17 +9,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    flexDirection: 'column',
+    padding: 10,
+  },
+  list: {
+    width: Dimensions.get('window').width, // CHGME
   },
   itemButton: {
-    flex: 1,
-    margin: 1,
-    // DEBUG:
-    // borderWidth: 1,
-    // borderStyle: 'solid',
-    // borderColor: 'black',
+    marginHorizontal: 20,
+    marginVertical: 10,
+    backgroundColor: '#20b2aa',
   },
   itemText: {
     fontSize: 20,
+    paddingVertical: 5,
+    textAlign: 'center',
+    color: 'white',
   },
 });
 
@@ -38,6 +43,7 @@ const Menu = ({ options, onPressOption }) => {
   return (
     <View style={styles.container}>
       <FlatList
+        style={styles.list}
         data={options}
         renderItem={renderOption}
         keyExtractor={(item, index) => index.toString()}
