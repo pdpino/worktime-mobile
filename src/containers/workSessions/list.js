@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import WorkSessionsListComponent from '../../components/workSessions/list';
-import { workSessionsSelector } from '../../redux/selectors';
+import { subjectSessionsSelector } from '../../redux/selectors';
 
 class WorkSessionsList extends React.Component {
   componentDidMount() {}
@@ -11,14 +11,14 @@ class WorkSessionsList extends React.Component {
 
     return (
       <WorkSessionsListComponent
-        sessions={workSessions}
+        workSessions={workSessions}
       />
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  workSessions: workSessionsSelector(state, {
+  workSessions: subjectSessionsSelector(state, {
     subject: ownProps.navigation.getParam('subject'),
   }),
 });

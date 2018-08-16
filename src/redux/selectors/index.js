@@ -1,7 +1,9 @@
-import subjectsSelector from './subjects';
-import workSessionsSelector from './workSessions';
+import { subjectsSelector } from './subjects';
+import { subjectSessionsSelector } from './workSessions';
+import { runningSessionSelector } from './work';
 
 export {
   subjectsSelector,
-  workSessionsSelector,
+  subjectSessionsSelector,
+  runningSessionSelector,
 };

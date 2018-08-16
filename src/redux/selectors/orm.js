@@ -1,3 +1,9 @@
-const ormSessionSelector = state => state.orm;
+import { createSelector } from 'redux-orm';
+import orm from '../models/orm';
 
-export default ormSessionSelector;
+export const ormSessionSelector = state => state.entities;
+
+export const createOrmSelector = (...selectors) => createSelector(
+  orm,
+  ...selectors,
+);

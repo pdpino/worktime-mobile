@@ -1,11 +1,7 @@
-import { createSelector } from 'redux-orm';
-import orm from '../models/orm';
-import ormSessionSelector from './orm';
+import { createOrmSelector, ormSessionSelector } from './orm';
 
-const subjectsSelector = createSelector(
-  orm,
+// eslint-disable-next-line import/prefer-default-export
+export const subjectsSelector = createOrmSelector(
   ormSessionSelector,
-  session => session.Subject.all().toModelArray(),
+  ormSession => ormSession.Subject.all().toModelArray(),
 );
-
-export default subjectsSelector;

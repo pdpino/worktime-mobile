@@ -1,6 +1,12 @@
 import { fk, attr, Model } from 'redux-orm';
 
-class Sprint extends Model { }
+class Sprint extends Model {
+  close(duration) {
+    return this.update({
+      duration,
+    });
+  }
+}
 
 Sprint.modelName = 'Sprint';
 

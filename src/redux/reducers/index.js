@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import orm from '../models/orm';
-import working from './working';
+import work from './work';
 import entities from './entities';
 
 const rootReducer = combineReducers({
-  orm: entities(orm),
-  working,
+  entities: entities(orm),
+  work,
 });
 
 export default rootReducer;

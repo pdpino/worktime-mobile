@@ -12,21 +12,29 @@ const styles = StyleSheet.create({
 const noWorkSessions = 'No sessions'; // DICTIONARY
 
 const WorkSessionsList = ({ workSessions }) => {
-  const renderSession = ({ item }) => (
-    <Text>
-      {item.duration}
-      {' | '}
-      {item.datetimeStart}
-      {' | '}
-      {item.datetimeEnd}
-    </Text>
-  );
+  const renderWorkSession = ({ item }) => {
+    const seconds = Math.floor(item.getTotalSeconds());
+
+    return (
+      <Text>
+        {item.date}
+        {' | '}
+        {item.getHourStart()}
+        {' - '}
+        {item.getHourEnd()}
+        {' | '}
+        {seconds}
+        {' s | '}
+        {item.status}
+      </Text>
+    );
+  };
 
   return (
     <View style={styles.container}>
       <FlatList
         data={workSessions}
-        renderItem={renderSession}
+        renderItem={renderWorkSession}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={(
           <Text>
