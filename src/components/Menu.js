@@ -13,10 +13,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   list: {
-    width: Dimensions.get('window').width, // CHGME
+    width: Dimensions.get('window').width, // HACK?
+    paddingHorizontal: 20,
   },
   itemButton: {
-    marginHorizontal: 20,
     marginVertical: 10,
     backgroundColor: '#20b2aa',
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, View, FlatList, Text,
+  StyleSheet, View, FlatList, Text, Dimensions,
 } from 'react-native';
 import SubjectItem from './item';
 
@@ -10,6 +10,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    flexDirection: 'column',
+  },
+  list: {
+    width: Dimensions.get('window').width, // HACK?
+    paddingHorizontal: 10,
+  },
+  item: {
+    marginVertical: 10,
   },
 });
 
@@ -17,26 +25,34 @@ const noSubjects = 'No subjects'; // DICTIONARY
 
 const SubjectsList = ({
   subjects, onPressDetail, onPressEdit, onPressDelete,
-}) => (
-  <View style={styles.container}>
-    <FlatList
-      data={subjects}
-      renderItem={({ item }) => (
-        <SubjectItem
-          subject={item}
-          onPressDetail={onPressDetail}
-          onPressEdit={onPressEdit}
-          onPressDelete={onPressDelete}
-        />
-      )}
-      keyExtractor={(item, index) => index.toString()}
-      ListEmptyComponent={(
-        <Text>
-          {noSubjects}
-        </Text>
-      )}
+}) => {
+  const renderSubject = ({ item }) => (
+    <SubjectItem
+      style={styles.item}
+      subject={item}
+      onPressDetail={onPressDetail}
+      onPressEdit={onPressEdit}
+      onPressDelete={onPressDelete}
     />
-  </View>
-);
+  );
+
+  const emptyComponent = (
+    <Text>
+      {noSubjects}
+    </Text>
+  );
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        style={styles.list}
+        data={subjects}
+        renderItem={renderSubject}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={emptyComponent}
+      />
+    </View>
+  );
+};
 
 export default SubjectsList;
