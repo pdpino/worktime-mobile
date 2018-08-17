@@ -14,10 +14,7 @@ const styles = StyleSheet.create({
   },
   list: {
     width: Dimensions.get('window').width, // HACK?
-    paddingHorizontal: 10,
-  },
-  item: {
-    marginVertical: 10,
+    paddingTop: 5,
   },
 });
 
@@ -28,7 +25,6 @@ const SubjectsList = ({
 }) => {
   const renderSubject = ({ item }) => (
     <SubjectItem
-      style={styles.item}
       subject={item}
       onPressDetail={onPressDetail}
       onPressEdit={onPressEdit}

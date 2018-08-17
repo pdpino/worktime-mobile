@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
   itemButton: {
     marginVertical: 10,
-    backgroundColor: '#20b2aa',
+    backgroundColor: '#3B88B0',
   },
   itemText: {
     fontSize: 20,

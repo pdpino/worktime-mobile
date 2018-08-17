@@ -1,7 +1,11 @@
-import { getTimestamp, getDate, getHour } from './dates';
+import {
+  getTimestamp, unixToDate, unixToHour, daysAgo, prettyDate,
+} from './dates';
 
 export {
   getTimestamp,
-  getDate,
-  getHour,
+  unixToDate,
+  unixToHour,
+  daysAgo,
+  prettyDate,
 };

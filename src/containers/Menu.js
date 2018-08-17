@@ -3,11 +3,11 @@ import MenuComponent from '../components/Menu';
 
 const options = [
   {
-    key: 'subjects',
+    key: 'subjectsList',
     title: 'Manage Subjects', // DICTIONARY
   },
   {
-    key: 'workSelectSubject',
+    key: 'selectWork',
     title: 'Work', // DICTIONARY
   },
 ];

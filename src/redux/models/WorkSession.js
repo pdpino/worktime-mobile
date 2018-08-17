@@ -1,11 +1,11 @@
 import { fk, attr, Model } from 'redux-orm';
-import { getDate, getHour } from '../../shared/utils';
+import { unixToDate, unixToHour } from '../../shared/utils';
 
 class WorkSession extends Model {
   static start(timestamp, subjectId) {
     const { WorkSession } = this.session; // eslint-disable-line no-shadow
     const props = {
-      date: getDate(timestamp),
+      date: unixToDate(timestamp),
       timeStart: timestamp,
       timeEnd: timestamp,
       status: 'playing',
@@ -68,11 +68,11 @@ class WorkSession extends Model {
   }
 
   getHourStart() {
-    return getHour(this.timeStart);
+    return unixToHour(this.timeStart);
   }
 
   getHourEnd() {
-    return getHour(this.timeEnd);
+    return unixToHour(this.timeEnd);
   }
 }
 

@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 
 const noSubjects = 'No subjects'; // DICTIONARY
 
-const WorkSelectSubject = ({ subjects, onPressSubject }) => {
+const SelectWork = ({ subjects, onPressSubject }) => {
   const renderSubject = ({ item }) => (
     <TouchableOpacity
       style={styles.itemButton}
@@ -48,4 +48,4 @@ const WorkSelectSubject = ({ subjects, onPressSubject }) => {
   );
 };
 
-export default WorkSelectSubject;
+export default SelectWork;

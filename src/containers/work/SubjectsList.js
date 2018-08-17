@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import WorkSelectSubjectComponent from '../../components/work/SubjectsList';
+import SelectWorkComponent from '../../components/work/SubjectsList';
 import { subjectsSelector } from '../../redux/selectors';
 
-class WorkSelectSubject extends Component {
+class SelectWork extends Component {
   constructor(props) {
     super(props);
 
@@ -21,7 +21,7 @@ class WorkSelectSubject extends Component {
     const { subjects } = this.props;
 
     return (
-      <WorkSelectSubjectComponent
+      <SelectWorkComponent
         subjects={subjects}
         onPressSubject={this.handlePressSubject}
       />
@@ -33,4 +33,4 @@ const mapStateToProps = state => ({
   subjects: subjectsSelector(state),
 });
 
-export default connect(mapStateToProps)(WorkSelectSubject);
+export default connect(mapStateToProps)(SelectWork);

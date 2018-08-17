@@ -2,8 +2,8 @@ import { createStackNavigator } from 'react-navigation';
 import Menu from './Menu';
 import SubjectsList from './subjects/list';
 import SubjectForm from './subjects/form';
-import WorkSelectSubject from './work/SubjectsList';
-import WorkSessionsList from './workSessions/list';
+import SubjectShow from './subjects/show';
+import SelectWork from './work/SubjectsList';
 import WorkPlayer from './work/player';
 
 const Root = createStackNavigator({
@@ -13,7 +13,7 @@ const Root = createStackNavigator({
       title: 'Worktime', // DICTIONARY
     }),
   },
-  subjects: {
+  subjectsList: {
     screen: SubjectsList,
     navigationOptions: () => ({
       title: 'Subjects', // DICTIONARY
@@ -31,16 +31,16 @@ const Root = createStackNavigator({
       title: 'New Subject', // DICTIONARY
     }),
   },
-  workSelectSubject: {
-    screen: WorkSelectSubject,
+  selectWork: {
+    screen: SelectWork,
     navigationOptions: () => ({
       title: 'Work in:', // DICTIONARY
     }),
   },
-  workSessions: {
-    screen: WorkSessionsList,
+  subjectShow: {
+    screen: SubjectShow,
     navigationOptions: ({ navigation }) => ({
-      title: `${navigation.state.params.subject.name}'s sessions`, // DICTIONARY
+      title: `${navigation.state.params.subject.name}`,
     }),
   },
   work: {
@@ -52,6 +52,12 @@ const Root = createStackNavigator({
 },
 {
   initialRouteName: 'menu',
+  navigationOptions: () => ({
+    headerStyle: {
+      backgroundColor: '#3B84B5',
+    },
+    headerTintColor: 'white',
+  }),
 });
 
 export default Root;
