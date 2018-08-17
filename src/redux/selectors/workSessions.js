@@ -6,5 +6,5 @@ const subjectFromPropsSelector = (_, props) => props.subject;
 export const subjectSessionsSelector = createSelector(
   subjectFromPropsSelector,
   subject => subject.worksessionSet.toModelArray()
-    .sort((ws1, ws2) => ws2.timeStart - ws1.timeStart),
+    .sort((ws1, ws2) => ws2.timestampStart - ws1.timestampStart),
 );

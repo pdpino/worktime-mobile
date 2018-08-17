@@ -6,8 +6,8 @@ class WorkSession extends Model {
     const { WorkSession } = this.session; // eslint-disable-line no-shadow
     const props = {
       date: unixToDate(timestamp),
-      timeStart: timestamp,
-      timeEnd: timestamp,
+      timestampStart: timestamp,
+      timestampEnd: timestamp,
       status: 'playing',
       subject: subjectId,
     };
@@ -44,15 +44,15 @@ class WorkSession extends Model {
   }
 
   closeCurrentSprint(timestamp) {
-    const duration = timestamp - this.timeEnd;
+    const duration = timestamp - this.timestampEnd;
     this.sprintSet.last().close(duration);
     return this.update({
-      timeEnd: timestamp,
+      timestampEnd: timestamp,
     });
   }
 
   getTotalSeconds() {
-    return this.timeEnd - this.timeStart;
+    return this.timestampEnd - this.timestampStart;
   }
 
   isPlaying() {
@@ -68,11 +68,11 @@ class WorkSession extends Model {
   }
 
   getHourStart() {
-    return unixToHour(this.timeStart);
+    return unixToHour(this.timestampStart);
   }
 
   getHourEnd() {
-    return unixToHour(this.timeEnd);
+    return unixToHour(this.timestampEnd);
   }
 }
 
@@ -81,8 +81,8 @@ WorkSession.modelName = 'WorkSession';
 WorkSession.fields = {
   id: attr(),
   date: attr(),
-  timeStart: attr(),
-  timeEnd: attr(),
+  timestampStart: attr(),
+  timestampEnd: attr(),
   status: attr(),
   subject: fk('Subject'),
 };
