@@ -1,5 +1,6 @@
 const defaultState = {
   runningSessionId: -1,
+  selectedSubjectId: -1,
 };
 
 const work = (state = defaultState, action) => {
@@ -7,12 +8,17 @@ const work = (state = defaultState, action) => {
     case 'SAVE_RUNNING_SESSION_ID':
       return {
         ...state,
-        runningSessionId: action.payload.id,
+        runningSessionId: action.payload.runningSessionId,
       };
     case 'REMOVE_RUNNING_SESSION_ID':
       return {
         ...state,
-        ...defaultState,
+        runningSessionId: -1,
+      };
+    case 'SELECT_WORK_SUBJECT':
+      return {
+        ...state,
+        selectedSubjectId: action.payload.selectedSubjectId,
       };
     default:
       return state;

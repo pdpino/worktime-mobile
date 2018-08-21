@@ -18,7 +18,7 @@ export const start = (timestamp, subjectId) => (dispatch, getState) => {
   return dispatch({
     type: 'SAVE_RUNNING_SESSION_ID',
     payload: {
-      id: runningSession.id,
+      runningSessionId: runningSession.id,
     },
   });
 };
@@ -49,3 +49,10 @@ export const stop = (timestamp, runningSessionId) => (dispatch) => {
   });
   return dispatch({ type: 'REMOVE_RUNNING_SESSION_ID' });
 };
+
+export const selectWorkSubject = selectedSubjectId => ({
+  type: 'SELECT_WORK_SUBJECT',
+  payload: {
+    selectedSubjectId,
+  },
+});

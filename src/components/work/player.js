@@ -27,7 +27,7 @@ const status2Text = {
 }; // DICTIONARY
 
 const WorkPlayer = ({
-  status, showPlay, stopDisabled, onPressPlayPause, onPressStop,
+  status, playerEnabled, showPlay, stopDisabled, onPressPlayPause, onPressStop,
 }) => {
   const statusText = (
     <Text style={styles.status}>
@@ -49,6 +49,7 @@ const WorkPlayer = ({
         type: 'font-awesome',
       }}
       onPress={onPressPlayPause}
+      disabled={!playerEnabled}
     />
   );
 
@@ -60,7 +61,7 @@ const WorkPlayer = ({
         type: 'font-awesome',
       }}
       onPress={onPressStop}
-      disabled={stopDisabled}
+      disabled={!playerEnabled || stopDisabled}
     />
   );
 

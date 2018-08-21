@@ -1,6 +1,6 @@
 import { upsertSubject, deleteSubject } from './subjects';
 import {
-  start, resume, pause, stop,
+  start, resume, pause, stop, selectWorkSubject,
 } from './work';
 
 export {
@@ -10,4 +10,5 @@ export {
   resume,
   pause,
   stop,
+  selectWorkSubject,
 };

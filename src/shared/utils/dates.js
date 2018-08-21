@@ -54,6 +54,10 @@ export function prettyDate(date) {
 }
 
 export function prettyDuration(totalSeconds) {
+  if (!totalSeconds) {
+    return '0s';
+  }
+
   const seconds = Math.floor(totalSeconds) % 60;
   let duration = `${seconds}s`;
 

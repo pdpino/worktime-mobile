@@ -3,7 +3,6 @@ import Menu from './Menu';
 import SubjectsList from './subjects/list';
 import SubjectForm from './subjects/form';
 import SubjectShow from './subjects/show';
-import SelectWork from './work/SubjectsList';
 import WorkPlayer from './work/player';
 
 const Root = createStackNavigator({
@@ -31,12 +30,6 @@ const Root = createStackNavigator({
       title: 'New Subject', // DICTIONARY
     }),
   },
-  selectWork: {
-    screen: SelectWork,
-    navigationOptions: () => ({
-      title: 'Work in:', // DICTIONARY
-    }),
-  },
   subjectShow: {
     screen: SubjectShow,
     navigationOptions: ({ navigation }) => ({
@@ -45,8 +38,8 @@ const Root = createStackNavigator({
   },
   work: {
     screen: WorkPlayer,
-    navigationOptions: ({ navigation }) => ({
-      title: `Work on ${navigation.state.params.subject.name}`, // DICTIONARY
+    navigationOptions: () => ({
+      title: 'Work', // DICTIONARY
     }),
   },
 },
