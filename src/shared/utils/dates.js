@@ -52,3 +52,22 @@ export function prettyDate(date) {
   }
   return parsedDate.format('dddd DD MMMM YYYY');
 }
+
+export function prettyDuration(totalSeconds) {
+  const seconds = Math.floor(totalSeconds) % 60;
+  let duration = `${seconds}s`;
+
+  let minutes = Math.floor(totalSeconds / 60);
+  const hours = Math.floor(minutes / 60);
+  minutes %= 60;
+
+  if (minutes) {
+    duration = `${minutes}m ${duration}`;
+  }
+
+  if (hours) {
+    duration = `${hours}h ${duration}`;
+  }
+
+  return duration;
+}

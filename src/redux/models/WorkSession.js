@@ -8,6 +8,9 @@ class WorkSession extends Model {
       date: unixToDate(timestamp),
       timestampStart: timestamp,
       timestampEnd: timestamp,
+      timeTotal: 0,
+      timeEffective: 0,
+      nPauses: 0,
       status: 'playing',
       subject: subjectId,
     };
@@ -26,7 +29,10 @@ class WorkSession extends Model {
   pause(timestamp) {
     this.closeCurrentSprint(timestamp);
     this.openSprint('paused');
-    return this.update({ status: 'paused' });
+    return this.update({
+      status: 'paused',
+      nPauses: this.nPauses + 1,
+    });
   }
 
   stop(timestamp) {
@@ -45,14 +51,14 @@ class WorkSession extends Model {
 
   closeCurrentSprint(timestamp) {
     const duration = timestamp - this.timestampEnd;
-    this.sprintSet.last().close(duration);
+    const lastSprint = this.sprintSet.last();
+    lastSprint.close(duration);
+    const addTimeEffective = lastSprint.status === 'playing' ? duration : 0;
     return this.update({
       timestampEnd: timestamp,
+      timeTotal: this.timeTotal + duration,
+      timeEffective: this.timeEffective + addTimeEffective,
     });
-  }
-
-  getTotalSeconds() {
-    return this.timestampEnd - this.timestampStart;
   }
 
   isPlaying() {
@@ -83,6 +89,9 @@ WorkSession.fields = {
   date: attr(),
   timestampStart: attr(),
   timestampEnd: attr(),
+  timeTotal: attr(),
+  timeEffective: attr(),
+  nPauses: attr(),
   status: attr(),
   subject: fk('Subject'),
 };

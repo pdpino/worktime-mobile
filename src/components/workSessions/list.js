@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, FlatList, Text,
 } from 'react-native';
-import { prettyDate } from '../../shared/utils';
+import { prettyDate, prettyDuration } from '../../shared/utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -49,7 +49,8 @@ const WorkSessionsList = ({ workSessions, listProps }) => {
 
   // REVIEW: move to workSession/item
   const renderWorkSession = ({ item }) => {
-    const seconds = Math.floor(item.getTotalSeconds());
+    // DICTIONARY (text)
+    const { nPauses, timeTotal, timeEffective } = item;
 
     return (
       <View style={styles.item}>
@@ -65,14 +66,13 @@ const WorkSessionsList = ({ workSessions, listProps }) => {
         </View>
         <View style={styles.subitem}>
           <Text>
-            {seconds}
-            {' s'}
+            {`Total: ${prettyDuration(timeTotal)}`}
           </Text>
           <Text>
-            {item.status}
+            {`Effective: ${prettyDuration(timeEffective)}`}
           </Text>
           <Text>
-            Hola
+            {`${nPauses || 0} pauses`}
           </Text>
         </View>
       </View>

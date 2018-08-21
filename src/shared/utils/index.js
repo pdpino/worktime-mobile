@@ -1,5 +1,5 @@
 import {
-  getTimestamp, unixToDate, unixToHour, daysAgo, prettyDate,
+  getTimestamp, unixToDate, unixToHour, daysAgo, prettyDate, prettyDuration,
 } from './dates';
 
 export {
@@ -8,4 +8,5 @@ export {
   unixToHour,
   daysAgo,
   prettyDate,
+  prettyDuration,
 };
