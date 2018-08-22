@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import SubjectsListComponent from '../../components/subjects/list';
 import { subjectsSelector } from '../../redux/selectors';
 import { deleteSubject } from '../../redux/actions';
@@ -37,7 +37,15 @@ class SubjectsList extends Component {
   }
 
   handlePressDeleteSubject(id) {
-    this.props.deleteSubject(id);
+    // DICTIONARY
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to delete it?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete', onPress: () => this.props.deleteSubject(id) },
+      ],
+    );
   }
 
   handlePressNewSubject() {

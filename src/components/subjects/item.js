@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, TouchableOpacity, Text,
 } from 'react-native';
-import { Button } from 'react-native-elements';
+import { DropdownMenu } from '../../shared/UI/menus';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingHorizontal: 15,
     marginBottom: 5,
-    // justifyContent: 'space-around',
     alignItems: 'center',
     borderStyle: 'solid',
     borderBottomWidth: 1,
@@ -24,21 +23,14 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 20,
+    color: 'black',
   },
   description: {
     fontSize: 12,
     paddingLeft: 8,
-  },
-  buttons: {
-    flexDirection: 'row',
-    flex: 1,
-  },
-  button: {
-    padding: 0,
-    margin: 0,
+    color: 'black',
   },
 });
-
 
 const SubjectItem = ({
   subject, onPressDetail, onPressEdit, onPressDelete,
@@ -55,21 +47,19 @@ const SubjectItem = ({
     </Text>
   );
 
-  const editButton = (
-    <Button
-      buttonStyle={styles.button}
-      icon={{ name: 'edit' }}
-      onPress={() => onPressEdit(subject.id)}
-    />
-  );
-
-  const deleteButton = (
-    <Button
-      buttonStyle={styles.button}
-      icon={{ name: 'delete' }}
-      onPress={() => onPressDelete(subject.id)}
-    />
-  );
+  const buttons = [
+    {
+      label: 'Edit', // DICTIONARY
+      callback: () => onPressEdit(subject.id),
+    },
+    {
+      label: 'Delete', // DICTIONARY
+      callback: () => onPressDelete(subject.id),
+      textStyle: {
+        color: '#d50000',
+      },
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -80,10 +70,9 @@ const SubjectItem = ({
         {name}
         {description}
       </TouchableOpacity>
-      <View style={styles.buttons}>
-        {editButton}
-        {deleteButton}
-      </View>
+      <DropdownMenu
+        items={buttons}
+      />
     </View>
   );
 };
