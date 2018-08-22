@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View } from 'react-native';
 import { WorkPlayerComponent, SubjectPicker } from '../../components/work';
 import {
   start, resume, pause, stop, selectWorkSubject,
@@ -64,22 +63,22 @@ class WorkPlayer extends React.Component {
     const { subjects, selectedSubjectId } = this.props;
 
     return (
-      <View style={{ flex: 1 }}>
-        <SubjectPicker
-          subjects={subjects}
-          selectedSubjectId={selectedSubjectId}
-          onValueChange={this.handleSelectSubject}
-          pickerEnabled={status === 'stopped'}
-        />
-        <WorkPlayerComponent
-          status={status}
-          playerEnabled={selectedSubjectId !== -1}
-          showPlay={status !== 'playing'}
-          stopDisabled={status === 'stopped'}
-          onPressPlayPause={this.handlePressPlayPause}
-          onPressStop={this.handlePressStop}
-        />
-      </View>
+      <WorkPlayerComponent
+        picker={(
+          <SubjectPicker
+            subjects={subjects}
+            selectedSubjectId={selectedSubjectId}
+            onValueChange={this.handleSelectSubject}
+            pickerEnabled={status === 'stopped'}
+          />
+        )}
+        status={status}
+        playerEnabled={selectedSubjectId !== -1}
+        showPlay={status !== 'playing'}
+        stopDisabled={status === 'stopped'}
+        onPressPlayPause={this.handlePressPlayPause}
+        onPressStop={this.handlePressStop}
+      />
     );
   }
 }

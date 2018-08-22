@@ -3,8 +3,7 @@ import { StyleSheet, Picker } from 'react-native';
 
 const styles = StyleSheet.create({
   picker: {
-    height: 50,
-    width: 200,
+    flex: 1,
   },
 });
 

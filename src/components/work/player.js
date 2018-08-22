@@ -7,16 +7,66 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
+  },
+  box: {
+    backgroundColor: '#e8eaf6',
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  subjectsContainer: {
+    flexDirection: 'column',
+    height: 80,
+    width: 200,
+  },
+  subjectsLabel: {
+    flex: 1,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    fontSize: 20,
+    color: 'black',
+  },
+  subjectsPicker: {
+    flex: 1,
+    justifyContent: 'center',
+    height: 50,
+  },
+  statusContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 50,
+    marginTop: 20,
+    marginHorizontal: 20,
+  },
+  statusLabel: {
+    flex: 1,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    fontSize: 18,
+    marginLeft: 10,
+    color: 'black',
   },
   status: {
-
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 18,
+    margin: 10,
+    fontWeight: 'bold',
   },
-  time: {
-
+  buttons: {
+    flexDirection: 'row',
+    marginTop: 20,
   },
   button: {
-
+    width: 110,
+    height: 70,
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: 'gray',
+  },
+  buttonContainerView: {
+    elevation: 5,
+    borderRadius: 4,
   },
 });
 
@@ -26,27 +76,56 @@ const status2Text = {
   stopped: 'Stopped',
 }; // DICTIONARY
 
+const status2Color = {
+  playing: 'green',
+  paused: 'orange',
+  stopped: 'red',
+}; // COLORS
+
+const chooseSubject = 'Choose a Subject'; // DICTIONARY
+const statusLabel = 'Status'; // DICTIONARY
+
+const baseIconOptions = {
+  type: 'font-awesome',
+  size: 30,
+  style: { marginRight: 0 },
+};
+
 const WorkPlayer = ({
-  status, playerEnabled, showPlay, stopDisabled, onPressPlayPause, onPressStop,
+  picker, status, playerEnabled, showPlay, stopDisabled, onPressPlayPause, onPressStop,
 }) => {
-  const statusText = (
-    <Text style={styles.status}>
-      {status2Text[status] || 'Stopped'}
-    </Text>
+  const subjectsBox = (
+    <View style={[styles.box, styles.subjectsContainer]}>
+      <Text style={styles.subjectsLabel}>
+        {chooseSubject}
+      </Text>
+      <View style={styles.subjectsPicker}>
+        {picker}
+      </View>
+    </View>
   );
 
-  const statusTime = (
-    <Text style={styles.time}>
-      Time
-    </Text>
+  const statusBox = (
+    <View style={[styles.box, styles.statusContainer]}>
+      <Text style={styles.statusLabel}>
+        {statusLabel}
+      </Text>
+      <Text style={[styles.status, { color: status2Color[status] || 'black' }]}>
+        {status2Text[status] || 'Stopped'}
+      </Text>
+    </View>
   );
 
   const playPauseButton = (
     <Button
-      style={styles.button}
+      containerViewStyle={styles.buttonContainerView}
+      buttonStyle={[
+        styles.button,
+        { backgroundColor: 'darkcyan' },
+      ]}
       icon={{
+        ...baseIconOptions,
         name: showPlay ? 'play' : 'pause',
-        type: 'font-awesome',
       }}
       onPress={onPressPlayPause}
       disabled={!playerEnabled}
@@ -55,10 +134,14 @@ const WorkPlayer = ({
 
   const stopButton = (
     <Button
-      style={styles.button}
+      containerViewStyle={styles.buttonContainerView}
+      buttonStyle={[
+        styles.button,
+        { backgroundColor: 'red' },
+      ]}
       icon={{
+        ...baseIconOptions,
         name: 'stop',
-        type: 'font-awesome',
       }}
       onPress={onPressStop}
       disabled={!playerEnabled || stopDisabled}
@@ -67,10 +150,12 @@ const WorkPlayer = ({
 
   return (
     <View style={styles.container}>
-      {statusText}
-      {statusTime}
-      {playPauseButton}
-      {stopButton}
+      {subjectsBox}
+      {statusBox}
+      <View style={styles.buttons}>
+        {playPauseButton}
+        {stopButton}
+      </View>
     </View>
   );
 };
