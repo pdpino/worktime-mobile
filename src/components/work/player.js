@@ -137,7 +137,7 @@ const WorkPlayer = ({
       containerViewStyle={styles.buttonContainerView}
       buttonStyle={[
         styles.button,
-        { backgroundColor: 'red' },
+        { backgroundColor: '#d50000' },
       ]}
       icon={{
         ...baseIconOptions,

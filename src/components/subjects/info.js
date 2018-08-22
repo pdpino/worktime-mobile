@@ -6,16 +6,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginBottom: 5,
-    // marginHorizontal: 10,
     backgroundColor: 'white',
     paddingHorizontal: 10,
     elevation: 1,
   },
   title: {
     fontSize: 20,
+    color: 'black',
   },
   lastWorked: {
     fontSize: 15,
+    color: 'black',
   },
 });
 

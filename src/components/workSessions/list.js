@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderBottomWidth: 1,
     borderBottomColor: 'gray',
+    color: 'black',
   },
   list: {
     // width: Dimensions.get('window').width, // HACK?
@@ -25,7 +26,6 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderBottomWidth: 1,
     borderBottomColor: 'gray',
-    // backgroundColor: 'white',
   },
   subitem: {
     flexDirection: 'column',
@@ -33,6 +33,9 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 2,
     marginRight: 50,
+  },
+  text: {
+    color: 'black',
   },
 });
 
@@ -55,23 +58,23 @@ const WorkSessionsList = ({ workSessions, listProps }) => {
     return (
       <View style={styles.item}>
         <View style={styles.subitem}>
-          <Text>
+          <Text style={styles.text}>
             {prettyDate(item.date)}
           </Text>
-          <Text>
+          <Text style={styles.text}>
             {item.getHourStart()}
             {' - '}
             {item.getHourEnd()}
           </Text>
         </View>
         <View style={styles.subitem}>
-          <Text>
+          <Text style={styles.text}>
             {`Total: ${prettyDuration(timeTotal)}`}
           </Text>
-          <Text>
+          <Text style={styles.text}>
             {`Effective: ${prettyDuration(timeEffective)}`}
           </Text>
-          <Text>
+          <Text style={styles.text}>
             {`${nPauses || 0} pauses`}
           </Text>
         </View>
