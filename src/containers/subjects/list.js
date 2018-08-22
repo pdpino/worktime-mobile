@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View, Button } from 'react-native';
+import { View } from 'react-native';
 import SubjectsListComponent from '../../components/subjects/list';
 import { subjectsSelector } from '../../redux/selectors';
 import { deleteSubject } from '../../redux/actions';
+import { NewButton } from '../../shared/UI/buttons';
 
 class SubjectsList extends Component {
   constructor(props) {
@@ -46,8 +47,6 @@ class SubjectsList extends Component {
   render() {
     const { subjects } = this.props;
 
-    const newButtonText = 'New Subject'; // DICTIONARY
-
     return (
       <View style={{ flex: 1 }}>
         <SubjectsListComponent
@@ -56,8 +55,7 @@ class SubjectsList extends Component {
           onPressEdit={this.handlePressEditSubject}
           onPressDelete={this.handlePressDeleteSubject}
         />
-        <Button
-          title={newButtonText}
+        <NewButton
           onPress={this.handlePressNewSubject}
         />
       </View>
