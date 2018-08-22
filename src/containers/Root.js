@@ -1,27 +1,24 @@
-import { createStackNavigator } from 'react-navigation';
-import Menu from './Menu';
+import React from 'react';
+import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
+import { HamburgerIcon } from '../shared/UI/icons';
 import SubjectsList from './subjects/list';
 import SubjectForm from './subjects/form';
 import SubjectShow from './subjects/show';
 import WorkPlayer from './work/player';
 
-const Root = createStackNavigator({
-  menu: {
-    screen: Menu,
-    navigationOptions: () => ({
-      title: 'Worktime', // DICTIONARY
-    }),
+const headerOptions = {
+  headerStyle: {
+    backgroundColor: '#3B84B5',
   },
+  headerTintColor: 'white',
+};
+
+const SubjectsStack = createStackNavigator({
   subjectsList: {
     screen: SubjectsList,
-    navigationOptions: () => ({
-      title: 'Subjects', // DICTIONARY
-    }),
-  },
-  editSubject: {
-    screen: SubjectForm,
     navigationOptions: ({ navigation }) => ({
-      title: `${navigation.state.params.subject.name}`,
+      title: 'Subjects', // DICTIONARY
+      headerLeft: <HamburgerIcon onPress={() => navigation.toggleDrawer()} />,
     }),
   },
   newSubject: {
@@ -30,27 +27,58 @@ const Root = createStackNavigator({
       title: 'New Subject', // DICTIONARY
     }),
   },
-  subjectShow: {
+  editSubject: {
+    screen: SubjectForm,
+    navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.params.subject.name}`,
+    }),
+  },
+  showSubject: {
     screen: SubjectShow,
     navigationOptions: ({ navigation }) => ({
       title: `${navigation.state.params.subject.name}`,
     }),
   },
+},
+{
+  initialRouteName: 'subjectsList',
+  navigationOptions: {
+    ...headerOptions,
+  },
+});
+
+const WorkStack = createStackNavigator({
   work: {
     screen: WorkPlayer,
-    navigationOptions: () => ({
+    navigationOptions: ({ navigation }) => ({
       title: 'Work', // DICTIONARY
+      headerLeft: <HamburgerIcon onPress={() => navigation.toggleDrawer()} />,
     }),
   },
 },
 {
-  initialRouteName: 'menu',
-  navigationOptions: () => ({
-    headerStyle: {
-      backgroundColor: '#3B84B5',
-    },
-    headerTintColor: 'white',
-  }),
+  initialRouteName: 'work',
+  navigationOptions: {
+    ...headerOptions,
+  },
+});
+
+const Root = createDrawerNavigator({
+  subjects: {
+    screen: SubjectsStack,
+    navigationOptions: () => ({
+      drawerLabel: 'Subjects', // DICTIONARY
+    }),
+  },
+  work: {
+    screen: WorkStack,
+    navigationOptions: () => ({
+      drawerLabel: 'Work', // DICTIONARY
+    }),
+  },
+},
+{
+  initialRouteName: 'subjects',
 });
 
 export default Root;

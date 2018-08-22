@@ -25,7 +25,7 @@ class SubjectsList extends Component {
   handlePressDetailSubject(id) {
     const subject = this.findSubject(id);
     if (subject) {
-      this.props.navigation.navigate('subjectShow', { subject });
+      this.props.navigation.navigate('showSubject', { subject });
     }
   }
 
