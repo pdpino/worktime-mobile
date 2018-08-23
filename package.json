@@ -6,7 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "android": "react-native run-android",
     "log": "react-native log-android",
-    "test": "jest"
+    "test": "jest",
+    "release": "react-native run-android --variant=release"
   },
   "dependencies": {
     "@redux-offline/redux-offline": "^2.4.0",
