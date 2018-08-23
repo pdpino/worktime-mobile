@@ -1,53 +1,86 @@
 import React from 'react';
 import {
-  StyleSheet, View, TextInput, Button,
+  StyleSheet, View, Text, TextInput, Button,
 } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: 'white',
+  },
+  formItem: {
+    marginHorizontal: 16,
+    marginVertical: 8,
+  },
+  label: {
+    fontSize: 18,
+    color: 'black',
+    marginBottom: 2,
+  },
+  input: {
+    fontSize: 16,
+    borderWidth: 1,
+    borderRadius: 3,
     backgroundColor: 'white',
+    textAlignVertical: 'top',
+    padding: 10,
   },
-  name: {
-    fontSize: 20,
+  inputName: { },
+  inputDescription: {
+    height: 100,
   },
-  description: {
-    fontSize: 12,
+  button: {
+    marginTop: 5,
   },
 });
 
 // DICTIONARY
 const namePlaceholder = 'Name';
-const descriptionPlaceholder = 'Description';
+const descriptionPlaceholder = 'Work on this and that...';
+const nameLabel = 'Name';
+const descriptionLabel = 'Description';
 
 const SubjectForm = ({
   name, description, onChangeName, onChangeDescription, onSubmit, canSubmit,
 }) => {
   const nameInput = (
-    <TextInput
-      style={styles.name}
-      value={name}
-      placeholder={namePlaceholder}
-      onChangeText={onChangeName}
-    />
+    <View style={styles.formItem}>
+      <Text style={styles.label}>
+        {nameLabel}
+      </Text>
+      <TextInput
+        style={[styles.input, styles.inputName]}
+        value={name}
+        placeholder={namePlaceholder}
+        onChangeText={onChangeName}
+      />
+    </View>
   );
 
   const descriptionInput = (
-    <TextInput
-      style={styles.description}
-      value={description}
-      placeholder={descriptionPlaceholder}
-      onChangeText={onChangeDescription}
-    />
+    <View style={styles.formItem}>
+      <Text style={styles.label}>
+        {descriptionLabel}
+      </Text>
+      <TextInput
+        style={[styles.input, styles.inputDescription]}
+        value={description}
+        placeholder={descriptionPlaceholder}
+        onChangeText={onChangeDescription}
+        multiline
+      />
+    </View>
   );
 
   const submitText = 'Save'; // DICTIONARY
   const submitButton = (
-    <Button
-      title={submitText}
-      onPress={onSubmit}
-      disabled={!canSubmit}
-    />
+    <View style={[styles.formItem, styles.button]}>
+      <Button
+        title={submitText}
+        onPress={onSubmit}
+        disabled={!canSubmit}
+      />
+    </View>
   );
 
   return (
