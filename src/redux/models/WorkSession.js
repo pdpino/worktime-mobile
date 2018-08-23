@@ -3,7 +3,7 @@ import { unixToDate, unixToHour } from '../../shared/utils';
 
 class WorkSession extends Model {
   static start(timestamp, subjectId) {
-    const { WorkSession } = this.session; // eslint-disable-line no-shadow
+    const { Subject, WorkSession } = this.session; // eslint-disable-line no-shadow
     const props = {
       date: unixToDate(timestamp),
       timestampStart: timestamp,
@@ -16,6 +16,7 @@ class WorkSession extends Model {
     };
 
     const workSession = WorkSession.create(props);
+    Subject.withId(subjectId).update({ workSession });
     workSession.openSprint('playing');
     return workSession;
   }
@@ -23,13 +24,13 @@ class WorkSession extends Model {
   resume(timestamp) {
     this.closeCurrentSprint(timestamp);
     this.openSprint('playing');
-    return this.update({ status: 'playing' });
+    this.update({ status: 'playing' });
   }
 
   pause(timestamp) {
     this.closeCurrentSprint(timestamp);
     this.openSprint('paused');
-    return this.update({
+    this.update({
       status: 'paused',
       nPauses: this.nPauses + 1,
     });
@@ -37,7 +38,7 @@ class WorkSession extends Model {
 
   stop(timestamp) {
     this.closeCurrentSprint(timestamp);
-    return this.update({ status: 'stopped' });
+    this.update({ status: 'stopped' });
   }
 
   openSprint(status) {
@@ -54,7 +55,7 @@ class WorkSession extends Model {
     const lastSprint = this.sprintSet.last();
     lastSprint.close(duration);
     const addTimeEffective = lastSprint.status === 'playing' ? duration : 0;
-    return this.update({
+    this.update({
       timestampEnd: timestamp,
       timeTotal: this.timeTotal + duration,
       timeEffective: this.timeEffective + addTimeEffective,
