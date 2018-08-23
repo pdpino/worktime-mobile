@@ -78,7 +78,7 @@ const Root = createDrawerNavigator({
   },
 },
 {
-  initialRouteName: 'subjects',
+  initialRouteName: 'work',
 });
 
 export default Root;
