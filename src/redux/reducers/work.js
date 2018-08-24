@@ -20,6 +20,15 @@ const work = (state = defaultState, action) => {
         ...state,
         selectedSubjectId: action.payload.selectedSubjectId,
       };
+    case 'DELETE_SUBJECT':
+      if (action.payload.id === state.selectedSubjectId) {
+        return {
+          ...state,
+          selectedSubjectId: -1,
+          runningSessionId: -1,
+        };
+      }
+      return state;
     default:
       return state;
   }
