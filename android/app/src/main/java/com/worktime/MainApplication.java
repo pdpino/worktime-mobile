@@ -1,4 +1,4 @@
-package com.worktimemobile;
+package com.worktime;
 
 import android.app.Application;
 
