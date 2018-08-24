@@ -7,7 +7,8 @@
     "android": "react-native run-android",
     "log": "react-native log-android",
     "test": "jest",
-    "release": "react-native run-android --variant=release"
+    "release": "react-native run-android --variant=release",
+    "build": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
     "@redux-offline/redux-offline": "^2.4.0",
