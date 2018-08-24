@@ -43,6 +43,18 @@ const styles = StyleSheet.create({
 const noWorkSessions = 'No sessions';
 const titleText = 'Work Sessions';
 
+const status2Text = {
+  playing: 'Playing',
+  paused: 'Paused',
+  stopped: 'Stopped',
+}; // DICTIONARY
+
+const status2Color = {
+  playing: 'green',
+  paused: 'orange',
+  stopped: 'red',
+}; // COLORS
+
 const WorkSessionsList = ({ workSessions, listProps }) => {
   const title = (
     <Text style={styles.title}>
@@ -54,6 +66,26 @@ const WorkSessionsList = ({ workSessions, listProps }) => {
   const renderWorkSession = ({ item }) => {
     // DICTIONARY (text)
     const { nPauses, timeTotal, timeEffective } = item;
+
+    const times = (
+      <View>
+        <Text style={styles.text}>
+          {`Total: ${prettyDuration(timeTotal)}`}
+        </Text>
+        <Text style={styles.text}>
+          {`Effective: ${prettyDuration(timeEffective)}`}
+        </Text>
+        <Text style={styles.text}>
+          {`${nPauses || 0} pauses`}
+        </Text>
+      </View>
+    );
+
+    const status = (
+      <Text style={[styles.text, { color: status2Color[item.status] }]}>
+        {status2Text[item.status]}
+      </Text>
+    );
 
     return (
       <View style={styles.item}>
@@ -68,15 +100,7 @@ const WorkSessionsList = ({ workSessions, listProps }) => {
           </Text>
         </View>
         <View style={styles.subitem}>
-          <Text style={styles.text}>
-            {`Total: ${prettyDuration(timeTotal)}`}
-          </Text>
-          <Text style={styles.text}>
-            {`Effective: ${prettyDuration(timeEffective)}`}
-          </Text>
-          <Text style={styles.text}>
-            {`${nPauses || 0} pauses`}
-          </Text>
+          {item.status !== 'stopped' ? status : times}
         </View>
       </View>
     );

@@ -25,6 +25,7 @@ class WorkSession extends Model {
     this.closeCurrentSprint(timestamp);
     this.openSprint('playing');
     this.update({ status: 'playing' });
+    this.updateSubject();
   }
 
   pause(timestamp) {
@@ -34,11 +35,13 @@ class WorkSession extends Model {
       status: 'paused',
       nPauses: this.nPauses + 1,
     });
+    this.updateSubject();
   }
 
   stop(timestamp) {
     this.closeCurrentSprint(timestamp);
     this.update({ status: 'stopped' });
+    this.updateSubject();
   }
 
   openSprint(status) {
@@ -60,6 +63,10 @@ class WorkSession extends Model {
       timeTotal: this.timeTotal + duration,
       timeEffective: this.timeEffective + addTimeEffective,
     });
+  }
+
+  updateSubject() {
+    this.subject.update({ workSession: this });
   }
 
   isPlaying() {
