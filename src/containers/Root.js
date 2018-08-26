@@ -5,6 +5,7 @@ import SubjectsList from './subjects/list';
 import SubjectForm from './subjects/form';
 import SubjectShow from './subjects/show';
 import WorkPlayer from './work/player';
+import SettingsMenu from './settings/menu';
 
 const headerOptions = {
   headerStyle: {
@@ -63,6 +64,23 @@ const WorkStack = createStackNavigator({
   },
 });
 
+const SettingsStack = createStackNavigator({
+  menu: {
+    screen: SettingsMenu,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Settings', // DICTIONARY
+      headerLeft: <HamburgerIcon onPress={() => navigation.toggleDrawer()} />,
+    }),
+  },
+},
+{
+  initialRouteName: 'menu',
+  navigationOptions: {
+    ...headerOptions,
+  },
+});
+
+
 const Root = createDrawerNavigator({
   subjects: {
     screen: SubjectsStack,
@@ -74,6 +92,12 @@ const Root = createDrawerNavigator({
     screen: WorkStack,
     navigationOptions: () => ({
       drawerLabel: 'Work', // DICTIONARY
+    }),
+  },
+  settings: {
+    screen: SettingsStack,
+    navigationOptions: () => ({
+      drawerLabel: 'Settings', // DICTIONARY
     }),
   },
 },
