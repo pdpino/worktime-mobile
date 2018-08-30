@@ -5,10 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Upcoming
-### Added
+### Add
 * Icon and buttons in notifications
+* Option to enable/disable ongoing notification
+* Option to export data to file
 
 ## Unreleased
+
+## 0.1.0 - 2018-08-30
 ### Added
 * Settings menu, with version number
 * Notification to show the user if is playing or paused. Display only title
