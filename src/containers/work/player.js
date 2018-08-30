@@ -6,15 +6,14 @@ import {
   start, resume, pause, stop, selectWorkSubject,
 } from '../../redux/actions';
 import {
-  subjectsSelector, runningSessionSelector, selectedSubjectIdSelector,
+  subjectsSelector, runningSessionSelector, selectedSubjectSelector,
 } from '../../redux/selectors';
+import Notifications from '../../services/notifications';
 import { getTimestamp } from '../../shared/utils';
 
 class WorkPlayer extends React.Component {
   constructor(props) {
     super(props);
-
-    // TODO: allow going back only if stopped
 
     this.handlePressPlayPause = this.handlePressPlayPause.bind(this);
     this.handlePressStop = this.handlePressStop.bind(this);
@@ -28,8 +27,8 @@ class WorkPlayer extends React.Component {
   }
 
   handlePressPlayPause() {
-    const { runningSession, selectedSubjectId } = this.props;
-    if (selectedSubjectId === -1) {
+    const { runningSession, selectedSubject } = this.props;
+    if (!selectedSubject) {
       return;
     }
 
@@ -37,21 +36,25 @@ class WorkPlayer extends React.Component {
     const timestamp = getTimestamp();
 
     if (status === 'stopped') {
-      this.props.start(timestamp, selectedSubjectId);
+      this.props.start(timestamp, selectedSubject.id);
+      Notifications.start(selectedSubject.name);
     } else if (status === 'playing') {
       this.props.pause(timestamp, runningSession.id);
+      Notifications.pause(selectedSubject.name);
     } else if (status === 'paused') {
       this.props.resume(timestamp, runningSession.id);
+      Notifications.start(selectedSubject.name);
     }
   }
 
   handlePressStop() {
-    if (this.props.selectedSubjectId === -1) {
+    if (!this.props.selectedSubject) {
       return;
     }
 
     const { runningSession } = this.props;
     this.props.stop(getTimestamp(), runningSession.id);
+    Notifications.cancelAll();
   }
 
   handleSelectSubject(selectedSubjectId) {
@@ -60,7 +63,8 @@ class WorkPlayer extends React.Component {
 
   render() {
     const status = this.getStatus();
-    const { subjects, selectedSubjectId } = this.props;
+    const { subjects, selectedSubject } = this.props;
+    const selectedSubjectId = selectedSubject ? selectedSubject.id : -1;
 
     return (
       <WorkPlayerComponent
@@ -86,7 +90,7 @@ class WorkPlayer extends React.Component {
 const mapStateToProps = state => ({
   subjects: subjectsSelector(state),
   runningSession: runningSessionSelector(state),
-  selectedSubjectId: selectedSubjectIdSelector(state),
+  selectedSubject: selectedSubjectSelector(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
