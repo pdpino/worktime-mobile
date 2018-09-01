@@ -1,13 +1,12 @@
 import PushNotification from 'react-native-push-notification';
 
 class Notifications {
-  static sendNotification(title) {
+  static sendNotification(title, icon) {
     PushNotification.localNotification({
       id: '0',
       title,
       message: 'Tap to go to worktime',
-      // bigText: 'My big text that will be shown when notification is expanded',
-      // subText: 'This is a subText',
+      largeIcon: icon,
       color: 'red',
       autoCancel: false,
       vibrate: false,
@@ -26,11 +25,11 @@ class Notifications {
   }
 
   static start(subjectName) {
-    this.sendNotification(`${subjectName} playing`); // DICTIONARY
+    this.sendNotification(`${subjectName} playing`, 'play'); // DICTIONARY
   }
 
   static pause(subjectName) {
-    this.sendNotification(`${subjectName} paused`); // DICTIONARY
+    this.sendNotification(`${subjectName} paused`, 'pause'); // DICTIONARY
   }
 
   static cancelAll() {
