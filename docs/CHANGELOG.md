@@ -6,11 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Upcoming
 ### Add
-* Icon and buttons in notifications
+* Buttons in notifications
 * Option to enable/disable ongoing notification
 * Option to export data to file
 
 ## Unreleased
+### Added
+* Added play and pause icons to notifications
 
 ## 0.1.0 - 2018-08-30
 ### Added
