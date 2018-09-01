@@ -7,6 +7,7 @@ class Notifications {
       title,
       message: 'Tap to go to worktime',
       largeIcon: icon,
+      smallIcon: icon,
       color: 'red',
       autoCancel: false,
       vibrate: false,
