@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import RootContainer from './src/containers/Root';
+import RootContainer from './src/screens/Root';
 import store from './src/redux/store';
 import Notifications from './src/services/notifications';
 
