@@ -2,6 +2,7 @@
 
 
 ## New Features
+* Option to enable/disable ongoing notification
 * Button to go from subjects-list directly to work-player
   - what happens if something is already playing?
 * View with sprints (for each work session)

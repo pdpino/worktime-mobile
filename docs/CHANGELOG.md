@@ -6,12 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Upcoming
 ### Add
-* Buttons in notifications
-* Option to enable/disable ongoing notification
+* Basic dashboard view
+* Total time in subject-show view
 * Option to export data to file
 
 ## Unreleased
+
+
+## 0.2.0 - 2018-09-14
 ### Added
+* Buttons in notifications to resume, pause and stop
 * Added play and pause icons to notifications
 
 ## 0.1.0 - 2018-08-30
