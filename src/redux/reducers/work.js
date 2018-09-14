@@ -10,7 +10,7 @@ const work = (state = defaultState, action) => {
         ...state,
         runningSessionId: action.payload.runningSessionId,
       };
-    case 'REMOVE_RUNNING_SESSION_ID':
+    case 'STOP':
       return {
         ...state,
         runningSessionId: -1,

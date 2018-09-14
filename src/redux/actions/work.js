@@ -39,16 +39,13 @@ export const pause = (timestamp, runningSessionId) => ({
   },
 });
 
-export const stop = (timestamp, runningSessionId) => (dispatch) => {
-  dispatch({
-    type: 'STOP',
-    payload: {
-      timestamp,
-      runningSessionId,
-    },
-  });
-  return dispatch({ type: 'REMOVE_RUNNING_SESSION_ID' });
-};
+export const stop = (timestamp, runningSessionId) => ({
+  type: 'STOP',
+  payload: {
+    timestamp,
+    runningSessionId,
+  },
+});
 
 export const selectWorkSubject = selectedSubjectId => ({
   type: 'SELECT_WORK_SUBJECT',
