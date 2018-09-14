@@ -8,8 +8,6 @@ import {
 import {
   subjectsSelector, runningSessionSelector, selectedSubjectSelector,
 } from '../../redux/selectors';
-import Notifications from '../../services/notifications';
-import { getTimestamp } from '../../shared/utils';
 
 class WorkPlayer extends React.Component {
   constructor(props) {
@@ -27,34 +25,26 @@ class WorkPlayer extends React.Component {
   }
 
   handlePressPlayPause() {
-    const { runningSession, selectedSubject } = this.props;
+    const { selectedSubject } = this.props;
     if (!selectedSubject) {
       return;
     }
 
     const status = this.getStatus();
-    const timestamp = getTimestamp();
 
     if (status === 'stopped') {
-      this.props.start(timestamp, selectedSubject.id);
-      Notifications.start(selectedSubject.name);
+      this.props.start(selectedSubject);
     } else if (status === 'playing') {
-      this.props.pause(timestamp, runningSession.id);
-      Notifications.pause(selectedSubject.name);
+      this.props.pause();
     } else if (status === 'paused') {
-      this.props.resume(timestamp, runningSession.id);
-      Notifications.start(selectedSubject.name);
+      this.props.resume();
     }
   }
 
   handlePressStop() {
-    if (!this.props.selectedSubject) {
-      return;
+    if (this.getStatus() !== 'stopped') {
+      this.props.stop();
     }
-
-    const { runningSession } = this.props;
-    this.props.stop(getTimestamp(), runningSession.id);
-    Notifications.cancelAll();
   }
 
   handleSelectSubject(selectedSubjectId) {

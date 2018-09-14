@@ -1,19 +1,16 @@
-import orm from '../models/orm';
+import { runningSessionIdSelector, lastWorkSessionSelector } from '../selectors';
+import { getTimestamp } from '../../shared/utils';
 
-export const start = (timestamp, subjectId) => (dispatch, getState) => {
+export const start = subject => (dispatch, getState) => {
   dispatch({
-    type: 'START',
+    type: 'PLAYER/START',
     payload: {
-      timestamp,
-      subjectId,
+      timestamp: getTimestamp(),
+      subject,
     },
   });
 
-  const state = getState();
-  const session = orm.session(state.entities);
-  const { WorkSession } = session;
-
-  const runningSession = WorkSession.all().last();
+  const runningSession = lastWorkSessionSelector(getState());
 
   return dispatch({
     type: 'SAVE_RUNNING_SESSION_ID',
@@ -23,33 +20,25 @@ export const start = (timestamp, subjectId) => (dispatch, getState) => {
   });
 };
 
-export const resume = (timestamp, runningSessionId) => ({
-  type: 'RESUME',
-  payload: {
-    timestamp,
-    runningSessionId,
-  },
-});
-
-export const pause = (timestamp, runningSessionId) => ({
-  type: 'PAUSE',
-  payload: {
-    timestamp,
-    runningSessionId,
-  },
-});
-
-export const stop = (timestamp, runningSessionId) => ({
-  type: 'STOP',
-  payload: {
-    timestamp,
-    runningSessionId,
-  },
-});
-
 export const selectWorkSubject = selectedSubjectId => ({
   type: 'SELECT_WORK_SUBJECT',
   payload: {
     selectedSubjectId,
   },
 });
+
+const createActionForRunningSession = type => () => (dispatch, getState) => {
+  const runningSessionId = runningSessionIdSelector(getState());
+  const timestamp = getTimestamp();
+  return dispatch({
+    type,
+    payload: {
+      timestamp,
+      runningSessionId,
+    },
+  });
+};
+
+export const resume = createActionForRunningSession('PLAYER/RESUME');
+export const pause = createActionForRunningSession('PLAYER/PAUSE');
+export const stop = createActionForRunningSession('PLAYER/STOP');

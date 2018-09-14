@@ -10,7 +10,7 @@ const work = (state = defaultState, action) => {
         ...state,
         runningSessionId: action.payload.runningSessionId,
       };
-    case 'STOP':
+    case 'PLAYER/STOP':
       return {
         ...state,
         runningSessionId: -1,

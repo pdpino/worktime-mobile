@@ -1,6 +1,6 @@
 import { createOrmSelector, ormSessionSelector } from './orm';
 
-const runningSessionIdSelector = state => state.work.runningSessionId;
+export const runningSessionIdSelector = state => state.work.runningSessionId;
 const selectedSubjectIdSelector = state => state.work.selectedSubjectId;
 
 export const runningSessionSelector = createOrmSelector(
