@@ -1,6 +1,7 @@
 import { createDrawerNavigator } from 'react-navigation';
 import SubjectsStack from './subjects';
 import WorkStack from './work';
+import DashboardStack from './dashboard';
 import SettingsStack from './settings';
 
 const Root = createDrawerNavigator({
@@ -16,6 +17,12 @@ const Root = createDrawerNavigator({
       drawerLabel: 'Work', // DICTIONARY
     }),
   },
+  dashboard: {
+    screen: DashboardStack,
+    navigationOptions: () => ({
+      drawerLabel: 'Dashboard', // DICTIONARY
+    }),
+  },
   settings: {
     screen: SettingsStack,
     navigationOptions: () => ({
@@ -24,7 +31,7 @@ const Root = createDrawerNavigator({
   },
 },
 {
-  initialRouteName: 'work',
+  initialRouteName: 'dashboard',
 });
 
 export default Root;
