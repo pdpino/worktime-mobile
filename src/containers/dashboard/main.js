@@ -42,7 +42,7 @@ class Dashboard extends React.Component {
     let addedTotal = 0;
     let addedEffective = 0;
 
-    const subjectsTimes = subjects.map((subject) => {
+    const subjectsSummaries = subjects.map((subject) => {
       const { name, id } = subject;
       if (!selectedSubjectsIds[subject.id]) {
         return {
@@ -68,7 +68,7 @@ class Dashboard extends React.Component {
     }).sort((subj1, subj2) => subj2.timeTotal - subj1.timeTotal);
 
     return {
-      subjectsTimes,
+      subjectsSummaries,
       timeTotal: addedTotal,
       timeEffective: addedEffective,
     };
@@ -77,7 +77,7 @@ class Dashboard extends React.Component {
   render() {
     const { initialDate, endingDate, selectedSubjectsIds } = this.state;
     const {
-      subjectsTimes,
+      subjectsSummaries,
       timeTotal,
       timeEffective,
     } = this.sumTimes();
@@ -98,7 +98,7 @@ class Dashboard extends React.Component {
           onChangeEndingDate={this.handleChangeEndingDate}
         />
         <SubjectsFilterComponent
-          subjects={subjectsTimes}
+          subjectsSummaries={subjectsSummaries}
           selectedSubjectsIds={selectedSubjectsIds}
           onSelectSubject={this.handleSelectSubject}
         />

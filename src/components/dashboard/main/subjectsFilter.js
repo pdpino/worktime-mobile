@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const SubjectsFilter = ({ subjects, selectedSubjectsIds, onSelectSubject }) => {
+const SubjectsFilter = ({ subjectsSummaries, selectedSubjectsIds, onSelectSubject }) => {
   const renderItem = ({ item }) => {
     const timeTotal = prettyDuration(item.timeTotal);
     const timeEffective = prettyDuration(item.timeEffective);
@@ -30,7 +30,7 @@ const SubjectsFilter = ({ subjects, selectedSubjectsIds, onSelectSubject }) => {
   return (
     <View style={styles.listContainer}>
       <FlatList
-        data={subjects}
+        data={subjectsSummaries}
         keyExtractor={item => item.id.toString()}
         renderItem={renderItem}
         extraData={selectedSubjectsIds}
