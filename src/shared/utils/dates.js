@@ -84,3 +84,39 @@ export function prettyDuration(totalSeconds) {
 export function isBetween(initialDate, endingDate, dateString) {
   return moment(dateString, 'L').isBetween(initialDate, endingDate, 'day', '[]');
 }
+
+function decidePluralLabel(singular, plural) {
+  return (amount) => {
+    const label = amount > 1 || amount === 0 ? plural : singular;
+    return `${amount} ${label}`;
+  };
+}
+
+// DICTIONARY
+export const prettyDays = decidePluralLabel('day', 'days');
+const prettyWeeks = decidePluralLabel('week', 'weeks');
+const prettyMonths = decidePluralLabel('month', 'months');
+const prettyYears = decidePluralLabel('year', 'years');
+
+function daysToInterval(nDays, amount1, amount2, pretty1, pretty2) {
+  const diff1 = Math.floor(nDays / amount1);
+  const diff2 = Math.floor((nDays % amount1) / amount2);
+  if (diff2 > 0) {
+    return `${pretty1(diff1)}, ${pretty2(diff2)}`;
+  }
+  return pretty1(diff1);
+}
+
+export function prettyDaysSpan(initialDate, endingDate) {
+  const diffDays = endingDate.diff(initialDate, 'days') + 1; // +1: inclusive limits
+
+  // DICTIONARY
+  if (diffDays < 7) {
+    return prettyDays(diffDays);
+  } if (diffDays < 30) {
+    return daysToInterval(diffDays, 7, 1, prettyWeeks, prettyDays);
+  } if (diffDays < 365) {
+    return daysToInterval(diffDays, 30, 7, prettyMonths, prettyWeeks);
+  }
+  return daysToInterval(diffDays, 365, 30, prettyYears, prettyWeeks);
+}

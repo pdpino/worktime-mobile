@@ -5,6 +5,7 @@ import moment from 'moment'; // REVIEW: try to hide moment
 import { SummaryComponent, SubjectsFilterComponent } from '../../components/dashboard/main';
 import { subjectsSelector } from '../../redux/selectors';
 import { DateRangeFilter } from '../../shared/UI/pickers';
+import { smartDivision } from '../../shared/utils';
 
 class Dashboard extends React.Component {
   static getAllSubjectsSelected(subjects) {
@@ -57,6 +58,8 @@ class Dashboard extends React.Component {
     let addedTotal = 0;
     let addedEffective = 0;
 
+    const daysWorked = {};
+
     const subjectsSummaries = subjects.map((subject) => {
       const { name, id } = subject;
       if (!selectedSubjectsIds[subject.id]) {
@@ -70,7 +73,7 @@ class Dashboard extends React.Component {
       const {
         timeTotal: subjectTotal,
         timeEffective: subjectEffective,
-      } = subject.sumTimes(initialDate, endingDate);
+      } = subject.sumTimes(initialDate, endingDate, daysWorked);
       addedTotal += subjectTotal;
       addedEffective += subjectEffective;
 
@@ -86,6 +89,7 @@ class Dashboard extends React.Component {
       subjectsSummaries,
       timeTotal: addedTotal,
       timeEffective: addedEffective,
+      daysWorked,
     };
   }
 
@@ -95,9 +99,12 @@ class Dashboard extends React.Component {
       subjectsSummaries,
       timeTotal,
       timeEffective,
+      daysWorked,
     } = this.sumTimes();
 
-    const effectivePercentage = timeTotal > 0 ? (timeEffective / timeTotal * 100).toFixed(1) : 0;
+    const effectivePercentage = smartDivision(timeEffective, timeTotal, true);
+    const nDaysWorked = Object.keys(daysWorked).length;
+    const averagePerDay = smartDivision(timeTotal, nDaysWorked, false);
 
     return (
       <View style={{ flex: 1 }}>
@@ -105,6 +112,10 @@ class Dashboard extends React.Component {
           timeTotal={timeTotal}
           timeEffective={timeEffective}
           effectivePercentage={effectivePercentage}
+          initialDate={initialDate}
+          endingDate={endingDate}
+          nDaysWorked={nDaysWorked}
+          averagePerDay={averagePerDay}
         />
         <DateRangeFilter
           initialDate={initialDate}
