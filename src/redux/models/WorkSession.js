@@ -1,11 +1,11 @@
 import { fk, attr, Model } from 'redux-orm';
-import { unixToDate, unixToHour } from '../../shared/utils';
+import { unixToDateString, unixToHour } from '../../shared/utils';
 
 class WorkSession extends Model {
   static start(timestamp, subjectId) {
     const { Subject, WorkSession } = this.session; // eslint-disable-line no-shadow
     const props = {
-      date: unixToDate(timestamp),
+      date: unixToDateString(timestamp),
       timestampStart: timestamp,
       timestampEnd: timestamp,
       timeTotal: 0,

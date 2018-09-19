@@ -23,3 +23,4 @@
 * Dictionary for colors (?)
 
 ## Fixes
+* Rename 'date' to 'dateString' in WorkSession attributes, and change format from 'L' to 'YYYY-MM-DD'. You need to add a reducer to remember the store version saved in every app, and an upgrade handler (to update the store when needed)

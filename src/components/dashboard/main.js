@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { prettyDate, prettyDuration } from '../../shared/utils';
+import moment from 'moment'; // TODO: hide moment
 import { CalendarPicker } from '../../shared/UI/pickers';
+import { prettyDuration } from '../../shared/utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,11 +13,15 @@ const styles = StyleSheet.create({
   },
 });
 
+// REFACTOR: date range selector as a separate component
+
+// DICTIONARY
 const timeTotalLabel = 'Total';
 const timeEffectiveLabel = 'Effective';
 
 const Dashboard = ({
   timeTotal, timeEffective, initialDate, endingDate,
+  onChangeInitialDate, onChangeEndingDate,
 }) => {
   const effectivePercentage = timeTotal > 0 ? (timeEffective / timeTotal * 100).toFixed(1) : 0;
 
@@ -33,10 +38,25 @@ const Dashboard = ({
       </Text>
       <View>
         <Text>
-          {`From ${prettyDate(initialDate)} to ${prettyDate(endingDate)}`}
+          From
         </Text>
+        <CalendarPicker
+          date={initialDate}
+          maxDate={endingDate}
+          onDayPress={day => onChangeInitialDate(day.dateString)}
+        />
       </View>
-      <CalendarPicker />
+      <View>
+        <Text>
+          To
+        </Text>
+        <CalendarPicker
+          date={endingDate}
+          minDate={initialDate}
+          maxDate={moment()}
+          onDayPress={day => onChangeEndingDate(day.dateString)}
+        />
+      </View>
     </View>
   );
 };

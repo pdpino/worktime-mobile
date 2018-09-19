@@ -1,10 +1,10 @@
 import {
-  getTimestamp, unixToDate, unixToHour, daysAgo, prettyDate, prettyDuration,
+  getTimestamp, unixToDateString, unixToHour, daysAgo, prettyDate, prettyDuration,
 } from './dates';
 
 export {
   getTimestamp,
-  unixToDate,
+  unixToDateString,
   unixToHour,
   daysAgo,
   prettyDate,

@@ -1,10 +1,16 @@
 import moment from 'moment';
 
+// Convention for date's names
+// dateString: date as plain strings, in format YYYY-MM-DD
+// date: moment object (except in WorkSession, which are strings)
+// timestamp: unix timestamp
+// prettyDate: date showable to the user, e.g. Today, Yesterday, 4 of September
+
 export function getTimestamp() {
   return Date.now() / 1000;
 }
 
-export function unixToDate(timestamp) {
+export function unixToDateString(timestamp) {
   const date = moment.unix(timestamp);
   return date.format('L');
 }
@@ -48,9 +54,9 @@ export function prettyDate(date) {
   } if (diffDays === 1) {
     return 'Yesterday';
   } if (diffYears === 0) {
-    return parsedDate.format('dddd DD MMMM');
+    return parsedDate.format('ddd D MMM');
   }
-  return parsedDate.format('dddd DD MMMM YYYY');
+  return parsedDate.format('ddd D MMM YYYY');
 }
 
 export function prettyDuration(totalSeconds) {
