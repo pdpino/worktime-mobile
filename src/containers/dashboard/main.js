@@ -1,40 +1,24 @@
 import React from 'react';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
-import moment from 'moment';
-import DashboardComponent from '../../components/dashboard/main';
-import { workSessionsSelector } from '../../redux/selectors';
+import moment from 'moment'; // REVIEW: try to hide moment
+import { SummaryComponent, SubjectsFilterComponent } from '../../components/dashboard/main';
+import { subjectsSelector } from '../../redux/selectors';
+import { DateRangeFilter } from '../../shared/UI/pickers';
 
 class Dashboard extends React.Component {
-  static sumTimes(workSessions) {
-    let total = 0;
-    let effective = 0;
-    workSessions.forEach((workSession) => {
-      total += workSession.timeTotal;
-      effective += workSession.timeEffective;
-    });
-
-    return {
-      total,
-      effective,
-    };
-  }
-
   constructor(props) {
     super(props);
 
     this.state = {
       initialDate: moment(),
       endingDate: moment(),
+      selectedSubjectsIds: {},
     };
 
     this.handleChangeInitialDate = this.handleChangeDate('initialDate');
     this.handleChangeEndingDate = this.handleChangeDate('endingDate');
-  }
-
-  filterWorkSessions() {
-    const { initialDate, endingDate } = this.state;
-    return this.props.workSessions.filter(workSession => moment(workSession.date, 'L')
-      .isBetween(initialDate, endingDate, 'day', '[]'));
+    this.handleSelectSubject = this.handleSelectSubject.bind(this);
   }
 
   handleChangeDate(key) {
@@ -43,26 +27,88 @@ class Dashboard extends React.Component {
     };
   }
 
+  handleSelectSubject(subjectId) {
+    this.setState(state => ({
+      selectedSubjectsIds: {
+        ...state.selectedSubjectsIds,
+        [subjectId]: !state.selectedSubjectsIds[subjectId],
+      },
+    }));
+  }
+
+  sumTimes() {
+    const { subjects } = this.props;
+    const { initialDate, endingDate, selectedSubjectsIds } = this.state;
+    let addedTotal = 0;
+    let addedEffective = 0;
+
+    const subjectsTimes = subjects.map((subject) => {
+      const { name, id } = subject;
+      if (!selectedSubjectsIds[subject.id]) {
+        return {
+          id,
+          name,
+          timeTotal: 0,
+          timeEffective: 0,
+        };
+      }
+      const {
+        timeTotal: subjectTotal,
+        timeEffective: subjectEffective,
+      } = subject.sumTimes(initialDate, endingDate);
+      addedTotal += subjectTotal;
+      addedEffective += subjectEffective;
+
+      return {
+        id,
+        name,
+        timeTotal: subjectTotal,
+        timeEffective: subjectEffective,
+      };
+    }).sort((subj1, subj2) => subj2.timeTotal - subj1.timeTotal);
+
+    return {
+      subjectsTimes,
+      timeTotal: addedTotal,
+      timeEffective: addedEffective,
+    };
+  }
+
   render() {
-    const { initialDate, endingDate } = this.state;
-    const workSessions = this.filterWorkSessions();
-    const times = Dashboard.sumTimes(workSessions);
+    const { initialDate, endingDate, selectedSubjectsIds } = this.state;
+    const {
+      subjectsTimes,
+      timeTotal,
+      timeEffective,
+    } = this.sumTimes();
+
+    const effectivePercentage = timeTotal > 0 ? (timeEffective / timeTotal * 100).toFixed(1) : 0;
 
     return (
-      <DashboardComponent
-        timeTotal={times.total}
-        timeEffective={times.effective}
-        initialDate={initialDate}
-        endingDate={endingDate}
-        onChangeInitialDate={this.handleChangeInitialDate}
-        onChangeEndingDate={this.handleChangeEndingDate}
-      />
+      <View style={{ flex: 1 }}>
+        <SummaryComponent
+          timeTotal={timeTotal}
+          timeEffective={timeEffective}
+          effectivePercentage={effectivePercentage}
+        />
+        <DateRangeFilter
+          initialDate={initialDate}
+          endingDate={endingDate}
+          onChangeInitialDate={this.handleChangeInitialDate}
+          onChangeEndingDate={this.handleChangeEndingDate}
+        />
+        <SubjectsFilterComponent
+          subjects={subjectsTimes}
+          selectedSubjectsIds={selectedSubjectsIds}
+          onSelectSubject={this.handleSelectSubject}
+        />
+      </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  workSessions: workSessionsSelector(state),
+  subjects: subjectsSelector(state),
 });
 
 export default connect(mapStateToProps)(Dashboard);

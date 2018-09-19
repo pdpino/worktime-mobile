@@ -21,10 +21,9 @@ export function unixToHour(timestamp) {
 }
 
 export function daysAgo(date) {
-  // REVIEW: delete this function if is not used
   const parsedDate = moment(date, 'L');
   if (!parsedDate.isValid()) {
-    return 0;
+    return 'Never'; // DICTIONARY
   }
 
   const diffDays = moment().diff(parsedDate, 'days');
@@ -80,4 +79,8 @@ export function prettyDuration(totalSeconds) {
   }
 
   return duration;
+}
+
+export function isBetween(initialDate, endingDate, dateString) {
+  return moment(dateString, 'L').isBetween(initialDate, endingDate, 'day', '[]');
 }

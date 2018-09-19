@@ -1,5 +1,7 @@
 import CalendarPicker from './calendar';
+import DateRangeFilter from './dateRangeFilter';
 
 export {
-  CalendarPicker, // eslint-disable-line import/prefer-default-export
+  CalendarPicker,
+  DateRangeFilter,
 };

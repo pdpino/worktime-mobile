@@ -1,5 +1,5 @@
 import {
-  getTimestamp, unixToDateString, unixToHour, daysAgo, prettyDate, prettyDuration,
+  getTimestamp, unixToDateString, unixToHour, daysAgo, prettyDate, prettyDuration, isBetween,
 } from './dates';
 
 export {
@@ -9,4 +9,5 @@ export {
   daysAgo,
   prettyDate,
   prettyDuration,
+  isBetween,
 };
