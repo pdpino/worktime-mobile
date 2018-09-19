@@ -7,18 +7,27 @@ import { subjectsSelector } from '../../redux/selectors';
 import { DateRangeFilter } from '../../shared/UI/pickers';
 
 class Dashboard extends React.Component {
+  static getAllSubjectsSelected(subjects) {
+    const selectedSubjectsIds = {};
+    subjects.forEach((subject) => {
+      selectedSubjectsIds[subject.id] = true;
+    });
+    return selectedSubjectsIds;
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
       initialDate: moment(),
       endingDate: moment(),
-      selectedSubjectsIds: {},
+      selectedSubjectsIds: Dashboard.getAllSubjectsSelected(this.props.subjects),
     };
 
     this.handleChangeInitialDate = this.handleChangeDate('initialDate');
     this.handleChangeEndingDate = this.handleChangeDate('endingDate');
     this.handleSelectSubject = this.handleSelectSubject.bind(this);
+    this.handleSelectAllSubjects = this.handleSelectAllSubjects.bind(this);
   }
 
   handleChangeDate(key) {
@@ -33,6 +42,12 @@ class Dashboard extends React.Component {
         ...state.selectedSubjectsIds,
         [subjectId]: !state.selectedSubjectsIds[subjectId],
       },
+    }));
+  }
+
+  handleSelectAllSubjects() {
+    this.setState((state, props) => ({
+      selectedSubjectsIds: Dashboard.getAllSubjectsSelected(props.subjects),
     }));
   }
 
@@ -101,6 +116,7 @@ class Dashboard extends React.Component {
           subjectsSummaries={subjectsSummaries}
           selectedSubjectsIds={selectedSubjectsIds}
           onSelectSubject={this.handleSelectSubject}
+          onSelectAllSubjects={this.handleSelectAllSubjects}
         />
       </View>
     );
