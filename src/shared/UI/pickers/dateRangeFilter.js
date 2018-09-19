@@ -7,12 +7,16 @@ const styles = StyleSheet.create({
   container: { },
 });
 
+// DICTIONARY
+const stringFrom = 'From';
+const stringTo = 'To';
+
 const DateRangeFilter = ({
   initialDate, endingDate, onChangeInitialDate, onChangeEndingDate,
 }) => (
   <View style={styles.container}>
     <Text>
-      From
+      {stringFrom}
     </Text>
     <CalendarPicker
       date={initialDate}
@@ -20,7 +24,7 @@ const DateRangeFilter = ({
       onDayPress={day => onChangeInitialDate(day.dateString)}
     />
     <Text>
-      To
+      {stringTo}
     </Text>
     <CalendarPicker
       date={endingDate}

@@ -81,11 +81,11 @@ class WorkSession extends Model {
     return this.status === 'stopped';
   }
 
-  getHourStart() {
+  getPrettyHourStart() {
     return unixToHour(this.timestampStart);
   }
 
-  getHourEnd() {
+  getPrettyHourEnd() {
     return unixToHour(this.timestampEnd);
   }
 }
