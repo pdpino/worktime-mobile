@@ -5,15 +5,21 @@ import thunk from 'redux-thunk';
 import playerMiddleware from './middlewares/player';
 import rootReducer from './reducers';
 
-const store = createStore(
-  rootReducer,
-  compose(
-    applyMiddleware(
-      thunk,
-      playerMiddleware,
-    ),
-    offline(offlineConfig),
-  ),
-);
+const configureStore = (persistCallback = () => {}) => {
+  const config = {
+    ...offlineConfig,
+    persistCallback,
+  };
 
-export default store;
+  const store = createStore(
+    rootReducer,
+    compose(
+      applyMiddleware(thunk, playerMiddleware),
+      offline(config),
+    ),
+  );
+
+  return store;
+};
+
+export default configureStore;
