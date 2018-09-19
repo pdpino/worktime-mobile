@@ -102,7 +102,7 @@ class Dashboard extends React.Component {
       daysWorked,
     } = this.sumTimes();
 
-    const effectivePercentage = smartDivision(timeEffective, timeTotal, true);
+    const effectivePercentage = smartDivision(timeEffective, timeTotal, true, 0);
     const nDaysWorked = Object.keys(daysWorked).length;
     const averagePerDay = smartDivision(timeTotal, nDaysWorked, false);
 

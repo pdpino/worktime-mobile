@@ -15,10 +15,22 @@ const styles = StyleSheet.create({
   title: {
     color: 'black',
   },
-  body: {
-    padding: 10,
+  subContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  box: {
+    flexDirection: 'column',
+    margin: 10,
+    borderWidth: 1,
+    borderRadius: 3,
+    padding: 3,
+  },
+  boxTitle: {
+
   },
   text: {
+    textAlign: 'center',
     color: 'black',
   },
 });
@@ -29,6 +41,7 @@ const timeEffectiveLabel = 'Effective';
 const title = 'Summary';
 const worked = 'worked';
 const perDay = 'per day';
+const periodLabel = 'period';
 
 const Summary = ({
   timeTotal, timeEffective, effectivePercentage,
@@ -36,32 +49,54 @@ const Summary = ({
 }) => {
   const period = prettyDaysSpan(initialDate, endingDate);
 
+  const totalBox = (
+    <View style={styles.box}>
+      <Text style={styles.text}>
+        {prettyDuration(timeTotal)}
+      </Text>
+      <Text style={styles.text}>
+        {timeTotalLabel}
+      </Text>
+    </View>
+  );
+
+  const effectiveBox = (
+    <View style={styles.box}>
+      <Text style={styles.text}>
+        {prettyDuration(timeEffective)}
+      </Text>
+      <Text style={styles.text}>
+        {`${effectivePercentage}%`}
+      </Text>
+      <Text style={styles.text}>
+        {timeEffectiveLabel}
+      </Text>
+    </View>
+  );
+
+  const daysBox = (
+    <View style={styles.box}>
+      <Text style={styles.text}>
+        {`${period} ${periodLabel}`}
+      </Text>
+      <Text style={styles.text}>
+        {`${prettyDays(nDaysWorked)} ${worked}`}
+      </Text>
+      <Text style={styles.text}>
+        {`${prettyDuration(averagePerDay)} ${perDay}`}
+      </Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
         {title}
       </Text>
-      <View style={styles.body}>
-        <Text style={styles.text}>
-          {`${timeTotalLabel} ${prettyDuration(timeTotal)}`}
-        </Text>
-        <Text style={styles.text}>
-          {`${timeEffectiveLabel} ${prettyDuration(timeEffective)}`}
-        </Text>
-        <Text style={styles.text}>
-          {`${effectivePercentage} %`}
-        </Text>
-      </View>
-      <View style={styles.body}>
-        <Text style={styles.text}>
-          {period}
-        </Text>
-        <Text style={styles.text}>
-          {`${prettyDays(nDaysWorked)} ${worked}`}
-        </Text>
-        <Text style={styles.text}>
-          {`${prettyDuration(averagePerDay)} ${perDay}`}
-        </Text>
+      <View style={styles.subContainer}>
+        {totalBox}
+        {effectiveBox}
+        {daysBox}
       </View>
     </View>
   );
