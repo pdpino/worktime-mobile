@@ -84,7 +84,10 @@ class Dashboard extends React.Component {
         timeTotal: subjectTotal,
         timeEffective: subjectEffective,
       };
-    }).sort((subj1, subj2) => subj2.timeTotal - subj1.timeTotal);
+    }).sort((subj1, subj2) => {
+      const onlyOneSelected = !!selectedSubjectsIds[subj2.id] - !!selectedSubjectsIds[subj1.id];
+      return onlyOneSelected || (subj2.timeTotal - subj1.timeTotal);
+    });
 
     return {
       subjectsSummaries,
