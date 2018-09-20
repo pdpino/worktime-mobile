@@ -1,14 +1,31 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { Calendar } from 'react-native-calendars';
 import asModal from './modal';
 import { prettyDate } from '../../utils';
 
 const styles = StyleSheet.create({
   button: {
+    color: 'black',
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
-    padding: 10,
+    marginHorizontal: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    width: 110,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderRadius: 5,
+  },
+  iconContainer: {
+    marginLeft: 3,
+    marginRight: 7,
+  },
+  buttonText: {
+    flex: 1,
+    color: 'black',
+    textAlign: 'center',
   },
 });
 
@@ -16,7 +33,13 @@ const formatDate = date => date && date.format('YYYY-MM-DD');
 
 const CalendarButton = ({ date }) => (
   <View style={styles.button}>
-    <Text>
+    <Icon
+      containerStyle={styles.iconContainer}
+      name="calendar"
+      type="font-awesome"
+      size={17}
+    />
+    <Text style={styles.buttonText}>
       {prettyDate(date)}
     </Text>
   </View>

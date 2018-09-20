@@ -4,7 +4,16 @@ import moment from 'moment'; // TODO: hide moment
 import { CalendarPicker } from '.';
 
 const styles = StyleSheet.create({
-  container: { },
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  text: {
+    color: 'black',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    paddingHorizontal: 5,
+  },
 });
 
 // DICTIONARY
@@ -15,7 +24,7 @@ const DateRangeFilter = ({
   initialDate, endingDate, onChangeInitialDate, onChangeEndingDate,
 }) => (
   <View style={styles.container}>
-    <Text>
+    <Text style={styles.text}>
       {stringFrom}
     </Text>
     <CalendarPicker
@@ -23,7 +32,7 @@ const DateRangeFilter = ({
       maxDate={endingDate}
       onDayPress={day => onChangeInitialDate(day.dateString)}
     />
-    <Text>
+    <Text style={styles.text}>
       {stringTo}
     </Text>
     <CalendarPicker

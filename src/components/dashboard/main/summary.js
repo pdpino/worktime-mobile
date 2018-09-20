@@ -7,7 +7,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    marginHorizontal: 10,
+    marginHorizontal: 7,
     marginVertical: 7,
     paddingHorizontal: 5,
     paddingVertical: 3,

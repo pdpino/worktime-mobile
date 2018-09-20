@@ -2,9 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment'; // REVIEW: try to hide moment
-import { SummaryComponent, SubjectsFilterComponent } from '../../components/dashboard/main';
+import {
+  SummaryComponent, SubjectsFilterComponent, DateFilterComponent,
+} from '../../components/dashboard/main';
 import { subjectsSelector } from '../../redux/selectors';
-import { DateRangeFilter } from '../../shared/UI/pickers';
 import { smartDivision } from '../../shared/utils';
 
 class Dashboard extends React.Component {
@@ -117,7 +118,7 @@ class Dashboard extends React.Component {
           nDaysWorked={nDaysWorked}
           averagePerDay={averagePerDay}
         />
-        <DateRangeFilter
+        <DateFilterComponent
           initialDate={initialDate}
           endingDate={endingDate}
           onChangeInitialDate={this.handleChangeInitialDate}
