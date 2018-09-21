@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 });
 
 // DICTIONARY
-const namePlaceholder = 'Name';
+const namePlaceholder = 'Short and memorable name';
 const descriptionPlaceholder = 'Work on this and that...';
 const nameLabel = 'Name';
 const descriptionLabel = 'Description';
