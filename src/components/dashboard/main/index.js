@@ -1,9 +1,9 @@
-import SubjectsFilterComponent from './subjectsFilter';
+import SubjectsDetailComponent from './subjects';
 import SummaryComponent from './summary';
 import DateFilterComponent from './dateFilter';
 
 export {
-  SubjectsFilterComponent,
+  SubjectsDetailComponent,
   SummaryComponent,
   DateFilterComponent,
 };

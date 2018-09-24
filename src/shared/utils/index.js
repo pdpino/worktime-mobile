@@ -4,6 +4,7 @@ import {
 } from './dates';
 import {
   smartDivision,
+  prettyPercentage,
 } from './misc';
 
 export {
@@ -17,4 +18,5 @@ export {
   prettyDays,
   prettyDaysSpan,
   smartDivision,
+  prettyPercentage,
 };

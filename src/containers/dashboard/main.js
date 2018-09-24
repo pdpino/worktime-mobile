@@ -1,9 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment'; // REVIEW: try to hide moment
 import {
-  SummaryComponent, SubjectsFilterComponent, DateFilterComponent,
+  SummaryComponent, SubjectsDetailComponent, DateFilterComponent,
 } from '../../components/dashboard/main';
 import { subjectsSelector } from '../../redux/selectors';
 import { smartDivision } from '../../shared/utils';
@@ -106,16 +106,14 @@ class Dashboard extends React.Component {
       daysWorked,
     } = this.sumTimes();
 
-    const effectivePercentage = smartDivision(timeEffective, timeTotal, true, 0);
     const nDaysWorked = Object.keys(daysWorked).length;
     const averagePerDay = smartDivision(timeTotal, nDaysWorked, false);
 
     return (
-      <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
         <SummaryComponent
           timeTotal={timeTotal}
           timeEffective={timeEffective}
-          effectivePercentage={effectivePercentage}
           initialDate={initialDate}
           endingDate={endingDate}
           nDaysWorked={nDaysWorked}
@@ -127,13 +125,14 @@ class Dashboard extends React.Component {
           onChangeInitialDate={this.handleChangeInitialDate}
           onChangeEndingDate={this.handleChangeEndingDate}
         />
-        <SubjectsFilterComponent
+        <SubjectsDetailComponent
           subjectsSummaries={subjectsSummaries}
           selectedSubjectsIds={selectedSubjectsIds}
+          subjectsTotal={timeTotal}
           onSelectSubject={this.handleSelectSubject}
           onSelectAllSubjects={this.handleSelectAllSubjects}
         />
-      </View>
+      </ScrollView>
     );
   }
 }

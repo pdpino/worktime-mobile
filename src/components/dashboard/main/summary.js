@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import {
-  prettyDuration, prettyDaysSpan, prettyDays,
+  prettyDuration, prettyDaysSpan, prettyDays, prettyPercentage,
 } from '../../../shared/utils';
 
 const styles = StyleSheet.create({
@@ -44,7 +44,7 @@ const perDay = 'per day';
 const periodLabel = 'period';
 
 const Summary = ({
-  timeTotal, timeEffective, effectivePercentage,
+  timeTotal, timeEffective,
   initialDate, endingDate, nDaysWorked, averagePerDay,
 }) => {
   const period = prettyDaysSpan(initialDate, endingDate);
@@ -66,7 +66,7 @@ const Summary = ({
         {prettyDuration(timeEffective)}
       </Text>
       <Text style={styles.text}>
-        {`${effectivePercentage}%`}
+        {prettyPercentage(timeEffective, timeTotal)}
       </Text>
       <Text style={styles.text}>
         {timeEffectiveLabel}
