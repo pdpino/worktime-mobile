@@ -58,6 +58,7 @@ const CalendarPicker = ({
     }}
     minDate={formatDate(minDate)}
     maxDate={formatDate(maxDate)}
+    firstDay={1}
   />
 );
 
