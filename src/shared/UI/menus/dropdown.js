@@ -25,7 +25,7 @@ class DropdownMenu extends React.PureComponent {
   };
 
   render() {
-    const { items } = this.props;
+    const { items, iconSize } = this.props;
 
     const menuItems = items.map((item, index) => (
       <MenuItem
@@ -44,6 +44,7 @@ class DropdownMenu extends React.PureComponent {
       <Icon
         name="more-vertical"
         type="feather"
+        size={iconSize || 26}
         onPress={this.showMenu}
       />
     );

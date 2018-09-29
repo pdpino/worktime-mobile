@@ -1,5 +1,8 @@
 import moment from 'moment';
 
+// REVIEW: split into multiple files?
+// could be: format (pretty), getters
+
 // Convention for date's names
 // dateString: date as plain strings, in format YYYY-MM-DD
 // date: moment object (except in WorkSession, which are strings)
@@ -83,6 +86,26 @@ export function prettyDuration(totalSeconds) {
 
 export function isBetween(initialDate, endingDate, dateString) {
   return moment(dateString, 'L').isBetween(initialDate, endingDate, 'day', '[]');
+}
+
+export function getToday() {
+  return moment();
+}
+
+export function getYesterday() {
+  return moment().subtract(1, 'days');
+}
+
+export function getStartOfWeek() {
+  return moment().startOf('isoWeek');
+}
+
+export function getStartOfMonth() {
+  return moment().startOf('month');
+}
+
+export function subtractDays(date, days) {
+  return moment(date).subtract(days, 'days');
 }
 
 function decidePluralLabel(singular, plural) {

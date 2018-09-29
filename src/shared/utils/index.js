@@ -1,6 +1,7 @@
 import {
   getTimestamp, unixToDateString, unixToHour, daysAgo, isBetween,
   prettyDate, prettyDuration, prettyDays, prettyDaysSpan,
+  getToday, getYesterday, getStartOfWeek, getStartOfMonth, subtractDays,
 } from './dates';
 import {
   smartDivision,
@@ -19,4 +20,9 @@ export {
   prettyDaysSpan,
   smartDivision,
   prettyPercentage,
+  getToday,
+  getYesterday,
+  getStartOfWeek,
+  getStartOfMonth,
+  subtractDays,
 };

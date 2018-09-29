@@ -23,4 +23,5 @@
 * Dictionary for colors (?)
 
 ## Fixes
+* Review: Migrate from moment to date-fns, for better performance. Also, moment mutates objects
 * Rename 'date' to 'dateString' in WorkSession attributes, and change format from 'L' to 'YYYY-MM-DD'. You need to add a reducer to remember the store version saved in every app, and an upgrade handler (to update the store when needed)

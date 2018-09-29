@@ -6,7 +6,10 @@ import {
   SummaryComponent, SubjectsDetailComponent, DateFilterComponent,
 } from '../../components/dashboard/main';
 import { subjectsSelector } from '../../redux/selectors';
-import { smartDivision } from '../../shared/utils';
+import {
+  smartDivision,
+  getToday, getYesterday, getStartOfWeek, getStartOfMonth, subtractDays,
+} from '../../shared/utils';
 
 class Dashboard extends React.Component {
   static getAllSubjectsSelected(subjects) {
@@ -21,8 +24,8 @@ class Dashboard extends React.Component {
     super(props);
 
     this.state = {
-      initialDate: moment(),
-      endingDate: moment(),
+      initialDate: getToday(),
+      endingDate: getToday(),
       selectedSubjectsIds: Dashboard.getAllSubjectsSelected(this.props.subjects),
     };
 
@@ -109,6 +112,48 @@ class Dashboard extends React.Component {
     const nDaysWorked = Object.keys(daysWorked).length;
     const averagePerDay = smartDivision(timeTotal, nDaysWorked, false);
 
+    const shortcuts = [
+      {
+        name: 'today',
+        callback: () => this.setState({
+          initialDate: getToday(),
+          endingDate: getToday(),
+        }),
+      },
+      {
+        name: 'yesterday',
+        callback: () => this.setState({
+          initialDate: getYesterday(),
+          endingDate: getYesterday(),
+        }),
+      },
+      {
+        name: 'thisWeek',
+        callback: () => this.setState({
+          initialDate: getStartOfWeek(),
+          endingDate: getToday(),
+        }),
+      },
+      {
+        name: 'lastWeek',
+        callback: () => {
+          const pastMonday = getStartOfWeek();
+          this.setState({
+            initialDate: subtractDays(pastMonday, 7),
+            endingDate: pastMonday,
+          });
+        },
+      },
+      {
+        name: 'thisMonth',
+        callback: () => this.setState({
+          initialDate: getStartOfMonth(),
+          endingDate: getToday(),
+        }),
+      },
+    ];
+
+
     return (
       <ScrollView style={{ flex: 1 }}>
         <SummaryComponent
@@ -124,6 +169,7 @@ class Dashboard extends React.Component {
           endingDate={endingDate}
           onChangeInitialDate={this.handleChangeInitialDate}
           onChangeEndingDate={this.handleChangeEndingDate}
+          shortcuts={shortcuts}
         />
         <SubjectsDetailComponent
           subjectsSummaries={subjectsSummaries}

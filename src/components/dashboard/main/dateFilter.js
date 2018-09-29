@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 const title = 'Date filter';
 
 const DateFilter = ({
-  initialDate, endingDate, onChangeInitialDate, onChangeEndingDate,
+  initialDate, endingDate, onChangeInitialDate, onChangeEndingDate, shortcuts,
 }) => (
   <View style={styles.container}>
     <Text style={styles.title}>
@@ -34,6 +34,7 @@ const DateFilter = ({
       endingDate={endingDate}
       onChangeInitialDate={onChangeInitialDate}
       onChangeEndingDate={onChangeEndingDate}
+      shortcuts={shortcuts}
     />
   </View>
 );
