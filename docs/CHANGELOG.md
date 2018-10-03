@@ -6,12 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Upcoming
 ### Add
-* Basic dashboard view
 * Total time in subject-show view
 * Option to export data to file
 
 ## Unreleased
 
+
+## 1.0.1-alpha - 2018-10-03
+### Fixed
+* Set the initial view to Work, instead of Dashboard
+
+## 1.0.0-alpha - 2018-10-03
+### Added
+* Basic dashboard view
 
 ## 0.2.0 - 2018-09-14
 ### Added
