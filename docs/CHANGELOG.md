@@ -10,7 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Option to export data to file
 
 ## Unreleased
+### Changed
+* Dashboard styling
+  - Put the Date filter first, then the Summary
 
+### Fixed
+* Dashboard bugs
+  - "Last week" option now is Monday to Sunday (it was Monday to Monday)
+  - Rerendering of the horizontal bars is smarter
 
 ## 1.0.1-alpha - 2018-10-03
 ### Fixed

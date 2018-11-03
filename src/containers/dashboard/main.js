@@ -140,7 +140,7 @@ class Dashboard extends React.Component {
           const pastMonday = getStartOfWeek();
           this.setState({
             initialDate: subtractDays(pastMonday, 7),
-            endingDate: pastMonday,
+            endingDate: subtractDays(pastMonday, 1),
           });
         },
       },
@@ -156,20 +156,18 @@ class Dashboard extends React.Component {
 
     return (
       <ScrollView style={{ flex: 1 }}>
-        <SummaryComponent
-          timeTotal={timeTotal}
-          timeEffective={timeEffective}
-          initialDate={initialDate}
-          endingDate={endingDate}
-          nDaysWorked={nDaysWorked}
-          averagePerDay={averagePerDay}
-        />
         <DateFilterComponent
           initialDate={initialDate}
           endingDate={endingDate}
           onChangeInitialDate={this.handleChangeInitialDate}
           onChangeEndingDate={this.handleChangeEndingDate}
           shortcuts={shortcuts}
+        />
+        <SummaryComponent
+          timeTotal={timeTotal}
+          timeEffective={timeEffective}
+          nDaysWorked={nDaysWorked}
+          averagePerDay={averagePerDay}
         />
         <SubjectsDetailComponent
           subjectsSummaries={subjectsSummaries}

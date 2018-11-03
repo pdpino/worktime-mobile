@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { DateRangeFilter } from '../../../shared/UI/pickers';
+import { prettyDaysSpan } from '../../../shared/utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,30 +14,48 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     backgroundColor: 'white',
   },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 3,
+  },
   title: {
     color: 'black',
-    marginBottom: 3,
+  },
+  periodText: {
+    color: 'gray',
+    fontStyle: 'italic',
   },
 });
 
 // DICTIONARY
 const title = 'Date filter';
+const periodLabel = 'period';
 
 const DateFilter = ({
   initialDate, endingDate, onChangeInitialDate, onChangeEndingDate, shortcuts,
-}) => (
-  <View style={styles.container}>
-    <Text style={styles.title}>
-      {title}
-    </Text>
-    <DateRangeFilter
-      initialDate={initialDate}
-      endingDate={endingDate}
-      onChangeInitialDate={onChangeInitialDate}
-      onChangeEndingDate={onChangeEndingDate}
-      shortcuts={shortcuts}
-    />
-  </View>
-);
+}) => {
+  const period = prettyDaysSpan(initialDate, endingDate);
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>
+          {title}
+        </Text>
+        <Text style={styles.periodText}>
+          {`${period} ${periodLabel}`}
+        </Text>
+      </View>
+      <DateRangeFilter
+        initialDate={initialDate}
+        endingDate={endingDate}
+        onChangeInitialDate={onChangeInitialDate}
+        onChangeEndingDate={onChangeEndingDate}
+        shortcuts={shortcuts}
+      />
+    </View>
+  );
+};
 
 export default DateFilter;
