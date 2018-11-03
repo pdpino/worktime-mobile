@@ -1,16 +1,14 @@
 # TODOs
-
+Next things to do
 
 ## New Features
-* Option to enable/disable ongoing notification
-* Button to go from subjects-list directly to work-player
-  - what happens if something is already playing?
+* Press and hold stop button, to stop and discard the work-session (use a confirmation box)
+* In work-player, show the last 5 (or so) sessions worked on
 * View with sprints (for each work session)
-* Widgets in Android
-* Search bar in subjects
-* Add categories and tags
-* Add support for nesting subjects
 * Archive/unarchive subjects
+* Dashboard
+  - save dates filter in store (also subjects selected?)
+  - Add total time to the right of the bars
 
 ## Style
 * Style for `emptyComponent`s in `FlatList`s (no subjects and no sessions)
@@ -23,5 +21,4 @@
 * Dictionary for colors (?)
 
 ## Fixes
-* Review: Migrate from moment to date-fns, for better performance. Also, moment mutates objects
-* Rename 'date' to 'dateString' in WorkSession attributes, and change format from 'L' to 'YYYY-MM-DD'. You need to add a reducer to remember the store version saved in every app, and an upgrade handler (to update the store when needed)
+* Refactor: make `DashboardSection` Component, that displays title and borders. Reuse styles
