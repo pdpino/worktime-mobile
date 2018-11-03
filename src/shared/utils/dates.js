@@ -62,19 +62,13 @@ export function prettyDate(date) {
 }
 
 export function prettyDuration(totalSeconds) {
-  if (!totalSeconds) {
-    return '0s';
-  }
-
-  const seconds = Math.floor(totalSeconds) % 60;
-  let duration = `${seconds}s`;
-
+  let duration = '0s';
   let minutes = Math.floor(totalSeconds / 60);
   const hours = Math.floor(minutes / 60);
   minutes %= 60;
 
   if (minutes) {
-    duration = `${minutes}m ${duration}`;
+    duration = `${minutes}m`;
   }
 
   if (hours) {
