@@ -10,6 +10,13 @@
 * Add support for nesting subjects
 * Configure periodical notification time. E.g., if you've been working for an hour without pauses, it vibrates to remind you (useful for not working too much, or to remember to put stop)
 
+## Charts in dashboard
+* Times by subject in a time-span, comparing by subject (bar chart) (show effective vs total time)
+* Distribution of work-sessions across dates (heatmap)
+* Distribution of durations, (number of sessions or sprints (y axis) vs duration (x axis))
+* Distribution in days of the week (heatmap?, specific week?)
+* Total or average by week, by day (?)
+
 ## Refactors and fixes
 * Refactor: (review) Migrate from moment to date-fns, for better performance. Also, moment mutates objects
 * Refactor bar chart: encapsulate behavior. Receives an array of data to display, calculates the widths and display a `FlatList` with `HorizontalBar`s.
