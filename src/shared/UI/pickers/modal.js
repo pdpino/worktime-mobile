@@ -2,8 +2,8 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 
-export default function asModal(ButtonComponent, ModalComponent) {
-  class AsModal extends React.Component {
+export default function asModalWithButton(ButtonComponent, ModalComponent) {
+  class AsModalWithButton extends React.Component {
     constructor(props) {
       super(props);
 
@@ -53,5 +53,5 @@ export default function asModal(ButtonComponent, ModalComponent) {
     }
   }
 
-  return AsModal;
+  return AsModalWithButton;
 }

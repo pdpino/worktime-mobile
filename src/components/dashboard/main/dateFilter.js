@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
 
 // DICTIONARY
 const title = 'Date filter';
-const periodLabel = 'period';
 
 const DateFilter = ({
   initialDate, endingDate, onChangeInitialDate, onChangeEndingDate, shortcuts,
@@ -44,7 +43,7 @@ const DateFilter = ({
           {title}
         </Text>
         <Text style={styles.periodText}>
-          {`${period} ${periodLabel}`}
+          {period}
         </Text>
       </View>
       <DateRangeFilter

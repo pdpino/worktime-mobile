@@ -114,6 +114,13 @@ class Dashboard extends React.Component {
 
     const shortcuts = [
       {
+        name: 'none',
+        callback: () => this.setState({
+          initialDate: null,
+          endingDate: null,
+        }),
+      },
+      {
         name: 'today',
         callback: () => this.setState({
           initialDate: getToday(),

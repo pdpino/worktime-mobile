@@ -131,6 +131,10 @@ function daysToInterval(nDays, amount1, amount2, pretty1, pretty2) {
 }
 
 export function prettyDaysSpan(initialDate, endingDate) {
+  if (!initialDate || !endingDate) {
+    return 'Infinite time'; // DICTIONARY
+  }
+
   const diffDays = endingDate.diff(initialDate, 'days') + 1; // +1: inclusive limits
 
   // DICTIONARY

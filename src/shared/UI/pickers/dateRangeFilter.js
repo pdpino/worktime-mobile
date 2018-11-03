@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
 
 // DICTIONARY
 const shortcutsLabels = {
+  none: 'None',
   today: 'Today',
   yesterday: 'Yesterday',
   thisWeek: 'This Week',
@@ -58,7 +59,7 @@ const DateRangeFilter = ({
       </Text>
       <CalendarPicker
         date={initialDate}
-        maxDate={endingDate}
+        maxDate={endingDate || getToday()}
         onDayPress={day => onChangeInitialDate(day.dateString)}
       />
       <Text style={styles.text}>

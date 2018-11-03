@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Option to export data to file
 
 ## Unreleased
+### Added
+* Dashboard features
+  - Support selecting "None" for the dates filter
+
 ### Changed
 * Dashboard styling
   - Put the Date filter first, then the Summary

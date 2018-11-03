@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Calendar } from 'react-native-calendars';
-import asModal from './modal';
+import asModalWithButton from './modal';
 import { prettyDate } from '../../utils';
 
 const styles = StyleSheet.create({
@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
 
 const formatDate = date => date && date.format('YYYY-MM-DD');
 
+// DICTIONARY
+const noneDateText = 'None';
+
 const CalendarButton = ({ date }) => (
   <View style={styles.button}>
     <Icon
@@ -40,7 +43,7 @@ const CalendarButton = ({ date }) => (
       size={17}
     />
     <Text style={styles.buttonText}>
-      {prettyDate(date)}
+      {date ? prettyDate(date) : noneDateText}
     </Text>
   </View>
 );
@@ -62,4 +65,4 @@ const CalendarPicker = ({
   />
 );
 
-export default asModal(CalendarButton, CalendarPicker);
+export default asModalWithButton(CalendarButton, CalendarPicker);
