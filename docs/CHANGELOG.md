@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - Button to select all subjects is now a checkbox
   - Improve styles
 
+### Fixed
+* Fix bug that caused subject name to be "undefined" on the notification
+
 ## 1.0.2-alpha - 2018-11-02
 ### Added
 * Dashboard features

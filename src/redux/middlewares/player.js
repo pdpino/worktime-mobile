@@ -9,31 +9,32 @@ const playerMiddleware = (store) => {
     Stop: () => store.dispatch(stop()),
   });
 
-  const notifications = new NotificationsService();
-
   return next => (action) => {
     if (!action.type.startsWith('PLAYER/')) {
       return next(action);
     }
 
+    const result = next(action);
+    const { subject } = action.payload;
+
     switch (action.type) {
       case 'PLAYER/START': {
-        notifications.start(action.payload.subject);
+        NotificationsService.start(subject);
         break;
       }
       case 'PLAYER/RESUME':
-        notifications.resume();
+        NotificationsService.resume(subject);
         break;
       case 'PLAYER/PAUSE':
-        notifications.pause();
+        NotificationsService.pause(subject);
         break;
       case 'PLAYER/STOP':
-        notifications.stop();
+        NotificationsService.stop();
         break;
       default:
     }
 
-    return next(action);
+    return result;
   };
 };
 

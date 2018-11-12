@@ -1,4 +1,6 @@
-import { runningSessionIdSelector, lastWorkSessionSelector } from '../selectors';
+import {
+  runningSessionIdSelector, lastWorkSessionSelector, selectedSubjectSelector,
+} from '../selectors';
 import { getTimestamp } from '../../shared/utils';
 
 export const start = subject => (dispatch, getState) => {
@@ -27,18 +29,20 @@ export const selectWorkSubject = selectedSubjectId => ({
   },
 });
 
-const createActionForRunningSession = type => () => (dispatch, getState) => {
-  const runningSessionId = runningSessionIdSelector(getState());
+const createActionForRunningSession = (type, sendSubject) => () => (dispatch, getState) => {
+  const store = getState();
+  const runningSessionId = runningSessionIdSelector(store);
   const timestamp = getTimestamp();
   return dispatch({
     type,
     payload: {
+      subject: sendSubject && selectedSubjectSelector(store),
       timestamp,
       runningSessionId,
     },
   });
 };
 
-export const resume = createActionForRunningSession('PLAYER/RESUME');
-export const pause = createActionForRunningSession('PLAYER/PAUSE');
-export const stop = createActionForRunningSession('PLAYER/STOP');
+export const resume = createActionForRunningSession('PLAYER/RESUME', true);
+export const pause = createActionForRunningSession('PLAYER/PAUSE', true);
+export const stop = createActionForRunningSession('PLAYER/STOP', false);

@@ -45,30 +45,28 @@ class Notifications {
     });
   }
 
-  start(subject) {
-    this.subjectName = subject.name;
-    this.resume();
+  static start(subject) {
+    Notifications.resume(subject);
   }
 
-  resume() {
+  static resume(subject) {
     Notifications.sendLocal({
-      title: `${this.subjectName} playing`, // DICTIONARY
+      title: `${subject.name} playing`, // DICTIONARY
       icon: 'play',
       actions: ['Pause', 'Stop'],
     });
   }
 
-  pause() {
+  static pause(subject) {
     Notifications.sendLocal({
-      title: `${this.subjectName} paused`, // DICTIONARY
+      title: `${subject.name} paused`, // DICTIONARY
       icon: 'pause',
       actions: ['Resume', 'Stop'],
     });
   }
 
-  stop() {
+  static stop() {
     PushNotification.cancelAllLocalNotifications();
-    this.subjectName = '';
   }
 }
 
