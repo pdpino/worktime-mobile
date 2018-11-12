@@ -5,8 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## 1.1.0 - 2018-11-12
 ### Add
-* Total time, effective time and amount of days worked in subject-show (summary)
+* In subject-show view (in summary) add total time, effective time and amount of days worked
 
 ### Changed
 * Use Tabs instead of Drawer for navigation
