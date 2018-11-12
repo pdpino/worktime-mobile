@@ -9,13 +9,18 @@ class SubjectShow extends React.Component {
   componentDidMount() {}
 
   render() {
-    const { workSessions } = this.props;
+    const { subject, workSessions } = this.props;
     const lastSession = workSessions[0];
+    const daysWorked = {};
+    const { timeTotal, timeEffective } = subject.sumTimes(null, null, daysWorked);
 
     return (
       <ScrollView>
         <SubjectInfoComponent
           lastWorkedDate={lastSession && lastSession.date}
+          timeTotal={timeTotal}
+          timeEffective={timeEffective}
+          nDaysWorked={Object.keys(daysWorked).length}
         />
         <WorkSessionsListComponent
           workSessions={workSessions}
@@ -30,6 +35,7 @@ const mapStateToProps = (state, ownProps) => ({
   workSessions: subjectSessionsSelector(state, {
     subject: ownProps.navigation.getParam('subject'),
   }),
+  subject: ownProps.navigation.getParam('subject'), // HACK? repeated
 });
 
 export default connect(mapStateToProps)(SubjectShow);

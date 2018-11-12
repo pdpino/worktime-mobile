@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { daysAgo } from '../../shared/utils';
+import { daysAgo, prettyDuration } from '../../shared/utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'black',
   },
-  lastWorked: {
+  text: {
     fontSize: 15,
     color: 'black',
   },
@@ -23,25 +23,54 @@ const styles = StyleSheet.create({
 // DICTIONARY
 const titleText = 'Summary';
 const lastWorkedText = 'Last worked on: ';
+const timeTotalText = 'Total time: ';
+const timeEffectiveText = 'Effective time: ';
+const nDaysWorkedText = 'Days worked: ';
 
-const SubjectInfo = ({ lastWorkedDate }) => {
+const SubjectInfo = ({
+  lastWorkedDate, timeTotal, timeEffective, nDaysWorked,
+}) => {
   const title = (
     <Text style={styles.title}>
       {titleText}
     </Text>
   );
 
-  const lastWorked = (
-    <Text style={styles.lastWorked}>
+  const lastWorkedInfo = (
+    <Text style={styles.text}>
       {lastWorkedText}
       {daysAgo(lastWorkedDate)}
+    </Text>
+  );
+
+  const timeTotalInfo = (
+    <Text style={styles.text}>
+      {timeTotalText}
+      {prettyDuration(timeTotal)}
+    </Text>
+  );
+
+  const timeEffectiveInfo = (
+    <Text style={styles.text}>
+      {timeEffectiveText}
+      {prettyDuration(timeEffective)}
+    </Text>
+  );
+
+  const nDaysWorkedInfo = (
+    <Text style={styles.text}>
+      {nDaysWorkedText}
+      {nDaysWorked}
     </Text>
   );
 
   return (
     <View style={styles.container}>
       {title}
-      {lastWorked}
+      {lastWorkedInfo}
+      {timeTotalInfo}
+      {timeEffectiveInfo}
+      {nDaysWorkedInfo}
     </View>
   );
 };

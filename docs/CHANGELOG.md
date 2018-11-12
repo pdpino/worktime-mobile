@@ -5,13 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Upcoming
-### Add
-* Total time in subject-show view
-
 ### Change
 * Use Tabs instead of Drawer for navigation
 
 ## Unreleased
+### Add
+* Total time, effective time and amount of days worked in subject-show (summary)
+
 ### Changed
 * Dashboard:
   - Button to select all subjects is now a checkbox
