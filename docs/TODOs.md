@@ -1,6 +1,10 @@
 # TODOs
 Next things to do
 
+## Fixes
+1. Dashboard subjects:
+  - percentage from total time is outside of borders (to the right)
+
 ## New Features
 * Times in work-player view
 * Option to export data to file
@@ -25,8 +29,6 @@ Next things to do
 * Type-checking with flow
 * Dictionary for strings
 * Dictionary for colors (?)
-
-## Fixes
 
 ## Refactors
 * Make `DashboardSection` Component, that displays title and borders. Reuse styles
