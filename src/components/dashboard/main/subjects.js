@@ -9,6 +9,15 @@ import { prettyDuration, prettyPercentage } from '../../../shared/utils';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
+    marginHorizontal: 7,
+    marginVertical: 7,
+    paddingHorizontal: 5,
+    paddingVertical: 3,
+  },
+  title: {
+    color: 'black',
+    marginBottom: 5,
   },
   listContainer: {
     flex: 1,
@@ -56,7 +65,7 @@ const SubjectsDetail = ({
   onSelectSubject, onSelectAllSubjects,
 }) => {
   const title = (
-    <Text>
+    <Text style={styles.title}>
       {titleText}
     </Text>
   );

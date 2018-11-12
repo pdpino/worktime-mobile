@@ -18,6 +18,8 @@ Next things to do
 * Add some padding for items in subjects-list
 * Dashboard:
   - select all should look different than the other checkboxes?
+  - summary boxes should have fixed size
+  - summary times should be displayed bigger
 
 ## Develop
 * Type-checking with flow
