@@ -2,6 +2,8 @@
 Next things to do
 
 ## New Features
+* Times in work-player view
+* Option to export data to file
 * Press and hold stop button, to stop and discard the work-session (use a confirmation box)
 * In work-player, show the last 5 (or so) sessions worked on
 * View with sprints (for each work session)
@@ -21,4 +23,6 @@ Next things to do
 * Dictionary for colors (?)
 
 ## Fixes
-* Refactor: make `DashboardSection` Component, that displays title and borders. Reuse styles
+
+## Refactors
+* Make `DashboardSection` Component, that displays title and borders. Reuse styles

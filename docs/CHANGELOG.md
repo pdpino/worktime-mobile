@@ -6,9 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Upcoming
 ### Add
-* Times in work-player view
 * Total time in subject-show view
-* Option to export data to file
 
 ### Change
 * Use Tabs instead of Drawer for navigation
