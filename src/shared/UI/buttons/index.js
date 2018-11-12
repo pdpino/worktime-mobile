@@ -1,5 +1,7 @@
 import NewButton from './new';
+import ItemCheckbox from './checkbox';
 
 export {
-  NewButton, // eslint-disable-line import/prefer-default-export
+  NewButton,
+  ItemCheckbox,
 };

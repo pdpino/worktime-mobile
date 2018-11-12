@@ -31,7 +31,7 @@ const Root = createDrawerNavigator({
   },
 },
 {
-  initialRouteName: 'work',
+  initialRouteName: 'dashboard',
 });
 
 export default Root;

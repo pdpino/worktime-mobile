@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  View, StyleSheet, FlatList, Dimensions, TouchableOpacity, Text,
+  View, StyleSheet, FlatList, Dimensions, Text,
 } from 'react-native';
-import { Icon } from 'react-native-elements';
 import { HorizontalBar } from '../../../shared/UI/charts';
+import { ItemCheckbox } from '../../../shared/UI/buttons';
 import { prettyDuration, prettyPercentage } from '../../../shared/utils';
 
 const styles = StyleSheet.create({
@@ -14,39 +14,15 @@ const styles = StyleSheet.create({
     flex: 1,
     width: Dimensions.get('window').width, // HACK?
   },
-  allButtonContainer: {
-    backgroundColor: '#BBBBBB',
-    width: 80,
-    marginHorizontal: 10,
-    paddingHorizontal: 5,
-    paddingVertical: 3,
-    borderRadius: 5,
-  },
-  allButtonText: {
-    textAlign: 'center',
-    color: 'black',
-  },
   itemContainer: {
     flex: 1,
     flexDirection: 'row',
   },
+  allButtonContainer: {
+    width: 200,
+  },
   checkboxContainer: {
-    flexDirection: 'row',
     width: 100,
-  },
-  checkboxIcon: {
-    marginHorizontal: 3,
-  },
-  text: {
-    flex: 1,
-    flexWrap: 'wrap',
-  },
-  checkedText: {
-    color: 'black',
-    fontWeight: 'bold',
-  },
-  uncheckedText: {
-    color: 'black',
   },
   percentageText: {
     color: 'black',
@@ -75,7 +51,8 @@ const colorEffective = '#4fb3bf';
 const colorPaused = '#bdbdbd';
 
 const SubjectsDetail = ({
-  subjectsSummaries, selectedSubjectsIds, subjectsTotal, onSelectSubject, onSelectAllSubjects,
+  subjectsSummaries, selectedSubjectsIds, allSubjectsSelected, subjectsTimeTotal,
+  onSelectSubject, onSelectAllSubjects,
 }) => {
   const title = (
     <Text>
@@ -84,14 +61,12 @@ const SubjectsDetail = ({
   );
 
   const allButton = (
-    <TouchableOpacity
-      style={styles.allButtonContainer}
+    <ItemCheckbox
+      text={allButtonLabel}
+      checked={allSubjectsSelected}
+      containerStyle={styles.allButtonContainer}
       onPress={onSelectAllSubjects}
-    >
-      <Text style={styles.allButtonText}>
-        {allButtonLabel}
-      </Text>
-    </TouchableOpacity>
+    />
   );
 
   const widthMultiplier = getWidthUnits(subjectsSummaries, 'timeTotal');
@@ -103,31 +78,17 @@ const SubjectsDetail = ({
     const checked = selectedSubjectsIds[item.id];
 
     const button = (
-      <TouchableOpacity
-        style={styles.checkboxContainer}
+      <ItemCheckbox
+        text={item.name}
+        checked={checked}
+        containerStyle={styles.checkboxContainer}
         onPress={() => onSelectSubject(item.id)}
-        checkedIcon="check-circle"
-        uncheckedIcon="circle-thin"
-      >
-        <Icon
-          name={checked ? 'check-square' : 'square'}
-          type="feather"
-          size={20}
-          containerStyle={styles.checkboxIcon}
-        />
-        <Text style={[
-          styles.text,
-          checked ? styles.checkedText : styles.uncheckedText,
-        ]}
-        >
-          {item.name}
-        </Text>
-      </TouchableOpacity>
+      />
     );
 
     const percentage = (
       <Text style={styles.percentageText}>
-        {prettyPercentage(timeTotal, subjectsTotal)}
+        {prettyPercentage(timeTotal, subjectsTimeTotal)}
       </Text>
     );
 

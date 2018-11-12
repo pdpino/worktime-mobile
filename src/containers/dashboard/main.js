@@ -27,6 +27,7 @@ class Dashboard extends React.Component {
       initialDate: getToday(),
       endingDate: getToday(),
       selectedSubjectsIds: Dashboard.getAllSubjectsSelected(this.props.subjects),
+      allSubjectsSelected: true,
     };
 
     this.handleChangeInitialDate = this.handleChangeDate('initialDate');
@@ -42,18 +43,29 @@ class Dashboard extends React.Component {
   }
 
   handleSelectSubject(subjectId) {
-    this.setState(state => ({
-      selectedSubjectsIds: {
+    this.setState((state) => {
+      const selectedSubjectsIds = {
         ...state.selectedSubjectsIds,
         [subjectId]: !state.selectedSubjectsIds[subjectId],
-      },
-    }));
+      };
+      const anySelected = Object.keys(selectedSubjectsIds)
+        .some(key => selectedSubjectsIds[key]);
+
+      return {
+        selectedSubjectsIds,
+        allSubjectsSelected: anySelected,
+      };
+    });
   }
 
   handleSelectAllSubjects() {
-    this.setState((state, props) => ({
-      selectedSubjectsIds: Dashboard.getAllSubjectsSelected(props.subjects),
-    }));
+    const { allSubjectsSelected } = this.state;
+    const selectedSubjectsIds = allSubjectsSelected ? {}
+      : Dashboard.getAllSubjectsSelected(this.props.subjects);
+    this.setState({
+      selectedSubjectsIds,
+      allSubjectsSelected: !allSubjectsSelected,
+    });
   }
 
   sumTimes() {
@@ -101,7 +113,9 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { initialDate, endingDate, selectedSubjectsIds } = this.state;
+    const {
+      initialDate, endingDate, selectedSubjectsIds, allSubjectsSelected,
+    } = this.state;
     const {
       subjectsSummaries,
       timeTotal,
@@ -179,7 +193,8 @@ class Dashboard extends React.Component {
         <SubjectsDetailComponent
           subjectsSummaries={subjectsSummaries}
           selectedSubjectsIds={selectedSubjectsIds}
-          subjectsTotal={timeTotal}
+          allSubjectsSelected={allSubjectsSelected}
+          subjectsTimeTotal={timeTotal}
           onSelectSubject={this.handleSelectSubject}
           onSelectAllSubjects={this.handleSelectAllSubjects}
         />
