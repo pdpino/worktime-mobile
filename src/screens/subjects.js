@@ -1,22 +1,19 @@
-import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import { HamburgerIcon } from '../shared/UI/icons';
 import { SubjectsList, SubjectForm, SubjectShow } from '../containers/subjects';
 import headerOptions from './header';
 
 const SubjectsStack = createStackNavigator({
   subjectsList: {
     screen: SubjectsList,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: {
       title: 'Subjects', // DICTIONARY
-      headerLeft: <HamburgerIcon onPress={() => navigation.toggleDrawer()} />,
-    }),
+    },
   },
   newSubject: {
     screen: SubjectForm,
-    navigationOptions: () => ({
+    navigationOptions: {
       title: 'New Subject', // DICTIONARY
-    }),
+    },
   },
   editSubject: {
     screen: SubjectForm,

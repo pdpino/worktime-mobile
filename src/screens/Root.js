@@ -1,37 +1,65 @@
-import { createDrawerNavigator } from 'react-navigation';
+import React from 'react';
+import { createBottomTabNavigator } from 'react-navigation';
+import { Icon } from 'react-native-elements';
 import SubjectsStack from './subjects';
 import WorkStack from './work';
 import DashboardStack from './dashboard';
 import SettingsStack from './settings';
 
-const Root = createDrawerNavigator({
+const iconConfiguration = {
+  subjects: {
+    name: 'list',
+    type: 'feather',
+  },
+  work: {
+    name: 'play',
+    type: 'font-awesome',
+    size: 20,
+  },
+  dashboard: {
+    name: 'dashboard',
+    type: 'font-awesome',
+  },
+  settings: {
+    name: 'settings',
+    type: 'material',
+  },
+};
+
+const Root = createBottomTabNavigator({
   subjects: {
     screen: SubjectsStack,
-    navigationOptions: () => ({
-      drawerLabel: 'Subjects', // DICTIONARY
-    }),
+    navigationOptions: {
+      tabBarLabel: 'Subjects', // DICTIONARY
+    },
   },
   work: {
     screen: WorkStack,
-    navigationOptions: () => ({
-      drawerLabel: 'Work', // DICTIONARY
-    }),
+    navigationOptions: {
+      tabBarLabel: 'Work', // DICTIONARY
+    },
   },
   dashboard: {
     screen: DashboardStack,
-    navigationOptions: () => ({
-      drawerLabel: 'Dashboard', // DICTIONARY
-    }),
+    navigationOptions: {
+      tabBarLabel: 'Dashboard', // DICTIONARY
+    },
   },
   settings: {
     screen: SettingsStack,
-    navigationOptions: () => ({
-      drawerLabel: 'Settings', // DICTIONARY
-    }),
+    navigationOptions: {
+      tabBarLabel: 'Settings', // DICTIONARY
+    },
   },
 },
 {
   initialRouteName: 'work',
+  navigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ tintColor }) => {
+      const { routeName } = navigation.state;
+      return <Icon color={tintColor} size={22} {...iconConfiguration[routeName]} />;
+    },
+  }),
 });
 
 export default Root;
