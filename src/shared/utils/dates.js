@@ -141,3 +141,7 @@ export function prettyDaysSpan(initialDate, endingDate) {
   }
   return daysToInterval(diffDays, 365, 30, prettyYears, prettyWeeks);
 }
+
+export function isSameDay(date1, date2) {
+  return moment(date1).isSame(date2, 'days');
+}

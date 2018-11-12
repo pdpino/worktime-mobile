@@ -7,7 +7,7 @@ import {
 } from '../../components/dashboard/main';
 import { subjectsSelector } from '../../redux/selectors';
 import {
-  smartDivision,
+  smartDivision, isSameDay,
   getToday, getYesterday, getStartOfWeek, getStartOfMonth, subtractDays,
 } from '../../shared/utils';
 
@@ -32,6 +32,7 @@ class Dashboard extends React.Component {
 
     this.handleChangeInitialDate = this.handleChangeDate('initialDate');
     this.handleChangeEndingDate = this.handleChangeDate('endingDate');
+    this.handleChangeDates = this.handleChangeDates.bind(this);
     this.handleSelectSubject = this.handleSelectSubject.bind(this);
     this.handleSelectAllSubjects = this.handleSelectAllSubjects.bind(this);
   }
@@ -40,6 +41,17 @@ class Dashboard extends React.Component {
     return (dateString) => {
       this.setState({ [key]: moment(dateString) });
     };
+  }
+
+  handleChangeDates(newInitialDate, newEndingDate) {
+    const { initialDate, endingDate } = this.state;
+    if (isSameDay(initialDate, newInitialDate) && isSameDay(endingDate, newEndingDate)) {
+      return;
+    }
+    this.setState({
+      initialDate: newInitialDate,
+      endingDate: newEndingDate,
+    });
   }
 
   handleSelectSubject(subjectId) {
@@ -129,48 +141,30 @@ class Dashboard extends React.Component {
     const shortcuts = [
       {
         name: 'none',
-        callback: () => this.setState({
-          initialDate: null,
-          endingDate: null,
-        }),
+        callback: () => this.handleChangeDates(null, null),
       },
       {
         name: 'today',
-        callback: () => this.setState({
-          initialDate: getToday(),
-          endingDate: getToday(),
-        }),
+        callback: () => this.handleChangeDates(getToday(), getToday()),
       },
       {
         name: 'yesterday',
-        callback: () => this.setState({
-          initialDate: getYesterday(),
-          endingDate: getYesterday(),
-        }),
+        callback: () => this.handleChangeDates(getYesterday(), getYesterday()),
       },
       {
         name: 'thisWeek',
-        callback: () => this.setState({
-          initialDate: getStartOfWeek(),
-          endingDate: getToday(),
-        }),
+        callback: () => this.handleChangeDates(getStartOfWeek(), getToday()),
       },
       {
         name: 'lastWeek',
         callback: () => {
           const pastMonday = getStartOfWeek();
-          this.setState({
-            initialDate: subtractDays(pastMonday, 7),
-            endingDate: subtractDays(pastMonday, 1),
-          });
+          this.handleChangeDates(subtractDays(pastMonday, 7), subtractDays(pastMonday, 1));
         },
       },
       {
         name: 'thisMonth',
-        callback: () => this.setState({
-          initialDate: getStartOfMonth(),
-          endingDate: getToday(),
-        }),
+        callback: () => this.handleChangeDates(getStartOfMonth(), getToday()),
       },
     ];
 
