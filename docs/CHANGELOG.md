@@ -12,7 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Use Tabs instead of Drawer for navigation
 
 ## Unreleased
-
+### Changed
+* Dashboard:
+  - Button to select all subjects is now a checkbox
+  - Improve styles
 
 ## 1.0.2-alpha - 2018-11-02
 ### Added

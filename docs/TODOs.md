@@ -16,6 +16,8 @@ Next things to do
 * Style for `emptyComponent`s in `FlatList`s (no subjects and no sessions)
 * Use a lighter color as division for items in lists
 * Add some padding for items in subjects-list
+* Dashboard:
+  - select all should look different than the other checkboxes?
 
 ## Develop
 * Type-checking with flow

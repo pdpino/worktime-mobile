@@ -9,12 +9,13 @@ const styles = StyleSheet.create({
   },
   bar: {
     alignSelf: 'center',
-    height: 15,
+    height: 22,
   },
   insideText: {
+    flex: 1,
     textAlign: 'center',
     textAlignVertical: 'center',
-    fontSize: 11,
+    fontSize: 14,
     color: 'black',
   },
 });

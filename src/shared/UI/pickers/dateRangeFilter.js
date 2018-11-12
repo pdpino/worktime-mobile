@@ -21,6 +21,10 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     paddingHorizontal: 5,
   },
+  shortcutsList: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
   shortcut: {
     backgroundColor: '#9BBBFF',
     borderRadius: 5,
@@ -94,6 +98,7 @@ const DateRangeFilter = ({
     <View style={styles.row}>
       <FlatList
         horizontal
+        contentContainerStyle={styles.shortcutsList}
         data={firstShortcuts}
         keyExtractor={(item, idx) => idx.toString()}
         renderItem={({ item }) => renderShortcut(item)}

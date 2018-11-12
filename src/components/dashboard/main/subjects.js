@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
     flexDirection: 'row',
+    paddingVertical: 5,
   },
   allButtonContainer: {
     width: 200,
@@ -77,7 +78,7 @@ const SubjectsDetail = ({
 
     const checked = selectedSubjectsIds[item.id];
 
-    const button = (
+    const checkbox = (
       <ItemCheckbox
         text={item.name}
         checked={checked}
@@ -94,7 +95,7 @@ const SubjectsDetail = ({
 
     return (
       <View style={styles.itemContainer}>
-        {button}
+        {checkbox}
         {checked && timeTotal > 0 && (
           <HorizontalBar
             totalValue={timeTotal * widthMultiplier}

@@ -5,6 +5,7 @@ import { Icon } from 'react-native-elements';
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   checkboxIcon: {
     marginHorizontal: 3,
