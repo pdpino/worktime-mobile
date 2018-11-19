@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 * Press and hold stop button: stop and discard the work-session (with a confirmation box)
 
+### Changed
+* Dashboard summary styles
+
 ### Fixed
 * Percentage from total time was outside of borders (to the right)
 

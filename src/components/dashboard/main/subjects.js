@@ -19,6 +19,11 @@ const styles = StyleSheet.create({
     color: 'black',
     marginBottom: 5,
   },
+  listHeader: {
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 5,
+  },
   listContainer: {
     flex: 1,
     width: Dimensions.get('window').width, // HACK?
@@ -129,7 +134,9 @@ const SubjectsDetail = ({
   return (
     <View style={styles.container}>
       {title}
-      {allButton}
+      <View style={styles.listHeader}>
+        {allButton}
+      </View>
       <View style={styles.listContainer}>
         <FlatList
           data={subjectsSummaries}

@@ -22,16 +22,36 @@ const styles = StyleSheet.create({
   box: {
     flexDirection: 'column',
     margin: 10,
-    borderWidth: 1,
-    borderRadius: 3,
-    padding: 3,
+    alignItems: 'center',
   },
-  boxTitle: {
-
-  },
-  text: {
+  textTitle: {
     textAlign: 'center',
+    color: 'gray',
+    fontSize: 10,
+  },
+  totalValues: {
     color: 'black',
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginTop: 3,
+  },
+  effectiveValues: {
+    color: 'black',
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+  daysRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textLabel: {
+    color: 'gray',
+    fontSize: 12,
+    marginLeft: 5,
+  },
+  daysValues: {
+    color: 'black',
+    fontSize: 17,
   },
 });
 
@@ -47,37 +67,47 @@ const Summary = ({
 }) => {
   const totalBox = (
     <View style={styles.box}>
-      <Text style={styles.text}>
-        {prettyDuration(timeTotal)}
-      </Text>
-      <Text style={styles.text}>
+      <Text style={styles.textTitle}>
         {timeTotalLabel}
+      </Text>
+      <Text style={styles.totalValues}>
+        {prettyDuration(timeTotal)}
       </Text>
     </View>
   );
 
   const effectiveBox = (
     <View style={styles.box}>
-      <Text style={styles.text}>
+      <Text style={styles.textTitle}>
+        {timeEffectiveLabel}
+      </Text>
+      <Text style={styles.effectiveValues}>
         {prettyDuration(timeEffective)}
       </Text>
-      <Text style={styles.text}>
+      <Text style={styles.effectiveValues}>
         {prettyPercentage(timeEffective, timeTotal)}
-      </Text>
-      <Text style={styles.text}>
-        {timeEffectiveLabel}
       </Text>
     </View>
   );
 
   const daysBox = (
     <View style={styles.box}>
-      <Text style={styles.text}>
-        {`${prettyDays(nDaysWorked)} ${worked}`}
-      </Text>
-      <Text style={styles.text}>
-        {`${prettyDuration(averagePerDay)} ${perDay}`}
-      </Text>
+      <View style={styles.daysRow}>
+        <Text style={styles.daysValues}>
+          {prettyDays(nDaysWorked)}
+        </Text>
+        <Text style={styles.textLabel}>
+          {worked}
+        </Text>
+      </View>
+      <View style={styles.daysRow}>
+        <Text style={styles.daysValues}>
+          {prettyDuration(averagePerDay)}
+        </Text>
+        <Text style={styles.textLabel}>
+          {perDay}
+        </Text>
+      </View>
     </View>
   );
 
