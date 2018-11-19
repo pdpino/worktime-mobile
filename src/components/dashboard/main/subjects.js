@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     position: 'absolute', // HACK??
     right: 0,
-    marginRight: 10,
+    marginRight: 25,
   },
 });
 
 function getWidthUnits(data, key) {
   const deviceWidth = Dimensions.get('window').width;
-  const maxWidthUsed = deviceWidth - 150; // FIXME: hardcoded
+  const maxWidthUsed = deviceWidth - 165; // FIXME: hardcoded
 
   const maxValue = Math.max(...data.map(item => item[key]));
 

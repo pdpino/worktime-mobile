@@ -2,18 +2,21 @@
 Next things to do
 
 ## Fixes
-1. Dashboard subjects:
-  - percentage from total time is outside of borders (to the right)
+* In the list of subjects:
+  - the add button is in top of a subject's "more" button (so you can't press it)
+* Dashboard
+  - date "Mon 12 Nov" overflows in date filter (although text is wrapping)
 
 ## New Features
 * Times in work-player view
 * Option to export data to file
+* Nest subjects
 * Press and hold stop button, to stop and discard the work-session (use a confirmation box)
 * In work-player, show the last 5 (or so) sessions worked on
 * View with sprints (for each work session)
 * Archive/unarchive subjects
 * Dashboard
-  - save dates filter in store (also subjects selected?)
+  - "This semester" shortcut
   - Add total time to the right of the bars
 
 ## Style
@@ -32,3 +35,4 @@ Next things to do
 
 ## Refactors
 * Make `DashboardSection` Component, that displays title and borders. Reuse styles
+* `WorkPlayerComponent`, could be separated in: (1) selecting a subject (2) displaying and controlling. Currently, the ref and nesting is messy (see how the picker is being passed down to the component from the container)
