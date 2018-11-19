@@ -21,23 +21,23 @@ const styles = StyleSheet.create({
   },
   box: {
     flexDirection: 'column',
-    margin: 10,
+    margin: 5,
     alignItems: 'center',
   },
   textTitle: {
     textAlign: 'center',
     color: 'gray',
-    fontSize: 10,
+    fontSize: 12,
   },
   totalValues: {
     color: 'black',
-    fontSize: 25,
+    fontSize: 28,
     fontWeight: 'bold',
     marginTop: 3,
   },
   effectiveValues: {
     color: 'black',
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   daysRow: {
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   daysValues: {
     color: 'black',
-    fontSize: 17,
+    fontSize: 18,
   },
 });
 
@@ -90,24 +90,14 @@ const Summary = ({
     </View>
   );
 
-  const daysBox = (
-    <View style={styles.box}>
-      <View style={styles.daysRow}>
-        <Text style={styles.daysValues}>
-          {prettyDays(nDaysWorked)}
-        </Text>
-        <Text style={styles.textLabel}>
-          {worked}
-        </Text>
-      </View>
-      <View style={styles.daysRow}>
-        <Text style={styles.daysValues}>
-          {prettyDuration(averagePerDay)}
-        </Text>
-        <Text style={styles.textLabel}>
-          {perDay}
-        </Text>
-      </View>
+  const daysRow = (value, label) => (
+    <View style={styles.daysRow}>
+      <Text style={styles.daysValues}>
+        {value}
+      </Text>
+      <Text style={styles.textLabel}>
+        {label}
+      </Text>
     </View>
   );
 
@@ -119,7 +109,10 @@ const Summary = ({
       <View style={styles.subContainer}>
         {totalBox}
         {effectiveBox}
-        {daysBox}
+        <View style={styles.box}>
+          {daysRow(prettyDays(nDaysWorked), worked)}
+          {daysRow(prettyDuration(averagePerDay), perDay)}
+        </View>
       </View>
     </View>
   );
