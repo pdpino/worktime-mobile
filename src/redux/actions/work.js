@@ -46,3 +46,4 @@ const createActionForRunningSession = (type, sendSubject) => () => (dispatch, ge
 export const resume = createActionForRunningSession('PLAYER/RESUME', true);
 export const pause = createActionForRunningSession('PLAYER/PAUSE', true);
 export const stop = createActionForRunningSession('PLAYER/STOP', false);
+export const stopAndDiscard = createActionForRunningSession('PLAYER/STOP_DISCARD', false);

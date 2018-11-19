@@ -44,6 +44,13 @@ class WorkSession extends Model {
     this.updateSubject();
   }
 
+  delete() {
+    const { subject } = this;
+    this.update({ subject: null });
+    subject.update({ workSession: this }); // Properly deattach subject from this session
+    super.delete();
+  }
+
   openSprint(status) {
     const { Sprint } = this.getClass().session;
     return Sprint.create({

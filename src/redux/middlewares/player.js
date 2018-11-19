@@ -29,6 +29,7 @@ const playerMiddleware = (store) => {
         NotificationsService.pause(subject);
         break;
       case 'PLAYER/STOP':
+      case 'PLAYER/STOP_DISCARD':
         NotificationsService.stop();
         break;
       default:

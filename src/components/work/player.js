@@ -92,7 +92,8 @@ const baseIconOptions = {
 };
 
 const WorkPlayer = ({
-  picker, status, playerEnabled, showPlay, stopDisabled, onPressPlayPause, onPressStop,
+  picker, status, playerEnabled, showPlay, stopDisabled,
+  onPressPlayPause, onPressStop, onLongPressStop,
 }) => {
   const subjectsBox = (
     <View style={[styles.box, styles.subjectsContainer]}>
@@ -144,6 +145,7 @@ const WorkPlayer = ({
         name: 'stop',
       }}
       onPress={onPressStop}
+      onLongPress={onLongPressStop}
       disabled={!playerEnabled || stopDisabled}
     />
   );

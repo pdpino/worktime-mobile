@@ -11,6 +11,7 @@ const work = (state = defaultState, action) => {
         runningSessionId: action.payload.runningSessionId,
       };
     case 'PLAYER/STOP':
+    case 'PLAYER/STOP_DISCARD':
       return {
         ...state,
         runningSessionId: -1,

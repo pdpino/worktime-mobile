@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Alert } from 'react-native';
 import { WorkPlayerComponent, SubjectPicker } from '../../components/work';
 import {
-  start, resume, pause, stop, selectWorkSubject,
+  start, resume, pause, stop, stopAndDiscard, selectWorkSubject,
 } from '../../redux/actions';
 import {
   subjectsSelector, runningSessionSelector, selectedSubjectSelector,
@@ -13,9 +14,10 @@ class WorkPlayer extends React.Component {
   constructor(props) {
     super(props);
 
+    this.handleSelectSubject = this.handleSelectSubject.bind(this);
     this.handlePressPlayPause = this.handlePressPlayPause.bind(this);
     this.handlePressStop = this.handlePressStop.bind(this);
-    this.handleSelectSubject = this.handleSelectSubject.bind(this);
+    this.handleLongPressStop = this.handleLongPressStop.bind(this);
   }
 
   getStatus() {
@@ -47,6 +49,24 @@ class WorkPlayer extends React.Component {
     }
   }
 
+  handleLongPressStop() {
+    if (this.getStatus() === 'stopped') {
+      return;
+    }
+    // DICTIONARY
+    Alert.alert(
+      'Stop and discard',
+      'Do you want to discard this work session?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Stop and Discard',
+          onPress: () => this.props.stopAndDiscard(),
+        },
+      ],
+    );
+  }
+
   handleSelectSubject(selectedSubjectId) {
     this.props.selectWorkSubject(selectedSubjectId);
   }
@@ -72,6 +92,7 @@ class WorkPlayer extends React.Component {
         stopDisabled={status === 'stopped'}
         onPressPlayPause={this.handlePressPlayPause}
         onPressStop={this.handlePressStop}
+        onLongPressStop={this.handleLongPressStop}
       />
     );
   }
@@ -88,6 +109,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   resume,
   pause,
   stop,
+  stopAndDiscard,
   selectWorkSubject,
 }, dispatch);
 

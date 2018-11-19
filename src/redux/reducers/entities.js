@@ -24,6 +24,10 @@ const entities = orm => (state, action) => {
     case 'PLAYER/STOP':
       WorkSession.withId(action.payload.runningSessionId).stop(action.payload.timestamp);
       break;
+    case 'PLAYER/STOP_DISCARD': {
+      WorkSession.withId(action.payload.runningSessionId).delete();
+      break;
+    }
     default:
   }
   return session.state;

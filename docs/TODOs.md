@@ -11,7 +11,6 @@ Next things to do
 * Times in work-player view
 * Option to export data to file
 * Nest subjects
-* Press and hold stop button, to stop and discard the work-session (use a confirmation box)
 * In work-player, show the last 5 (or so) sessions worked on
 * View with sprints (for each work session)
 * Archive/unarchive subjects
