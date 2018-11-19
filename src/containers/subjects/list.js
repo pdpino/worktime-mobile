@@ -37,10 +37,11 @@ class SubjectsList extends Component {
   }
 
   handlePressDeleteSubject(id) {
+    const subject = this.findSubject(id);
     // DICTIONARY
     Alert.alert(
       'Confirmation',
-      'Are you sure you want to delete it?',
+      `Are you sure you want to delete ${subject.name}?`,
       [
         { text: 'Cancel', style: 'cancel' },
         { text: 'Delete', onPress: () => this.props.deleteSubject(id) },
