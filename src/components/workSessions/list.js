@@ -26,15 +26,11 @@ const styles = StyleSheet.create({
 const noWorkSessions = 'No sessions';
 const titleText = 'Work Sessions';
 
-const WorkSessionsList = ({ workSessions, listProps }) => {
+const WorkSessionsList = ({ workSessions, listProps, onPressDelete }) => {
   const title = (
     <Text style={styles.title}>
       {titleText}
     </Text>
-  );
-
-  const renderWorkSession = ({ item }) => (
-    <WorkSessionItem workSession={item} />
   );
 
   const emptyComponent = (
@@ -49,7 +45,12 @@ const WorkSessionsList = ({ workSessions, listProps }) => {
       <FlatList
         style={styles.list}
         data={workSessions}
-        renderItem={renderWorkSession}
+        renderItem={({ item }) => (
+          <WorkSessionItem
+            workSession={item}
+            onPressDelete={onPressDelete}
+          />
+        )}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={emptyComponent}
         {...listProps}

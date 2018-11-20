@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+* Button to delete a specific work session
+
 ## 1.2.0-alpha - 2018-11-19
 ### Added
 * Press and hold stop button: stop and discard the work-session (with a confirmation box)

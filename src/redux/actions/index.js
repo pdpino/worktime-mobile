@@ -1,4 +1,5 @@
 import { upsertSubject, deleteSubject } from './subjects';
+import { deleteWorkSession } from './workSessions';
 import {
   start, resume, pause, stop, stopAndDiscard, selectWorkSubject,
 } from './work';
@@ -6,6 +7,7 @@ import {
 export {
   upsertSubject,
   deleteSubject,
+  deleteWorkSession,
   start,
   resume,
   pause,

@@ -1,24 +1,30 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { prettyDate, prettyDuration } from '../../shared/utils';
+import { DropdownMenu } from '../../shared/UI/menus';
 
 const styles = StyleSheet.create({
-  item: {
+  container: {
     paddingHorizontal: 15,
     flexDirection: 'row',
     borderStyle: 'solid',
     borderBottomWidth: 1,
     borderBottomColor: 'gray',
+    alignItems: 'center',
   },
-  subitem: {
+  item: {
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     paddingVertical: 4,
     paddingHorizontal: 2,
-    marginRight: 50,
+    marginRight: 30,
   },
   text: {
     color: 'black',
+  },
+  moreButtonContainer: {
+    position: 'absolute', // HACK?
+    right: 15,
   },
 });
 
@@ -35,12 +41,27 @@ const status2Color = {
   stopped: 'red',
 }; // COLORS
 
-const WorkSessionItem = ({ workSession }) => {
+const WorkSessionItem = ({ workSession, onPressDelete }) => {
   // DICTIONARY (text)
-  const { nPauses, timeTotal, timeEffective } = workSession;
+  const {
+    id, nPauses, timeTotal, timeEffective,
+  } = workSession;
 
-  const times = (
-    <View>
+  const dateTimeItem = (
+    <View style={styles.item}>
+      <Text style={styles.text}>
+        {prettyDate(workSession.date)}
+      </Text>
+      <Text style={styles.text}>
+        {workSession.getPrettyHourStart()}
+        {' - '}
+        {workSession.getPrettyHourEnd()}
+      </Text>
+    </View>
+  );
+
+  const timesItem = (
+    <View style={styles.item}>
       <Text style={styles.text}>
         {`Total: ${prettyDuration(timeTotal)}`}
       </Text>
@@ -53,27 +74,33 @@ const WorkSessionItem = ({ workSession }) => {
     </View>
   );
 
-  const status = (
-    <Text style={[styles.text, { color: status2Color[workSession.status] }]}>
-      {status2Text[workSession.status]}
-    </Text>
+  const statusItem = (
+    <View style={styles.item}>
+      <Text style={[styles.text, { color: status2Color[workSession.status] }]}>
+        {status2Text[workSession.status]}
+      </Text>
+    </View>
   );
 
   return (
-    <View style={styles.item}>
-      <View style={styles.subitem}>
-        <Text style={styles.text}>
-          {prettyDate(workSession.date)}
-        </Text>
-        <Text style={styles.text}>
-          {workSession.getPrettyHourStart()}
-          {' - '}
-          {workSession.getPrettyHourEnd()}
-        </Text>
-      </View>
-      <View style={styles.subitem}>
-        {workSession.status !== 'stopped' ? status : times}
-      </View>
+    <View style={styles.container}>
+      {dateTimeItem}
+      {timesItem}
+      {workSession.status !== 'stopped' ? statusItem : (
+        <View style={styles.moreButtonContainer}>
+          <DropdownMenu
+            items={[
+              {
+                label: 'Delete', // DICTIONARY
+                callback: () => onPressDelete(id),
+                textStyle: {
+                  color: '#d50000',
+                },
+              },
+            ]}
+          />
+        </View>
+      )}
     </View>
   );
 };

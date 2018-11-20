@@ -1,12 +1,29 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ScrollView } from 'react-native';
+import { ScrollView, Alert } from 'react-native';
 import WorkSessionsListComponent from '../../components/workSessions/list';
 import SubjectInfoComponent from '../../components/subjects/info';
 import { subjectSessionsSelector } from '../../redux/selectors';
+import { deleteWorkSession } from '../../redux/actions';
 
 class SubjectShow extends React.Component {
-  componentDidMount() {}
+  constructor(props) {
+    super(props);
+
+    this.handleDeleteWorkSession = this.handleDeleteWorkSession.bind(this);
+  }
+
+  handleDeleteWorkSession(id) {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to delete the work session?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete', onPress: () => this.props.deleteWorkSession(id) },
+      ],
+    );
+  }
 
   render() {
     const { subject, workSessions } = this.props;
@@ -25,6 +42,7 @@ class SubjectShow extends React.Component {
         <WorkSessionsListComponent
           workSessions={workSessions}
           listProps={{ enableScroll: false }}
+          onPressDelete={this.handleDeleteWorkSession}
         />
       </ScrollView>
     );
@@ -38,4 +56,8 @@ const mapStateToProps = (state, ownProps) => ({
   subject: ownProps.navigation.getParam('subject'), // HACK? repeated
 });
 
-export default connect(mapStateToProps)(SubjectShow);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  deleteWorkSession,
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubjectShow);

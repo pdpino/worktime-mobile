@@ -8,8 +8,12 @@ const entities = orm => (state, action) => {
       break;
     case 'DELETE_SUBJECT':
       if (Subject.idExists(action.payload.id)) {
-        const instance = Subject.withId(action.payload.id);
-        instance.delete();
+        Subject.withId(action.payload.id).delete();
+      }
+      break;
+    case 'DELETE_WORK_SESSION':
+      if (WorkSession.idExists(action.payload.id)) {
+        WorkSession.withId(action.payload.id).delete();
       }
       break;
     case 'PLAYER/START':
