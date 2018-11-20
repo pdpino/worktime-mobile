@@ -85,7 +85,7 @@ class WorkPlayer extends React.Component {
           subjects={subjects}
           selectedSubjectId={selectedSubjectId}
           onValueChange={this.handleSelectSubject}
-          pickerEnabled={status === 'stopped'}
+          enabled={status === 'stopped'}
         />
         <StatusDisplayerComponent
           status={status}

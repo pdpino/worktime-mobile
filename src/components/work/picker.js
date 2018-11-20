@@ -26,22 +26,35 @@ const styles = StyleSheet.create({
 // DICTIONARY
 const chooseSubject = 'Choose a Subject';
 
-const SubjectPicker = ({
-  subjects, selectedSubjectId, onValueChange, enabled,
-}) => (
-  <View style={[commonStyles.box, styles.container]}>
-    <Text style={styles.label}>
-      {chooseSubject}
-    </Text>
-    <View style={styles.pickerContainer}>
-      <Picker
-        items={subjects}
-        selectedId={selectedSubjectId}
-        onValueChange={onValueChange}
-        enabled={enabled}
-      />
-    </View>
-  </View>
-);
+class SubjectPicker extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    const { selectedSubjectId, enabled } = this.props;
+
+    return nextProps.selectedSubjectId !== selectedSubjectId
+      || nextProps.enabled !== enabled;
+  }
+
+  render() {
+    const {
+      subjects, selectedSubjectId, onValueChange, enabled,
+    } = this.props;
+
+    return (
+      <View style={[commonStyles.box, styles.container]}>
+        <Text style={styles.label}>
+          {chooseSubject}
+        </Text>
+        <View style={styles.pickerContainer}>
+          <Picker
+            items={subjects}
+            selectedId={selectedSubjectId}
+            onValueChange={onValueChange}
+            enabled={enabled}
+          />
+        </View>
+      </View>
+    );
+  }
+}
 
 export default SubjectPicker;

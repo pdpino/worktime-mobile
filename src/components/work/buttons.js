@@ -20,26 +20,32 @@ const styles = StyleSheet.create({
   },
 });
 
-const PlayerButton = ({
-  iconName, backgroundColor, onPress, onLongPress, disabled,
-}) => (
-  <Button
-    containerViewStyle={styles.buttonContainerView}
-    buttonStyle={[
-      styles.button,
-      { backgroundColor },
-    ]}
-    icon={{
-      type: 'font-awesome',
-      size: 30,
-      style: { marginRight: 0 },
-      name: iconName,
-    }}
-    onPress={onPress}
-    onLongPress={onLongPress}
-    disabled={disabled}
-  />
-);
+class PlayerButton extends React.PureComponent {
+  render() {
+    const {
+      iconName, backgroundColor, onPress, onLongPress, disabled,
+    } = this.props;
+
+    return (
+      <Button
+        containerViewStyle={styles.buttonContainerView}
+        buttonStyle={[
+          styles.button,
+          { backgroundColor },
+        ]}
+        icon={{
+          type: 'font-awesome',
+          size: 30,
+          style: { marginRight: 0 },
+          name: iconName,
+        }}
+        onPress={onPress}
+        onLongPress={onLongPress}
+        disabled={disabled}
+      />
+    );
+  }
+}
 
 const PlayerButtons = ({
   playerEnabled, showPlay, stopDisabled, onPressPlayPause, onPressStop, onLongPressStop,
