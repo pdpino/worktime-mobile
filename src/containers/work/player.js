@@ -73,8 +73,9 @@ class WorkPlayer extends React.Component {
 
   render() {
     const status = this.getStatus();
-    const { subjects, selectedSubject } = this.props;
+    const { subjects, selectedSubject, runningSession } = this.props;
     const selectedSubjectId = selectedSubject ? selectedSubject.id : -1;
+    const { timeTotal, timeEffective } = runningSession;
 
     return (
       <WorkPlayerComponent
@@ -87,6 +88,8 @@ class WorkPlayer extends React.Component {
           />
         )}
         status={status}
+        timeTotal={timeTotal}
+        timeEffective={timeEffective}
         playerEnabled={selectedSubjectId !== -1}
         showPlay={status !== 'playing'}
         stopDisabled={status === 'stopped'}

@@ -22,14 +22,14 @@ class WorkSession extends Model {
   }
 
   resume(timestamp) {
-    this.closeCurrentSprint(timestamp);
+    this.updateCurrentSprint(timestamp);
     this.openSprint('playing');
     this.update({ status: 'playing' });
     this.updateSubject();
   }
 
   pause(timestamp) {
-    this.closeCurrentSprint(timestamp);
+    this.updateCurrentSprint(timestamp);
     this.openSprint('paused');
     this.update({
       status: 'paused',
@@ -39,7 +39,7 @@ class WorkSession extends Model {
   }
 
   stop(timestamp) {
-    this.closeCurrentSprint(timestamp);
+    this.updateCurrentSprint(timestamp);
     this.update({ status: 'stopped' });
     this.updateSubject();
   }
@@ -60,15 +60,15 @@ class WorkSession extends Model {
     });
   }
 
-  closeCurrentSprint(timestamp) {
+  updateCurrentSprint(timestamp) {
     const duration = timestamp - this.timestampEnd;
     const lastSprint = this.sprintSet.last();
-    lastSprint.close(duration);
-    const addTimeEffective = lastSprint.status === 'playing' ? duration : 0;
+    lastSprint.addDuration(duration);
+    const effectiveTimeToAdd = lastSprint.status === 'playing' ? duration : 0;
     this.update({
       timestampEnd: timestamp,
       timeTotal: this.timeTotal + duration,
-      timeEffective: this.timeEffective + addTimeEffective,
+      timeEffective: this.timeEffective + effectiveTimeToAdd,
     });
   }
 

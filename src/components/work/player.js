@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
+import { prettyDuration } from '../../shared/utils/dates';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,26 +33,27 @@ const styles = StyleSheet.create({
     height: 50,
   },
   statusContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 50,
+    flexDirection: 'column',
     marginTop: 20,
-    marginHorizontal: 20,
   },
-  statusLabel: {
-    flex: 1,
+  statusRow: {
+    flexDirection: 'row',
+    padding: 7,
+    marginHorizontal: 20,
+    justifyContent: 'center',
+  },
+  statusText: {
     textAlignVertical: 'center',
     textAlign: 'center',
     fontSize: 18,
-    marginLeft: 10,
     color: 'black',
+    marginHorizontal: 20,
   },
-  status: {
-    flex: 1,
-    textAlign: 'center',
-    fontSize: 18,
-    margin: 10,
+  statusCurrent: {
     fontWeight: 'bold',
+  },
+  statusTimeLabel: {
+    fontSize: 14,
   },
   buttons: {
     flexDirection: 'row',
@@ -82,8 +84,11 @@ const status2Color = {
   stopped: 'red',
 }; // COLORS
 
-const chooseSubject = 'Choose a Subject'; // DICTIONARY
-const statusLabel = 'Status'; // DICTIONARY
+// DICTIONARY
+const chooseSubject = 'Choose a Subject';
+const statusLabel = 'Status';
+const timeTotalLabel = 'Total';
+const timeEffectiveLabel = 'Effective';
 
 const baseIconOptions = {
   type: 'font-awesome',
@@ -92,7 +97,8 @@ const baseIconOptions = {
 };
 
 const WorkPlayer = ({
-  picker, status, playerEnabled, showPlay, stopDisabled,
+  picker, status, timeTotal, timeEffective,
+  playerEnabled, showPlay, stopDisabled,
   onPressPlayPause, onPressStop, onLongPressStop,
 }) => {
   const subjectsBox = (
@@ -106,13 +112,30 @@ const WorkPlayer = ({
     </View>
   );
 
-  const statusBox = (
-    <View style={[styles.box, styles.statusContainer]}>
-      <Text style={styles.statusLabel}>
+  const statusRowCurrent = (
+    <View style={styles.statusRow}>
+      <Text style={styles.statusText}>
         {statusLabel}
       </Text>
-      <Text style={[styles.status, { color: status2Color[status] || 'black' }]}>
+      <Text style={
+        [
+          styles.statusText,
+          styles.statusCurrent,
+          { color: status2Color[status] },
+        ]}
+      >
         {status2Text[status] || 'Stopped'}
+      </Text>
+    </View>
+  );
+
+  const statusRowTime = (label, seconds) => (
+    <View style={styles.statusRow}>
+      <Text style={[styles.statusText, styles.statusTimeLabel]}>
+        {label}
+      </Text>
+      <Text style={[styles.statusText, styles.statusTimeLabel]}>
+        {seconds > 0 ? prettyDuration(seconds) : '-'}
       </Text>
     </View>
   );
@@ -153,7 +176,11 @@ const WorkPlayer = ({
   return (
     <View style={styles.container}>
       {subjectsBox}
-      {statusBox}
+      <View style={[styles.box, styles.statusContainer]}>
+        {statusRowCurrent}
+        {statusRowTime(timeTotalLabel, timeTotal)}
+        {statusRowTime(timeEffectiveLabel, timeEffective)}
+      </View>
       <View style={styles.buttons}>
         {playPauseButton}
         {stopButton}

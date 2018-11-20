@@ -1,9 +1,9 @@
 import { fk, attr, Model } from 'redux-orm';
 
 class Sprint extends Model {
-  close(duration) {
+  addDuration(newDuration) {
     return this.update({
-      duration,
+      duration: (this.duration || 0) + newDuration,
     });
   }
 }
