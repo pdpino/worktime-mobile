@@ -4,6 +4,7 @@
 * Button to go from subjects-list directly to work-player
   - (review) what happens if something is already playing?
 * Widgets in Android
+* In work-player, show the last 5 (or so) sessions worked on
 * Option to enable/disable ongoing notification
 * Search bar in subjects
 * Add categories and tags

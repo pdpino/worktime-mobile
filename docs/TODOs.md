@@ -11,12 +11,14 @@ Next things to do
 * Times in work-player view
 * Option to export data to file
 * Nest subjects
-* In work-player, show the last 5 (or so) sessions worked on
 * View with sprints (for each work session)
 * Archive/unarchive subjects
 * Dashboard
   - "This semester" shortcut
   - Add total time to the right of the bars
+* Work-player:
+  - when discarding a work session, show a mini-notification with feedback (was it deleted or not?)
+  (how to display that?)
 
 ## Style
 * Style for `emptyComponent`s in `FlatList`s (no subjects and no sessions)
