@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Alert } from 'react-native';
-import { WorkPlayerComponent, SubjectPicker } from '../../components/work';
+import {
+  WorkPlayerComponent, SubjectPickerComponent, PlayerButtonsComponent, StatusDisplayerComponent,
+} from '../../components/work';
 import {
   start, resume, pause, stop, stopAndDiscard, selectWorkSubject,
 } from '../../redux/actions';
@@ -78,25 +80,27 @@ class WorkPlayer extends React.Component {
     const { timeTotal, timeEffective } = runningSession;
 
     return (
-      <WorkPlayerComponent
-        picker={(
-          <SubjectPicker
-            subjects={subjects}
-            selectedSubjectId={selectedSubjectId}
-            onValueChange={this.handleSelectSubject}
-            pickerEnabled={status === 'stopped'}
-          />
-        )}
-        status={status}
-        timeTotal={timeTotal}
-        timeEffective={timeEffective}
-        playerEnabled={selectedSubjectId !== -1}
-        showPlay={status !== 'playing'}
-        stopDisabled={status === 'stopped'}
-        onPressPlayPause={this.handlePressPlayPause}
-        onPressStop={this.handlePressStop}
-        onLongPressStop={this.handleLongPressStop}
-      />
+      <WorkPlayerComponent>
+        <SubjectPickerComponent
+          subjects={subjects}
+          selectedSubjectId={selectedSubjectId}
+          onValueChange={this.handleSelectSubject}
+          pickerEnabled={status === 'stopped'}
+        />
+        <StatusDisplayerComponent
+          status={status}
+          timeTotal={timeTotal}
+          timeEffective={timeEffective}
+        />
+        <PlayerButtonsComponent
+          playerEnabled={selectedSubjectId !== -1}
+          showPlay={status !== 'playing'}
+          stopDisabled={status === 'stopped'}
+          onPressPlayPause={this.handlePressPlayPause}
+          onPressStop={this.handlePressStop}
+          onLongPressStop={this.handleLongPressStop}
+        />
+      </WorkPlayerComponent>
     );
   }
 }

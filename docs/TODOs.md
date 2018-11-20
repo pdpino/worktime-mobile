@@ -34,4 +34,3 @@ Next things to do
 
 ## Refactors
 * Make `DashboardSection` Component, that displays title and borders. Reuse styles
-* `WorkPlayerComponent`, could be separated in: (1) selecting a subject (2) displaying and controlling. Currently, the ref and nesting is messy (see how the picker is being passed down to the component from the container)

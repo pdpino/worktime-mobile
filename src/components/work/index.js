@@ -1,7 +1,11 @@
 import WorkPlayerComponent from './player';
-import SubjectPicker from './SubjectPicker';
+import SubjectPickerComponent from './picker';
+import PlayerButtonsComponent from './buttons';
+import StatusDisplayerComponent from './status';
 
 export {
   WorkPlayerComponent,
-  SubjectPicker,
+  SubjectPickerComponent,
+  PlayerButtonsComponent,
+  StatusDisplayerComponent,
 };

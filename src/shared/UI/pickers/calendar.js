@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Calendar } from 'react-native-calendars';
-import asModalWithButton from './modal';
+import asModalWithButton from './modalWithButton';
 import { prettyDate } from '../../utils';
 
 const styles = StyleSheet.create({
