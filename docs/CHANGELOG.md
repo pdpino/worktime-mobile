@@ -5,13 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## 1.2.1-beta - 2018-11-21
 ### Added
-* Display of total and effective times in the player
+* Display of total and effective times in the player (auto-updates every 1min)
 * Button to delete a specific work session
 
 ### Fixed
 * When a work session is deleted, also the associated sprints are deleted
-* Fix re-rendering of subject-show view
+* Fix updating of subject-show view, when changing a work-session (deleting or playing)
 
 ## 1.2.0-alpha - 2018-11-19
 ### Added

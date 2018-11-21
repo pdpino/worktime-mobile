@@ -101,8 +101,8 @@ android {
         applicationId "com.worktime"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName "1.2.0-alpha"
+        versionCode 10
+        versionName "1.2.1-beta"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
