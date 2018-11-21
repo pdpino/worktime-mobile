@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
 
 class HorizontalBar extends React.Component {
   shouldComponentUpdate(nextProps) {
-    return this.props.totalValue !== nextProps.totalValue;
+    return this.props.totalValue !== nextProps.totalValue
+      || this.props.totalWidth !== nextProps.totalWidth;
   }
 
   render() {

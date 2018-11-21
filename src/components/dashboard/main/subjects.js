@@ -112,7 +112,8 @@ const SubjectsDetail = ({
         {checkbox}
         {checked && timeTotal > 0 && (
           <HorizontalBar
-            totalValue={timeTotal * widthMultiplier}
+            totalValue={timeTotal}
+            totalWidth={timeTotal * widthMultiplier}
             values={[
               {
                 width: timeEffective * widthMultiplier,
