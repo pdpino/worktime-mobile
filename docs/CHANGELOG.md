@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 * When a work session is deleted, also the associated sprints are deleted
+* Fix re-rendering of subject-show view
 
 ## 1.2.0-alpha - 2018-11-19
 ### Added

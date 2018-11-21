@@ -34,6 +34,13 @@ Next things to do
 ## Refactors
 * Make `DashboardSection` Component, that displays title and borders. Reuse styles
 * Split `utils/dates.js` into multiple files (is too big by now)
+* Reuse `createOrmSelector()`
+* Optimize subject-show.
+  Currently:
+  - Whole subject is being passed as parameter via react-navigation.
+  - `subject.name` is taken in `screens/SubjectShow`, to set the screen title
+  - `subject.id` is taken in `SubjectShowContainer`, to re-grab the whole subject from the store (redux-orm)
+  Is done this way to properly update the component when deleting a work-session from the list (if the subject is not fetched from the store again, the subject is not updated)
 
 ## Fixes
 * In the list of subjects:

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ScrollView, Alert } from 'react-native';
 import WorkSessionsListComponent from '../../components/workSessions/list';
 import SubjectInfoComponent from '../../components/subjects/info';
-import { subjectSessionsSelector } from '../../redux/selectors';
+import { subjectSessionsSelector, subjectSelector } from '../../redux/selectors';
 import { deleteWorkSession } from '../../redux/actions';
 
 class SubjectShow extends React.Component {
@@ -49,12 +49,14 @@ class SubjectShow extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  workSessions: subjectSessionsSelector(state, {
-    subject: ownProps.navigation.getParam('subject'),
-  }),
-  subject: ownProps.navigation.getParam('subject'), // HACK? repeated
-});
+const mapStateToProps = (state, ownProps) => {
+  const { id: subjectId } = ownProps.navigation.getParam('subject');
+  // OPTIMIZE (see TODOs)
+  return {
+    workSessions: subjectSessionsSelector(state, { subjectId }),
+    subject: subjectSelector(state, { subjectId }),
+  };
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   deleteWorkSession,

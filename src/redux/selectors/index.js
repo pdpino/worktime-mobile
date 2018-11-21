@@ -1,4 +1,4 @@
-import { subjectsSelector } from './subjects';
+import { subjectsSelector, subjectSelector } from './subjects';
 import {
   subjectSessionsSelector,
   lastWorkSessionSelector,
@@ -12,6 +12,7 @@ import {
 
 export {
   subjectsSelector,
+  subjectSelector,
   subjectSessionsSelector,
   runningSessionIdSelector,
   selectedSubjectSelector,

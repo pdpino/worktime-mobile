@@ -1,11 +1,10 @@
-import { createSelector } from 'reselect';
 import { createOrmSelector, ormSessionSelector } from './orm';
 
-const subjectFromPropsSelector = (_, props) => props.subject;
-
-export const subjectSessionsSelector = createSelector(
-  subjectFromPropsSelector,
-  subject => subject.worksessionSet.toModelArray()
+export const subjectSessionsSelector = createOrmSelector(
+  ormSessionSelector,
+  (_, props) => props.subjectId,
+  (ormSession, id) => ormSession.Subject.withId(id)
+    .worksessionSet.toModelArray()
     .sort((ws1, ws2) => ws2.timestampStart - ws1.timestampStart),
 );
 
