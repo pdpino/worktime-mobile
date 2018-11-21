@@ -33,6 +33,11 @@ const playerMiddleware = (store) => {
   // REVIEW: move service to services/ folder?
   // could also be a generic interval service, receive seconds and callback
 
+  // TODO: when starting the service, run an initial update
+  // to display something in the status box of the work-player
+
+  // TODO: what happens with the service when you minimize or close the app?
+
   return next => (action) => {
     if (!action.type.startsWith('PLAYER/')) {
       return next(action);

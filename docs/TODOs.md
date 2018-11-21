@@ -1,15 +1,12 @@
 # TODOs
 Next things to do
 
-## Fixes
-* In the list of subjects:
-  - the add button is in top of a subject's "more" button (so you can't press it)
-* Dashboard
-  - date "Mon 12 Nov" overflows in date filter (although text is wrapping)
-
 ## New Features
-* Times in work-player view
-* Option to export data to file
+1. Times in work-player view
+  - display times of the last played work-session
+  (specially useful when putting stop, you want to see how much you've worked)
+  There must be a difference in the display, between a running session and a past session
+2. Option to export data to file
 * Nest subjects
 * View with sprints (for each work session)
 * Archive/unarchive subjects
@@ -36,3 +33,9 @@ Next things to do
 
 ## Refactors
 * Make `DashboardSection` Component, that displays title and borders. Reuse styles
+
+## Fixes
+* In the list of subjects:
+  - the add button is in top of a subject's "more" button (so you can't press it)
+* Dashboard
+  - date "Mon 12 Nov" overflows in date filter (although text is wrapping)
