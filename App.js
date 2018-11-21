@@ -31,7 +31,9 @@ class App extends React.Component {
 
   finishRehydrating() {
     this.setState({ isRehydrated: true });
-    store.dispatch(onAppActivate());
+    store.dispatch(onAppActivate()); // HACK
+    // app activates before the rehydration,
+    // so there is nothing in the store when the activation occurs
   }
 
   render() {

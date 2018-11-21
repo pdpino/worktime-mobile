@@ -41,6 +41,10 @@ Next things to do
   - `subject.name` is taken in `screens/SubjectShow`, to set the screen title
   - `subject.id` is taken in `SubjectShowContainer`, to re-grab the whole subject from the store (redux-orm)
   Is done this way to properly update the component when deleting a work-session from the list (if the subject is not fetched from the store again, the subject is not updated)
+* The player middleware is highly coupled, it contains logic for:
+  - notifications service
+  - update work-times service
+  - side effect when opening app, update work-times
 
 ## Fixes
 * In the list of subjects:

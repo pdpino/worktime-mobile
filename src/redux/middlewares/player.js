@@ -23,8 +23,11 @@ const playerMiddleware = (store) => {
   return next => (action) => {
     switch (action.type) {
       case 'APP/ACTIVATE':
-        if (isWorking() && !workTimesService.isActive()) {
-          workTimesService.start();
+        if (isWorking()) {
+          if (!workTimesService.isActive()) {
+            workTimesService.start();
+          }
+          store.dispatch(updateWorkTimes());
         }
         break;
       case 'APP/DEACTIVATE':
