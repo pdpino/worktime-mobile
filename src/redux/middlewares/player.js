@@ -1,20 +1,9 @@
 import NotificationsService from '../../services/notifications';
+import OnIntervalService from '../../services/onInterval';
 import {
   resume, pause, stop, updateWorkTimes,
 } from '../actions';
-
-const UpdateWorkTimesService = (store, seconds) => {
-  let intervalId;
-  return {
-    start: () => {
-      intervalId = setInterval(
-        () => store.dispatch(updateWorkTimes()),
-        seconds * 1000,
-      );
-    },
-    stop: () => clearInterval(intervalId),
-  };
-};
+import { runningSessionSelector } from '../selectors';
 
 const playerMiddleware = (store) => {
   NotificationsService.configure();
@@ -24,21 +13,28 @@ const playerMiddleware = (store) => {
     Stop: () => store.dispatch(stop()),
   });
 
-  const updateTimesService = UpdateWorkTimesService(store, 60);
-  // TODO: if there is a running session, start the service
+  const workTimesService = OnIntervalService(
+    () => store.dispatch(updateWorkTimes()),
+    60,
+  );
 
-  // TODO: use std name: updateWorkTimes vs updateTimes
-  // (see action, service, etc)
-
-  // REVIEW: move service to services/ folder?
-  // could also be a generic interval service, receive seconds and callback
-
-  // TODO: when starting the service, run an initial update
-  // to display something in the status box of the work-player
-
-  // TODO: what happens with the service when you minimize or close the app?
+  const isWorking = () => runningSessionSelector(store.getState());
 
   return next => (action) => {
+    switch (action.type) {
+      case 'APP/ACTIVATE':
+        if (isWorking() && !workTimesService.isActive()) {
+          workTimesService.start();
+        }
+        break;
+      case 'APP/DEACTIVATE':
+        if (workTimesService.isActive()) {
+          workTimesService.stop();
+        }
+        break;
+      default:
+    }
+
     if (!action.type.startsWith('PLAYER/')) {
       return next(action);
     }
@@ -47,11 +43,11 @@ const playerMiddleware = (store) => {
     const { subject } = action.payload;
 
     switch (action.type) {
-      case 'PLAYER/START':
+      case 'PLAYER/STARTING':
         NotificationsService.start(subject);
         break;
-      case 'PLAYER/SAVE_RUNNING_SESSION_ID':
-        updateTimesService.start();
+      case 'PLAYER/STARTED':
+        workTimesService.start();
         break;
       case 'PLAYER/RESUME':
         NotificationsService.resume(subject);
@@ -62,7 +58,7 @@ const playerMiddleware = (store) => {
       case 'PLAYER/STOP':
       case 'PLAYER/STOP_DISCARD':
         NotificationsService.stop();
-        updateTimesService.stop();
+        workTimesService.stop();
         break;
       default:
     }

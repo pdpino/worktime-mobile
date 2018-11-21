@@ -3,6 +3,7 @@ import { deleteWorkSession } from './workSessions';
 import {
   start, resume, pause, stop, stopAndDiscard, selectWorkSubject, updateWorkTimes,
 } from './work';
+import { onAppActivate, onAppDeactivate } from './app';
 
 export {
   upsertSubject,
@@ -15,4 +16,6 @@ export {
   stopAndDiscard,
   selectWorkSubject,
   updateWorkTimes,
+  onAppActivate,
+  onAppDeactivate,
 };

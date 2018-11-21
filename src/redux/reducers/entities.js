@@ -16,9 +16,15 @@ const entities = orm => (state, action) => {
         WorkSession.withId(action.payload.id).delete();
       }
       break;
-    case 'PLAYER/START':
+    case 'PLAYER/STARTING':
       WorkSession.start(action.payload.timestamp, action.payload.subject.id);
       break;
+    case 'PLAYER/STARTED':
+    case 'PLAYER/UPDATE_TIMES': {
+      const { runningSessionId, timestamp } = action.payload;
+      WorkSession.withId(runningSessionId).updateTimes(timestamp);
+      break;
+    }
     case 'PLAYER/RESUME':
       WorkSession.withId(action.payload.runningSessionId).resume(action.payload.timestamp);
       break;
@@ -31,11 +37,6 @@ const entities = orm => (state, action) => {
     case 'PLAYER/STOP_DISCARD':
       WorkSession.withId(action.payload.runningSessionId).delete();
       break;
-    case 'PLAYER/UPDATE_TIMES': {
-      const { runningSessionId, timestamp } = action.payload;
-      WorkSession.withId(runningSessionId).updateTimes(timestamp);
-      break;
-    }
     default:
   }
   return session.state;

@@ -1,8 +1,5 @@
 import moment from 'moment';
 
-// REVIEW: split into multiple files?
-// could be: format (pretty), getters
-
 // Convention for date's names
 // dateString: date as plain strings, in format YYYY-MM-DD
 // date: moment object (except in WorkSession, which are strings)
@@ -61,21 +58,28 @@ export function prettyDate(date) {
   return parsedDate.format('ddd D MMM YYYY');
 }
 
-export function prettyDuration(totalSeconds) {
-  let duration = '0m';
+export function prettyDuration(totalSeconds, includeSeconds = false) {
+  let duration = '';
+  const emptyResult = includeSeconds ? '0s' : '0m';
+
+  const seconds = Math.floor(totalSeconds % 60);
   let minutes = Math.floor(totalSeconds / 60);
   const hours = Math.floor(minutes / 60);
   minutes %= 60;
 
+  if (includeSeconds && seconds) {
+    duration = `${seconds}s`;
+  }
+
   if (minutes) {
-    duration = `${minutes}m`;
+    duration = `${minutes}m ${duration}`;
   }
 
   if (hours) {
     duration = `${hours}h ${duration}`;
   }
 
-  return duration;
+  return duration ? duration.trim() : emptyResult;
 }
 
 export function isBetween(initialDate, endingDate, dateString) {

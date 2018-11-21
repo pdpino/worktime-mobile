@@ -33,6 +33,7 @@ Next things to do
 
 ## Refactors
 * Make `DashboardSection` Component, that displays title and borders. Reuse styles
+* Split `utils/dates.js` into multiple files (is too big by now)
 
 ## Fixes
 * In the list of subjects:
