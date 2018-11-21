@@ -15,7 +15,7 @@ export const start = subject => (dispatch, getState) => {
   const runningSession = lastWorkSessionSelector(getState());
 
   return dispatch({
-    type: 'SAVE_RUNNING_SESSION_ID',
+    type: 'PLAYER/SAVE_RUNNING_SESSION_ID',
     payload: {
       runningSessionId: runningSession.id,
     },
@@ -47,3 +47,4 @@ export const resume = createActionForRunningSession('PLAYER/RESUME', true);
 export const pause = createActionForRunningSession('PLAYER/PAUSE', true);
 export const stop = createActionForRunningSession('PLAYER/STOP', false);
 export const stopAndDiscard = createActionForRunningSession('PLAYER/STOP_DISCARD', false);
+export const updateWorkTimes = createActionForRunningSession('PLAYER/UPDATE_TIMES', false);

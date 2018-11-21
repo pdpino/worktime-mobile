@@ -53,7 +53,7 @@ const Root = createBottomTabNavigator({
   },
 },
 {
-  initialRouteName: 'subjects',
+  initialRouteName: 'work',
   navigationOptions: ({ navigation }) => ({
     tabBarIcon: ({ tintColor }) => {
       const { routeName } = navigation.state;

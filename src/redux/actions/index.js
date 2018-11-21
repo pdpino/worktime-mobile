@@ -1,7 +1,7 @@
 import { upsertSubject, deleteSubject } from './subjects';
 import { deleteWorkSession } from './workSessions';
 import {
-  start, resume, pause, stop, stopAndDiscard, selectWorkSubject,
+  start, resume, pause, stop, stopAndDiscard, selectWorkSubject, updateWorkTimes,
 } from './work';
 
 export {
@@ -14,4 +14,5 @@ export {
   stop,
   stopAndDiscard,
   selectWorkSubject,
+  updateWorkTimes,
 };

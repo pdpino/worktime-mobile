@@ -22,14 +22,14 @@ class WorkSession extends Model {
   }
 
   resume(timestamp) {
-    this.updateCurrentSprint(timestamp);
+    this.updateTimes(timestamp);
     this.openSprint('playing');
     this.update({ status: 'playing' });
     this.updateSubject();
   }
 
   pause(timestamp) {
-    this.updateCurrentSprint(timestamp);
+    this.updateTimes(timestamp);
     this.openSprint('paused');
     this.update({
       status: 'paused',
@@ -39,7 +39,7 @@ class WorkSession extends Model {
   }
 
   stop(timestamp) {
-    this.updateCurrentSprint(timestamp);
+    this.updateTimes(timestamp);
     this.update({ status: 'stopped' });
     this.updateSubject();
   }
@@ -53,7 +53,7 @@ class WorkSession extends Model {
     });
   }
 
-  updateCurrentSprint(timestamp) {
+  updateTimes(timestamp) {
     const duration = timestamp - this.timestampEnd;
     const lastSprint = this.sprintSet.last();
     lastSprint.addDuration(duration);

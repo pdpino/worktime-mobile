@@ -5,7 +5,7 @@ const defaultState = {
 
 const work = (state = defaultState, action) => {
   switch (action.type) {
-    case 'SAVE_RUNNING_SESSION_ID':
+    case 'PLAYER/SAVE_RUNNING_SESSION_ID':
       return {
         ...state,
         runningSessionId: action.payload.runningSessionId,
