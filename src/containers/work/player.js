@@ -9,7 +9,8 @@ import {
   start, resume, pause, stop, stopAndDiscard, selectWorkSubject,
 } from '../../redux/actions';
 import {
-  subjectsSelector, runningSessionSelector, selectedSubjectSelector,
+  subjectsSelector, selectedSubjectSelector,
+  runningSessionSelector, lastRunningSessionSelector,
 } from '../../redux/selectors';
 
 class WorkPlayer extends React.Component {
@@ -75,9 +76,15 @@ class WorkPlayer extends React.Component {
 
   render() {
     const status = this.getStatus();
-    const { subjects, selectedSubject, runningSession } = this.props;
+    const {
+      subjects, selectedSubject, runningSession, lastRunningSession,
+    } = this.props;
     const selectedSubjectId = selectedSubject ? selectedSubject.id : -1;
     const { timeTotal, timeEffective } = runningSession;
+    const {
+      timeTotal: lastTimeTotal,
+      timeEffective: lastTimeEffective,
+    } = lastRunningSession;
 
     return (
       <WorkPlayerComponent>
@@ -89,8 +96,8 @@ class WorkPlayer extends React.Component {
         />
         <StatusDisplayerComponent
           status={status}
-          timeTotal={timeTotal}
-          timeEffective={timeEffective}
+          timeTotal={timeTotal || lastTimeTotal}
+          timeEffective={timeEffective || lastTimeEffective}
         />
         <PlayerButtonsComponent
           playerEnabled={selectedSubjectId !== -1}
@@ -107,8 +114,9 @@ class WorkPlayer extends React.Component {
 
 const mapStateToProps = state => ({
   subjects: subjectsSelector(state),
-  runningSession: runningSessionSelector(state),
   selectedSubject: selectedSubjectSelector(state),
+  runningSession: runningSessionSelector(state),
+  lastRunningSession: lastRunningSessionSelector(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

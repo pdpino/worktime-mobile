@@ -5,18 +5,20 @@ import {
   workSessionsSelector,
 } from './workSessions';
 import {
-  runningSessionIdSelector,
   selectedSubjectSelector,
+  runningSessionIdSelector,
   runningSessionSelector,
+  lastRunningSessionSelector,
 } from './work';
 
 export {
   subjectsSelector,
   subjectSelector,
   subjectSessionsSelector,
-  runningSessionIdSelector,
-  selectedSubjectSelector,
-  runningSessionSelector,
   lastWorkSessionSelector,
   workSessionsSelector,
+  selectedSubjectSelector,
+  runningSessionIdSelector,
+  runningSessionSelector,
+  lastRunningSessionSelector,
 };

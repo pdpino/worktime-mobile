@@ -2,11 +2,7 @@
 Next things to do
 
 ## New Features
-1. Times in work-player view
-  - display times of the last played work-session
-  (specially useful when putting stop, you want to see how much you've worked)
-  There must be a difference in the display, between a running session and a past session
-2. Option to export data to file
+1. Option to export data to file
 * Nest subjects
 * View with sprints (for each work session)
 * Archive/unarchive subjects
@@ -21,21 +17,25 @@ Next things to do
 * Style for `emptyComponent`s in `FlatList`s (no subjects and no sessions)
 * Use a lighter color as division for items in lists
 * Add some padding for items in subjects-list
-* Dashboard:
-  - select all should look different than the other checkboxes?
-  - summary boxes should have fixed size
-  - summary times should be displayed bigger
 
 ## Develop
 * Type-checking with flow
 * Dictionary for strings
 * Dictionary for colors (?)
 
+## Fixes
+* In the list of subjects:
+  - the add button is in top of a subject's "more" button (so you can't press it)
+* Dashboard
+  - date "Mon 12 Nov" overflows in date filter (although text is wrapping)
+
 ## Refactors
 * Make `DashboardSection` Component, that displays title and borders. Reuse styles
 * Split `utils/dates.js` into multiple files (is too big by now)
-* Reuse `createOrmSelector()`
-* Optimize subject-show.
+* Reuse `createOrmSelector()`. Also, there are selectors with really long names
+* `index.js` files in the folders look really bad.
+  Is there a way to do `import/export *`?
+* Optimize subject-show. (Review: how non-optimal is this?)
   Currently:
   - Whole subject is being passed as parameter via react-navigation.
   - `subject.name` is taken in `screens/SubjectShow`, to set the screen title
@@ -45,9 +45,4 @@ Next things to do
   - notifications service
   - update work-times service
   - side effect when opening app, update work-times
-
-## Fixes
-* In the list of subjects:
-  - the add button is in top of a subject's "more" button (so you can't press it)
-* Dashboard
-  - date "Mon 12 Nov" overflows in date filter (although text is wrapping)
+  But two or three middlewares may be too much?

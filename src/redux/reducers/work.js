@@ -1,4 +1,5 @@
 const defaultState = {
+  lastRunningSessionId: -1,
   runningSessionId: -1,
   selectedSubjectId: -1,
 };
@@ -15,6 +16,7 @@ const work = (state = defaultState, action) => {
       return {
         ...state,
         runningSessionId: -1,
+        lastRunningSessionId: action.payload.runningSessionId,
       };
     case 'SELECT_WORK_SUBJECT':
       return {
