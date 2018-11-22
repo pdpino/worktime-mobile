@@ -13,17 +13,17 @@ Next things to do
   - when discarding a work session, show a mini-notification with feedback (was it deleted or not?)
   (how to display that?)
 
-## Style
-* Style for `emptyComponent`s in `FlatList`s (no subjects and no sessions)
-* Use a lighter color as division for items in lists
-* Add some padding for items in subjects-list
-
 ## Develop
 * Type-checking with flow
 * Dictionary for strings
 * Dictionary for colors (?)
 
 ## Fixes
+* Extra re-renders, slow performance:
+  - Navigation is slow
+  - behavior:
+    + App just opened: play and pause are fast
+    + After some time navigating through screens: play and pause become slow
 * In the list of subjects:
   - the add button is in top of a subject's "more" button (so you can't press it)
 * Dashboard
@@ -32,6 +32,7 @@ Next things to do
 ## Refactors
 * Make `DashboardSection` Component, that displays title and borders. Reuse styles
 * Split `utils/dates.js` into multiple files (is too big by now)
+* Create class `TimeStats`; object that allows to record days worked, initial date, ending date, etc. It's passed down to `sumTimes()` (instead of `daysWorked` object) (useful to encapsulate behavior of times-summaries) (dashboard summary, subject summary, etc)
 * Reuse `createOrmSelector()`. Also, there are selectors with really long names
 * `index.js` files in the folders look really bad.
   Is there a way to do `import/export *`?

@@ -20,6 +20,11 @@ const styles = StyleSheet.create({
   list: {
     // width: Dimensions.get('window').width, // HACK?
   },
+  emptyList: {
+    textAlign: 'center',
+    marginVertical: 15,
+    fontStyle: 'italic',
+  },
 });
 
 // DICTIONARY
@@ -34,7 +39,7 @@ const WorkSessionsList = ({ workSessions, listProps, onPressDelete }) => {
   );
 
   const emptyComponent = (
-    <Text>
+    <Text style={styles.emptyList}>
       {noWorkSessions}
     </Text>
   );

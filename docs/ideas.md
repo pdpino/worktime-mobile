@@ -8,7 +8,6 @@
 * Option to enable/disable ongoing notification
 * Search bar in subjects
 * Add categories and tags
-* Add support for nesting subjects
 * Configure periodical notification time. E.g., if you've been working for an hour without pauses, it vibrates to remind you (useful for not working too much, or to remember to put stop)
 
 ## Charts in dashboard

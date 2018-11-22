@@ -16,6 +16,11 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width, // HACK?
     paddingTop: 5,
   },
+  emptyList: {
+    textAlign: 'center',
+    marginVertical: 15,
+    fontStyle: 'italic',
+  },
 });
 
 const noSubjects = 'No subjects'; // DICTIONARY
@@ -33,7 +38,7 @@ const SubjectsList = ({
   );
 
   const emptyComponent = (
-    <Text>
+    <Text style={styles.emptyList}>
       {noSubjects}
     </Text>
   );
