@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 * Improve subjects and work-sessions styles (empty list styles)
 
+### Fixed
+* When deleting a subject, also delete its work-sessions (and sprints associated)
+
 
 ## 1.2.2 - 2018-11-21
 ### Added

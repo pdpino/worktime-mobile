@@ -19,6 +19,11 @@ class Subject extends Model {
       timeEffective,
     };
   }
+
+  delete() {
+    this.worksessionSet.toModelArray().forEach(workSession => workSession.delete());
+    super.delete();
+  }
 }
 
 Subject.modelName = 'Subject';
