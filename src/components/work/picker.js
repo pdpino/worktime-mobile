@@ -28,10 +28,13 @@ const chooseSubject = 'Choose a Subject';
 
 class SubjectPicker extends React.Component {
   shouldComponentUpdate(nextProps) {
-    const { selectedSubjectId, enabled } = this.props;
+    const {
+      selectedSubjectId, enabled, subjects,
+    } = this.props;
 
     return nextProps.selectedSubjectId !== selectedSubjectId
-      || nextProps.enabled !== enabled;
+      || nextProps.enabled !== enabled
+      || nextProps.length !== subjects.length;
   }
 
   render() {
