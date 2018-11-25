@@ -1,8 +1,85 @@
 # TODOs
 Next things to do
 
+## Next feature: Export data from mobile to desktop
+* In mobile:
+  - Infrastructure to update the store when needed (in production)
+  - Update the store, adding `device: 'mobile'` to each existing work-session
+    + also, you could delete orphan work-sessions (and sprints)
+      (how do I recognize them? subject null?)
+  - Add a `porting` reducer (importing and exporting)
+    + has a `lastExportedTimestamp` number, default value is 0
+  - View to export (for now, in settings)
+    + Choose: export all vs export since last exported
+      (the second one is the default)
+    + button to export, wait to finish
+    + choose which app to share to (google drive, whatsapp, etc)
+  - Generate json file with subjects, work-sessions and sprints (nested data)
+    + don't include sprints (?), (desktop won't take them anyway)
+    + only include stopped sessions
+    + Save the greatest `timestampEnd` (the oldest work-session exported) to reducer
+      (update `lastExportedTimestamp`)
+  - Share file via the selected app
+
+* In desktop:
+  - `work update`:
+    + prompt for device name (defaults to laptop)
+    + save the device name to `admin.json`
+    + add `device: <device-name>` to every entry
+  - `work import file.json`
+    + conciliate subject-job names:
+      Create a dict: `clean(subjectName) => jobName`,
+      where `clean()` takes out the accents and makes it lowercase
+      Save the dict in `admin.json`
+    + take each work-session from each subject, create entry with:
+      ```
+      obs = ""
+      finished = True
+      date = workSession.date
+      n_pauses = workSession.nPauses
+      total_time = workSession.timeTotal
+      effective_time = workSession.timeEffective
+      pause_time = workSession.timeTotal - timeEffective
+      hi = unixToHour(timestampStart)
+      hf = unixToHour(timestampEnd)
+      device = workSession.device
+      ```
+    + Extend existing list with new one
+    + sort the merged one (timsort should do it pretty well), and save job
+    + save imported date and hour in `admin.json`
+      `last_imported_hour`, `last_imported_date`
+
+
+### Import to mobile from desktop
+* In desktop:
+  - Export same json files, considering:
+    + jobs must be stopped (`_entry = null`, `is_running = False`)
+    + after exporting, save date and last final hour (`hf`) (in `admin.json`)
+      `last_exported_hour`, `last_exported_date`
+    + when exporting, choose only those older than the last one
+  - send it manually through whatsapp/drive, etc
+
+* In mobile:
+  - Import from file (react-native-fs can do this?)
+  - conciliate names (how??)
+  - Create method `subject.importJob(job)` (specific for jobs, in the future it will be legacy code)
+  - Create method `WorkSession.importEntry(entry)`, copy:
+    ```
+    status = 'stopped'
+    date = entry.date
+    timestampStart = hourToUnix(date, hi)
+    timestampEnd = hourToUnix(date, hf)
+    timeTotal = entry.total_time
+    timeEffective = entry.effective_time
+    nPauses = entry.n_pauses
+    sprints = []
+    ```
+    Sprints are empty, which means that there is no info about sprints.
+    (In the future, edge case `sprints.length === 0` will have to be handled in the mobile app)
+
+
+
 ## New Features
-1. Option to export data to file
 * Nest subjects
 * View with sprints (for each work session)
 * Archive/unarchive subjects
