@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import {
+  StyleSheet, View, Text, ActivityIndicator,
+} from 'react-native';
 import {
   prettyDuration, prettyDays, prettyPercentage,
 } from '../../../shared/utils';
@@ -63,7 +65,7 @@ const worked = 'worked';
 const perDay = 'per day';
 
 const Summary = ({
-  timeTotal, timeEffective, nDaysWorked, averagePerDay,
+  timeTotal, timeEffective, nDaysWorked, averagePerDay, isLoading,
 }) => {
   const totalBox = (
     <View style={styles.box}>
@@ -101,19 +103,27 @@ const Summary = ({
     </View>
   );
 
+  const loadingWheel = (
+    <View style={styles.subContainer}>
+      <ActivityIndicator />
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
         {title}
       </Text>
-      <View style={styles.subContainer}>
-        {totalBox}
-        {effectiveBox}
-        <View style={styles.box}>
-          {daysRow(prettyDays(nDaysWorked), worked)}
-          {daysRow(prettyDuration(averagePerDay), perDay)}
+      {isLoading ? loadingWheel : (
+        <View style={styles.subContainer}>
+          {totalBox}
+          {effectiveBox}
+          <View style={styles.box}>
+            {daysRow(prettyDays(nDaysWorked), worked)}
+            {daysRow(prettyDuration(averagePerDay), perDay)}
+          </View>
         </View>
-      </View>
+      )}
     </View>
   );
 };

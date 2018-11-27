@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import {
+  StyleSheet, View, Text, ActivityIndicator,
+} from 'react-native';
 import { daysAgo, prettyDuration } from '../../shared/utils';
 
 const styles = StyleSheet.create({
@@ -28,7 +30,7 @@ const timeEffectiveText = 'Effective time: ';
 const nDaysWorkedText = 'Days worked: ';
 
 const SubjectInfo = ({
-  lastWorkedDate, timeTotal, timeEffective, nDaysWorked,
+  lastWorkedDate, timeTotal, timeEffective, nDaysWorked, isLoading,
 }) => {
   const title = (
     <Text style={styles.title}>
@@ -67,10 +69,14 @@ const SubjectInfo = ({
   return (
     <View style={styles.container}>
       {title}
-      {lastWorkedInfo}
-      {timeTotalInfo}
-      {timeEffectiveInfo}
-      {nDaysWorkedInfo}
+      {isLoading ? <ActivityIndicator /> : (
+        <View>
+          {lastWorkedInfo}
+          {timeTotalInfo}
+          {timeEffectiveInfo}
+          {nDaysWorkedInfo}
+        </View>
+      )}
     </View>
   );
 };

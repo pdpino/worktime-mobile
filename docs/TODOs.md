@@ -96,11 +96,14 @@ Next things to do
 * Dictionary for colors (?)
 
 ## Fixes
-* Extra re-renders, slow performance:
-  - Navigation is slow
-  - behavior:
-    + App just opened: play and pause are fast
-    + After some time navigating through screens: play and pause become slow
+1. Extra re-renders, slow performance. Refactor?:
+  - `componentDidMount`, `componentWillUnMount` and `shouldComponentUpdate` are copied in `SubjectShow` and `DashboardMain`
+* Bug: when there is a session running, if you delete it's subject:
+  - the `updateTimesService` keeps running on the back, so every minute (or the time that it takes to update), it throws an error because the workSession does not exist.
+  - hack solution: in the reducer, check if the workSession exists before updating its time
+    Problem: this does not stop the service once the work-session is deleted (the service should be stopped!)
+  - another solution: don't allow deleting a subject if there is a workSession running (that it belongs to that subject).
+    Is reasonable, since you probably do not want to delete a subject that is running
 * In the list of subjects:
   - the add button is in top of a subject's "more" button (so you can't press it)
 * Dashboard

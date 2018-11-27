@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { View, Alert } from 'react-native';
@@ -7,7 +7,7 @@ import { subjectsSelector } from '../../redux/selectors';
 import { deleteSubject } from '../../redux/actions';
 import { NewButton } from '../../shared/UI/buttons';
 
-class SubjectsList extends Component {
+class SubjectsList extends React.Component {
   constructor(props) {
     super(props);
 

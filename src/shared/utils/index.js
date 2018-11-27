@@ -8,6 +8,8 @@ import {
   smartDivision,
   prettyPercentage,
 } from './misc';
+import TimeStats from './TimeStats';
+import Memoizer from './memoizer';
 
 export {
   getTimestamp,
@@ -27,4 +29,6 @@ export {
   getStartOfMonth,
   subtractDays,
   isSameDay,
+  TimeStats,
+  Memoizer,
 };

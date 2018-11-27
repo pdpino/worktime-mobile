@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 * When deleting a subject, also delete its work-sessions (and sprints associated)
 * When creating a new subject, it was not displayed immediately in the work-player subject-picker.
+* Make time calculations async in the subject-show view and in dashboard
+* Smarter re-rendering of subject-show and dashboard. Improves performance
 
 
 ## 1.2.2 - 2018-11-21

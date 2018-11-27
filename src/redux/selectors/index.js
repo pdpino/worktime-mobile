@@ -1,6 +1,5 @@
 import { subjectsSelector, subjectSelector } from './subjects';
 import {
-  subjectSessionsSelector,
   lastWorkSessionSelector,
   workSessionsSelector,
 } from './workSessions';
@@ -14,7 +13,6 @@ import {
 export {
   subjectsSelector,
   subjectSelector,
-  subjectSessionsSelector,
   lastWorkSessionSelector,
   workSessionsSelector,
   selectedSubjectSelector,
