@@ -13,6 +13,10 @@ import {
 import { sumTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
 
 class Dashboard extends React.Component {
+  static isSameDay(dateA, dateB) {
+    return (!dateA && !dateB) || isSameDay(dateA, dateB);
+  }
+
   static getAllSubjectsSelected(subjects) {
     const selectedSubjectsIds = {};
     subjects.forEach((subject) => {
@@ -98,7 +102,7 @@ class Dashboard extends React.Component {
 
   handleChangeDate(key) {
     return (dateString) => {
-      if (isSameDay(this.state[key], dateString)) {
+      if (Dashboard.isSameDay(this.state[key], dateString)) {
         return;
       }
       this.setStateWrapper({ [key]: moment(dateString) });
@@ -107,7 +111,8 @@ class Dashboard extends React.Component {
 
   handleChangeDates(newInitialDate, newEndingDate) {
     const { initialDate, endingDate } = this.state;
-    if (isSameDay(initialDate, newInitialDate) && isSameDay(endingDate, newEndingDate)) {
+    if (Dashboard.isSameDay(initialDate, newInitialDate)
+      && Dashboard.isSameDay(endingDate, newEndingDate)) {
       return;
     }
     this.setStateWrapper({
@@ -164,9 +169,7 @@ class Dashboard extends React.Component {
       initialDate, endingDate, selectedSubjectsIds, allSubjectsSelected, isLoading,
       timeStats,
     } = this.state;
-    const {
-      subjectsSummaries, timeTotal, timeEffective, nDaysWorked, averagePerDay,
-    } = timeStats;
+    const { subjectsSummaries, timeTotal } = timeStats;
 
     return (
       <ScrollView style={{ flex: 1 }}>
@@ -178,10 +181,7 @@ class Dashboard extends React.Component {
           shortcuts={this.shortcuts}
         />
         <SummaryComponent
-          timeTotal={timeTotal}
-          timeEffective={timeEffective}
-          nDaysWorked={nDaysWorked}
-          averagePerDay={averagePerDay}
+          timeStats={timeStats}
           isLoading={isLoading}
         />
         <SubjectsDetailComponent

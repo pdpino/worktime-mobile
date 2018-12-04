@@ -1,4 +1,6 @@
-import { isBetween, smartDivision } from '../utils';
+import {
+  isBetween, isBefore, getDateCopy, smartDivision, countWeeks,
+} from '../utils';
 
 class TimeStats {
   constructor() {
@@ -6,6 +8,45 @@ class TimeStats {
     this.timeTotal = 0;
     this.timeEffective = 0;
     this.subjectsSummaries = [];
+
+    this.firstDate = null;
+    this.lastDate = null;
+  }
+
+  updateDates(date) {
+    this.daysWorked[date] = true;
+
+    if (!this.firstDate || isBefore(date, this.firstDate)) {
+      this.firstDate = getDateCopy(date);
+    }
+
+    if (!this.lastDate || isBefore(this.lastDate, date)) {
+      this.lastDate = getDateCopy(date);
+    }
+  }
+
+  sumSubjectTimesReturn(subject, initialDate, endingDate) {
+    let timeTotal = 0;
+    let timeEffective = 0;
+    subject.getWorkSessions({ sorted: false }).forEach((workSession) => {
+      if (!isBetween(initialDate, endingDate, workSession.date)) {
+        return;
+      }
+      this.updateDates(workSession.date);
+      timeTotal += workSession.timeTotal;
+      timeEffective += workSession.timeEffective;
+    });
+
+    return {
+      timeTotal,
+      timeEffective,
+    };
+  }
+
+  sumSubjectTimes(...params) {
+    const { timeTotal, timeEffective } = this.sumSubjectTimesReturn(...params);
+    this.timeTotal = timeTotal;
+    this.timeEffective = timeEffective;
   }
 
   sumTimes(subjects, initialDate, endingDate, selectedSubjectsIds) {
@@ -44,38 +85,20 @@ class TimeStats {
     this.timeEffective = addedEffective;
   }
 
-  sumSubjectTimesReturn(subject, initialDate, endingDate) {
-    let timeTotal = 0;
-    let timeEffective = 0;
-    subject.getWorkSessions({ sorted: false }).forEach((workSession) => {
-      if (!isBetween(initialDate, endingDate, workSession.date)) {
-        return;
-      }
-      this.daysWorked[workSession.date] = true;
-      timeTotal += workSession.timeTotal;
-      timeEffective += workSession.timeEffective;
-    });
-
-    return {
-      timeTotal,
-      timeEffective,
-    };
-  }
-
-  sumSubjectTimes(...params) {
-    const { timeTotal, timeEffective } = this.sumSubjectTimesReturn(...params);
-    this.timeTotal = timeTotal;
-    this.timeEffective = timeEffective;
-  }
-
   getStats() {
     const nDaysWorked = Object.keys(this.daysWorked).length;
-    const averagePerDay = smartDivision(this.timeTotal, nDaysWorked, false);
+    const dayAvg = smartDivision(this.timeTotal, nDaysWorked, false);
+
+    const nWeeksWorked = (this.firstDate && this.lastDate)
+      ? countWeeks(this.firstDate, this.lastDate) : 0;
+    const weekAvg = smartDivision(this.timeTotal, nWeeksWorked, false);
 
     return {
       ...this,
       nDaysWorked,
-      averagePerDay,
+      dayAvg,
+      nWeeksWorked,
+      weekAvg,
     };
   }
 }

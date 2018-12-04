@@ -3,7 +3,7 @@ import {
   StyleSheet, View, Text, ActivityIndicator,
 } from 'react-native';
 import {
-  prettyDuration, prettyDays, prettyPercentage,
+  prettyDuration, prettyDays, prettyWeeks, prettyPercentage,
 } from '../../../shared/utils';
 
 const styles = StyleSheet.create({
@@ -64,12 +64,15 @@ const styles = StyleSheet.create({
 const timeTotalLabel = 'Total';
 const timeEffectiveLabel = 'Effective';
 const title = 'Summary';
-const worked = 'worked';
-const perDay = 'per day';
+const workedLabel = 'worked';
+const perDayLabel = 'per day';
+const perWeekLabel = 'per week';
 
-const Summary = ({
-  timeTotal, timeEffective, nDaysWorked, averagePerDay, isLoading,
-}) => {
+const Summary = ({ timeStats, isLoading }) => {
+  const {
+    timeTotal, timeEffective, nDaysWorked, dayAvg, nWeeksWorked, weekAvg,
+  } = timeStats;
+
   const totalBox = (
     <View style={styles.box}>
       <Text style={styles.textTitle}>
@@ -95,7 +98,7 @@ const Summary = ({
     </View>
   );
 
-  const daysRow = (value, label) => (
+  const getDaysRow = (value, label) => (
     <View style={styles.daysRow}>
       <Text style={styles.daysValues}>
         {value}
@@ -103,6 +106,18 @@ const Summary = ({
       <Text style={styles.textLabel}>
         {label}
       </Text>
+    </View>
+  );
+
+  const detailBox = (nWeeksWorked <= 1) ? (
+    <View style={styles.box}>
+      {getDaysRow(prettyDays(nDaysWorked), workedLabel)}
+      {getDaysRow(prettyDuration(dayAvg), perDayLabel)}
+    </View>
+  ) : (
+    <View style={styles.box}>
+      {getDaysRow(prettyWeeks(nWeeksWorked), workedLabel)}
+      {getDaysRow(prettyDuration(weekAvg), perWeekLabel)}
     </View>
   );
 
@@ -121,10 +136,7 @@ const Summary = ({
         <View style={styles.subContainer}>
           {totalBox}
           {effectiveBox}
-          <View style={styles.box}>
-            {daysRow(prettyDays(nDaysWorked), worked)}
-            {daysRow(prettyDuration(averagePerDay), perDay)}
-          </View>
+          {detailBox}
         </View>
       )}
     </View>

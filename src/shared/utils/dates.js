@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { toMaxFixed } from '.';
 
 // Convention for date's names
 // dateString: date as plain strings, in format YYYY-MM-DD
@@ -35,6 +36,10 @@ export function daysAgo(date) {
     return 'Yesterday';
   }
   return `${diffDays} days ago`;
+}
+
+export function countWeeks(initialDate, endingDate) {
+  return toMaxFixed(endingDate.diff(initialDate, 'days') / 7, 1);
 }
 
 export function prettyDate(date) {
@@ -86,6 +91,14 @@ export function isBetween(initialDate, endingDate, dateString) {
   return moment(dateString, 'L').isBetween(initialDate, endingDate, 'day', '[]');
 }
 
+export function isBefore(dateA, dateB) {
+  return moment(dateA, 'L').isBefore(moment(dateB, 'L'), 'day');
+}
+
+export function getDateCopy(date) {
+  return moment(date, 'L');
+}
+
 export function getToday() {
   return moment();
 }
@@ -115,7 +128,7 @@ function decidePluralLabel(singular, plural) {
 
 // DICTIONARY
 export const prettyDays = decidePluralLabel('day', 'days');
-const prettyWeeks = decidePluralLabel('week', 'weeks');
+export const prettyWeeks = decidePluralLabel('wk', 'wks');
 const prettyMonths = decidePluralLabel('month', 'months');
 const prettyYears = decidePluralLabel('year', 'years');
 

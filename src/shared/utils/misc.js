@@ -7,3 +7,9 @@ export function prettyPercentage(value, divider) {
   const percentage = divider ? smartDivision(value, divider, true, 0) : value.toFixed(0);
   return `${percentage}%`;
 }
+
+export function toMaxFixed(number, decimals) {
+  const roundedNumber = number.toFixed(decimals);
+  const hasDecimals = roundedNumber % 1 === 0;
+  return hasDecimals ? roundedNumber : number.toFixed(0);
+}
