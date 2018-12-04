@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+
+## 1.2.3-alpha.1 - 2018-12-04
+### Changed
+* Details displayed in dashboard can be about days or weeks
+
+### Fixed
+* Async time calculations (in subject-show and dashboard). Now they really are async
+* Fix calculations bugs
+
+
 ## 1.2.3-alpha - 2018-11-27
 ### Changed
 * Improve subjects and work-sessions styles (empty list styles)
