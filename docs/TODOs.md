@@ -91,13 +91,14 @@ Next things to do
   (how to display that?)
 
 ## Develop
+* Create avds:
+  - android-23 and 5 inches (motoG)
 * Type-checking with flow
 * Dictionary for strings
 * Dictionary for colors (?)
 
 ## Fixes
-1. Extra re-renders, slow performance. Refactor?:
-  - `componentDidMount`, `componentWillUnMount` and `shouldComponentUpdate` are copied in `SubjectShow` and `DashboardMain`
+* In `SubjectShow` make loading of work-sessions async
 * Bug: when there is a session running, if you delete it's subject:
   - the `updateTimesService` keeps running on the back, so every minute (or the time that it takes to update), it throws an error because the workSession does not exist.
   - hack solution: in the reducer, check if the workSession exists before updating its time
@@ -107,9 +108,10 @@ Next things to do
 * In the list of subjects:
   - the add button is in top of a subject's "more" button (so you can't press it)
 * Dashboard
-  - date "Mon 12 Nov" overflows in date filter (although text is wrapping)
+  - date "Mon 12 Nov" overflows in date filter (although text is wrapping). It should always be in one line
 
 ## Refactors
+* `componentDidMount`, `componentWillUnmount` and `shouldComponentUpdate` are copied in `SubjectShow` and `DashboardMain`
 * Make `DashboardSection` Component, that displays title and borders. Reuse styles
 * Split `utils/dates.js` into multiple files (is too big by now)
 * Create class `TimeStats`; object that allows to record days worked, initial date, ending date, etc. It's passed down to `sumTimes()` (instead of `daysWorked` object) (useful to encapsulate behavior of times-summaries) (dashboard summary, subject summary, etc)
