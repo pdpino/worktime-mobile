@@ -1,4 +1,4 @@
-import { isBetween, smartDivision } from '.';
+import { isBetween, smartDivision } from '../utils';
 
 class TimeStats {
   constructor() {
@@ -25,7 +25,7 @@ class TimeStats {
       const {
         timeTotal: subjectTotal,
         timeEffective: subjectEffective,
-      } = this.sumSubjectTimes(subject, initialDate, endingDate);
+      } = this.sumSubjectTimesReturn(subject, initialDate, endingDate);
       addedTotal += subjectTotal;
       addedEffective += subjectEffective;
 
@@ -44,7 +44,7 @@ class TimeStats {
     this.timeEffective = addedEffective;
   }
 
-  sumSubjectTimes(subject, initialDate, endingDate) {
+  sumSubjectTimesReturn(subject, initialDate, endingDate) {
     let timeTotal = 0;
     let timeEffective = 0;
     subject.getWorkSessions({ sorted: false }).forEach((workSession) => {
@@ -60,6 +60,12 @@ class TimeStats {
       timeTotal,
       timeEffective,
     };
+  }
+
+  sumSubjectTimes(...params) {
+    const { timeTotal, timeEffective } = this.sumSubjectTimesReturn(...params);
+    this.timeTotal = timeTotal;
+    this.timeEffective = timeEffective;
   }
 
   getStats() {

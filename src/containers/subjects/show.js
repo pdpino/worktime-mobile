@@ -6,15 +6,16 @@ import WorkSessionsListComponent from '../../components/workSessions/list';
 import SubjectInfoComponent from '../../components/subjects/info';
 import { subjectSelector } from '../../redux/selectors';
 import { deleteWorkSession } from '../../redux/actions';
-import { TimeStats, Memoizer } from '../../shared/utils';
+import { Memoizer } from '../../shared/utils';
+import { sumSubjectTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
 
 class SubjectShow extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      timeStats: new TimeStats(),
       isLoading: true,
+      timeStats: getEmptyStats(),
     };
 
     this.handleDeleteWorkSession = this.handleDeleteWorkSession.bind(this);
@@ -63,20 +64,20 @@ class SubjectShow extends React.Component {
       this.setState({ isLoading: true });
     }
 
-    const timeStats = new TimeStats();
-    timeStats.sumSubjectTimes(subject, null, null);
-    this.setState({
-      timeStats,
-      isLoading: false,
-    });
+    sumSubjectTimesCalc(subject, null, null)
+      .then(timeStats => this.setState({
+        isLoading: false,
+        timeStats,
+      }));
   }
 
   render() {
     const { subject } = this.props;
     const workSessions = subject.getWorkSessions({ sorted: true }); // REVIEW: make this call async?
     const lastSession = workSessions[0];
+
     const { timeStats, isLoading } = this.state;
-    const { timeTotal, timeEffective, nDaysWorked } = timeStats.getStats();
+    const { timeTotal, timeEffective, nDaysWorked } = timeStats;
 
     return (
       <ScrollView>

@@ -8,8 +8,9 @@ import {
 import { subjectsSelector } from '../../redux/selectors';
 import {
   isSameDay, getToday, getYesterday, getStartOfWeek, getStartOfMonth, subtractDays,
-  TimeStats, Memoizer,
+  Memoizer,
 } from '../../shared/utils';
+import { sumTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
 
 class Dashboard extends React.Component {
   static getAllSubjectsSelected(subjects) {
@@ -28,7 +29,7 @@ class Dashboard extends React.Component {
       endingDate: getToday(),
       selectedSubjectsIds: Dashboard.getAllSubjectsSelected(this.props.subjects),
       allSubjectsSelected: true,
-      timeStats: new TimeStats(),
+      timeStats: getEmptyStats(),
       isLoading: true,
     };
 
@@ -54,7 +55,7 @@ class Dashboard extends React.Component {
     this.willFocusListener.remove();
   }
 
-  changeFilters(params) {
+  setStateWrapper(params) {
     this.setState({
       ...params,
       isLoading: true,
@@ -66,7 +67,7 @@ class Dashboard extends React.Component {
       if (isSameDay(this.state[key], dateString)) {
         return;
       }
-      this.changeFilters({ [key]: moment(dateString) });
+      this.setStateWrapper({ [key]: moment(dateString) });
     };
   }
 
@@ -75,7 +76,7 @@ class Dashboard extends React.Component {
     if (isSameDay(initialDate, newInitialDate) && isSameDay(endingDate, newEndingDate)) {
       return;
     }
-    this.changeFilters({
+    this.setStateWrapper({
       initialDate: newInitialDate,
       endingDate: newEndingDate,
     });
@@ -89,7 +90,7 @@ class Dashboard extends React.Component {
     const anySelected = Object.keys(selectedSubjectsIds)
       .some(key => selectedSubjectsIds[key]);
 
-    this.changeFilters({
+    this.setStateWrapper({
       selectedSubjectsIds,
       allSubjectsSelected: anySelected,
     });
@@ -99,7 +100,7 @@ class Dashboard extends React.Component {
     const { allSubjectsSelected } = this.state;
     const selectedSubjectsIds = allSubjectsSelected ? {}
       : Dashboard.getAllSubjectsSelected(this.props.subjects);
-    this.changeFilters({
+    this.setStateWrapper({
       selectedSubjectsIds,
       allSubjectsSelected: !allSubjectsSelected,
     });
@@ -117,24 +118,23 @@ class Dashboard extends React.Component {
       this.setState({ isLoading: true });
     }
 
-    const timeStats = new TimeStats();
-    timeStats.sumTimes(subjects, initialDate, endingDate, selectedSubjectsIds);
-    this.setState({
-      timeStats,
-      isLoading: false,
-    });
+    sumTimesCalc(subjects, initialDate, endingDate, selectedSubjectsIds)
+      .then(timeStats => this.setState({
+        isLoading: false,
+        timeStats,
+      }));
   }
 
   render() {
     const {
-      initialDate, endingDate, selectedSubjectsIds, allSubjectsSelected,
-      timeStats, isLoading,
+      initialDate, endingDate, selectedSubjectsIds, allSubjectsSelected, isLoading,
+      timeStats,
     } = this.state;
     const {
       subjectsSummaries, timeTotal, timeEffective, nDaysWorked, averagePerDay,
-    } = timeStats.getStats();
+    } = timeStats;
 
-    // REVIEW: this callbacks are always the same!
+    // FIXME: this callbacks are always the same!
     // don't recreate them in each render
     const shortcuts = [
       {
