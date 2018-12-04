@@ -41,6 +41,8 @@ class Dashboard extends React.Component {
 
     this.sumTimes = this.sumTimes.bind(this);
     this.memoizer = Memoizer();
+
+    this.createShortcuts();
   }
 
   componentDidMount() {
@@ -60,6 +62,38 @@ class Dashboard extends React.Component {
       ...params,
       isLoading: true,
     }, () => this.sumTimes());
+  }
+
+  createShortcuts() {
+    this.shortcuts = [
+      {
+        name: 'none',
+        callback: () => this.handleChangeDates(null, null),
+      },
+      {
+        name: 'today',
+        callback: () => this.handleChangeDates(getToday(), getToday()),
+      },
+      {
+        name: 'yesterday',
+        callback: () => this.handleChangeDates(getYesterday(), getYesterday()),
+      },
+      {
+        name: 'thisWeek',
+        callback: () => this.handleChangeDates(getStartOfWeek(), getToday()),
+      },
+      {
+        name: 'lastWeek',
+        callback: () => {
+          const pastMonday = getStartOfWeek();
+          this.handleChangeDates(subtractDays(pastMonday, 7), subtractDays(pastMonday, 1));
+        },
+      },
+      {
+        name: 'thisMonth',
+        callback: () => this.handleChangeDates(getStartOfMonth(), getToday()),
+      },
+    ];
   }
 
   handleChangeDate(key) {
@@ -134,38 +168,6 @@ class Dashboard extends React.Component {
       subjectsSummaries, timeTotal, timeEffective, nDaysWorked, averagePerDay,
     } = timeStats;
 
-    // FIXME: this callbacks are always the same!
-    // don't recreate them in each render
-    const shortcuts = [
-      {
-        name: 'none',
-        callback: () => this.handleChangeDates(null, null),
-      },
-      {
-        name: 'today',
-        callback: () => this.handleChangeDates(getToday(), getToday()),
-      },
-      {
-        name: 'yesterday',
-        callback: () => this.handleChangeDates(getYesterday(), getYesterday()),
-      },
-      {
-        name: 'thisWeek',
-        callback: () => this.handleChangeDates(getStartOfWeek(), getToday()),
-      },
-      {
-        name: 'lastWeek',
-        callback: () => {
-          const pastMonday = getStartOfWeek();
-          this.handleChangeDates(subtractDays(pastMonday, 7), subtractDays(pastMonday, 1));
-        },
-      },
-      {
-        name: 'thisMonth',
-        callback: () => this.handleChangeDates(getStartOfMonth(), getToday()),
-      },
-    ];
-
     return (
       <ScrollView style={{ flex: 1 }}>
         <DateFilterComponent
@@ -173,7 +175,7 @@ class Dashboard extends React.Component {
           endingDate={endingDate}
           onChangeInitialDate={this.handleChangeInitialDate}
           onChangeEndingDate={this.handleChangeEndingDate}
-          shortcuts={shortcuts}
+          shortcuts={this.shortcuts}
         />
         <SummaryComponent
           timeTotal={timeTotal}

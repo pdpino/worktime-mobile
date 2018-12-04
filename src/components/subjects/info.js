@@ -20,6 +20,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'black',
   },
+  loading: {
+    height: 84, // HACK: value hardcoded, equal to height when displaying text
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
 });
 
 // DICTIONARY
@@ -66,10 +71,16 @@ const SubjectInfo = ({
     </Text>
   );
 
+  const loadingWheel = (
+    <View style={styles.loading}>
+      <ActivityIndicator />
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       {title}
-      {isLoading ? <ActivityIndicator /> : (
+      {isLoading ? loadingWheel : (
         <View>
           {lastWorkedInfo}
           {timeTotalInfo}

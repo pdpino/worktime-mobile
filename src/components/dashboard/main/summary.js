@@ -55,6 +55,9 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 18,
   },
+  loading: {
+    height: 83, // HACK: value hardcoded, equal to height when displaying text
+  },
 });
 
 // DICTIONARY
@@ -104,7 +107,7 @@ const Summary = ({
   );
 
   const loadingWheel = (
-    <View style={styles.subContainer}>
+    <View style={[styles.subContainer, styles.loading]}>
       <ActivityIndicator />
     </View>
   );
