@@ -1,12 +1,10 @@
 # TODOs
 Next things to do
 
-## Next feature: Export data from mobile to desktop
+## Next feature: Importing/Exporting
+
+### Export data from mobile to desktop
 * In mobile:
-  - Infrastructure to update the store when needed (in production)
-  - Update the store, adding `device: 'mobile'` to each existing work-session
-    + also, you could delete orphan work-sessions (and sprints)
-      (how do I recognize them? subject null?)
   - Add a `porting` reducer (importing and exporting)
     + has a `lastExportedTimestamp` number, default value is 0
   - View to export (for now, in settings)
@@ -98,6 +96,7 @@ Next things to do
 * Dictionary for colors (?)
 
 ## Fixes
+* Delete orphan work-sessions (and sprints)
 * In `SubjectShow` make loading of work-sessions async
 * Bug: when there is a session running, if you delete it's subject:
   - the `updateTimesService` keeps running on the back, so every minute (or the time that it takes to update), it throws an error because the workSession does not exist.

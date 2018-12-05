@@ -4,16 +4,17 @@ import RootContainer from './src/screens/Root';
 import configureStore from './src/redux/store';
 import { SplashScreen } from './src/shared/UI/screens';
 import AppStateListener from './src/services/appState';
-import { onAppActivate, onAppDeactivate } from './src/redux/actions';
+import { onAppActivate, onAppDeactivate, checkStoreVersion } from './src/redux/actions';
 
 let store;
+const storeVersionNeeded = 1;
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isRehydrated: false,
+      storeReady: false,
     };
 
     store = configureStore(this.finishRehydrating.bind(this));
@@ -30,14 +31,16 @@ class App extends React.Component {
   }
 
   finishRehydrating() {
-    this.setState({ isRehydrated: true });
-    store.dispatch(onAppActivate()); // HACK
-    // app activates before the rehydration,
-    // so there is nothing in the store when the activation occurs
+    store.dispatch(checkStoreVersion(storeVersionNeeded)).then(() => {
+      this.setState({ storeReady: true });
+      store.dispatch(onAppActivate()); // HACK
+      // app activates before the rehydration,
+      // so there is nothing in the store when the activation occurs
+    });
   }
 
   render() {
-    if (!this.state.isRehydrated) {
+    if (!this.state.storeReady) {
       return (
         <SplashScreen />
       );

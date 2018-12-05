@@ -12,6 +12,7 @@ class WorkSession extends Model {
       timeEffective: 0,
       nPauses: 0,
       status: 'playing',
+      device: 'mobile',
       subject: subjectId,
     };
 
@@ -103,6 +104,7 @@ WorkSession.modelName = 'WorkSession';
 WorkSession.fields = {
   id: attr(),
   date: attr(),
+  device: attr(),
   timestampStart: attr(),
   timestampEnd: attr(),
   timeTotal: attr(),

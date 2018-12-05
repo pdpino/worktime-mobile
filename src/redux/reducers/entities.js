@@ -1,3 +1,5 @@
+import { addAttrWorkSessionDevice } from './updates';
+
 const entities = orm => (state, action) => {
   const session = orm.session(state);
   const { Subject, WorkSession } = session;
@@ -37,6 +39,12 @@ const entities = orm => (state, action) => {
     case 'PLAYER/STOP_DISCARD':
       WorkSession.withId(action.payload.runningSessionId).delete();
       break;
+    case 'APP/UPDATE_STORE': {
+      if (action.payload.nextStoreVersion === 1) {
+        addAttrWorkSessionDevice(WorkSession);
+      }
+      break;
+    }
     default:
   }
   return session.state;
