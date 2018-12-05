@@ -3,7 +3,9 @@ import DeviceInfo from 'react-native-device-info';
 import SettingsMenuComponent from '../../components/settings/menu';
 
 const menuItems = [
-  /* ADD MENU ITEMS HERE */
+  {
+    key: 'exporting',
+  },
 ];
 
 class SettingsMenu extends React.Component {
