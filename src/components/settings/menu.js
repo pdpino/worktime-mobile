@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  StyleSheet, View, Text, TouchableOpacity, FlatList, Dimensions,
+  StyleSheet, View, Text, FlatList, Dimensions,
 } from 'react-native';
+import MenuItem from './item';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,12 +13,13 @@ const styles = StyleSheet.create({
   list: {
     flexGrow: 0,
     width: Dimensions.get('window').width, // HACK?
-    borderBottomWidth: 1,
   },
   emptyList: {
     color: 'black',
     textAlign: 'center',
-    marginVertical: 20,
+    paddingVertical: 20,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
   },
   versionContainer: {
     marginTop: 10,
@@ -31,18 +33,30 @@ const styles = StyleSheet.create({
 // DICTIONARY
 const noSettingsAvailable = 'No settings available yet!';
 
+const itemsConfig = {
+  exporting: {
+    text: 'Export data', // DICTIONARY
+    icon: {
+      name: 'share',
+      type: 'entypo',
+    },
+  },
+};
+
 const SettingsMenu = ({
   menuItems, versionNumber, onPressItem,
 }) => {
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => onPressItem(item.key)}
-    >
-      <Text>
-        {item.name}
-      </Text>
-    </TouchableOpacity>
-  );
+  const renderItem = ({ item }) => {
+    const config = itemsConfig[item.key];
+    return (
+      <MenuItem
+        text={config.text}
+        iconName={config.icon.name}
+        iconType={config.icon.type}
+        onPress={() => onPressItem(item.key)}
+      />
+    );
+  };
 
   const emptyComponent = (
     <Text style={styles.emptyList}>

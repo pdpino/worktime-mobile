@@ -3,13 +3,7 @@ import DeviceInfo from 'react-native-device-info';
 import SettingsMenuComponent from '../../components/settings/menu';
 
 const menuItems = [
-  /* ADD MENU ENTRIES HERE */
-  /* Example object:
-  {
-    key: 'setting1', // key to navigate
-    title: 'Setting 1', // Name to display in menu
-  }
-  */
+  /* ADD MENU ITEMS HERE */
 ];
 
 class SettingsMenu extends React.Component {
