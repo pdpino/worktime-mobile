@@ -105,8 +105,6 @@ Next things to do
     Problem: this does not stop the service once the work-session is deleted (the service should be stopped!)
   - another solution: don't allow deleting a subject if there is a workSession running (that it belongs to that subject).
     Is reasonable, since you probably do not want to delete a subject that is running
-* In the list of subjects:
-  - the add button is in top of a subject's "more" button (so you can't press it)
 * Dashboard
   - date "Mon 12 Nov" overflows in date filter (although text is wrapping). It should always be in one line
 

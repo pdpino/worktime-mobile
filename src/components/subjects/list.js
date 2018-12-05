@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width, // HACK?
     paddingTop: 5,
   },
+  listContainer: {
+    paddingBottom: 80, // Make last item "more" button visible
+  },
   emptyList: {
     textAlign: 'center',
     marginVertical: 15,
@@ -51,6 +54,7 @@ const SubjectsList = ({
         renderItem={renderSubject}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={emptyComponent}
+        contentContainerStyle={styles.listContainer}
       />
     </View>
   );
