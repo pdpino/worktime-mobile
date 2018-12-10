@@ -1,4 +1,6 @@
-import { createOrmSelector } from './orm';
+import { createOrmSelector, ormSessionUnMemoized } from './orm';
+
+export const subjectsSetSelector = state => ormSessionUnMemoized(state).Subject.all();
 
 export const subjectsSelector = createOrmSelector(
   ormSession => ormSession.Subject.all().toModelArray()

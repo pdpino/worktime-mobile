@@ -1,5 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import share from '../../services/sharing';
+import { subjectsSetSelector } from '../../redux/selectors';
 import ExportingComponent from '../../components/settings/exporting';
+import { exportSubjects } from '../../shared/porting';
 
 class Exporting extends React.Component {
   constructor(props) {
@@ -9,7 +13,8 @@ class Exporting extends React.Component {
   }
 
   handlePressShare() {
-    console.log('SHARING');
+    const exportable = exportSubjects(this.props.subjectsSet);
+    share('subjects', exportable);
   }
 
   render() {
@@ -21,4 +26,8 @@ class Exporting extends React.Component {
   }
 }
 
-export default Exporting;
+const mapStateToProps = state => ({
+  subjectsSet: subjectsSetSelector(state),
+});
+
+export default connect(mapStateToProps)(Exporting);

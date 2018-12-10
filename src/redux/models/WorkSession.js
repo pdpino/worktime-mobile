@@ -90,6 +90,17 @@ class WorkSession extends Model {
     return unixToHour(this.timestampEnd);
   }
 
+  getSprints() {
+    return this.sprintSet.toModelArray();
+  }
+
+  exportable() {
+    return {
+      ...this.ref,
+      sprints: this.getSprints().map(sprint => sprint.exportable()),
+    };
+  }
+
   delete() {
     const { subject } = this;
     this.sprintSet.delete();

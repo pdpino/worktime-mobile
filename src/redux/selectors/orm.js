@@ -1,11 +1,10 @@
 import { createSelector } from 'redux-orm';
 import orm from '../models/orm';
 
-const ormSessionSelector = state => state.entities;
+export const ormSessionUnMemoized = state => orm.session(state.entities);
 
-// eslint-disable-next-line import/prefer-default-export
 export const createOrmSelector = (...selectors) => createSelector(
   orm,
-  ormSessionSelector,
+  state => state.entities,
   ...selectors,
 );

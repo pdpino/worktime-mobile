@@ -6,6 +6,12 @@ class Sprint extends Model {
       duration: (this.duration || 0) + newDuration,
     });
   }
+
+  exportable() {
+    return {
+      ...this.ref,
+    };
+  }
 }
 
 Sprint.modelName = 'Sprint';

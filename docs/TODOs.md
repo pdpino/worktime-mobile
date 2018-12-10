@@ -5,19 +5,12 @@ Next things to do
 
 ### Export data from mobile to desktop
 * In mobile:
-  - Add a `porting` reducer (importing and exporting)
-    + has a `lastExportedTimestamp` number, default value is 0
-  - View to export (for now, in settings)
-    + Choose: export all vs export since last exported
-      (the second one is the default)
-    + button to export, wait to finish
-    + choose which app to share to (google drive, whatsapp, etc)
-  - Generate json file with subjects, work-sessions and sprints (nested data)
-    + don't include sprints (?), (desktop won't take them anyway)
+  - make a quick mock-up
+  - Choose: export all vs export since last exported (the second one is the default)
+  - Generate object with subjects, work-sessions and sprints (nested data)
     + only include stopped sessions
-    + Save the greatest `timestampEnd` (the oldest work-session exported) to reducer
+  - Save the greatest `timestampEnd` (use `getTimestamp()`) to reducer
       (update `lastExportedTimestamp`)
-  - Share file via the selected app
 
 * In desktop:
   - `work update`:

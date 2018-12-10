@@ -27,3 +27,9 @@
 * Dashboard fixes/bugs:
   - when bar is too small to show durations (e.g. 10min vs 8hrs of work in another subject). It should be calculated when the text is not showed?
   - what happens when you've worked for 0.005 seconds? (or a small amount of time). Should it be approximated? (It may not be important, as it is not a real case).
+* Fix HACK:
+  - When updating a work-session, a call to `subject.update({ workSession })` is needed, to see the changes right away
+  - This creates a `workSession` attribute in each `subject`
+  - When a subject is being exported, it has a `workSession` attribute with its last work-session (is a model object, with `_fields` and everything)
+  - There should be a better way to do this (instead of calling `subject.update`).
+  Calling `subject.refreshFromState()` each time a work-session changes (on play, pause or stop) does not work.
