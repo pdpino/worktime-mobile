@@ -4,7 +4,7 @@ import {
   getDateCopy, countWeeks,
   prettyDate, prettyDuration, prettyDays, prettyDaysSpan, prettyWeeks,
   getToday, getYesterday, getStartOfWeek, getStartOfMonth, subtractDays,
-  isSameDay,
+  isSameDay, unixToPrettyDate,
 } from './dates';
 import {
   smartDivision,
@@ -32,6 +32,7 @@ export {
   getYesterday,
   getStartOfWeek,
   getStartOfMonth,
+  unixToPrettyDate,
   subtractDays,
   isSameDay,
   Memoizer,

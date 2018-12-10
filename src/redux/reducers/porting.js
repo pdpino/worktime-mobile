@@ -4,9 +4,10 @@ const defaultState = {
 
 const porting = (state = defaultState, action) => {
   switch (action.type) {
-    case 'TODO':
+    case 'UPDATE_EXPORT_TIMESTAMP':
       return {
         ...state,
+        lastExportedTimestamp: action.payload.timestamp,
       };
     default:
       return state;

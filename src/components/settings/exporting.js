@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, Text, FlatList,
 } from 'react-native';
-import { prettyDate, unixToHour } from '../../shared/utils';
+import { unixToPrettyDate, unixToHour } from '../../shared/utils';
 import { ItemCheckbox, SubmitButton } from '../../shared/UI/buttons';
 
 const styles = StyleSheet.create({
@@ -44,10 +44,11 @@ const neverLabel = 'Never';
 
 
 const Exporting = ({
-  lastExportedTimestamp, options, selectedOptionKey, onPressOption, onPressShare,
+  lastExportedTimestamp, options, selectedOptionKey,
+  onPressOption, onPressShare, onPressUpdateTimestamp,
 }) => {
   const lastExportedDate = lastExportedTimestamp
-    ? `${prettyDate(lastExportedTimestamp)}, ${unixToHour(lastExportedTimestamp)}`
+    ? `${unixToPrettyDate(lastExportedTimestamp)}, ${unixToHour(lastExportedTimestamp)}`
     : neverLabel;
 
   const lastExportedRow = (
@@ -94,11 +95,21 @@ const Exporting = ({
     </View>
   );
 
+  const updateTimestampButton = (
+    <View style={[styles.row, styles.buttonContainer]}>
+      <SubmitButton
+        text="Mark exported"
+        onPress={onPressUpdateTimestamp}
+      />
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       {lastExportedRow}
       {optionsRow}
       {button}
+      {updateTimestampButton}
     </View>
   );
 };

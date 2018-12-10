@@ -4,6 +4,7 @@ import {
   start, resume, pause, stop, stopAndDiscard, selectWorkSubject, updateWorkTimes,
 } from './work';
 import { onAppActivate, onAppDeactivate, checkStoreVersion } from './app';
+import { updateExportTimestamp } from './porting';
 
 export {
   upsertSubject,
@@ -19,4 +20,5 @@ export {
   onAppActivate,
   onAppDeactivate,
   checkStoreVersion,
+  updateExportTimestamp,
 };

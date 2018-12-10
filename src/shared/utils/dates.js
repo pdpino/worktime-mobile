@@ -162,3 +162,7 @@ export function prettyDaysSpan(initialDate, endingDate) {
 export function isSameDay(date1, date2) {
   return moment(date1).isSame(date2, 'days');
 }
+
+export function unixToPrettyDate(timestamp) {
+  return prettyDate(moment.unix(timestamp));
+}

@@ -89,6 +89,7 @@ Next things to do
 * Dictionary for colors (?)
 
 ## Fixes
+* IMPORTANT HACK: when exporting data, a button is displayed to "Mark exported", which updates the `lastExportedTimestamp`. This should be done automatically. The problem is that `Share.open` does not let you know when the sharing ended correctly, so there is no way to know.
 * Delete orphan work-sessions (and sprints)
 * In `SubjectShow` make loading of work-sessions async
 * Bug: when there is a session running, if you delete it's subject:
