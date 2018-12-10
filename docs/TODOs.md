@@ -4,10 +4,6 @@ Next things to do
 ## Next feature: Importing/Exporting
 
 ### Export data from mobile to desktop
-* In mobile:
-  - Save the greatest `timestampEnd` (use `getTimestamp()`) to reducer
-      (update `lastExportedTimestamp`)
-
 * In desktop:
   - `work update`:
     + prompt for device name (defaults to laptop)
@@ -87,6 +83,7 @@ Next things to do
 * Type-checking with flow
 * Dictionary for strings
 * Dictionary for colors (?)
+* Use https://medium.com/@andr3wjack/versioning-react-native-apps-407469707661 to simplify deploying new versions
 
 ## Fixes
 * IMPORTANT HACK: when exporting data, a button is displayed to "Mark exported", which updates the `lastExportedTimestamp`. This should be done automatically. The problem is that `Share.open` does not let you know when the sharing ended correctly, so there is no way to know.
