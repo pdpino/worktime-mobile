@@ -26,8 +26,6 @@ const ItemCheckbox = ({
   <TouchableOpacity
     style={[styles.container, containerStyle]}
     onPress={onPress}
-    checkedIcon="check-circle"
-    uncheckedIcon="circle-thin"
   >
     <Icon
       name={checked ? 'check-square' : 'square'}

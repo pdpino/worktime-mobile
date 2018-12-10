@@ -5,10 +5,6 @@ Next things to do
 
 ### Export data from mobile to desktop
 * In mobile:
-  - make a quick mock-up
-  - Choose: export all vs export since last exported (the second one is the default)
-  - Generate object with subjects, work-sessions and sprints (nested data)
-    + only include stopped sessions
   - Save the greatest `timestampEnd` (use `getTimestamp()`) to reducer
       (update `lastExportedTimestamp`)
 
@@ -81,6 +77,10 @@ Next things to do
   - when discarding a work session, show a mini-notification with feedback (was it deleted or not?)
   (how to display that?)
 
+## Styles
+* Make `ViewSection` Component, that displays title and borders. Reuse style in dashboard, subject-show, and export-data
+* Improve the looks of exporting view
+
 ## Develop
 * Create avds:
   - android-23 and 5 inches (motoG)
@@ -102,7 +102,6 @@ Next things to do
 
 ## Refactors
 * `componentDidMount`, `componentWillUnmount` and `shouldComponentUpdate` are copied in `SubjectShow` and `DashboardMain`
-* Make `DashboardSection` Component, that displays title and borders. Reuse styles
 * Split `utils/dates.js` into multiple files (is too big by now)
 * Create class `TimeStats`; object that allows to record days worked, initial date, ending date, etc. It's passed down to `sumTimes()` (instead of `daysWorked` object) (useful to encapsulate behavior of times-summaries) (dashboard summary, subject summary, etc)
 * `index.js` files in the folders look really bad.
@@ -118,3 +117,4 @@ Next things to do
   - update work-times service
   - side effect when opening app, update work-times
   But two or three middlewares may be too much?
+* When selecting redux-orm data, instead of using `array.sort()`, use `orderBy()`

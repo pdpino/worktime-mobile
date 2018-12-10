@@ -13,6 +13,9 @@ import {
   runningSessionSelector,
   lastRunningSessionSelector,
 } from './work';
+import {
+  lastExportedSelector,
+} from './porting';
 
 export {
   subjectsSelector,
@@ -24,4 +27,5 @@ export {
   runningSessionSelector,
   lastRunningSessionSelector,
   subjectsSetSelector,
+  lastExportedSelector,
 };

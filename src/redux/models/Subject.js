@@ -1,4 +1,5 @@
 import { attr, Model } from 'redux-orm';
+import { isBefore } from '../../shared/utils';
 
 class Subject extends Model {
   getWorkSessions(options = {}) {
@@ -9,14 +10,25 @@ class Subject extends Model {
       : workSessions;
   }
 
-  exportable() {
+  exportable(options) {
+    const { since } = options;
     const { id, name, description } = this;
     // NOTE: don't use 'this.ref' here, see TODOs
+
+    const workSessions = this.worksessionSet.toModelArray()
+      .reduce((filtered, workSession) => {
+        if (workSession.isStopped()
+          && (!since || isBefore(since, workSession.date))) {
+          filtered.push(workSession.exportable());
+        }
+        return filtered;
+      }, []);
+
     return {
       id,
       name,
       description: description || '',
-      workSessions: this.getWorkSessions().map(ws => ws.exportable()),
+      workSessions,
     };
   }
 
