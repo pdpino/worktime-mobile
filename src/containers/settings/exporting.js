@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import share from '../../services/sharing';
 import { subjectsSetSelector } from '../../redux/selectors';
 import ExportingComponent from '../../components/settings/exporting';
-import getExportableObject from '../../shared/porting';
+import { getExportableObject, getExportFilename } from '../../shared/porting';
 import { getTimestampString } from '../../shared/utils';
 
 class Exporting extends React.Component {
@@ -22,7 +22,8 @@ class Exporting extends React.Component {
       subjectsSet: this.props.subjectsSet,
     });
 
-    share('data', device, exportObject);
+    const filename = getExportFilename(device);
+    share(filename, exportObject);
   }
 
   render() {

@@ -2,7 +2,7 @@ function exportSubjects(subjectsSet, device) {
   return subjectsSet.toModelArray().map(subject => subject.exportable(device));
 }
 
-export default function getExportableObject(options) {
+export function getExportableObject(options) {
   const exportObject = {
     device: options.device,
     timestamp: options.timestamp,
@@ -13,4 +13,8 @@ export default function getExportableObject(options) {
   }
 
   return exportObject;
+}
+
+export function getExportFilename(device) {
+  return `worktime-data-${device}.json`;
 }
