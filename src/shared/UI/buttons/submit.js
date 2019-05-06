@@ -6,7 +6,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     width: 220,
-    height: 40,
+    height: 30,
   },
   button: {
     flex: 1,
@@ -14,14 +14,16 @@ const styles = StyleSheet.create({
   },
   enabled: {
     backgroundColor: '#2196F3',
+    elevation: 4,
   },
   disabled: {
-    backgroundColor: 'gray',
+    backgroundColor: '#DFDFDF',
   },
   text: {
     textAlign: 'center',
+    fontSize: 14,
     color: 'white',
-    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
 
@@ -31,10 +33,11 @@ const SubmitButton = ({
   <View style={styles.container}>
     <TouchableOpacity
       style={[styles.button, disabled ? styles.disabled : styles.enabled]}
+      disabled={disabled}
       onPress={onPress}
     >
       <Text style={styles.text}>
-        {text}
+        {(text || '').toUpperCase()}
       </Text>
     </TouchableOpacity>
   </View>

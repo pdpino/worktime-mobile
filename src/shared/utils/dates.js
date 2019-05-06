@@ -11,6 +11,10 @@ export function getTimestamp() {
   return Date.now() / 1000;
 }
 
+export function getTimestampString() {
+  return moment(Date.now()).format('YYYY/MM/DD-HH:mm:ss');
+}
+
 export function unixToDateString(timestamp) {
   const date = moment.unix(timestamp);
   return date.format('L');

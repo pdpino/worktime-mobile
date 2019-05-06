@@ -1,9 +1,8 @@
 import React from 'react';
 import {
-  StyleSheet, View, Text, FlatList,
+  StyleSheet, View, Text,
 } from 'react-native';
-import { unixToPrettyDate, unixToHour } from '../../shared/utils';
-import { ItemCheckbox, SubmitButton } from '../../shared/UI/buttons';
+import { SubmitButton } from '../../shared/UI/buttons';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,100 +15,38 @@ const styles = StyleSheet.create({
   },
   row: {
     marginVertical: 10,
-  },
-  lastExported: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-  lastExportedText: {
-    marginRight: 5,
-  },
-  text: {
-    fontSize: 20,
-    color: 'black',
-  },
-  buttonContainer: {
     alignSelf: 'center',
+  },
+  helpText: {
+    fontStyle: 'italic',
+    fontSize: 16,
   },
 });
 
-// DICTIONARY
-const lastExportedLabel = 'Last exported';
-const optionLabels = {
-  everything: 'Everything',
-  lastExported: 'Since last exported',
-};
-const exportLabel = 'Export';
-const neverLabel = 'Never';
-
-
-const Exporting = ({
-  lastExportedTimestamp, options, selectedOptionKey,
-  onPressOption, onPressShare, onPressUpdateTimestamp,
-}) => {
-  const lastExportedDate = lastExportedTimestamp
-    ? `${unixToPrettyDate(lastExportedTimestamp)}, ${unixToHour(lastExportedTimestamp)}`
-    : neverLabel;
-
-  const lastExportedRow = (
-    <View style={[styles.row, styles.lastExported]}>
-      <Text style={[styles.lastExportedText, styles.text]}>
-        {lastExportedLabel}
-        :
-      </Text>
-      <Text style={[styles.lastExportedText, styles.text]}>
-        {lastExportedDate}
-      </Text>
-    </View>
-  );
-
-  const renderOption = option => (
-    <ItemCheckbox
-      text={optionLabels[option.key]}
-      checked={option.key === selectedOptionKey}
-      onPress={() => onPressOption(option.key)}
-    />
-  );
-
-  const optionsRow = (
+const Exporting = ({ onPressExport }) => {
+  // DICTIONARY
+  const helpSection = (
     <View style={styles.row}>
-      <Text style={styles.text}>
-        {exportLabel}
-        :
+      <Text style={styles.helpText}>
+        Export or import your data to a file
       </Text>
-      <FlatList
-        data={options}
-        renderItem={({ item }) => renderOption(item)}
-        keyExtractor={(item, index) => index.toString()}
-        extraData={selectedOptionKey}
-      />
     </View>
   );
 
-  const button = (
-    <View style={[styles.row, styles.buttonContainer]}>
+  // DICTIONARY
+  const exportButton = (
+    <View style={styles.row}>
       <SubmitButton
-        text={exportLabel}
-        onPress={onPressShare}
-      />
-    </View>
-  );
-
-  const updateTimestampButton = (
-    <View style={[styles.row, styles.buttonContainer]}>
-      <SubmitButton
-        text="Mark exported"
-        onPress={onPressUpdateTimestamp}
+        text="Export"
+        onPress={onPressExport}
       />
     </View>
   );
 
   return (
     <View style={styles.container}>
-      {lastExportedRow}
-      {optionsRow}
-      {button}
-      {updateTimestampButton}
+      {helpSection}
+      {exportButton}
     </View>
   );
 };

@@ -76,6 +76,9 @@ Next things to do
 ## Styles
 * Make `ViewSection` Component, that displays title and borders. Reuse style in dashboard, subject-show, and export-data
 * Improve the looks of exporting view
+* When creating a subject, the bottom bar is always above the keyboard. Hide it when the keyboard is up.
+* Improve submit button style
+  - Use `SubmitButton` in the subject form
 
 ## Develop
 * Create avds:

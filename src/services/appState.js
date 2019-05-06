@@ -7,7 +7,7 @@ class AppStateListener {
 
     this.handleAppStateChange = this.handleAppStateChange.bind(this);
 
-    AppState.addEventListener('change', this.handleAppStateChange.bind(this));
+    AppState.addEventListener('change', this.handleAppStateChange);
   }
 
   listenOnActivate(callback) {

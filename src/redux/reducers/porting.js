@@ -1,5 +1,5 @@
 const defaultState = {
-  lastExportedTimestamp: 0,
+  lastExportedTimestamp: 0, // TODO: delete if not used
 };
 
 const porting = (state = defaultState, action) => {

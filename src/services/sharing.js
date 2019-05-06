@@ -1,13 +1,17 @@
 import Share from 'react-native-share';
-import { Buffer } from 'buffer';
 
-export default function share(filename, obj) {
-  const encoded = Buffer.from(JSON.stringify(obj)).toString('base64');
+const RNFS = require('react-native-fs');
 
-  return Share.open({
-    url: `data:text/json;base64,${encoded}`,
+export default function share(name, device, obj) {
+  const content = JSON.stringify(obj, null, 2);
+  const filename = `worktime-${name}-${device}.json`;
+  const path = `${RNFS.DocumentDirectoryPath}/${filename}`;
+  const url = `file://${path}`;
+
+  return RNFS.writeFile(path, content, 'utf8').then(() => Share.open({
+    url,
     title: 'Export data', // DICTIONARY
-    subject: `${filename}.json`,
+    subject: filename,
     type: 'text/plain',
-  });
+  }));
 }

@@ -1,5 +1,5 @@
 import {
-  getTimestamp, unixToDateString, unixToHour, daysAgo,
+  getTimestamp, getTimestampString, unixToDateString, unixToHour, daysAgo,
   isBetween, isBefore,
   getDateCopy, countWeeks,
   prettyDate, prettyDuration, prettyDays, prettyDaysSpan, prettyWeeks,
@@ -15,6 +15,7 @@ import Memoizer from './memoizer';
 
 export {
   getTimestamp,
+  getTimestampString,
   unixToDateString,
   unixToHour,
   daysAgo,
