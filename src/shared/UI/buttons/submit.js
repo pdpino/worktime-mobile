@@ -6,11 +6,12 @@ import {
 const styles = StyleSheet.create({
   container: {
     width: 220,
-    height: 30,
+    height: 32,
   },
   button: {
     flex: 1,
     justifyContent: 'center',
+    borderRadius: 2,
   },
   enabled: {
     backgroundColor: '#2196F3',

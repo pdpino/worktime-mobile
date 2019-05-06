@@ -1,4 +1,12 @@
-import { addAttrWorkSessionDevice } from './updates';
+function updateWorkSessionDevice(WorkSession, device) {
+  WorkSession.all().update({ device });
+}
+
+function updateWorkSessionDeviceWhere(WorkSession, oldName, newName) {
+  WorkSession.all()
+    .filter(workSession => workSession.device === oldName)
+    .update({ device: newName });
+}
 
 const entities = orm => (state, action) => {
   const session = orm.session(state);
@@ -18,9 +26,11 @@ const entities = orm => (state, action) => {
         WorkSession.withId(action.payload.id).delete();
       }
       break;
-    case 'PLAYER/STARTING':
-      WorkSession.start(action.payload.timestamp, action.payload.subject.id);
+    case 'PLAYER/STARTING': {
+      const { timestamp, subject, deviceName } = action.payload;
+      WorkSession.start(timestamp, subject.id, deviceName);
       break;
+    }
     case 'PLAYER/STARTED':
     case 'PLAYER/UPDATE_TIMES': {
       const { runningSessionId, timestamp } = action.payload;
@@ -39,9 +49,14 @@ const entities = orm => (state, action) => {
     case 'PLAYER/STOP_DISCARD':
       WorkSession.withId(action.payload.runningSessionId).delete();
       break;
+    case 'UPDATE_DEVICE_NAME': {
+      const { oldDeviceName, newDeviceName } = action.payload;
+      updateWorkSessionDeviceWhere(WorkSession, oldDeviceName, newDeviceName);
+      break;
+    }
     case 'APP/UPDATE_STORE': {
       if (action.payload.nextStoreVersion === 1) {
-        addAttrWorkSessionDevice(WorkSession);
+        updateWorkSessionDevice(WorkSession, 'mobile');
       }
       break;
     }

@@ -5,6 +5,7 @@ import {
 } from './work';
 import { onAppActivate, onAppDeactivate, checkStoreVersion } from './app';
 import { updateExportTimestamp } from './porting';
+import { updateDeviceName } from './profile';
 
 export {
   upsertSubject,
@@ -21,4 +22,5 @@ export {
   onAppDeactivate,
   checkStoreVersion,
   updateExportTimestamp,
+  updateDeviceName,
 };

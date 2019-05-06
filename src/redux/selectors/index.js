@@ -16,6 +16,9 @@ import {
 import {
   lastExportedSelector,
 } from './porting';
+import {
+  profileSelector,
+} from './profile';
 
 export {
   subjectsSelector,
@@ -28,4 +31,5 @@ export {
   lastRunningSessionSelector,
   subjectsSetSelector,
   lastExportedSelector,
+  profileSelector,
 };

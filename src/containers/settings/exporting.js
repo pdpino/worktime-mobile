@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import share from '../../services/sharing';
-import { subjectsSetSelector } from '../../redux/selectors';
+import { subjectsSetSelector, profileSelector } from '../../redux/selectors';
 import ExportingComponent from '../../components/settings/exporting';
 import { getExportableObject, getExportFilename } from '../../shared/porting';
 import { getTimestampString } from '../../shared/utils';
@@ -14,7 +14,7 @@ class Exporting extends React.Component {
   }
 
   handlePressExport() {
-    const device = 'mobile';
+    const device = this.props.profile.deviceName;
 
     const exportObject = getExportableObject({
       timestamp: getTimestampString(),
@@ -37,6 +37,7 @@ class Exporting extends React.Component {
 
 const mapStateToProps = state => ({
   subjectsSet: subjectsSetSelector(state),
+  profile: profileSelector(state),
 });
 
 export default connect(mapStateToProps)(Exporting);

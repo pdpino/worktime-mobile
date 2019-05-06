@@ -28,7 +28,7 @@ const Exporting = ({ onPressExport }) => {
   const helpSection = (
     <View style={styles.row}>
       <Text style={styles.helpText}>
-        Export or import your data to a file
+        Export your data to a file
       </Text>
     </View>
   );

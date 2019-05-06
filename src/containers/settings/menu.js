@@ -4,6 +4,9 @@ import SettingsMenuComponent from '../../components/settings/menu';
 
 const menuItems = [
   {
+    key: 'profile',
+  },
+  {
     key: 'exporting',
   },
 ];

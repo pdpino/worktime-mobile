@@ -35,10 +35,17 @@ const noSettingsAvailable = 'No settings available yet!';
 
 const itemsConfig = {
   exporting: {
-    text: 'Export data', // DICTIONARY
+    text: 'Export', // DICTIONARY
     icon: {
       name: 'share',
       type: 'entypo',
+    },
+  },
+  profile: {
+    text: 'Profile', // DICTIONARY
+    icon: {
+      name: 'person',
+      type: 'material-icons',
     },
   },
 };

@@ -1,6 +1,7 @@
 import { createStackNavigator } from 'react-navigation';
 import SettingsMenu from '../containers/settings/menu';
 import Exporting from '../containers/settings/exporting';
+import Profile from '../containers/settings/profile';
 import headerOptions from './header';
 
 const SettingsStack = createStackNavigator({
@@ -8,6 +9,12 @@ const SettingsStack = createStackNavigator({
     screen: SettingsMenu,
     navigationOptions: {
       title: 'Settings', // DICTIONARY
+    },
+  },
+  profile: {
+    screen: Profile,
+    navigationOptions: {
+      title: 'Profile', // DICTIONARY
     },
   },
   exporting: {

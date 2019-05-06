@@ -1,5 +1,6 @@
 import {
   runningSessionIdSelector, lastWorkSessionSelector, selectedSubjectSelector,
+  profileSelector,
 } from '../selectors';
 import { getTimestamp } from '../../shared/utils';
 
@@ -29,6 +30,7 @@ export const start = subject => (dispatch, getState) => {
     payload: {
       timestamp: getTimestamp(),
       subject,
+      deviceName: profileSelector(getState()).deviceName,
     },
   });
 

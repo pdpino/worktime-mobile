@@ -2,7 +2,7 @@ import { fk, attr, Model } from 'redux-orm';
 import { unixToDateString, unixToHour } from '../../shared/utils';
 
 class WorkSession extends Model {
-  static start(timestamp, subjectId) {
+  static start(timestamp, subjectId, deviceName) {
     const { Subject, WorkSession } = this.session; // eslint-disable-line no-shadow
     const props = {
       date: unixToDateString(timestamp),
@@ -12,7 +12,7 @@ class WorkSession extends Model {
       timeEffective: 0,
       nPauses: 0,
       status: 'playing',
-      device: 'mobile',
+      device: deviceName,
       subject: subjectId,
     };
 

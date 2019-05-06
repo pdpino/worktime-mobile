@@ -6,6 +6,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: 'white',
   },
   formItem: {
     marginHorizontal: 16,
@@ -34,39 +35,22 @@ const styles = StyleSheet.create({
 });
 
 // DICTIONARY
-const namePlaceholder = 'Short and memorable name';
-const descriptionPlaceholder = 'Work on this and that...';
-const nameLabel = 'Name';
-const descriptionLabel = 'Description';
+const deviceNamePlaceholder = 'Short and memorable name';
+const deviceNameLabel = 'Device name';
 
-const SubjectForm = ({
-  name, description, onChangeName, onChangeDescription, onSubmit, canSubmit,
+const Profile = ({
+  deviceName, onChangeDeviceName, onSubmit,
 }) => {
-  const nameInput = (
+  const deviceNameInput = (
     <View style={styles.formItem}>
       <Text style={styles.label}>
-        {nameLabel}
+        {deviceNameLabel}
       </Text>
       <TextInput
         style={[styles.input, styles.inputName]}
-        value={name}
-        placeholder={namePlaceholder}
-        onChangeText={onChangeName}
-      />
-    </View>
-  );
-
-  const descriptionInput = (
-    <View style={styles.formItem}>
-      <Text style={styles.label}>
-        {descriptionLabel}
-      </Text>
-      <TextInput
-        style={[styles.input, styles.inputDescription]}
-        value={description}
-        placeholder={descriptionPlaceholder}
-        onChangeText={onChangeDescription}
-        multiline
+        value={deviceName}
+        placeholder={deviceNamePlaceholder}
+        onChangeText={onChangeDeviceName}
       />
     </View>
   );
@@ -77,19 +61,17 @@ const SubjectForm = ({
       <Button
         title={submitText}
         onPress={onSubmit}
-        disabled={!canSubmit}
       />
     </View>
   );
 
   return (
     <View style={styles.container}>
-      {nameInput}
-      {descriptionInput}
+      {deviceNameInput}
       {submitButton}
     </View>
   );
 };
 
 
-export default SubjectForm;
+export default Profile;
