@@ -148,6 +148,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fs')
     implementation project(':react-native-push-notification')
     implementation project(':react-native-device-info')
     implementation project(':react-native-vector-icons')
