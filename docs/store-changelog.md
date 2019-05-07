@@ -1,9 +1,19 @@
 # Store changelog
 All relevant changes to the store will be documented here.
-A relevant change is one that requires an action to update the store saved in production
+A relevant change is one that requires an action to update the store saved in
+production.
+Irrelevant changes may also be documented, but only a relevant change triggers
+a new store version.
 
-## 1 - with version 1.3.0
-* Add reducer `app`, that keeps `storeVersion` (number) with the current store version
+## Irrelevant change - with version 1.3.0
+* Add reducer `profile`, that keeps:
+  - `deviceName`: a string with the device's name, defaulting to `"mobile"`
+  This change does not require a store update in production.
+
+
+## 1 - with version 1.3.0-alpha
+* Add reducer `app`, that keeps `storeVersion` (number) with the current store
+  version.
 * Add attribute `device` to each `WorkSession`, with value `"mobile"`
 
 
@@ -12,7 +22,8 @@ A relevant change is one that requires an action to update the store saved in pr
 
 ### Work
 * Keeps:
-  - `lastRunningSessionId` (this attribute was added later, but didn't need an action to update the store)
+  - `lastRunningSessionId` (this attribute was added later, but does not require
+    an action to update in production).
   - `runningSessionId`
   - `selectedSubjectId`
 
@@ -32,7 +43,9 @@ A relevant change is one that requires an action to update the store saved in pr
     + `nPauses`: number
     + `status`: string, one of "playing", "paused", "stopped"
     + `subject`: FK to Subject
-    The attributes `timeTotal`, `timeEffective` and `nPauses` are redundant, considering the info is stored in the sprints. Is kept for efficiency, so you don't have to recalculate with the sprints every time
+    The attributes `timeTotal`, `timeEffective` and `nPauses` are redundant,
+    considering the info is stored in the sprints. Is kept for efficiency,
+    so a recalculation is not needed every time.
   - Sprint:
     + `id`: number
     + `order`: number

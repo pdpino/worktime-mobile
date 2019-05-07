@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 
 
+## 1.3.0 - 2019-05-06
+### Added
+* Custom name to the device (configurable by the user)
+* View in settings: Profile, edit the device name
+* Complete the export feature: View in settings allows sharing a JSON file with
+  another app (e.g. Google Drive). The file contains the user data.
+
+
 ## 1.3.0-alpha - 2018-12-10
 ### Added
 * Store versioning

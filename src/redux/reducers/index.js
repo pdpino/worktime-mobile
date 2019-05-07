@@ -10,7 +10,6 @@ const rootReducer = combineReducers({
   work,
   app,
   profile,
-  // porting,
 });
 
 export default rootReducer;

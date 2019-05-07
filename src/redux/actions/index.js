@@ -4,7 +4,6 @@ import {
   start, resume, pause, stop, stopAndDiscard, selectWorkSubject, updateWorkTimes,
 } from './work';
 import { onAppActivate, onAppDeactivate, checkStoreVersion } from './app';
-import { updateExportTimestamp } from './porting';
 import { updateDeviceName } from './profile';
 
 export {
@@ -21,6 +20,5 @@ export {
   onAppActivate,
   onAppDeactivate,
   checkStoreVersion,
-  updateExportTimestamp,
   updateDeviceName,
 };

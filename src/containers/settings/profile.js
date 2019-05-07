@@ -20,7 +20,8 @@ class Profile extends React.Component {
   }
 
   handleChangeDeviceName(value) {
-    this.setState({ deviceName: value });
+    const deviceNameNoSpaces = value.replace(/\s/g, '');
+    this.setState({ deviceName: deviceNameNoSpaces });
   }
 
   handleSave() {

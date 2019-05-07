@@ -1,5 +1,4 @@
 import { attr, Model } from 'redux-orm';
-// import { isBefore } from '../../shared/utils';
 
 class Subject extends Model {
   getWorkSessions(options = {}) {

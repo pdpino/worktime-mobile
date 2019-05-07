@@ -14,9 +14,6 @@ import {
   lastRunningSessionSelector,
 } from './work';
 import {
-  lastExportedSelector,
-} from './porting';
-import {
   profileSelector,
 } from './profile';
 
@@ -30,6 +27,5 @@ export {
   runningSessionSelector,
   lastRunningSessionSelector,
   subjectsSetSelector,
-  lastExportedSelector,
   profileSelector,
 };

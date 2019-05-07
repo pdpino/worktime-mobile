@@ -6,10 +6,10 @@ Next things to do
 ### Export data from mobile to desktop
 * In desktop:
   - `work update`:
-    + prompt for device name (defaults to laptop)
-    + save the device name to `admin.json`
+    + save the default device name to `admin.json` (name = laptop)
     + add `device: <device-name>` to every entry
   - `work import file.json`
+    DO NOT IMPORT!
     + conciliate subject-job names:
       Create a dict: `clean(subjectName) => jobName`,
       where `clean()` takes out the accents and makes it lowercase
@@ -35,30 +35,20 @@ Next things to do
 
 ### Import to mobile from desktop
 * In desktop:
-  - Export same json files, considering:
+  - Export JSON files to mobile format (is the standard now):
     + jobs must be stopped (`_entry = null`, `is_running = False`)
-    + after exporting, save date and last final hour (`hf`) (in `admin.json`)
-      `last_exported_hour`, `last_exported_date`
-    + when exporting, choose only those older than the last one
+    + rename necessary fields
+    + check that the timestamp represents the same time in python and JS
   - send it manually through whatsapp/drive, etc
 
 * In mobile:
-  - Import from file (react-native-fs can do this?)
+  - Import from file (load a file from folders)
   - conciliate names (how??)
-  - Create method `subject.importJob(job)` (specific for jobs, in the future it will be legacy code)
-  - Create method `WorkSession.importEntry(entry)`, copy:
-    ```
-    status = 'stopped'
-    date = entry.date
-    timestampStart = hourToUnix(date, hi)
-    timestampEnd = hourToUnix(date, hf)
-    timeTotal = entry.total_time
-    timeEffective = entry.effective_time
-    nPauses = entry.n_pauses
-    sprints = []
-    ```
-    Sprints are empty, which means that there is no info about sprints.
-    (In the future, edge case `sprints.length === 0` will have to be handled in the mobile app)
+  - check that device name (the one globally defined in the JSON file) is
+    different than the local one (saved in the app)
+  - Import only work sessions with:
+    + the same device name that the global one
+    + If sprints are empty, that's fine (legacy code does not save sprints)
 
 
 
@@ -74,8 +64,7 @@ Next things to do
   (how to display that?)
 
 ## Styles
-* Make `ViewSection` Component, that displays title and borders. Reuse style in dashboard, subject-show, and export-data
-* Improve the looks of exporting view
+* Make `ViewSection` Component, that displays title and borders. Reuse style in dashboard, subject-show, etc
 * When creating a subject, the bottom bar is always above the keyboard. Hide it when the keyboard is up.
 * Improve submit button style
   - Use `SubmitButton` in the subject form
@@ -89,7 +78,6 @@ Next things to do
 * Use https://medium.com/@andr3wjack/versioning-react-native-apps-407469707661 to simplify deploying new versions
 
 ## Fixes
-* IMPORTANT HACK: when exporting data, a button is displayed to "Mark exported", which updates the `lastExportedTimestamp`. This should be done automatically. The problem is that `Share.open` does not let you know when the sharing ended correctly, so there is no way to know.
 * Delete orphan work-sessions (and sprints)
 * In `SubjectShow` make loading of work-sessions async
 * Bug: when there is a session running, if you delete it's subject:
