@@ -53,7 +53,7 @@ const PlayerButtons = ({
   <View style={styles.container}>
     <PlayerButton
       iconName={showPlay ? 'play' : 'pause'}
-      backgroundColor="darkcyan"
+      backgroundColor={showPlay ? 'darkcyan' : 'darkorange'}
       onPress={onPressPlayPause}
       disabled={!playerEnabled}
     />

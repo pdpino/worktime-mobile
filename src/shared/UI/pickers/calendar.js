@@ -50,19 +50,24 @@ const CalendarButton = ({ date }) => (
 
 const CalendarPicker = ({
   date, minDate, maxDate, onDayPress, closeModal,
-}) => (
-  <Calendar
-    markedDates={{
-      [formatDate(date)]: { selected: true },
-    }}
-    onDayPress={(day) => {
-      closeModal();
-      onDayPress(day);
-    }}
-    minDate={formatDate(minDate)}
-    maxDate={formatDate(maxDate)}
-    firstDay={1}
-  />
-);
+}) => {
+  const formattedCurrentDate = formatDate(date);
+
+  return (
+    <Calendar
+      current={formattedCurrentDate}
+      markedDates={{
+        [formattedCurrentDate]: { selected: true },
+      }}
+      onDayPress={(day) => {
+        closeModal();
+        onDayPress(day);
+      }}
+      minDate={formatDate(minDate)}
+      maxDate={formatDate(maxDate)}
+      firstDay={1}
+    />
+  );
+};
 
 export default asModalWithButton(CalendarButton, CalendarPicker);
