@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 
 const Splash = () => (
   <View style={styles.container}>
-    <ActivityIndicator color="#3B84B5" />
+    <ActivityIndicator color="#3B84B5" size="large" />
   </View>
 );
 
