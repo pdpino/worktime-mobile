@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 
 
+## 1.3.1 - 2019-05-08
+### Added
+* Loading spinner to the exporting process
+
+### Fixed
+* Minor fixes
+  - Color of the pause button
+  - Enlarge activity indicator in the splash screen
+  - In the calendar picker, start the calendar in the selected date.
+
+
+
 ## 1.3.0 - 2019-05-06
 ### Added
 * Custom name to the device (configurable by the user)
