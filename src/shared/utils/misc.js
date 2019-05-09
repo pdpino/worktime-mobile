@@ -13,3 +13,10 @@ export function toMaxFixed(number, decimals) {
   const hasDecimals = roundedNumber % 1 === 0;
   return hasDecimals ? roundedNumber : number.toFixed(0);
 }
+
+export function makeFunctionAsync(func) {
+  // REVIEW: usage of setTimeout to make something async, is it too hacky?
+  return (...params) => new Promise((resolve) => {
+    setTimeout(() => resolve(func(...params)), 0);
+  });
+}

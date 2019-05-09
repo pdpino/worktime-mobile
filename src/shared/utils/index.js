@@ -10,6 +10,7 @@ import {
   smartDivision,
   prettyPercentage,
   toMaxFixed,
+  makeFunctionAsync,
 } from './misc';
 import Memoizer from './memoizer';
 
@@ -39,4 +40,5 @@ export {
   Memoizer,
   countWeeks,
   toMaxFixed,
+  makeFunctionAsync,
 };

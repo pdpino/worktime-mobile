@@ -10,25 +10,33 @@ class Exporting extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isPreparingData: false,
+    };
+
     this.handlePressExport = this.handlePressExport.bind(this);
   }
 
   handlePressExport() {
     const device = this.props.profile.deviceName;
-
-    const exportObject = getExportableObject({
-      timestamp: getTimestampString(),
-      device,
-      subjectsSet: this.props.subjectsSet,
-    });
-
     const filename = getExportFilename(device);
-    share(filename, exportObject);
+
+    this.setState({ isPreparingData: true }, () => {
+      getExportableObject({
+        timestamp: getTimestampString(),
+        device,
+        subjectsSet: this.props.subjectsSet,
+      }).then(exportObject => share(filename, exportObject))
+        .then(() => this.setState({ isPreparingData: false }));
+    });
   }
 
   render() {
+    const { isPreparingData } = this.state;
+
     return (
       <ExportingComponent
+        isPreparingData={isPreparingData}
         onPressExport={this.handlePressExport}
       />
     );

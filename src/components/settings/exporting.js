@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Exporting = ({ onPressExport }) => {
+const Exporting = ({ isPreparingData, onPressExport }) => {
   // DICTIONARY
   const helpSection = (
     <View style={styles.row}>
@@ -38,6 +38,7 @@ const Exporting = ({ onPressExport }) => {
     <View style={styles.row}>
       <SubmitButton
         text="Export"
+        isLoading={isPreparingData}
         onPress={onPressExport}
       />
     </View>

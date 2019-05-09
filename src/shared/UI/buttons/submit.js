@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, View, Text, TouchableOpacity,
+  StyleSheet, View, Text, TouchableOpacity, ActivityIndicator,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -29,17 +29,19 @@ const styles = StyleSheet.create({
 });
 
 const SubmitButton = ({
-  text, disabled, onPress,
+  text, isLoading, disabled, onPress,
 }) => (
   <View style={styles.container}>
     <TouchableOpacity
       style={[styles.button, disabled ? styles.disabled : styles.enabled]}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onPress={onPress}
     >
-      <Text style={styles.text}>
-        {(text || '').toUpperCase()}
-      </Text>
+      {isLoading ? <ActivityIndicator color="white" /> : (
+        <Text style={styles.text}>
+          {(text || '').toUpperCase()}
+        </Text>
+      )}
     </TouchableOpacity>
   </View>
 );

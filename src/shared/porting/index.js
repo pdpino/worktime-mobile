@@ -1,19 +1,23 @@
-function exportSubjects(subjectsSet, device) {
+import { makeFunctionAsync } from '../utils';
+
+function getExportableSubjects(subjectsSet, device) {
   return subjectsSet.toModelArray().map(subject => subject.exportable(device));
 }
 
-export function getExportableObject(options) {
+export const getExportableObject = makeFunctionAsync((options) => {
+  const { device, timestamp, subjectsSet } = options;
+
   const exportObject = {
-    device: options.device,
-    timestamp: options.timestamp,
+    device,
+    timestamp,
   };
 
-  if (options.subjectsSet) {
-    exportObject.subjects = exportSubjects(options.subjectsSet, options.device);
+  if (subjectsSet) {
+    exportObject.subjects = getExportableSubjects(subjectsSet, device);
   }
 
   return exportObject;
-}
+});
 
 export function getExportFilename(device) {
   return `worktime-data-${device}.json`;
