@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 });
 
 const ItemCheckbox = ({
-  text, checked, containerStyle, onPress,
+  text, checked, containerStyle, textStyle, onPress,
 }) => (
   <TouchableOpacity
     style={[styles.container, containerStyle]}
@@ -36,6 +36,7 @@ const ItemCheckbox = ({
     <Text style={[
       styles.text,
       checked && styles.checkedText,
+      textStyle,
     ]}
     >
       {text}

@@ -9,6 +9,9 @@ const menuItems = [
   {
     key: 'exporting',
   },
+  {
+    key: 'importing',
+  },
 ];
 
 class SettingsMenu extends React.Component {

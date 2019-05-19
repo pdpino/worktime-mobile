@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+* Support import data from JSON files
+* Tests for some of the importing code
 
 
 ## 1.3.1 - 2019-05-08
@@ -12,10 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Loading spinner to the exporting process
 
 ### Fixed
-* Minor fixes
-  - Color of the pause button
+* Minor UI fixes
+  - Change pause button color to orange
   - Enlarge activity indicator in the splash screen
-  - In the calendar picker, start the calendar in the selected date.
+  - In the calendar picker, start the calendar in the selected date
 
 
 

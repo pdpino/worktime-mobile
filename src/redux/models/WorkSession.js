@@ -1,9 +1,34 @@
+import _ from 'lodash';
 import { fk, attr, Model } from 'redux-orm';
 import { unixToDateString, unixToHour } from '../../shared/utils';
 
+const portingWhiteList = [
+  'date', 'device', 'timestampStart', 'timestampEnd',
+  'timeTotal', 'timeEffective', 'nPauses', 'status',
+];
+
+function filterWhiteList(obj) {
+  return _.pick(obj, portingWhiteList);
+}
+
 class WorkSession extends Model {
+  static import(subject, importableWorkSession) {
+    // eslint-disable-next-line no-shadow
+    const { WorkSession, Sprint } = this.session;
+
+    const workSession = WorkSession.create({
+      subject: subject.id,
+      ...filterWhiteList(importableWorkSession),
+    });
+
+    importableWorkSession.sprints
+      .forEach(importableSprint => Sprint
+        .import(workSession, importableSprint));
+  }
+
   static start(timestamp, subjectId, deviceName) {
-    const { Subject, WorkSession } = this.session; // eslint-disable-line no-shadow
+    // eslint-disable-next-line no-shadow
+    const { Subject, WorkSession } = this.session;
     const props = {
       date: unixToDateString(timestamp),
       timestampStart: timestamp,
@@ -96,7 +121,7 @@ class WorkSession extends Model {
 
   exportable() {
     return {
-      ...this.ref,
+      ...filterWhiteList(this.ref),
       sprints: this.getSprints().map(sprint => sprint.exportable()),
     };
   }

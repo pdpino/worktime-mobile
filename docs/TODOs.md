@@ -1,60 +1,25 @@
 # TODOs
 Next things to do
 
-## Next feature: Importing/Exporting
+## [P1] Next feature: Importing/Exporting
 
-### Export data from mobile to desktop
-* In desktop:
-  - `work update`:
-    + save the default device name to `admin.json` (name = laptop)
-    + add `device: <device-name>` to every entry
-  - `work import file.json`
-    DO NOT IMPORT!
-    + conciliate subject-job names:
-      Create a dict: `clean(subjectName) => jobName`,
-      where `clean()` takes out the accents and makes it lowercase
-      Save the dict in `admin.json`
-    + take each work-session from each subject, create entry with:
-      ```
-      obs = ""
-      finished = True
-      date = workSession.date
-      n_pauses = workSession.nPauses
-      total_time = workSession.timeTotal
-      effective_time = workSession.timeEffective
-      pause_time = workSession.timeTotal - timeEffective
-      hi = unixToHour(timestampStart)
-      hf = unixToHour(timestampEnd)
-      device = workSession.device
-      ```
-    + Extend existing list with new one
-    + sort the merged one (timsort should do it pretty well), and save job
-    + save imported date and hour in `admin.json`
-      `last_imported_hour`, `last_imported_date`
-
-
-### Import to mobile from desktop
-* In desktop:
-  - Export JSON files to mobile format (is the standard now):
-    + jobs must be stopped (`_entry = null`, `is_running = False`)
-    + rename necessary fields
-    + check that the timestamp represents the same time in python and JS
-  - send it manually through whatsapp/drive, etc
-
-* In mobile:
-  - Import from file (load a file from folders)
-  - conciliate names (how??)
-  - check that device name (the one globally defined in the JSON file) is
-    different than the local one (saved in the app)
-  - Import only work sessions with:
-    + the same device name that the global one
-    + If sprints are empty, that's fine (legacy code does not save sprints)
-
+### Export data from desktop to mobile
+(In desktop):
+* `work update`:
+  - save the default device name to `admin.json` (name = laptop)
+  - add `device: <device-name>` to every entry
+* Export JSON files to mobile format (is the standard):
+  - jobs must be stopped (`_entry = null`, `is_running = False`)
+  - rename necessary fields
+  - check that the timestamp represents the same time in python and JS
 
 
 ## New Features
 * [P1] Archive/unarchive subjects
 * Implement categories
+* Complete about Porting feature:
+  - Allow choosing device on export (this device only, or all)
+  - Allow choosing device on import (main device only, or all)
 * Nest subjects
 * View with sprints (for each work session)
 * Dashboard
@@ -69,10 +34,13 @@ Next things to do
   - this month: avg time by week, top 3 subjects?
 
 ## Styles
-* When creating a subject, the bottom bar is always above the keyboard. Hide it
-  when the keyboard is up.
+* [P2] Bottom bar avoid keyboard.
+* [P2] Hide bottom bar on views other than main views (e.g. subject form).
 * Improve submit button style
   - Use `SubmitButton` in the subject form
+  - In `components/settings/importing.js`, the submit button has a hacky style
+  to prevent left aligning the button (`alignSelf: center`). The submit button
+  should center itself?
 * Make `ViewSection` Component, that displays title and borders. Reuse style in
   dashboard, subject-show, etc.
 

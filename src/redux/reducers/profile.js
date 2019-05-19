@@ -1,5 +1,6 @@
 const defaultState = {
   deviceName: 'mobile',
+  knownDevices: {},
 };
 
 const profile = (state = defaultState, action) => {
@@ -9,6 +10,16 @@ const profile = (state = defaultState, action) => {
         ...state,
         deviceName: action.payload.newDeviceName,
       };
+    case 'IMPORT_SUBJECTS_DATA': {
+      const { device, timestamp } = action.payload;
+      return {
+        ...state,
+        knownDevices: {
+          ...state.knownDevices,
+          [device]: timestamp,
+        },
+      };
+    }
     default:
       return state;
   }

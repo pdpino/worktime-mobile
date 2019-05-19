@@ -42,6 +42,10 @@ export function daysAgo(date) {
   return `${diffDays} days ago`;
 }
 
+export function unixToDaysAgo(timestamp) {
+  return daysAgo(unixToDateString(timestamp));
+}
+
 export function countWeeks(initialDate, endingDate) {
   return toMaxFixed(endingDate.diff(initialDate, 'days') / 7, 1);
 }

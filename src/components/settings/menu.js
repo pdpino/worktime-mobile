@@ -34,6 +34,13 @@ const styles = StyleSheet.create({
 const noSettingsAvailable = 'No settings available yet!';
 
 const itemsConfig = {
+  profile: {
+    text: 'Profile', // DICTIONARY
+    icon: {
+      name: 'person',
+      type: 'material-icons',
+    },
+  },
   exporting: {
     text: 'Export', // DICTIONARY
     icon: {
@@ -41,11 +48,11 @@ const itemsConfig = {
       type: 'entypo',
     },
   },
-  profile: {
-    text: 'Profile', // DICTIONARY
+  importing: {
+    text: 'Import', // DICTIONARY
     icon: {
-      name: 'person',
-      type: 'material-icons',
+      name: 'file',
+      type: 'feather',
     },
   },
 };

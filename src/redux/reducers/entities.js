@@ -49,6 +49,10 @@ const entities = orm => (state, action) => {
     case 'PLAYER/STOP_DISCARD':
       WorkSession.withId(action.payload.runningSessionId).delete();
       break;
+    case 'IMPORT_SUBJECTS_DATA':
+      action.payload.importableSubjects
+        .forEach(importableSubject => Subject.import(importableSubject));
+      break;
     case 'UPDATE_DEVICE_NAME': {
       const { oldDeviceName, newDeviceName } = action.payload;
       updateWorkSessionDeviceWhere(WorkSession, oldDeviceName, newDeviceName);

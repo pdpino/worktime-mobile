@@ -1,6 +1,36 @@
+import _ from 'lodash';
 import { attr, Model } from 'redux-orm';
+import { isNumber } from '../../shared/utils';
+
+const portingWhiteList = ['name', 'description'];
+
+function filterWhiteList(obj) {
+  return _.pickBy(obj, (value, key) => portingWhiteList.includes(key) && value);
+}
 
 class Subject extends Model {
+  static import(importableSubject) {
+    // eslint-disable-next-line no-shadow
+    const { Subject, WorkSession } = this.session;
+
+    const subjectId = importableSubject.id;
+    const props = filterWhiteList(importableSubject);
+
+    // NOTE: this operation is equivalent to Subject.upsert(props)
+    // but is done like this to be explicit about the two cases
+    // (id defined or not).
+    let subject;
+    if (isNumber(subjectId) && Subject.idExists(subjectId)) {
+      subject = Subject.withId(subjectId);
+      subject.update(props);
+    } else {
+      subject = Subject.create(props);
+    }
+
+    importableSubject.workSessions
+      .forEach(workSession => WorkSession.import(subject, workSession));
+  }
+
   getWorkSessions(options = {}) {
     const { sorted } = options;
     const workSessions = this.worksessionSet.toModelArray();
@@ -10,7 +40,7 @@ class Subject extends Model {
   }
 
   exportable(deviceName) {
-    const { id, name, description } = this;
+    const { name, description } = this;
 
     const workSessions = this.worksessionSet.toModelArray()
       .reduce((filtered, workSession) => {
@@ -21,7 +51,6 @@ class Subject extends Model {
       }, []);
 
     return {
-      id,
       name,
       description: description || '',
       workSessions,

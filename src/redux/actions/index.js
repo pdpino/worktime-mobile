@@ -5,6 +5,7 @@ import {
 } from './work';
 import { onAppActivate, onAppDeactivate, checkStoreVersion } from './app';
 import { updateDeviceName } from './profile';
+import { importFromJson } from './porting';
 
 export {
   upsertSubject,
@@ -21,4 +22,5 @@ export {
   onAppDeactivate,
   checkStoreVersion,
   updateDeviceName,
+  importFromJson,
 };

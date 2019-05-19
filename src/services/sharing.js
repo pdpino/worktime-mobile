@@ -1,4 +1,6 @@
 import Share from 'react-native-share';
+import { PermissionsAndroid } from 'react-native';
+import RNFileSelector from 'react-native-file-selector';
 
 const RNFS = require('react-native-fs');
 
@@ -13,4 +15,25 @@ export default function share(filename, obj) {
     subject: filename,
     type: 'text/plain',
   }));
+}
+
+function requestExternalStoragePermission() {
+  return PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+  ).then(granted => granted === PermissionsAndroid.RESULTS.GRANTED);
+}
+
+export function openFileSelector(title) {
+  return requestExternalStoragePermission()
+    .then(hasPermission => hasPermission
+      && new Promise(resolve => RNFileSelector.Show({
+        title,
+        onDone: path => resolve(path),
+      })));
+}
+
+export function openJsonFile(path) {
+  return RNFS.readFile(path, 'utf8')
+    .then(fileContent => JSON.parse(fileContent))
+    .catch(() => Promise.resolve(null));
 }
