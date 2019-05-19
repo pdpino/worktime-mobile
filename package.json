@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@redux-offline/redux-offline": "^2.4.0",
+    "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "react": "16.4.1",
     "react-native": "0.56.0",
@@ -19,6 +20,7 @@
     "react-native-calendars": "^1.20.0",
     "react-native-device-info": "^0.22.5",
     "react-native-elements": "^0.19.1",
+    "react-native-file-selector": "^0.0.6",
     "react-native-fs": "2.11.17",
     "react-native-material-menu": "^0.4.0",
     "react-native-modal": "^6.5.0",
@@ -30,7 +32,8 @@
     "redux": "^4.0.0",
     "redux-orm": "^0.12.1",
     "redux-thunk": "^2.3.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "unorm": "^1.5.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -47,6 +50,9 @@
     "react-test-renderer": "16.4.1"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    }
   }
 }
