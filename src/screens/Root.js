@@ -55,6 +55,7 @@ const Root = createBottomTabNavigator({
 {
   initialRouteName: 'work',
   navigationOptions: ({ navigation }) => ({
+    tabBarVisible: navigation.state.index === 0,
     tabBarIcon: ({ tintColor }) => {
       const { routeName } = navigation.state;
       return <Icon color={tintColor} size={22} {...iconConfiguration[routeName]} />;

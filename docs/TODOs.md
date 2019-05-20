@@ -34,8 +34,6 @@ Next things to do
   - this month: avg time by week, top 3 subjects?
 
 ## Styles
-* [P2] Bottom bar avoid keyboard.
-* [P2] Hide bottom bar on views other than main views (e.g. subject form).
 * Improve submit button style
   - Use `SubmitButton` in the subject form
   - In `components/settings/importing.js`, the submit button has a hacky style
@@ -57,6 +55,8 @@ Next things to do
   to simplify deploying new versions
 
 ## Fixes
+* [BUG] [P2] The timezone of each work session should be saved
+  (in case you moved to another timezone).
 * [BUG] Delete orphan work-sessions (and sprints). May be leftovers from a
   bug fixed in 1.2.3-alpha.
 * In `SubjectShow` make loading of work-sessions async.
@@ -78,8 +78,6 @@ Next things to do
 * Split `utils/dates.js` into multiple files (is too big by now).
 * `componentDidMount`, `componentWillUnmount` and `shouldComponentUpdate` are
   copied in `SubjectShow` and `DashboardMain`. Can it be refactored/improved?
-* `index.js` files in the folders look really bad.
-  Is there a way to do `import/export *`?
 * Optimize subject-show. (Review: how non-optimal is this?)
   Currently, two subjects are taken:
   - Whole subject is being passed as parameter via react-navigation.
