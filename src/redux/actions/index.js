@@ -1,26 +1,6 @@
-import { upsertSubject, deleteSubject } from './subjects';
-import { deleteWorkSession } from './workSessions';
-import {
-  start, resume, pause, stop, stopAndDiscard, selectWorkSubject, updateWorkTimes,
-} from './work';
-import { onAppActivate, onAppDeactivate, checkStoreVersion } from './app';
-import { updateDeviceName } from './profile';
-import { importFromJson } from './porting';
-
-export {
-  upsertSubject,
-  deleteSubject,
-  deleteWorkSession,
-  start,
-  resume,
-  pause,
-  stop,
-  stopAndDiscard,
-  selectWorkSubject,
-  updateWorkTimes,
-  onAppActivate,
-  onAppDeactivate,
-  checkStoreVersion,
-  updateDeviceName,
-  importFromJson,
-};
+export * from './app';
+export * from './porting';
+export * from './profile';
+export * from './subjects';
+export * from './work';
+export * from './workSessions';

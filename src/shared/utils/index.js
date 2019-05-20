@@ -1,55 +1,10 @@
-import {
-  getTimestamp, getTimestampString, unixToDateString, unixToHour, daysAgo,
-  isBetween, isBefore,
-  getDateCopy, countWeeks,
-  prettyDate, prettyDuration, prettyDays, prettyDaysSpan, prettyWeeks,
-  getToday, getYesterday, getStartOfWeek, getStartOfMonth, subtractDays,
-  isSameDay, unixToPrettyDate, unixToDaysAgo,
-} from './dates';
-import {
-  smartDivision,
-  prettyPercentage,
-  toMaxFixed,
-  makeFunctionAsync,
-  extractFilename,
-  isNumber,
-  sortByName,
-  removeStrAccents,
-} from './misc';
 import Memoizer from './memoizer';
 import ElementsIndex from './elementsIndex';
 
 export {
-  getTimestamp,
-  getTimestampString,
-  unixToDateString,
-  unixToHour,
-  daysAgo,
-  isBetween,
-  isBefore,
-  prettyDate,
-  prettyDuration,
-  prettyDays,
-  prettyWeeks,
-  prettyDaysSpan,
-  smartDivision,
-  prettyPercentage,
-  getDateCopy,
-  getToday,
-  getYesterday,
-  getStartOfWeek,
-  getStartOfMonth,
-  unixToPrettyDate,
-  subtractDays,
-  isSameDay,
-  unixToDaysAgo,
   Memoizer,
   ElementsIndex,
-  countWeeks,
-  toMaxFixed,
-  makeFunctionAsync,
-  extractFilename,
-  isNumber,
-  sortByName,
-  removeStrAccents,
 };
+
+export * from './dates';
+export * from './misc';
