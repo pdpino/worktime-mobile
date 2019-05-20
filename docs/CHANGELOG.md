@@ -6,8 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 ### Added
-* Support import data from JSON files
+* Support importing data from JSON files
 * Tests for some of the importing code
+
+### Fixed
+* On export, do not save ids or foreign keys, to avoid mixing them up on import
 
 
 ## 1.3.1 - 2019-05-08
