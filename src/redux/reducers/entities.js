@@ -16,10 +16,12 @@ const entities = orm => (state, action) => {
     case 'UPSERT_SUBJECT':
       Subject.upsert(action.payload.attributes);
       break;
-    case 'DELETE_SUBJECT':
-      if (Subject.idExists(action.payload.id)) {
-        Subject.withId(action.payload.id).delete();
-      }
+    case 'DELETE_SUBJECTS':
+      action.payload.ids.forEach((id) => {
+        if (Subject.idExists(id)) {
+          Subject.withId(id).delete();
+        }
+      });
       break;
     case 'DELETE_WORK_SESSION':
       if (WorkSession.idExists(action.payload.id)) {

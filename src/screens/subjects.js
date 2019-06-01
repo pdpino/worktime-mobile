@@ -5,9 +5,6 @@ import headerOptions from './header';
 const SubjectsStack = createStackNavigator({
   subjectsList: {
     screen: SubjectsList,
-    navigationOptions: {
-      title: 'Subjects', // DICTIONARY
-    },
   },
   newSubject: {
     screen: SubjectForm,

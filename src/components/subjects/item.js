@@ -2,19 +2,23 @@ import React from 'react';
 import {
   StyleSheet, View, TouchableOpacity, Text,
 } from 'react-native';
-import { DropdownMenu } from '../../shared/UI/menus';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    paddingBottom: 5,
+    paddingVertical: 5,
     paddingHorizontal: 15,
-    marginBottom: 5,
     alignItems: 'center',
     borderStyle: 'solid',
     borderBottomWidth: 1,
     borderBottomColor: 'gray',
+  },
+  selectedContainer: {
+    backgroundColor: '#c4eeff', // FIXME: better color?
+  },
+  unselectedContainer: {
+    backgroundColor: 'white',
   },
   detail: {
     flexDirection: 'column',
@@ -33,7 +37,7 @@ const styles = StyleSheet.create({
 });
 
 const SubjectItem = ({
-  subject, onPressDetail, onPressEdit, onPressDelete,
+  subject, isSelected, onPress, onLongPress,
 }) => {
   const name = (
     <Text style={styles.name}>
@@ -47,32 +51,21 @@ const SubjectItem = ({
     </Text>
   );
 
-  const buttons = [
-    {
-      label: 'Edit', // DICTIONARY
-      callback: () => onPressEdit(subject.id),
-    },
-    {
-      label: 'Delete', // DICTIONARY
-      callback: () => onPressDelete(subject.id),
-      textStyle: {
-        color: '#d50000',
-      },
-    },
-  ];
-
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        isSelected ? styles.selectedContainer : styles.unselectedContainer,
+      ]}
+    >
       <TouchableOpacity
         style={styles.detail}
-        onPress={() => onPressDetail(subject.id)}
+        onPress={() => onPress(subject.id)}
+        onLongPress={() => onLongPress(subject.id)}
       >
         {name}
         {description}
       </TouchableOpacity>
-      <DropdownMenu
-        items={buttons}
-      />
     </View>
   );
 };

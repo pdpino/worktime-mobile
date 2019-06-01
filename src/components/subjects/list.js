@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   },
   list: {
     width: Dimensions.get('window').width, // HACK?
-    paddingTop: 5,
   },
   listContainer: {
     paddingBottom: 80, // Make last item "more" button visible
@@ -29,14 +28,14 @@ const styles = StyleSheet.create({
 const noSubjects = 'No subjects'; // DICTIONARY
 
 const SubjectsList = ({
-  subjects, onPressDetail, onPressEdit, onPressDelete,
+  subjects, selectedSubjects, onPressSubject, onLongPressSubject,
 }) => {
   const renderSubject = ({ item }) => (
     <SubjectItem
       subject={item}
-      onPressDetail={onPressDetail}
-      onPressEdit={onPressEdit}
-      onPressDelete={onPressDelete}
+      isSelected={selectedSubjects[item.id]}
+      onPress={onPressSubject}
+      onLongPress={onLongPressSubject}
     />
   );
 

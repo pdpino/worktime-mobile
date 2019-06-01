@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   disabled: {
-    backgroundColor: '#DFDFDF',
+    backgroundColor: '#bdbdbd',
   },
   text: {
     textAlign: 'center',

@@ -5,9 +5,9 @@ export const upsertSubject = attributes => ({
   },
 });
 
-export const deleteSubject = id => ({
-  type: 'DELETE_SUBJECT',
+export const deleteSubjects = ids => ({
+  type: 'DELETE_SUBJECTS',
   payload: {
-    id,
+    ids,
   },
 });
