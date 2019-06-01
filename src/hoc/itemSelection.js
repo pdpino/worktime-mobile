@@ -6,7 +6,10 @@ export default function withItemSelection(Component) {
     static navigationOptions = ({ navigation }) => {
       const amountSelected = navigation.getParam('amountSelected', 0);
       if (amountSelected) {
-        const actions = Component.getSelectionActions(navigation, amountSelected);
+        const actions = Component.getSelectionActions(
+          navigation,
+          amountSelected,
+        );
         const handleUnselection = navigation.getParam('handleUnselection');
 
         return getSelectionHeaderParams({
@@ -22,8 +25,10 @@ export default function withItemSelection(Component) {
     constructor(props) {
       super(props);
 
-      this.selectedIds = {};
-      this.amountSelected = 0;
+      this.state = {
+        selectedIds: {},
+        amountSelected: 0,
+      };
 
       this.getSelectionArray = this.getSelectionArray.bind(this);
       this.toggleSelection = this.toggleSelection.bind(this);
@@ -35,33 +40,41 @@ export default function withItemSelection(Component) {
     }
 
     getSelectionArray() {
-      return Object.keys(this.selectedIds).filter(id => this.selectedIds[id]);
+      const { selectedIds } = this.state;
+      return Object.keys(selectedIds).filter(id => selectedIds[id]);
+    }
+
+    updateSelection(selectedIds, amountSelected) {
+      this.setState({
+        selectedIds,
+        amountSelected,
+      });
+      this.props.navigation.setParams({ amountSelected });
     }
 
     toggleSelection(id) {
-      const isSelected = this.selectedIds[id];
-      const newAmountSelected = this.amountSelected + (isSelected ? -1 : 1);
+      const { selectedIds, amountSelected } = this.state;
+      const isSelected = selectedIds[id];
+      const newAmountSelected = amountSelected + (isSelected ? -1 : 1);
 
-      this.selectedIds = {
-        ...this.selectedIds,
+      this.updateSelection({
+        ...selectedIds,
         [id]: !isSelected,
-      };
-      this.amountSelected = newAmountSelected;
-      this.props.navigation.setParams({ amountSelected: newAmountSelected });
+      }, newAmountSelected);
     }
 
     handleUnselection() {
-      this.props.navigation.setParams({ amountSelected: 0 });
-      this.amountSelected = 0;
-      this.selectedIds = {};
+      this.updateSelection({}, 0);
     }
 
     render() {
+      const { selectedIds, amountSelected } = this.state;
+
       return (
         <Component
           {...this.props}
-          amountSelected={this.amountSelected}
-          selection={this.selectedIds}
+          amountSelected={amountSelected}
+          selection={selectedIds}
           getSelectionArray={this.getSelectionArray}
           toggleSelection={this.toggleSelection}
           clearSelection={this.handleUnselection}
