@@ -146,6 +146,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   deleteSubjects,
 }, dispatch);
 
-export default withItemSelection(connect(
-  mapStateToProps, mapDispatchToProps,
-)(SubjectsList));
+export default withItemSelection(
+  connect(mapStateToProps, mapDispatchToProps)(SubjectsList),
+);

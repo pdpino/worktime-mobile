@@ -17,9 +17,6 @@ const styles = StyleSheet.create({
     borderBottomColor: 'gray',
     color: 'black',
   },
-  list: {
-    // width: Dimensions.get('window').width, // HACK?
-  },
   emptyList: {
     textAlign: 'center',
     marginVertical: 15,
@@ -31,7 +28,7 @@ const styles = StyleSheet.create({
 const noWorkSessions = 'No sessions';
 const titleText = 'Work Sessions';
 
-const WorkSessionsList = ({ workSessions, listProps, onPressDelete }) => {
+const WorkSessionsList = ({ workSessions, onPressDelete }) => {
   const title = (
     <Text style={styles.title}>
       {titleText}
@@ -48,7 +45,6 @@ const WorkSessionsList = ({ workSessions, listProps, onPressDelete }) => {
     <View style={styles.container}>
       {title}
       <FlatList
-        style={styles.list}
         data={workSessions}
         renderItem={({ item }) => (
           <WorkSessionItem
@@ -58,7 +54,7 @@ const WorkSessionsList = ({ workSessions, listProps, onPressDelete }) => {
         )}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={emptyComponent}
-        {...listProps}
+        enableScroll={false}
       />
     </View>
   );

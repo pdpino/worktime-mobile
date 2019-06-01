@@ -90,7 +90,6 @@ class SubjectShow extends React.Component {
         />
         <WorkSessionsListComponent
           workSessions={workSessions}
-          listProps={{ enableScroll: false }}
           onPressDelete={this.handleDeleteWorkSession}
         />
       </ScrollView>

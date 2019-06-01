@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'gray',
   },
   selectedContainer: {
-    backgroundColor: '#c4eeff', // FIXME: better color?
+    backgroundColor: '#c4eeff',
   },
   unselectedContainer: {
     backgroundColor: 'white',
