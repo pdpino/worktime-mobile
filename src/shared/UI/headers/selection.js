@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const getSelectionHeader = ({
+const getSelectionHeaderParams = ({
   amountSelected, actions, handleUnselection,
 }) => ({
   title: amountSelected.toString(),
@@ -25,9 +25,9 @@ const getSelectionHeader = ({
       renderItem={({ item }) => (
         item.enabled ? (
           <ClickableIcon
+            containerStyle={styles.iconContainer}
             icon={item.icon}
             onPress={item.handlePress}
-            containerStyle={styles.iconContainer}
           />
         ) : null
       )}
@@ -39,4 +39,4 @@ const getSelectionHeader = ({
   },
 });
 
-export default getSelectionHeader;
+export default getSelectionHeaderParams;

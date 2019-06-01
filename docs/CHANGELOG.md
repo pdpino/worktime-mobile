@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 ### Changed
-* In subjects list: press and hold to edit or delete
+* Press and hold a subject to edit or delete it
 
 ### Fixed
 * Bottom tab bar now is hidden when:

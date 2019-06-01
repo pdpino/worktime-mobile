@@ -1,5 +1,5 @@
 import React from 'react';
-import getSelectionHeader from '../shared/UI/headers/selection';
+import getSelectionHeaderParams from '../shared/UI/headers/selection';
 
 export default function withItemSelection(Component) {
   class WithItemSelection extends React.Component {
@@ -9,7 +9,7 @@ export default function withItemSelection(Component) {
         const actions = Component.getSelectionActions(navigation, amountSelected);
         const handleUnselection = navigation.getParam('handleUnselection');
 
-        return getSelectionHeader({
+        return getSelectionHeaderParams({
           amountSelected,
           actions,
           handleUnselection,

@@ -39,6 +39,8 @@ Next things to do
   - In `components/settings/importing.js`, the submit button has a hacky style
   to prevent left aligning the button (`alignSelf: center`). The submit button
   should center itself?
+  - Instead of defining a fixed width, define `horizontalMargin` to the
+  container, to keep the button away from the borders
 * Make `ViewSection` Component, that displays title and borders. Reuse style in
   dashboard, subject-show, etc.
 
