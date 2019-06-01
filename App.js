@@ -7,7 +7,7 @@ import AppStateListener from './src/services/appState';
 import { onAppActivate, onAppDeactivate, checkStoreVersion } from './src/redux/actions';
 
 let store;
-const storeVersionNeeded = 1;
+const storeVersionNeeded = 2;
 
 class App extends React.Component {
   constructor(props) {

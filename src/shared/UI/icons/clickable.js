@@ -3,6 +3,11 @@ import { TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 const rnIconDefinitions = {
+  archive: {
+    name: 'archive',
+    type: 'material-icons',
+    size: 28,
+  },
   edit: {
     name: 'edit',
     type: 'material-icons',
@@ -22,6 +27,11 @@ const rnIconDefinitions = {
     name: 'error',
     type: 'material-icons',
     color: 'black',
+  },
+  unarchive: {
+    name: 'unarchive',
+    type: 'material-icons',
+    size: 28,
   },
 };
 

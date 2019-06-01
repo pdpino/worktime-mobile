@@ -1,151 +1,187 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View, Alert } from 'react-native';
-import SubjectsListComponent from '../../components/subjects/list';
+import { Alert } from 'react-native';
+import { SubjectsListComponent, SubjectsList } from '../../components/subjects/list';
 import { subjectsSelector } from '../../redux/selectors';
-import { deleteSubjects } from '../../redux/actions';
+import { archiveSubjects, deleteSubjects } from '../../redux/actions';
 import { NewButton } from '../../shared/UI/buttons';
 import withItemSelection from '../../hoc/itemSelection';
 
-class SubjectsList extends React.Component {
-  static getSelectionActions(navigation, amountSelected) {
-    return [
-      {
-        enabled: amountSelected === 1,
-        icon: 'edit',
-        handlePress: navigation.getParam('handleEditSelected'),
-      },
-      {
-        enabled: true,
-        icon: 'delete',
-        handlePress: navigation.getParam('handleDeleteSelected'),
-      },
-    ];
-  }
+export default function createSubjectsList(isArchive) {
+  class SubjectsListContainer extends React.Component {
+    static getSelectionActions(navigation, amountSelected) {
+      return [
+        {
+          enabled: amountSelected === 1,
+          icon: 'edit',
+          handlePress: navigation.getParam('handleEditSelected'),
+        },
+        {
+          enabled: true,
+          icon: isArchive ? 'unarchive' : 'archive',
+          handlePress: navigation.getParam('handleArchiveSelected'),
+        },
+        {
+          enabled: true,
+          icon: 'delete',
+          handlePress: navigation.getParam('handleDeleteSelected'),
+        },
+      ];
+    }
 
-  static navigationOptions() {
-    return {
-      title: 'Subjects', // DICTIONARY
-    };
-  }
+    static navigationOptions() {
+      // DICTIONARY
+      return {
+        title: isArchive ? 'Archive' : 'Subjects',
+      };
+    }
 
-  constructor(props) {
-    super(props);
+    constructor(props) {
+      super(props);
 
-    this.handleLongPressSubject = this.handleLongPressSubject.bind(this);
-    this.handlePressSubject = this.handlePressSubject.bind(this);
+      this.handleLongPressSubject = this.handleLongPressSubject.bind(this);
+      this.handlePressSubject = this.handlePressSubject.bind(this);
 
-    this.handlePressNewSubject = this.handlePressNewSubject.bind(this);
-    this.handleEditSelected = this.handleEditSelected.bind(this);
-    this.handleDeleteSelected = this.handleDeleteSelected.bind(this);
+      this.handlePressNewSubject = this.handlePressNewSubject.bind(this);
+      this.handleEditSelected = this.handleEditSelected.bind(this);
+      this.handleArchiveSelected = this.handleArchiveSelected.bind(this);
+      this.handleDeleteSelected = this.handleDeleteSelected.bind(this);
 
-    this.props.navigation.setParams({
-      handleEditSelected: this.handleEditSelected,
-      handleDeleteSelected: this.handleDeleteSelected,
-    });
-  }
+      this.handlePressArchive = this.handlePressArchive.bind(this);
 
-  findSubject(id) {
-    const numericId = Number(id);
-    return this.props.subjects.find(subj => subj.id === numericId);
-  }
+      this.props.navigation.setParams({
+        handleEditSelected: this.handleEditSelected,
+        handleArchiveSelected: this.handleArchiveSelected,
+        handleDeleteSelected: this.handleDeleteSelected,
+      });
+    }
 
-  handlePressSubject(id) {
-    const { amountSelected } = this.props;
-    if (amountSelected) {
-      this.props.toggleSelection(id);
-    } else {
-      const subject = this.findSubject(id);
-      if (subject) {
-        this.props.navigation.navigate('showSubject', { subject });
+    findSubject(id) {
+      const numericId = Number(id);
+      return this.props.subjects.find(subj => subj.id === numericId);
+    }
+
+    handlePressSubject(id) {
+      const { amountSelected } = this.props;
+      if (amountSelected) {
+        this.props.toggleSelection(id);
+      } else {
+        const subject = this.findSubject(id);
+        if (subject) {
+          this.props.navigation.navigate('showSubject', { subject });
+        }
       }
     }
-  }
 
-  handleLongPressSubject(id) {
-    this.props.toggleSelection(id);
-  }
-
-  handlePressNewSubject() {
-    if (this.props.amountSelected) {
-      return;
-    }
-    this.props.navigation.navigate('newSubject');
-  }
-
-  handleEditSelected() {
-    const selectedIds = this.props.getSelectionArray();
-    if (selectedIds.length !== 1) {
-      return;
+    handleLongPressSubject(id) {
+      this.props.toggleSelection(id);
     }
 
-    const subject = this.findSubject(selectedIds[0]);
-    if (subject) {
-      this.props.clearSelection();
-      this.props.navigation.navigate('editSubject', { subject });
-    }
-  }
-
-  handleDeleteSelected() {
-    const selectedIds = this.props.getSelectionArray();
-    if (selectedIds.length === 0) {
-      return;
+    handlePressNewSubject() {
+      if (isArchive || this.props.amountSelected) {
+        return;
+      }
+      this.props.navigation.navigate('newSubject');
     }
 
-    let deletionSelected;
-    if (selectedIds.length === 1) {
+    handleEditSelected() {
+      const selectedIds = this.props.getSelectionArray();
+      if (selectedIds.length !== 1) {
+        return;
+      }
+
       const subject = this.findSubject(selectedIds[0]);
-      deletionSelected = subject.name;
-    } else {
-      deletionSelected = `${selectedIds.length} subjects`;
+      if (subject) {
+        this.props.clearSelection();
+        this.props.navigation.navigate('editSubject', { subject });
+      }
     }
 
-    // DICTIONARY
-    Alert.alert(
-      'Confirmation',
-      `Delete ${deletionSelected}?`,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Delete',
-          onPress: () => {
-            this.props.deleteSubjects(selectedIds);
-            this.props.clearSelection();
+    handleArchiveSelected() {
+      const selectedIds = this.props.getSelectionArray();
+      if (selectedIds.length === 0) {
+        return;
+      }
+
+      const archiving = !isArchive;
+      this.props.archiveSubjects(selectedIds, archiving);
+      this.props.clearSelection();
+    }
+
+    handleDeleteSelected() {
+      const selectedIds = this.props.getSelectionArray();
+      if (selectedIds.length === 0) {
+        return;
+      }
+
+      let deletionSelected;
+      if (selectedIds.length === 1) {
+        const subject = this.findSubject(selectedIds[0]);
+        deletionSelected = subject.name;
+      } else {
+        deletionSelected = `${selectedIds.length} subjects`;
+      }
+
+      // DICTIONARY
+      Alert.alert(
+        'Confirmation',
+        `Delete ${deletionSelected}?`,
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Delete',
+            onPress: () => {
+              this.props.deleteSubjects(selectedIds);
+              this.props.clearSelection();
+            },
           },
-        },
-      ],
-    );
+        ],
+      );
+    }
+
+    handlePressArchive() {
+      if (isArchive) {
+        return;
+      }
+      this.props.clearSelection();
+      this.props.navigation.navigate('subjectsArchiveList');
+    }
+
+    render() {
+      const { subjects, selection, amountSelected } = this.props;
+
+      return (
+        <SubjectsListComponent>
+          <SubjectsList
+            subjects={subjects}
+            selectedSubjects={selection}
+            isArchive={isArchive}
+            onPressSubject={this.handlePressSubject}
+            onLongPressSubject={this.handleLongPressSubject}
+            onPressArchive={this.handlePressArchive}
+          />
+          {!isArchive && (
+            <NewButton
+              disabled={amountSelected > 0}
+              onPress={this.handlePressNewSubject}
+            />
+          )}
+        </SubjectsListComponent>
+      );
+    }
   }
 
-  render() {
-    const { subjects, selection, amountSelected } = this.props;
+  const mapStateToProps = state => ({
+    subjects: subjectsSelector(state, { isArchive }),
+  });
 
-    return (
-      <View style={{ flex: 1 }}>
-        <SubjectsListComponent
-          subjects={subjects}
-          selectedSubjects={selection}
-          onPressSubject={this.handlePressSubject}
-          onLongPressSubject={this.handleLongPressSubject}
-        />
-        <NewButton
-          disabled={amountSelected > 0}
-          onPress={this.handlePressNewSubject}
-        />
-      </View>
-    );
-  }
+  const mapDispatchToProps = dispatch => bindActionCreators({
+    archiveSubjects,
+    deleteSubjects,
+  }, dispatch);
+
+  return withItemSelection(
+    connect(mapStateToProps, mapDispatchToProps)(SubjectsListContainer),
+  );
 }
-
-const mapStateToProps = state => ({
-  subjects: subjectsSelector(state),
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  deleteSubjects,
-}, dispatch);
-
-export default withItemSelection(
-  connect(mapStateToProps, mapDispatchToProps)(SubjectsList),
-);

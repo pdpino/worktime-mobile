@@ -5,6 +5,10 @@ production.
 Irrelevant changes may also be documented, but only a relevant change triggers
 a new store version.
 
+## 2 - not released yet
+* Add `archived` to Subject model. By default, the subjects are not archived.
+
+
 ## Irrelevant change - with version 1.3.0
 * Add reducer `profile`, that keeps:
   - `deviceName`: a string with the device's name, defaulting to `"mobile"`

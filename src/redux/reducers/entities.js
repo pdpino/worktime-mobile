@@ -8,6 +8,10 @@ function updateWorkSessionDeviceWhere(WorkSession, oldName, newName) {
     .update({ device: newName });
 }
 
+function addArchivedAttr(Subject) {
+  Subject.all().update({ archived: false });
+}
+
 const entities = orm => (state, action) => {
   const session = orm.session(state);
   const { Subject, WorkSession } = session;
@@ -15,6 +19,13 @@ const entities = orm => (state, action) => {
   switch (action.type) {
     case 'UPSERT_SUBJECT':
       Subject.upsert(action.payload.attributes);
+      break;
+    case 'ARCHIVE_SUBJECTS':
+      action.payload.ids.forEach((id) => {
+        if (Subject.idExists(id)) {
+          Subject.withId(id).update({ archived: action.payload.archived });
+        }
+      });
       break;
     case 'DELETE_SUBJECTS':
       action.payload.ids.forEach((id) => {
@@ -61,8 +72,17 @@ const entities = orm => (state, action) => {
       break;
     }
     case 'APP/UPDATE_STORE': {
-      if (action.payload.nextStoreVersion === 1) {
-        updateWorkSessionDevice(WorkSession, 'mobile');
+      const { prevStoreVersion, nextStoreVersion } = action.payload;
+      for (
+        let storeVersion = prevStoreVersion + 1;
+        storeVersion <= nextStoreVersion;
+        storeVersion += 1
+      ) {
+        if (storeVersion === 1) {
+          updateWorkSessionDevice(WorkSession, 'mobile');
+        } else if (storeVersion === 2) {
+          addArchivedAttr(Subject);
+        }
       }
       break;
     }

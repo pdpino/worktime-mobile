@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { attr, Model } from 'redux-orm';
 import { isNumber } from '../../shared/utils';
 
-const portingWhiteList = ['name', 'description'];
+const portingWhiteList = ['name', 'description', 'archived'];
 
 function filterWhiteList(obj) {
   return _.pickBy(obj, (value, key) => portingWhiteList.includes(key) && value);
@@ -40,7 +40,7 @@ class Subject extends Model {
   }
 
   exportable(deviceName) {
-    const { name, description } = this;
+    const { name, description, archived } = this;
 
     const workSessions = this.worksessionSet.toModelArray()
       .reduce((filtered, workSession) => {
@@ -54,6 +54,7 @@ class Subject extends Model {
       name,
       description: description || '',
       workSessions,
+      archived,
     };
   }
 
@@ -69,6 +70,7 @@ Subject.fields = {
   id: attr(),
   name: attr(),
   description: attr(),
+  archived: attr(),
 };
 
 export default Subject;

@@ -1,22 +1,13 @@
 import React from 'react';
 import {
-  StyleSheet, View, FlatList, Text, Dimensions,
+  StyleSheet, FlatList, Text, Dimensions,
 } from 'react-native';
 import SubjectItem from './item';
+import ArchiveButton from './archive';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    flexDirection: 'column',
-  },
   list: {
     width: Dimensions.get('window').width, // HACK?
-  },
-  listContainer: {
-    paddingBottom: 80, // Make last item "more" button visible
   },
   emptyList: {
     textAlign: 'center',
@@ -28,7 +19,8 @@ const styles = StyleSheet.create({
 const noSubjects = 'No subjects'; // DICTIONARY
 
 const SubjectsList = ({
-  subjects, selectedSubjects, onPressSubject, onLongPressSubject,
+  subjects, selectedSubjects, isArchive,
+  onPressSubject, onLongPressSubject, onPressArchive,
 }) => {
   const renderSubject = ({ item }) => (
     <SubjectItem
@@ -46,16 +38,19 @@ const SubjectsList = ({
   );
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        style={styles.list}
-        data={subjects}
-        renderItem={renderSubject}
-        keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={emptyComponent}
-        contentContainerStyle={styles.listContainer}
-      />
-    </View>
+    <FlatList
+      style={styles.list}
+      data={subjects}
+      renderItem={renderSubject}
+      keyExtractor={(item, index) => index.toString()}
+      ListEmptyComponent={emptyComponent}
+      ListFooterComponent={!isArchive && (
+        <ArchiveButton
+          onPress={onPressArchive}
+        />
+      )}
+      enableScroll={false}
+    />
   );
 };
 

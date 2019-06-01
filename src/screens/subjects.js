@@ -1,10 +1,13 @@
 import { createStackNavigator } from 'react-navigation';
-import { SubjectsList, SubjectForm, SubjectShow } from '../containers/subjects';
+import { createSubjectsList, SubjectForm, SubjectShow } from '../containers/subjects';
 import headerOptions from './header';
 
 const SubjectsStack = createStackNavigator({
   subjectsList: {
-    screen: SubjectsList,
+    screen: createSubjectsList(false),
+  },
+  subjectsArchiveList: {
+    screen: createSubjectsList(true),
   },
   newSubject: {
     screen: SubjectForm,

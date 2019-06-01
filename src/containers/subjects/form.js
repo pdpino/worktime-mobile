@@ -35,6 +35,8 @@ class SubjectForm extends React.Component {
     };
     if (this.props.subject) {
       data.id = this.props.subject.id;
+    } else {
+      data.archived = false;
     }
 
     this.props.upsertSubject(data);

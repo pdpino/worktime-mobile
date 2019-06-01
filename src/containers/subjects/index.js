@@ -1,9 +1,9 @@
-import SubjectsList from './list';
+import createSubjectsList from './list';
 import SubjectForm from './form';
 import SubjectShow from './show';
 
 export {
-  SubjectsList,
+  createSubjectsList,
   SubjectForm,
   SubjectShow,
 };

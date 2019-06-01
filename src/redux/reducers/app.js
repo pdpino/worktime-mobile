@@ -1,5 +1,5 @@
-const defaultState = {
-  storeVersion: 0,
+export const defaultState = {
+  storeVersion: 2,
 };
 
 const app = (state = defaultState, action) => {

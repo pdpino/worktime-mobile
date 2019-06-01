@@ -1,9 +1,7 @@
 # TODOs
 Next things to do
 
-## [P1] Next feature: Importing/Exporting
-
-### Export data from desktop to mobile
+## [P1] Export data from desktop to mobile
 (In desktop):
 * `work update`:
   - save the default device name to `admin.json` (name = laptop)
@@ -15,11 +13,11 @@ Next things to do
 
 
 ## New Features
-* [P1] Archive/unarchive subjects
 * Implement categories
-* Complete about Porting feature:
-  - Allow choosing device on export (this device only, or all)
-  - Allow choosing device on import (main device only, or all)
+* Complete about Porting feature: Allow choosing on import/export:
+  - Export this device only, or all
+  - Import main device only, or all
+  - Export/Import archived subjects or not
 * Nest subjects
 * View with sprints (for each work session)
 * Dashboard
@@ -62,6 +60,9 @@ Next things to do
 * [BUG] Delete orphan work-sessions (and sprints). May be leftovers from a
   bug fixed in 1.2.3-alpha.
 * In `SubjectShow` make loading of work-sessions async.
+* Can't hot reload if store is created inside `App` component. See:
+  https://github.com/reduxjs/react-redux/issues/347,
+  https://stackoverflow.com/questions/46046909/provider-does-not-support-changing-store-on-the-fly-in-reactnative-redux
 * [BUG] when there is a session running, if you delete it's subject:
   - the `updateTimesService` keeps running on the back, so every minute (or the
     time that it takes to update), it throws an error because the workSession
