@@ -1,12 +1,7 @@
 import React from 'react';
-import { StyleSheet, FlatList } from 'react-native';
-import { CrossIcon, ClickableIcon } from '../icons';
-
-const styles = StyleSheet.create({
-  iconContainer: {
-    margin: 10,
-  },
-});
+import { CrossIcon } from '../icons';
+import HeaderActions from './actions';
+import commonStyles from './styles';
 
 const getSelectionHeaderParams = ({
   amountSelected, actions, handleUnselection,
@@ -14,26 +9,11 @@ const getSelectionHeaderParams = ({
   title: amountSelected.toString(),
   headerLeft: (
     <CrossIcon
-      containerStyle={styles.iconContainer}
+      containerStyle={commonStyles.iconContainer}
       onPress={handleUnselection}
     />
   ),
-  headerRight: (
-    <FlatList
-      horizontal
-      data={actions}
-      renderItem={({ item }) => (
-        item.enabled ? (
-          <ClickableIcon
-            containerStyle={styles.iconContainer}
-            icon={item.icon}
-            onPress={item.handlePress}
-          />
-        ) : null
-      )}
-      keyExtractor={(item, index) => index.toString()}
-    />
-  ),
+  headerRight: <HeaderActions actions={actions} />,
   headerStyle: {
     backgroundColor: '#005885',
   },

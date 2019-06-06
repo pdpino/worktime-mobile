@@ -35,24 +35,28 @@ const rnIconDefinitions = {
   },
 };
 
-const ClickableIcon = ({
-  icon, size, color, containerStyle, onPress,
-}) => {
-  const iconDefinition = rnIconDefinitions[icon] || rnIconDefinitions.error;
+class ClickableIcon extends React.PureComponent {
+  render() {
+    const {
+      icon, size, color, containerStyle, onPress,
+    } = this.props;
 
-  return (
-    <TouchableOpacity
-      style={containerStyle}
-      onPress={onPress}
-    >
-      <Icon
-        name={iconDefinition.name}
-        type={iconDefinition.type}
-        size={size || iconDefinition.size || 26}
-        color={color || iconDefinition.color || 'white'}
-      />
-    </TouchableOpacity>
-  );
-};
+    const iconDefinition = rnIconDefinitions[icon] || rnIconDefinitions.error;
+
+    return (
+      <TouchableOpacity
+        style={containerStyle}
+        onPress={onPress}
+      >
+        <Icon
+          name={iconDefinition.name}
+          type={iconDefinition.type}
+          size={size || iconDefinition.size || 26}
+          color={color || iconDefinition.color || 'white'}
+        />
+      </TouchableOpacity>
+    );
+  }
+}
 
 export default ClickableIcon;
