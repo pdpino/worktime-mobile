@@ -1,4 +1,5 @@
 import React from 'react';
+import { BackHandler } from 'react-native';
 import getSelectionHeaderParams from '../shared/UI/headers/selection';
 
 export default function withItemSelection(Component) {
@@ -33,10 +34,38 @@ export default function withItemSelection(Component) {
       this.getSelectionArray = this.getSelectionArray.bind(this);
       this.toggleSelection = this.toggleSelection.bind(this);
       this.handleUnselection = this.handleUnselection.bind(this);
+      this.handleBackPress = this.handleBackPress.bind(this);
 
       this.props.navigation.setParams({
         handleUnselection: this.handleUnselection,
       });
+
+      this.didFocusListener = props.navigation.addListener(
+        'didFocus',
+        () => BackHandler.addEventListener(
+          'hardwareBackPress',
+          this.handleBackPress,
+        ),
+      );
+    }
+
+    componentDidMount() {
+      this.willBlurListener = this.props.navigation.addListener(
+        'willBlur',
+        () => BackHandler.removeEventListener(
+          'hardwareBackPress',
+          this.handleBackPress,
+        ),
+      );
+    }
+
+    componentWillUnmount() {
+      if (this.didFocusListener) {
+        this.didFocusListener.remove();
+      }
+      if (this.willBlurListener) {
+        this.willBlurListener.remove();
+      }
     }
 
     getSelectionArray() {
@@ -65,6 +94,14 @@ export default function withItemSelection(Component) {
 
     handleUnselection() {
       this.updateSelection({}, 0);
+    }
+
+    handleBackPress() {
+      if (this.state.amountSelected > 0) {
+        this.handleUnselection();
+        return true;
+      }
+      return false;
     }
 
     render() {

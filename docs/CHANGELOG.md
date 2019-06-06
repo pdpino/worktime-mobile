@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 ### Fixed
 * Improve header actions performance (icons are pure components).
+* When selecting subjects, back button clears selection.
 
 
 ## 1.6.0 - 2019-06-01
