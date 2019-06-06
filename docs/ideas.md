@@ -3,6 +3,8 @@
 ## New Features
 * Button to go from subjects-list directly to work-player
   - (review) what happens if something is already playing?
+  - (review) override this by improving the player view, simpler way of
+  selecting, also display the nested subjects (and categories?)
 * Widgets in Android
 * Show start and end hour in the day (avg?, by day?, etc).
 * Dashboard:
@@ -38,6 +40,9 @@
 
 
 ## Refactors and fixes
+* Rename 'date' to 'dateString' in WorkSession attributes, and change format
+  from 'L' to 'YYYY-MM-DD'. Store version needs to be upgraded.
+  - Consider eliminating date, the timestampStart should be enough.
 * [REVIEW] [REFACTOR] Migrate from moment to date-fns, for better performance.
   Also, moment mutates objects.
 * [REFACTOR] Refactor bar chart: encapsulate behavior. Receives an array of
@@ -49,18 +54,23 @@
     `SelectableHorizontalBarChart`.
   - This should be reusable for others display of horiztonal-bars data. E.g.,
     time by categories or tags (future).
-* Rename 'date' to 'dateString' in WorkSession attributes, and change format
-  from 'L' to 'YYYY-MM-DD'. Store version needs to be upgraded.
 * [BUG] Dashboard fixes/bugs:
   - when bar is too small to show durations (e.g. 10min vs 8hrs of work in
     another subject). It should be calculated when the text is not showed?
   - what happens when you've worked for 0.005 seconds? (or a small amount of
     time). Should it be approximated? (It may not be important, as it is not a
     real case).
-* Fix HACK:
+* [HACK] Fix subject/workSession update:
   - When updating a work-session, a call to `subject.update({ workSession })`
     is needed, to see the changes right away.
   - This creates a `workSession` attribute in each `subject`.
   - There should be a better way to do this (instead of calling
     `subject.update`). Calling `subject.refreshFromState()` each time a
     work-session changes (on play, pause or stop) does not work.
+* [REFACTOR] Item selection hoc efficiency:
+  - On each `updateSelection()` call, the navigation state is updated, which
+  re-creates the actions list, which means that the `HeaderActions` component
+  gets re-rendered (PureComponent is not a solution, since the actions list is
+  a new object on each call).
+  - The `ClickableIcon` component is a `PureComponent`, so is not that bad.
+  - The actions could be memoized. Should the hoc handle it? the container?

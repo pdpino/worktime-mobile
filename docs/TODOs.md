@@ -5,20 +5,20 @@ Next things to do
 (In desktop):
 * `work update`:
   - save the default device name to `admin.json` (name = laptop)
-  - add `device: <device-name>` to every entry
 * Export JSON files to mobile format (is the standard):
+  - add `device: <device-name>` to every session
   - jobs must be stopped (`_entry = null`, `is_running = False`)
   - rename necessary fields
   - check that the timestamp represents the same time in python and JS
 
 
 ## New Features
-* Implement categories
+* [P2] Implement categories
+* [P2] Nest subjects
 * Complete about Porting feature: Allow choosing on import/export:
   - Export this device only, or all
   - Import main device only, or all
   - Export/Import archived subjects or not
-* Nest subjects
 * View with sprints (for each work session)
 * Dashboard
   - "This semester" shortcut
@@ -43,19 +43,19 @@ Next things to do
   dashboard, subject-show, etc.
 
 ## Develop
+* [P1] Dictionary for strings (i18n)
 * [P2] Reinstall adbs and emulator (better with android studio?).
   - Create avd with bigger screen.
   - Install KVM accelerator for emulator, see
   https://developer.android.com/studio/run/emulator-acceleration?utm_source=android-studio#vm-linux
 * Force linter to have maximum line width = 80 chars. Fix the code to comply.
 * Type-checking with flow
-* Dictionary for strings (i18n)
 * Dictionary for colors (?)
 * Evaluate using https://medium.com/@andr3wjack/versioning-react-native-apps-407469707661
   to simplify deploying new versions
 
 ## Fixes
-* [BUG] [P2] The timezone of each work session should be saved
+* [BUG] [P1] The timezone of each work session should be saved
   (in case you moved to another timezone).
 * [BUG] Delete orphan work-sessions (and sprints). May be leftovers from a
   bug fixed in 1.2.3-alpha.
@@ -67,7 +67,7 @@ Next things to do
   - the `updateTimesService` keeps running on the back, so every minute (or the
     time that it takes to update), it throws an error because the workSession
     does not exist.
-  - hack solution: in the reducer, check if the workSession exists before
+  - hot fix: in the reducer, check if the workSession exists before
     updating its time. Problem: this does not stop the service once the
     work-session is deleted (the service should be stopped!).
   - another solution: don't allow deleting a subject if there is a workSession
