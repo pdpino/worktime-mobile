@@ -198,7 +198,7 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  subjects: subjectsSelector(state),
+  subjects: subjectsSelector(state, { archived: false }),
 });
 
 export default connect(mapStateToProps)(Dashboard);

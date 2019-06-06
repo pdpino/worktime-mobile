@@ -173,7 +173,7 @@ export default function createSubjectsList(isArchive) {
   }
 
   const mapStateToProps = state => ({
-    subjects: subjectsSelector(state, { isArchive }),
+    subjects: subjectsSelector(state, { archived: isArchive }),
   });
 
   const mapDispatchToProps = dispatch => bindActionCreators({

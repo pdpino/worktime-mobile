@@ -4,12 +4,15 @@ import { sortByName } from '../../shared/utils';
 export const subjectsSetSelector = state => ormSessionUnMemoized(state).Subject.all();
 
 export const subjectsSelector = createOrmSelector(
-  (state, props) => props && props.isArchive,
-  (ormSession, isArchive) => sortByName(ormSession.Subject
-    .all()
-    .filter(subject => (isArchive && subject.archived)
-                    || (!isArchive && !subject.archived))
-    .toModelArray()),
+  (state, props) => props && props.archived,
+  (ormSession, archived) => {
+    const allSubjects = ormSession.Subject.all();
+    const subjects = archived === 'all'
+      ? allSubjects
+      : allSubjects.filter(subject => (archived && subject.archived)
+                                   || (!archived && !subject.archived));
+    return sortByName(subjects.toModelArray());
+  },
 );
 
 export const subjectSelector = createOrmSelector(

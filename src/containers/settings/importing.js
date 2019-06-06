@@ -163,7 +163,7 @@ class Importing extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  subjects: subjectsSelector(state),
+  subjects: subjectsSelector(state, { archived: 'all' }),
   profile: profileSelector(state),
 });
 

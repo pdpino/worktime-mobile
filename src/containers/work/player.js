@@ -113,7 +113,7 @@ class WorkPlayer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  subjects: subjectsSelector(state),
+  subjects: subjectsSelector(state, { archived: false }),
   selectedSubject: selectedSubjectSelector(state),
   runningSession: runningSessionSelector(state),
   lastRunningSession: lastRunningSessionSelector(state),
