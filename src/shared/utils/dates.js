@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { toMaxFixed } from '.';
+import { toMaxFixed } from './misc';
 
 // Convention for date's names
 // dateString: date as plain strings, in format YYYY-MM-DD

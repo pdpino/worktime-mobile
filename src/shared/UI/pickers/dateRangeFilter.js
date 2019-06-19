@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, Text, FlatList, TouchableOpacity,
 } from 'react-native';
-import { CalendarPicker } from '.';
+import CalendarPicker from './calendar';
 import { DropdownMenu } from '../menus';
 import { getToday } from '../../utils';
 
