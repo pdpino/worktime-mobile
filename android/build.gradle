@@ -37,4 +37,7 @@ ext {
     compileSdkVersion = 27
     targetSdkVersion = 27
     supportLibVersion = "27.1.1"
+    // Prevent needing to migrate to AndroidX (see TODOs > Develop)
+    googlePlayServicesVersion = "16.0.0"
+    firebaseVersion = "17.3.4"
 }
