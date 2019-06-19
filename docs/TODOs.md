@@ -30,6 +30,18 @@ Next things to do
   - today: total time, start hour of the day, top 3 subjects?
   - this week: total time, avg start hour, top 3 subjects?
   - this month: avg time by week, top 3 subjects?
+* (Wait on desktop) Add "Sync with google drive" behavior:
+  - Similar to whatsapp, can "Sync now", but also syncs periodically
+  - Sync: export + import
+    + Export: Uploads a JSON file containing subjects, one file per device.
+    The file should get overriden with the newest version.
+    + Import: Downloads JSON files from other devices. It should import every
+    subject and work-session from there (categories too?). Repeated
+    work-sessions must be ignored, as usual.
+    Optional efficiency improvement: the device records the
+    "last imported timestamp" from each device, so it only imports from that
+    date and forward.
+
 
 ## Styles
 * Improve submit button style
@@ -44,10 +56,17 @@ Next things to do
 
 ## Develop
 * [P1] Dictionary for strings (i18n)
-* [P2] Reinstall adbs and emulator (better with android studio?).
+* [P3] Migrate to AndroidX? Maybe wait more time. See:
+  - Google play release from 17 June 2019,
+  https://developers.google.com/android/guides/releases
+  - RN issue: https://github.com/facebook/react-native/issues/25296
+  - RN issue: https://github.com/facebook/react-native/issues/25293
+* [P3] Reinstall adbs and emulator (better with android studio?).
   - Create avd with bigger screen.
   - Install KVM accelerator for emulator, see
   https://developer.android.com/studio/run/emulator-acceleration?utm_source=android-studio#vm-linux
+* [P3] Upgrade React native, react and gradle versions.
+  - See https://react-native-community.github.io/upgrade-helper/
 * Force linter to have maximum line width = 80 chars. Fix the code to comply.
 * Type-checking with flow
 * Dictionary for colors (?)
