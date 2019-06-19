@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Changed
+* Upgrade versions:
+  - React: 16.8.3
+  - React native: 0.59.8
+  - Babel: ^7.x.x
+
 ### Fixed
 * Improve header actions performance (icons are pure components).
 * When selecting subjects, back button clears selection.

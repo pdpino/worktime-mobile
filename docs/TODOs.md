@@ -54,26 +54,12 @@ Next things to do
 * Make `ViewSection` Component, that displays title and borders. Reuse style in
   dashboard, subject-show, etc.
 
-## Develop
-* [P1] Dictionary for strings (i18n)
-* [P3] Migrate to AndroidX? Maybe wait more time. See:
-  - Google play release from 17 June 2019,
-  https://developers.google.com/android/guides/releases
-  - RN issue: https://github.com/facebook/react-native/issues/25296
-  - RN issue: https://github.com/facebook/react-native/issues/25293
-* [P3] Reinstall adbs and emulator (better with android studio?).
-  - Create avd with bigger screen.
-  - Install KVM accelerator for emulator, see
-  https://developer.android.com/studio/run/emulator-acceleration?utm_source=android-studio#vm-linux
-* [P3] Upgrade React native, react and gradle versions.
-  - See https://react-native-community.github.io/upgrade-helper/
-* Force linter to have maximum line width = 80 chars. Fix the code to comply.
-* Type-checking with flow
-* Dictionary for colors (?)
-* Evaluate using https://medium.com/@andr3wjack/versioning-react-native-apps-407469707661
-  to simplify deploying new versions
 
 ## Fixes
+* [BUG] [P1] Review this: picker in work-player changed since RN version
+  upgrade, now is not a modal. Keep it this way? Make it a modal again?
+* [BUG] [P1] When exporting a file, if the action is canceled, the promise is
+  now rejected. TODO: catch this case.
 * [BUG] [P1] The timezone of each work session should be saved
   (in case you moved to another timezone).
 * [BUG] Delete orphan work-sessions (and sprints). May be leftovers from a
@@ -95,6 +81,39 @@ Next things to do
 * Dashboard
   - date "Mon 12 Nov" overflows in date filter (although text is wrapping). It
     should always be in one line.
+
+
+## Develop
+* [P1] Dictionary for strings (i18n)
+* [P3] Migrate to AndroidX? Maybe wait more time. See:
+  - Google play release from 17 June 2019,
+  https://developers.google.com/android/guides/releases
+  - RN issue: https://github.com/facebook/react-native/issues/25296
+  - RN issue: https://github.com/facebook/react-native/issues/25293
+* [P3] Reinstall adbs and emulator (better with android studio?).
+  - Create avd with bigger screen.
+  - Install KVM accelerator for emulator, see
+  https://developer.android.com/studio/run/emulator-acceleration?utm_source=android-studio#vm-linux
+* [P3] Fix `AsyncStorage` deprecation.
+  - RN v0.59.0 deprecates direct use of `AsyncStorage`. Is moved to here:
+    https://github.com/react-native-community/async-storage
+  - `redux-persist` v6 addresses this issue. See
+    https://github.com/rt2zz/redux-persist/releases/tag/v6.0.0-pre1
+  - If keeping `redux-persist` <v6, there is a workaround.
+    It would have to be used directly, i.e without `redux-offline`.
+    See this issue for the workaround:
+    https://github.com/rt2zz/redux-persist/issues/1013
+  - `redux-offline` migration to redux-persist v5:
+    https://github.com/redux-offline/redux-offline/issues/119
+  - The warning raised for the deprecation is ignored in `index.js`.
+    Remove this when fixed.
+
+* Force linter to have maximum line width = 80 chars. Fix the code to comply.
+* Type-checking with flow
+* Dictionary for colors (?)
+* Evaluate using https://medium.com/@andr3wjack/versioning-react-native-apps-407469707661
+  to simplify deploying new versions
+
 
 ## Refactors
 * Split `utils/dates.js` into multiple files (is too big by now).
