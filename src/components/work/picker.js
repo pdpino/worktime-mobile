@@ -34,7 +34,7 @@ class SubjectPicker extends React.Component {
 
     return nextProps.selectedSubjectId !== selectedSubjectId
       || nextProps.enabled !== enabled
-      || nextProps.length !== subjects.length;
+      || nextProps.subjects !== subjects;
   }
 
   render() {

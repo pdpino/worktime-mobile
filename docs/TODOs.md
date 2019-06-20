@@ -13,7 +13,7 @@ Next things to do
 
 
 ## New Features
-* [P2] Implement categories
+* [P1] Implement categories
 * [P2] Nest subjects
 * Complete about Porting feature: Allow choosing on import/export:
   - Export this device only, or all
@@ -56,12 +56,9 @@ Next things to do
 
 
 ## Fixes
-* [BUG] [P1] Review this: picker in work-player changed since RN version
-  upgrade, now is not a modal. Keep it this way? Make it a modal again?
-* [BUG] [P1] When exporting a file, if the action is canceled, the promise is
-  now rejected. TODO: catch this case.
 * [BUG] [P1] The timezone of each work session should be saved
   (in case you moved to another timezone).
+* [BUG] [P1] Buttons in notification not working.
 * [BUG] Delete orphan work-sessions (and sprints). May be leftovers from a
   bug fixed in 1.2.3-alpha.
 * In `SubjectShow` make loading of work-sessions async.
@@ -82,14 +79,37 @@ Next things to do
   - date "Mon 12 Nov" overflows in date filter (although text is wrapping). It
     should always be in one line.
 
+#### Work-player picker bugs
+* [BUG] [P3] Selected subject id bug. Reproduce:
+  - Select a subject that is not the first one in the work-player.
+  - Go to the subjects tab and edit the subject's name.
+  - Go back to the work-player, the first subject is selected, instead of the
+  previously selected.
+
+  Seems to be a RN Picker issue:
+  - When the subjects change in another place, the `onValueChange` of the picker
+  is triggered with the first value of the list, which triggers an action and
+  a change in the store.
+  - This means that the UI is consistent with the store, so this won't cause an
+  inconsistency ()
+  See https://stackoverflow.com/q/42397896/9951939, suggesting this could be a
+  Picker issue.
+
+  One solution: Implement a `ModalPicker` to display as picker, which will also
+  fix the "work-player as a dropdown" bug
+
+* [BUG] [P3] [WAIT] Picker in work-player should be a dialog instead of a
+  dropdown. There is a bug in RN v0.59.1, see
+  https://github.com/facebook/react-native/issues/24055
+
+
+## Tests
+* Add tests for the "update store version" stuff
+
 
 ## Develop
-* [P1] Dictionary for strings (i18n)
-* [P3] Migrate to AndroidX? Maybe wait more time. See:
-  - Google play release from 17 June 2019,
-  https://developers.google.com/android/guides/releases
-  - RN issue: https://github.com/facebook/react-native/issues/25296
-  - RN issue: https://github.com/facebook/react-native/issues/25293
+* [P2] Dictionary for strings (i18n)
+  - Change "Playing" string to "Working"
 * [P3] Reinstall adbs and emulator (better with android studio?).
   - Create avd with bigger screen.
   - Install KVM accelerator for emulator, see
@@ -107,7 +127,11 @@ Next things to do
     https://github.com/redux-offline/redux-offline/issues/119
   - The warning raised for the deprecation is ignored in `index.js`.
     Remove this when fixed.
-
+* [WAIT] Migrate to AndroidX? Maybe wait more time. See:
+  - Google play release from 17 June 2019,
+  https://developers.google.com/android/guides/releases
+  - RN issue: https://github.com/facebook/react-native/issues/25296
+  - RN issue: https://github.com/facebook/react-native/issues/25293
 * Force linter to have maximum line width = 80 chars. Fix the code to comply.
 * Type-checking with flow
 * Dictionary for colors (?)
@@ -116,6 +140,7 @@ Next things to do
 
 
 ## Refactors
+* Refactor `itemSelection` from a hoc to hooks (review if possible)
 * Split `utils/dates.js` into multiple files (is too big by now).
 * `componentDidMount`, `componentWillUnmount` and `shouldComponentUpdate` are
   copied in `SubjectShow` and `DashboardMain`. Can it be refactored/improved?

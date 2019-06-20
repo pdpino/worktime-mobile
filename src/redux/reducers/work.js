@@ -23,8 +23,10 @@ const work = (state = defaultState, action) => {
         ...state,
         selectedSubjectId: action.payload.selectedSubjectId,
       };
-    case 'DELETE_SUBJECT':
-      if (action.payload.id === state.selectedSubjectId) {
+    case 'ARCHIVE_SUBJECTS':
+    case 'DELETE_SUBJECTS': {
+      const { ids } = action.payload;
+      if (ids && ids.includes(state.selectedSubjectId.toString())) {
         return {
           ...state,
           selectedSubjectId: -1,
@@ -32,6 +34,7 @@ const work = (state = defaultState, action) => {
         };
       }
       return state;
+    }
     default:
       return state;
   }

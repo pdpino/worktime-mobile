@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+* Add vibration when selecting subjects.
+
 ### Changed
 * Upgrade versions:
   - React: 16.8.3
@@ -15,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Improve header actions performance (icons are pure components).
 * When selecting subjects, back button clears selection.
 * When importing, archived subjects are considered.
+* When archiving or deleting a subject, if the subject was selected it gets
+cleared.
 
 
 ## 1.6.0 - 2019-06-01

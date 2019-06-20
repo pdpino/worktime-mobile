@@ -27,7 +27,7 @@ class Exporting extends React.Component {
         device,
         subjectsSet: this.props.subjectsSet,
       }).then(exportObject => share(filename, exportObject))
-        .then(() => this.setState({ isPreparingData: false }));
+        .finally(() => this.setState({ isPreparingData: false }));
     });
   }
 

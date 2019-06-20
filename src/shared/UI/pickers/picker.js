@@ -27,12 +27,15 @@ const PickerWrapper = ({
     />,
   );
 
+  // NOTE: there is a bug on RN that sets the picker mode to "dropdown".
+  // See TODOs.
   return (
     <Picker
       style={styles.picker}
       selectedValue={selectedId}
       onValueChange={onValueChange}
       enabled={enabled}
+      mode="dialog"
     >
       {itemsList}
     </Picker>
