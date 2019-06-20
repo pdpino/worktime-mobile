@@ -1,5 +1,5 @@
 import React from 'react';
-import { BackHandler } from 'react-native';
+import { BackHandler, Vibration } from 'react-native';
 import getSelectionHeaderParams from '../shared/UI/headers/selection';
 
 export default function withItemSelection(Component) {
@@ -85,6 +85,10 @@ export default function withItemSelection(Component) {
       const { selectedIds, amountSelected } = this.state;
       const isSelected = selectedIds[id];
       const newAmountSelected = amountSelected + (isSelected ? -1 : 1);
+
+      if (amountSelected === 0 && newAmountSelected === 1) {
+        Vibration.vibrate(500);
+      }
 
       this.updateSelection({
         ...selectedIds,
