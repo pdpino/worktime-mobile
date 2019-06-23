@@ -59,12 +59,21 @@ Next things to do
 * [BUG] [P1] The timezone of each work session should be saved
   (in case you moved to another timezone).
 * [BUG] [P1] Buttons in notification not working.
+  - The event listener for `notificationActionReceived` in
+    `services/notifications.js` is not being triggered.
+  - Review: the listener may be added multiple times, and is never unregistered.
+    Should it be removed at some point?
 * [BUG] Delete orphan work-sessions (and sprints). May be leftovers from a
   bug fixed in 1.2.3-alpha.
 * In `SubjectShow` make loading of work-sessions async.
 * Can't hot reload if store is created inside `App` component. See:
   https://github.com/reduxjs/react-redux/issues/347,
   https://stackoverflow.com/questions/46046909/provider-does-not-support-changing-store-on-the-fly-in-reactnative-redux
+* [BUG] [P3] [REVIEW] Review possible bug: Running application multiple times
+  - When running the app for the first time, it throws multiple times the same
+    message: "Running Application with params ...".
+    Should it be just one time?
+  - Maybe an emulator issue.
 * [BUG] when there is a session running, if you delete it's subject:
   - the `updateTimesService` keeps running on the back, so every minute (or the
     time that it takes to update), it throws an error because the workSession
@@ -75,7 +84,7 @@ Next things to do
   - another solution: don't allow deleting a subject if there is a workSession
     running (that it belongs to that subject). Is reasonable, since you
     probably do not want to delete a subject that is running.
-* Dashboard
+* [BUG] Dashboard
   - date "Mon 12 Nov" overflows in date filter (although text is wrapping). It
     should always be in one line.
 
