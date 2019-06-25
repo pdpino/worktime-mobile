@@ -8,6 +8,11 @@ const rnIconDefinitions = {
     type: 'material-icons',
     size: 28,
   },
+  archivedFolder: {
+    name: 'archive',
+    type: 'entypo',
+    size: 24,
+  },
   edit: {
     name: 'edit',
     type: 'material-icons',

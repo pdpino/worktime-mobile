@@ -6,6 +6,7 @@ import { SubjectsListComponent, SubjectsList } from '../../components/subjects/l
 import { subjectsSelector } from '../../redux/selectors';
 import { archiveSubjects, deleteSubjects } from '../../redux/actions';
 import { NewButton } from '../../shared/UI/buttons';
+import { HeaderActions } from '../../shared/UI/headers';
 import withItemSelection from '../../hoc/itemSelection';
 
 export default function createSubjectsList(isArchive) {
@@ -30,10 +31,26 @@ export default function createSubjectsList(isArchive) {
       ];
     }
 
-    static navigationOptions() {
+    static navigationOptions({ navigation }) {
+      if (isArchive) {
+        // DICTIONARY
+        return {
+          title: 'Archive',
+        };
+      }
+
+      const actions = [
+        {
+          enabled: true,
+          icon: 'archivedFolder',
+          handlePress: navigation.getParam('handlePressArchive'),
+        },
+      ];
+
       // DICTIONARY
       return {
-        title: isArchive ? 'Archive' : 'Subjects',
+        title: 'Subjects',
+        headerRight: <HeaderActions actions={actions} />,
       };
     }
 
@@ -54,6 +71,7 @@ export default function createSubjectsList(isArchive) {
         handleEditSelected: this.handleEditSelected,
         handleArchiveSelected: this.handleArchiveSelected,
         handleDeleteSelected: this.handleDeleteSelected,
+        handlePressArchive: this.handlePressArchive,
       });
     }
 

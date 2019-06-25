@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Add vibration when selecting subjects.
 
 ### Changed
-* Upgrade versions:
+* In subjects list, move Archive button to the header.
+* Upgrade libraries versions:
   - React: 16.8.3
   - React native: 0.59.8
   - Babel: ^7.x.x

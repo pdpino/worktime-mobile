@@ -6,6 +6,7 @@ import commonStyles from './styles';
 const HeaderActions = ({ actions }) => (
   <FlatList
     horizontal
+    contentContainerStyle={{ paddingRight: 5 }}
     data={actions}
     renderItem={({ item }) => (
       item.enabled ? (

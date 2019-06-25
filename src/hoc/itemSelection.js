@@ -1,6 +1,6 @@
 import React from 'react';
 import { BackHandler, Vibration } from 'react-native';
-import getSelectionHeaderParams from '../shared/UI/headers/selection';
+import { getSelectionHeaderParams } from '../shared/UI/headers';
 
 export default function withItemSelection(Component) {
   class WithItemSelection extends React.Component {
@@ -20,7 +20,7 @@ export default function withItemSelection(Component) {
         });
       }
 
-      return Component.navigationOptions();
+      return Component.navigationOptions({ navigation });
     }
 
     constructor(props) {
