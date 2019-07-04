@@ -13,7 +13,6 @@ Next things to do
 
 
 ## New Features
-* [P1] Implement categories
 * [P2] Nest subjects
 * Complete about Porting feature: Allow choosing on import/export:
   - Export this device only, or all
@@ -74,6 +73,7 @@ Next things to do
     message: "Running Application with params ...".
     Should it be just one time?
   - Maybe an emulator issue.
+  - See https://stackoverflow.com/questions/48987915/react-native-creates-multiple-rootview-on-android
 * [BUG] when there is a session running, if you delete it's subject:
   - the `updateTimesService` keeps running on the back, so every minute (or the
     time that it takes to update), it throws an error because the workSession
@@ -149,6 +149,8 @@ Next things to do
 
 
 ## Refactors
+* [P2] Refactor text-inputs used in `SubjectForm` and `CategoryForm`:
+  - Create a reusable component (has label, input, etc)
 * Refactor `itemSelection` from a hoc to hooks (review if possible)
 * Split `utils/dates.js` into multiple files (is too big by now).
 * `componentDidMount`, `componentWillUnmount` and `shouldComponentUpdate` are

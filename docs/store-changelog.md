@@ -5,6 +5,11 @@ production.
 Irrelevant changes may also be documented, but only a relevant change triggers
 a new store version.
 
+## 3 - with version 1.7.0
+* Add `Category` model, with attributes: `name`, `alias`, `description`.
+  - Add foreign key from `Subject` to `Category` (N-1)
+
+
 ## 2 - with version 1.6.0
 * Add `archived` to Subject model. By default, the subjects are not archived.
 

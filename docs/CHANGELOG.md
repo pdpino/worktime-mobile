@@ -5,7 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+
+## 1.7.0 - 2019-07-04
 ### Added
+* Support categories for subjects.
+  - Subjects now can be organized in categories. Subjects List reflects this.
 * Add vibration when selecting subjects.
 
 ### Changed
