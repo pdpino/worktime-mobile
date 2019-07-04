@@ -1,29 +1,29 @@
 import React from 'react';
 import {
-  StyleSheet, View, TouchableOpacity, Text,
+  StyleSheet, View, TouchableHighlight, Text,
 } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingVertical: 5,
     paddingHorizontal: 15,
     alignItems: 'center',
     borderStyle: 'solid',
-    borderBottomWidth: 1,
-    borderBottomColor: 'gray',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#cdcdcd',
   },
   selectedContainer: {
-    backgroundColor: '#c4eeff',
+    backgroundColor: '#71b3e74A',
   },
   unselectedContainer: {
     backgroundColor: 'white',
   },
   detail: {
-    flex: 2,
     flexDirection: 'column',
-    margin: 1,
   },
   name: {
     fontSize: 20,
@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
     color: 'black',
     paddingLeft: 8,
   },
+  chevronContainer: {
+    justifyContent: 'center',
+  },
 });
 
 class SubjectItem extends React.PureComponent {
@@ -42,34 +45,41 @@ class SubjectItem extends React.PureComponent {
       subject, isSelected, onPress, onLongPress,
     } = this.props;
 
-    const name = (
-      <Text style={styles.name}>
-        {subject.name}
-      </Text>
-    );
-
-    const description = (
-      <Text style={styles.description}>
-        {subject.description}
-      </Text>
+    const detail = (
+      <View style={styles.detail}>
+        <Text style={styles.name}>
+          {subject.name}
+        </Text>
+        {subject.description && (
+          <Text style={styles.description}>
+            {subject.description}
+          </Text>
+        )}
+      </View>
     );
 
     return (
-      <View
-        style={[
-          styles.container,
-          isSelected ? styles.selectedContainer : styles.unselectedContainer,
-        ]}
+      <TouchableHighlight
+        onPress={() => onPress(subject.id)}
+        onLongPress={() => onLongPress(subject.id)}
+        underlayColor="#71b3e74A"
+        activeOpacity={1}
       >
-        <TouchableOpacity
-          style={styles.detail}
-          onPress={() => onPress(subject.id)}
-          onLongPress={() => onLongPress(subject.id)}
+        <View
+          style={[
+            styles.container,
+            isSelected ? styles.selectedContainer : styles.unselectedContainer,
+          ]}
         >
-          {name}
-          {description}
-        </TouchableOpacity>
-      </View>
+          {detail}
+          <View style={styles.chevronContainer}>
+            <Icon
+              name="chevron-right"
+              type="feather"
+            />
+          </View>
+        </View>
+      </TouchableHighlight>
     );
   }
 }

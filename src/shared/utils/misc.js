@@ -1,4 +1,5 @@
 import unorm from 'unorm';
+import memoizeOne from 'memoize-one';
 
 export function smartDivision(divide, by, percentage = false, decimals = 1) {
   const perc = percentage ? 100 : 1;
@@ -40,3 +41,57 @@ export function sortByName(array) {
 export function removeStrAccents(str) {
   return unorm.nfd(str).replace(/[\u0300-\u036f]/g, '');
 }
+
+/**
+ * Returns subjects formatted as a SectionList, organizing by category.
+ *
+ * Receives Model objects.
+ * Result example:
+ * [
+ *   {
+ *     name: 'Work',
+ *     data: [
+ *       { id: '1', name: 'subj 1' },
+ *       { id: '2', name: 'subj 2', description: 'do this and that' },
+ *     ],
+ *   },
+ *   { name: 'other', data: [] },
+ *   { name: 'Personal stuff', data: [{ id: '5', name: 'subj 5' }] },
+ *   { name: 'No Category', data: [{ id: '6', name: 'subj 6' }] },
+ * ];
+ * Subjects returned are from the Subject Model, but categories are plain
+ * objects.
+ */
+export const getSubjectsAsSectionList = memoizeOne((subjects, categories) => {
+  const noCategoryId = -1;
+
+  const categoryToSubjects = {
+    [noCategoryId]: [],
+  };
+
+  categories.forEach((category) => {
+    categoryToSubjects[category.id] = [];
+  });
+
+  subjects.forEach((subject) => {
+    const categoryId = subject.category ? subject.category.id : noCategoryId;
+    categoryToSubjects[categoryId].push(subject);
+  });
+
+  const subjectsByCategories = categories.map(category => ({
+    id: category.id,
+    name: category.name,
+    data: categoryToSubjects[category.id],
+  }));
+
+  const orphanSubjects = categoryToSubjects[noCategoryId];
+  if (orphanSubjects && orphanSubjects.length) {
+    subjectsByCategories.push({
+      id: noCategoryId,
+      name: 'No Category', // DICTIONARY
+      data: orphanSubjects,
+    });
+  }
+
+  return subjectsByCategories;
+});

@@ -1,26 +1,38 @@
 import React from 'react';
 import {
-  StyleSheet, FlatList, Text, Dimensions,
+  StyleSheet, Text, Dimensions, SectionList, View,
 } from 'react-native';
 import SubjectItem from './item';
-import ArchiveButton from './archive';
+import CategoryHeader from './categoryHeader';
 
 const styles = StyleSheet.create({
   list: {
     width: Dimensions.get('window').width, // HACK?
   },
+  categoryBottom: {
+    marginBottom: 25,
+  },
   emptyList: {
-    textAlign: 'center',
     marginVertical: 15,
+    textAlign: 'center',
+    fontStyle: 'italic',
+  },
+  emptyCategory: {
+    marginTop: 5,
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 15,
     fontStyle: 'italic',
   },
 });
 
-const noSubjects = 'No subjects'; // DICTIONARY
+// DICTIONARY
+const labelNoSubjects = 'No subjects';
+const labelEmpty = 'Empty';
 
 const SubjectsList = ({
-  subjects, selectedSubjects, isArchive,
-  onPressSubject, onLongPressSubject, onPressArchive,
+  subjectsByCategories, selectedSubjects,
+  onPressSubject, onLongPressSubject, onPressCategory,
 }) => {
   const renderSubject = ({ item }) => (
     <SubjectItem
@@ -31,25 +43,38 @@ const SubjectsList = ({
     />
   );
 
-  const emptyComponent = (
+  const renderCategory = ({ section }) => (
+    <CategoryHeader
+      category={section}
+      onPress={onPressCategory}
+    />
+  );
+
+  const renderCategoryFooter = ({ section }) => section.data.length === 0 && (
+    <Text style={[styles.emptyCategory, styles.categoryBottom]}>
+      {labelEmpty}
+    </Text>
+  );
+
+  const renderCategorySeparator = ({ leadingItem }) => (leadingItem ? (
+    <View style={styles.categoryBottom} />
+  ) : null);
+
+  const emptyListComponent = (
     <Text style={styles.emptyList}>
-      {noSubjects}
+      {labelNoSubjects}
     </Text>
   );
 
   return (
-    <FlatList
-      style={styles.list}
-      data={subjects}
+    <SectionList
+      sections={subjectsByCategories}
       renderItem={renderSubject}
+      renderSectionHeader={renderCategory}
+      renderSectionFooter={renderCategoryFooter}
       keyExtractor={(item, index) => index.toString()}
-      ListEmptyComponent={emptyComponent}
-      ListFooterComponent={!isArchive && (
-        <ArchiveButton
-          onPress={onPressArchive}
-        />
-      )}
-      enableScroll={false}
+      ListEmptyComponent={emptyListComponent}
+      SectionSeparatorComponent={renderCategorySeparator}
     />
   );
 };

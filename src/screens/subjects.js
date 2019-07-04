@@ -1,5 +1,6 @@
 import { createStackNavigator } from 'react-navigation';
 import { createSubjectsList, SubjectForm, SubjectShow } from '../containers/subjects';
+import { CategoryForm } from '../containers/categories';
 import headerOptions from './header';
 
 const SubjectsStack = createStackNavigator({
@@ -27,6 +28,7 @@ const SubjectsStack = createStackNavigator({
       title: `${navigation.state.params.subject.name}`,
     }),
   },
+  categoryForm: CategoryForm,
 },
 {
   initialRouteName: 'subjectsList',

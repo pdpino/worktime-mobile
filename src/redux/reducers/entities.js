@@ -14,9 +14,17 @@ function addArchivedAttr(Subject) {
 
 const entities = orm => (state, action) => {
   const session = orm.session(state);
-  const { Subject, WorkSession } = session;
+  const { Category, Subject, WorkSession } = session;
 
   switch (action.type) {
+    case 'UPSERT_CATEGORY':
+      Category.upsert(action.payload.attributes);
+      break;
+    case 'DELETE_CATEGORY':
+      if (Category.idExists(action.payload.id)) {
+        Category.withId(action.payload.id).delete();
+      }
+      break;
     case 'UPSERT_SUBJECT':
       Subject.upsert(action.payload.attributes);
       break;

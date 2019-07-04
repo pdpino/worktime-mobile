@@ -1,4 +1,5 @@
 export * from './app';
+export * from './categories';
 export * from './porting';
 export * from './profile';
 export * from './subjects';

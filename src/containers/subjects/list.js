@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Alert } from 'react-native';
 import { SubjectsListComponent, SubjectsList } from '../../components/subjects/list';
-import { subjectsSelector } from '../../redux/selectors';
+import { subjectsSelector, categoriesSelector } from '../../redux/selectors';
 import { archiveSubjects, deleteSubjects } from '../../redux/actions';
-import { NewButton } from '../../shared/UI/buttons';
+import { MultipleNewButton } from '../../shared/UI/buttons';
 import { HeaderActions } from '../../shared/UI/headers';
+import { getSubjectsAsSectionList } from '../../shared/utils';
 import withItemSelection from '../../hoc/itemSelection';
 
 export default function createSubjectsList(isArchive) {
@@ -57,15 +58,17 @@ export default function createSubjectsList(isArchive) {
     constructor(props) {
       super(props);
 
-      this.handleLongPressSubject = this.handleLongPressSubject.bind(this);
       this.handlePressSubject = this.handlePressSubject.bind(this);
+      this.handleLongPressSubject = this.handleLongPressSubject.bind(this);
+      this.handlePressCategory = this.handlePressCategory.bind(this);
 
       this.handlePressNewSubject = this.handlePressNewSubject.bind(this);
+      this.handlePressNewCategory = this.handlePressNewCategory.bind(this);
+      this.handlePressArchive = this.handlePressArchive.bind(this);
+
       this.handleEditSelected = this.handleEditSelected.bind(this);
       this.handleArchiveSelected = this.handleArchiveSelected.bind(this);
       this.handleDeleteSelected = this.handleDeleteSelected.bind(this);
-
-      this.handlePressArchive = this.handlePressArchive.bind(this);
 
       this.props.navigation.setParams({
         handleEditSelected: this.handleEditSelected,
@@ -78,6 +81,11 @@ export default function createSubjectsList(isArchive) {
     findSubject(id) {
       const numericId = Number(id);
       return this.props.subjects.find(subj => subj.id === numericId);
+    }
+
+    findCategory(id) {
+      const numericId = Number(id);
+      return this.props.categories.find(category => category.id === numericId);
     }
 
     handlePressSubject(id) {
@@ -96,11 +104,28 @@ export default function createSubjectsList(isArchive) {
       this.props.toggleSelection(id);
     }
 
+    handlePressCategory(id) {
+      if (this.props.amountSelected) {
+        return;
+      }
+      const category = this.findCategory(id);
+      if (category) {
+        this.props.navigation.navigate('categoryForm', { category });
+      }
+    }
+
     handlePressNewSubject() {
       if (isArchive || this.props.amountSelected) {
         return;
       }
       this.props.navigation.navigate('newSubject');
+    }
+
+    handlePressNewCategory() {
+      if (isArchive || this.props.amountSelected) {
+        return;
+      }
+      this.props.navigation.navigate('categoryForm');
     }
 
     handleEditSelected() {
@@ -167,22 +192,40 @@ export default function createSubjectsList(isArchive) {
     }
 
     render() {
-      const { subjects, selection, amountSelected } = this.props;
+      const {
+        subjects, categories, selection, amountSelected,
+      } = this.props;
+
+      const subjectsByCategories = getSubjectsAsSectionList(
+        subjects,
+        categories,
+      );
+
+      // DICTIONARY
+      const newActions = [
+        {
+          title: 'Category',
+          handlePress: this.handlePressNewCategory,
+        },
+        {
+          title: 'Subject',
+          handlePress: this.handlePressNewSubject,
+        },
+      ];
 
       return (
         <SubjectsListComponent>
           <SubjectsList
-            subjects={subjects}
+            subjectsByCategories={subjectsByCategories}
             selectedSubjects={selection}
-            isArchive={isArchive}
             onPressSubject={this.handlePressSubject}
             onLongPressSubject={this.handleLongPressSubject}
-            onPressArchive={this.handlePressArchive}
+            onPressCategory={this.handlePressCategory}
           />
           {!isArchive && (
-            <NewButton
+            <MultipleNewButton
               disabled={amountSelected > 0}
-              onPress={this.handlePressNewSubject}
+              actions={newActions}
             />
           )}
         </SubjectsListComponent>
@@ -192,6 +235,7 @@ export default function createSubjectsList(isArchive) {
 
   const mapStateToProps = state => ({
     subjects: subjectsSelector(state, { archived: isArchive }),
+    categories: categoriesSelector(state),
   });
 
   const mapDispatchToProps = dispatch => bindActionCreators({

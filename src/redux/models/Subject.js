@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { attr, Model } from 'redux-orm';
+import { attr, fk, Model } from 'redux-orm';
 import { isNumber } from '../../shared/utils';
 
 const portingWhiteList = ['name', 'description', 'archived'];
@@ -71,6 +71,7 @@ Subject.fields = {
   name: attr(),
   description: attr(),
   archived: attr(),
+  category: fk('Category'),
 };
 
 export default Subject;

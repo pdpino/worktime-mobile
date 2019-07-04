@@ -1,8 +1,7 @@
 import React from 'react';
 import {
-  StyleSheet, ScrollView, View, Text, TextInput, Button,
+  StyleSheet, View, Text, TextInput, Button,
 } from 'react-native';
-import { ModalPicker } from '../../shared/UI/pickers';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,10 +10,6 @@ const styles = StyleSheet.create({
   formItem: {
     marginHorizontal: 16,
     marginVertical: 8,
-  },
-  categoryFormItem: {
-    flex: 1,
-    flexDirection: 'row',
   },
   label: {
     fontSize: 18,
@@ -29,20 +24,8 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     padding: 10,
   },
-  inputName: { },
   inputDescription: {
     height: 100,
-  },
-  inputCategory: {
-    flex: 1,
-    marginLeft: 10,
-    paddingVertical: 3,
-    paddingHorizontal: 5,
-  },
-  inputCategoryText: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: 'black',
   },
   button: {
     marginTop: 5,
@@ -50,16 +33,16 @@ const styles = StyleSheet.create({
 });
 
 // DICTIONARY
-const namePlaceholder = 'Short and memorable name';
+const namePlaceholder = 'Name';
+const aliasPlaceholder = 'Short name';
 const descriptionPlaceholder = 'Work on this and that...';
 const nameLabel = 'Name';
+const aliasLabel = 'Alias';
 const descriptionLabel = 'Description';
-const categoryLabel = 'Category';
 
-const SubjectForm = ({
-  name, description, categoryId, categories,
-  onChangeName, onChangeDescription, onChangeCategory,
-  onSubmit, canSubmit,
+const CategoryForm = ({
+  name, alias, description,
+  onChangeName, onChangeAlias, onChangeDescription, onSubmit, canSubmit,
 }) => {
   const nameInput = (
     <View style={styles.formItem}>
@@ -67,10 +50,24 @@ const SubjectForm = ({
         {nameLabel}
       </Text>
       <TextInput
-        style={[styles.input, styles.inputName]}
+        style={styles.input}
         value={name}
         placeholder={namePlaceholder}
         onChangeText={onChangeName}
+      />
+    </View>
+  );
+
+  const aliasInput = (
+    <View style={styles.formItem}>
+      <Text style={styles.label}>
+        {aliasLabel}
+      </Text>
+      <TextInput
+        style={styles.input}
+        value={alias}
+        placeholder={aliasPlaceholder}
+        onChangeText={onChangeAlias}
       />
     </View>
   );
@@ -90,21 +87,6 @@ const SubjectForm = ({
     </View>
   );
 
-  const categoryInput = (
-    <View style={[styles.formItem, styles.categoryFormItem]}>
-      <Text style={styles.label}>
-        {categoryLabel}
-      </Text>
-      <ModalPicker
-        items={categories}
-        selectedId={categoryId}
-        buttonStyle={[styles.input, styles.inputCategory]}
-        textStyle={styles.inputCategoryText}
-        onValueChange={onChangeCategory}
-      />
-    </View>
-  );
-
   const submitText = 'Save'; // DICTIONARY
   const submitButton = (
     <View style={[styles.formItem, styles.button]}>
@@ -117,14 +99,14 @@ const SubjectForm = ({
   );
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {nameInput}
+      {aliasInput}
       {descriptionInput}
-      {categoryInput}
       {submitButton}
-    </ScrollView>
+    </View>
   );
 };
 
 
-export default SubjectForm;
+export default CategoryForm;

@@ -3,16 +3,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SubjectFormComponent from '../../components/subjects/form';
 import { upsertSubject } from '../../redux/actions';
+import { categoriesSelector } from '../../redux/selectors';
 
 class SubjectForm extends React.Component {
   constructor(props) {
     super(props);
 
-    const { name, description } = this.props.subject || {};
+    const { name, description, category } = this.props.subject || {};
 
     this.state = {
       name,
       description,
+      categoryId: category ? category.id : -1,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -30,9 +32,18 @@ class SubjectForm extends React.Component {
   }
 
   handleSubmitSubject() {
+    if (!this.validChanges()) {
+      return;
+    }
+
+    const { name, description, categoryId } = this.state;
+
     const data = {
-      ...this.state,
+      name: name.trim(),
+      description: description && description.trim(),
+      category: categoryId,
     };
+
     if (this.props.subject) {
       data.id = this.props.subject.id;
     } else {
@@ -44,15 +55,19 @@ class SubjectForm extends React.Component {
   }
 
   render() {
-    const { name, description } = this.state;
+    const { name, description, categoryId } = this.state;
+    const { categories } = this.props;
     const canSubmit = this.validChanges();
 
     return (
       <SubjectFormComponent
         name={name}
         description={description}
+        categoryId={categoryId}
+        categories={categories}
         onChangeName={this.handleChange('name')}
         onChangeDescription={this.handleChange('description')}
+        onChangeCategory={this.handleChange('categoryId')}
         onSubmit={this.handleSubmitSubject}
         canSubmit={canSubmit}
       />
@@ -62,6 +77,7 @@ class SubjectForm extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
   subject: ownProps.navigation.getParam('subject'),
+  categories: categoriesSelector(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
