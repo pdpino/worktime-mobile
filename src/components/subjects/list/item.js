@@ -62,8 +62,8 @@ class SubjectItem extends React.PureComponent {
       <TouchableHighlight
         onPress={() => onPress(subject.id)}
         onLongPress={() => onLongPress(subject.id)}
-        underlayColor="#71b3e74A"
-        activeOpacity={1}
+        underlayColor="#71b3e75F"
+        activeOpacity={0.5}
       >
         <View
           style={[

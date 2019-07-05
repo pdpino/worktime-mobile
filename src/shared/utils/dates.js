@@ -96,7 +96,19 @@ export function prettyDuration(totalSeconds, includeSeconds = false) {
 }
 
 export function isBetween(initialDate, endingDate, dateString) {
-  return moment(dateString, 'L').isBetween(initialDate, endingDate, 'day', '[]');
+  const date = moment(dateString, 'L');
+
+  if (initialDate && !endingDate) {
+    return initialDate.isBefore(date, 'day');
+  }
+  if (!initialDate && endingDate) {
+    return date.isBefore(endingDate, 'day');
+  }
+  if (!initialDate && !endingDate) {
+    return true;
+  }
+
+  return date.isBetween(initialDate, endingDate, 'day', '[]');
 }
 
 export function isBefore(dateA, dateB) {

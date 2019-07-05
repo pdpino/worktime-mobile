@@ -87,7 +87,7 @@ export default function withItemSelection(Component) {
       const newAmountSelected = amountSelected + (isSelected ? -1 : 1);
 
       if (amountSelected === 0 && newAmountSelected === 1) {
-        Vibration.vibrate(500);
+        Vibration.vibrate(50);
       }
 
       this.updateSelection({

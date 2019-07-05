@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Changed
+* Shorten vibration on item selection.
+* In subjects list, move empty categories to the bottom.
+* In work session list, add device name.
+
+### Fixed
+* In dashboard, fix bug that broke "None" behavior.
+* In subjects list, fix visual feedback when touching a subject item.
+
 
 
 ## 1.7.0 - 2019-07-04

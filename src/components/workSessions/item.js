@@ -22,6 +22,9 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
   },
+  textDevice: {
+    fontStyle: 'italic',
+  },
   moreButtonContainer: {
     position: 'absolute', // HACK?
     right: 15,
@@ -56,6 +59,9 @@ const WorkSessionItem = ({ workSession, onPressDelete }) => {
         {workSession.getPrettyHourStart()}
         {' - '}
         {workSession.getPrettyHourEnd()}
+      </Text>
+      <Text style={[styles.text, styles.textDevice]}>
+        {workSession.device}
       </Text>
     </View>
   );

@@ -93,5 +93,27 @@ export const getSubjectsAsSectionList = memoizeOne((subjects, categories) => {
     });
   }
 
-  return subjectsByCategories;
+  // OPTIMIZE: do this more efficiently?
+  return subjectsByCategories.sort((category1, category2) => {
+    const length1 = category1.data.length;
+    const length2 = category2.data.length;
+    if (length1 === 0 && length2 > 0) {
+      // 2 goes first
+      return 1;
+    }
+    if (length1 > 0 && length2 === 0) {
+      // 1 goes first
+      return -1;
+    }
+
+    if (category1.id === -1) {
+      // 2 goes first ("No category" is last)
+      return 1;
+    }
+    if (category2.id === -1) {
+      // 1 goes first ("No category" is last)
+      return -1;
+    }
+    return category1.name <= category2.name ? -1 : 1;
+  });
 });
