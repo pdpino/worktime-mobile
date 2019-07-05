@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 
 
+## 1.7.2 - 2019-07-05
+### Changed
+* Shorten vibration on item selection (even more).
+
+
 ## 1.7.1 - 2019-07-05
 ### Changed
 * Shorten vibration on item selection.
