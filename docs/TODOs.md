@@ -1,17 +1,6 @@
 # TODOs
 Next things to do
 
-## [P1] Export data from desktop to mobile
-(In desktop):
-* `work update`:
-  - save the default device name to `admin.json` (name = laptop)
-* Export JSON files to mobile format (is the standard):
-  - add `device: <device-name>` to every session
-  - jobs must be stopped (`_entry = null`, `is_running = False`)
-  - rename necessary fields
-  - check that the timestamp represents the same time in python and JS
-
-
 ## New Features
 * [P2] Nest subjects
 * Complete about Porting feature: Allow choosing on import/export:
@@ -49,9 +38,7 @@ Next things to do
   to prevent left aligning the button (`alignSelf: center`). The submit button
   should center itself?
   - Instead of defining a fixed width, define `horizontalMargin` to the
-  container, to keep the button away from the borders
-* Make `ViewSection` Component, that displays title and borders. Reuse style in
-  dashboard, subject-show, etc.
+  container, to keep the button away from the borders.
 
 
 ## Fixes
@@ -68,11 +55,12 @@ Next things to do
 * Can't hot reload if store is created inside `App` component. See:
   https://github.com/reduxjs/react-redux/issues/347,
   https://stackoverflow.com/questions/46046909/provider-does-not-support-changing-store-on-the-fly-in-reactnative-redux
-* [BUG] [P3] [REVIEW] Review possible bug: Running application multiple times
+* [BUG] [P3] [WAIT] [REVIEW] Review possible bug: Running application multiple
+  times
   - When running the app for the first time, it throws multiple times the same
     message: "Running Application with params ...".
     Should it be just one time?
-  - Maybe an emulator issue.
+  - Maybe an emulator issue, wait on AndroidStudio re-install.
   - See https://stackoverflow.com/questions/48987915/react-native-creates-multiple-rootview-on-android
 * [BUG] when there is a session running, if you delete it's subject:
   - the `updateTimesService` keeps running on the back, so every minute (or the
@@ -151,8 +139,9 @@ Next things to do
 ## Refactors
 * [P2] Refactor text-inputs used in `SubjectForm` and `CategoryForm`:
   - Create a reusable component (has label, input, etc)
-* Refactor `itemSelection` from a hoc to hooks (review if possible)
-* Split `utils/dates.js` into multiple files (is too big by now).
+* [REVIEW] Refactor `itemSelection` from a hoc to hooks (review if possible)
+* [WAIT] Split `utils/dates.js` into multiple files (is too big by now). Wait on
+  timezone bug, and date L simplification.
 * `componentDidMount`, `componentWillUnmount` and `shouldComponentUpdate` are
   copied in `SubjectShow` and `DashboardMain`. Can it be refactored/improved?
 * Optimize subject-show. (Review: how non-optimal is this?)

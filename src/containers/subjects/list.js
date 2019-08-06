@@ -76,6 +76,21 @@ export default function createSubjectsList(isArchive) {
         handleDeleteSelected: this.handleDeleteSelected,
         handlePressArchive: this.handlePressArchive,
       });
+
+      // DICTIONARY
+      // COLORS
+      this.newActions = [
+        {
+          title: 'Category',
+          handlePress: this.handlePressNewCategory,
+          color: '#d50000',
+        },
+        {
+          title: 'Subject',
+          handlePress: this.handlePressNewSubject,
+          color: '#ef8c00',
+        },
+      ];
     }
 
     findSubject(id) {
@@ -201,18 +216,6 @@ export default function createSubjectsList(isArchive) {
         categories,
       );
 
-      // DICTIONARY
-      const newActions = [
-        {
-          title: 'Category',
-          handlePress: this.handlePressNewCategory,
-        },
-        {
-          title: 'Subject',
-          handlePress: this.handlePressNewSubject,
-        },
-      ];
-
       return (
         <SubjectsListComponent>
           <SubjectsList
@@ -225,7 +228,7 @@ export default function createSubjectsList(isArchive) {
           {!isArchive && (
             <MultipleNewButton
               disabled={amountSelected > 0}
-              actions={newActions}
+              actions={this.newActions}
             />
           )}
         </SubjectsListComponent>

@@ -14,7 +14,7 @@ const MultipleNewButton = ({ disabled, actions }) => {
   const buttons = actions.map((action, index) => (
     <ActionButton.Item
       key={index.toString()}
-      buttonColor="#71b3e7"
+      buttonColor={action.color || '#71b3e7'}
       title={action.title}
       onPress={action.handlePress}
       textContainerStyle={{ height: 'auto' }}
