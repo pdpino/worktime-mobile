@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 * In the work player, in the list of subjects, display also the category name
 from each subject.
+* Same in the dashboard's subject list.
 * Sort names considering lowercase letters.
 
 

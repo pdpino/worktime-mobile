@@ -58,7 +58,7 @@ function getWidthUnits(data, key) {
 }
 
 // DICTIONARY
-const allButtonLabel = 'Select all';
+const allButtonLabel = 'All';
 const titleText = 'Subjects';
 
 // DICTIONARY COLORS

@@ -54,7 +54,9 @@ class TimeStats {
     let addedEffective = 0;
 
     this.subjectsSummaries = subjects.map((subject) => {
-      const { name, id } = subject;
+      const { id } = subject;
+      const name = subject.getNameWithCategory();
+
       if (!selectedSubjectsIds[subject.id]) {
         return {
           id,
