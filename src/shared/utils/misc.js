@@ -117,6 +117,8 @@ export const getSubjectsAsSectionList = memoizeOne((subjects, categories) => {
       // 1 goes first ("No category" is last)
       return -1;
     }
-    return category1.name <= category2.name ? -1 : 1;
+    const name1 = category1.name.toLowerCase();
+    const name2 = category2.name.toLowerCase();
+    return name1 <= name2 ? -1 : 1;
   });
 });

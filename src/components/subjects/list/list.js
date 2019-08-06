@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
   },
   emptyCategory: {
     marginTop: 5,
+    marginLeft: 25,
     color: 'black',
-    textAlign: 'center',
     fontSize: 15,
     fontStyle: 'italic',
   },
