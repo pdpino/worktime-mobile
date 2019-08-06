@@ -34,9 +34,12 @@ export function isNumber(value) {
   return parsedValue || parsedValue === 0;
 }
 
-export function sortByName(array) {
-  return array.sort((elem1, elem2) => (elem1.name <= elem2.name ? -1 : 1));
-}
+export const sortByName = memoizeOne((array) => {
+  const getName = elem => (elem && elem.name && elem.name.toLowerCase()) || '';
+  return array.sort(
+    (elem1, elem2) => (getName(elem1) <= getName(elem2) ? -1 : 1),
+  );
+});
 
 export function removeStrAccents(str) {
   return unorm.nfd(str).replace(/[\u0300-\u036f]/g, '');

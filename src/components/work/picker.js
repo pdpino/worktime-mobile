@@ -26,6 +26,43 @@ const styles = StyleSheet.create({
 // DICTIONARY
 const chooseSubject = 'Choose a Subject';
 
+/**
+ * Returns a formatted subject name, containing subject name and category name.
+ *
+ * If the subject has a category, the returned value is
+ * "[category name] - [subject name]".
+ * If the subject doesn't have a category, the returned value is the subject
+ * name.
+ */
+const getNameWithCategory = (subject) => {
+  if (subject.category) {
+    return `${subject.category.getShortName()} - ${subject.name}`;
+  }
+  return subject.name;
+};
+
+/**
+ * Formats the subjects for the picker.
+ */
+const formatSubjectsForPicker = subjects => subjects.map(subject => ({
+  id: subject.id,
+  name: getNameWithCategory(subject),
+  hasCategory: !!subject.category,
+})).sort((subj1, subj2) => {
+  if (subj1.hasCategory && !subj2.hasCategory) {
+    // Subjects with category go to the top (subj1)
+    return -1;
+  }
+  if (!subj1.hasCategory && subj2.hasCategory) {
+    // Subjects without category go to the bottom (subj1)
+    return 1;
+  }
+  const name1 = subj1.name ? subj1.name.toLowerCase() : '';
+  const name2 = subj2.name ? subj2.name.toLowerCase() : '';
+
+  return name1 <= name2 ? -1 : 1;
+});
+
 class SubjectPicker extends React.Component {
   shouldComponentUpdate(nextProps) {
     const {
@@ -42,6 +79,8 @@ class SubjectPicker extends React.Component {
       subjects, selectedSubjectId, onValueChange, enabled,
     } = this.props;
 
+    const sortedSubjects = formatSubjectsForPicker(subjects);
+
     return (
       <View style={[commonStyles.box, styles.container]}>
         <Text style={styles.label}>
@@ -49,10 +88,11 @@ class SubjectPicker extends React.Component {
         </Text>
         <View style={styles.pickerContainer}>
           <Picker
-            items={subjects}
+            items={sortedSubjects}
             selectedId={selectedSubjectId}
             onValueChange={onValueChange}
             enabled={enabled}
+            getDisplayName={getNameWithCategory}
           />
         </View>
       </View>
