@@ -27,26 +27,11 @@ const styles = StyleSheet.create({
 const chooseSubject = 'Choose a Subject';
 
 /**
- * Returns a formatted subject name, containing subject name and category name.
- *
- * If the subject has a category, the returned value is
- * "[category name] - [subject name]".
- * If the subject doesn't have a category, the returned value is the subject
- * name.
- */
-const getNameWithCategory = (subject) => {
-  if (subject.category) {
-    return `${subject.category.getShortName()} - ${subject.name}`;
-  }
-  return subject.name;
-};
-
-/**
  * Formats the subjects for the picker.
  */
 const formatSubjectsForPicker = subjects => subjects.map(subject => ({
   id: subject.id,
-  name: getNameWithCategory(subject),
+  name: subject.getNameWithCategory(),
   hasCategory: !!subject.category,
 })).sort((subj1, subj2) => {
   if (subj1.hasCategory && !subj2.hasCategory) {
@@ -92,7 +77,6 @@ class SubjectPicker extends React.Component {
             selectedId={selectedSubjectId}
             onValueChange={onValueChange}
             enabled={enabled}
-            getDisplayName={getNameWithCategory}
           />
         </View>
       </View>

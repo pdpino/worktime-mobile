@@ -39,6 +39,13 @@ class Subject extends Model {
       : workSessions;
   }
 
+  getNameWithCategory() {
+    if (this.category) {
+      return `${this.category.getShortName()} - ${this.name}`;
+    }
+    return this.name;
+  }
+
   exportable(deviceName) {
     const { name, description, archived } = this;
 
