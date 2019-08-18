@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## 1.7.4 - 2019-08-18
+### Fixed
+* Subject Picker bugs:
+  - When editing a category, the picker gets updated right away.
+  - Make it a Dialog again (instead of a dropdown).
+
+
 ## 1.7.3 - 2019-08-05
 ### Changed
 * Improve subjects list view.
