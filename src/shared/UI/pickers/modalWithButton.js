@@ -30,10 +30,13 @@ export default function asModalWithButton(ButtonComponent, ModalComponent) {
 
     render() {
       const { modalVisible } = this.state;
+      const { disabled } = this.props;
 
       return (
         <View style={{ flex: 1 }}>
           <TouchableOpacity
+            style={{ flex: 1 }}
+            disabled={disabled}
             onPress={this.openModal}
           >
             <ButtonComponent {...this.props} />

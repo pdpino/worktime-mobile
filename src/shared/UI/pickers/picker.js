@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Picker } from 'react-native';
 
+// DEPRECATED: this Component is deprecated, prefer ModalPicker
+
 const styles = StyleSheet.create({
   picker: {
     flex: 1,
@@ -27,8 +29,8 @@ const PickerWrapper = ({
     />,
   );
 
-  // NOTE: there is a bug on RN that sets the picker mode to "dropdown".
-  // See TODOs.
+  // NOTE: there is a bug on RN 0.59 that sets the picker mode to "dropdown".
+  // See https://github.com/facebook/react-native/issues/24055
   return (
     <Picker
       style={styles.picker}

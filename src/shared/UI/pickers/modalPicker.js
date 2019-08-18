@@ -24,10 +24,18 @@ const styles = StyleSheet.create({
 const noneText = 'None';
 
 const TextButton = ({
-  items, selectedId, buttonStyle, textStyle,
+  items, selectedId, buttonStyle, textStyle, ButtonComponent,
 }) => {
   const selectedItem = items.find(item => item.id === selectedId);
   const selectedName = selectedItem ? selectedItem.name : noneText;
+
+  if (ButtonComponent) {
+    return (
+      <ButtonComponent
+        selectedName={selectedName}
+      />
+    );
+  }
 
   return (
     <View style={buttonStyle}>

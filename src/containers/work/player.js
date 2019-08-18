@@ -9,7 +9,7 @@ import {
   start, resume, pause, stop, stopAndDiscard, selectWorkSubject,
 } from '../../redux/actions';
 import {
-  subjectsSelector, selectedSubjectSelector,
+  subjectsForPickerSelector, selectedSubjectSelector,
   runningSessionSelector, lastRunningSessionSelector,
 } from '../../redux/selectors';
 
@@ -77,7 +77,7 @@ class WorkPlayer extends React.Component {
   render() {
     const status = this.getStatus();
     const {
-      subjects, selectedSubject, runningSession, lastRunningSession,
+      subjectsForPicker, selectedSubject, runningSession, lastRunningSession,
     } = this.props;
     const selectedSubjectId = selectedSubject ? selectedSubject.id : -1;
     const { timeTotal, timeEffective } = runningSession;
@@ -89,7 +89,7 @@ class WorkPlayer extends React.Component {
     return (
       <WorkPlayerComponent>
         <SubjectPickerComponent
-          subjects={subjects}
+          subjectsForPicker={subjectsForPicker}
           selectedSubjectId={selectedSubjectId}
           onValueChange={this.handleSelectSubject}
           enabled={status === 'stopped'}
@@ -113,7 +113,7 @@ class WorkPlayer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  subjects: subjectsSelector(state, { archived: false }),
+  subjectsForPicker: subjectsForPickerSelector(state, { archived: false }),
   selectedSubject: selectedSubjectSelector(state),
   runningSession: runningSessionSelector(state),
   lastRunningSession: lastRunningSessionSelector(state),

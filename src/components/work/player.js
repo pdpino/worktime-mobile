@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
 });
 
 const WorkPlayer = ({ children }) => (
-  <View style={styles.container}>
+  <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.container}>
     {children}
-  </View>
+  </ScrollView>
 );
 
 export default WorkPlayer;

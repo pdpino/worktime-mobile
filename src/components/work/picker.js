@@ -1,84 +1,75 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import commonStyles from './styles';
-import { Picker } from '../../shared/UI/pickers';
+import { ModalPicker } from '../../shared/UI/pickers';
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
-    height: 80,
-    width: 200,
+    flex: 1,
+    paddingTop: 25,
+    paddingHorizontal: 20,
+  },
+  buttonContainer: {
+    flex: 1,
+    padding: 10,
+    minWidth: 200,
   },
   label: {
-    flex: 1,
-    textAlignVertical: 'center',
     textAlign: 'center',
     fontSize: 20,
+    fontStyle: 'italic',
     color: 'black',
+    marginBottom: 5,
   },
-  pickerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    height: 50,
+  pickerText: {
+    textAlign: 'center',
+    color: 'black',
+    fontSize: 16,
+  },
+  textDisabled: {
+    color: 'gray',
   },
 });
 
 // DICTIONARY
-const chooseSubject = 'Choose a Subject';
-
-/**
- * Formats the subjects for the picker.
- */
-const formatSubjectsForPicker = subjects => subjects.map(subject => ({
-  id: subject.id,
-  name: subject.getNameWithCategory(),
-  hasCategory: !!subject.category,
-})).sort((subj1, subj2) => {
-  if (subj1.hasCategory && !subj2.hasCategory) {
-    // Subjects with category go to the top (subj1)
-    return -1;
-  }
-  if (!subj1.hasCategory && subj2.hasCategory) {
-    // Subjects without category go to the bottom (subj1)
-    return 1;
-  }
-  const name1 = subj1.name ? subj1.name.toLowerCase() : '';
-  const name2 = subj2.name ? subj2.name.toLowerCase() : '';
-
-  return name1 <= name2 ? -1 : 1;
-});
+const chooseSubject = 'Choose subject';
 
 class SubjectPicker extends React.Component {
   shouldComponentUpdate(nextProps) {
     const {
-      selectedSubjectId, enabled, subjects,
+      selectedSubjectId, enabled, subjectsForPicker,
     } = this.props;
 
     return nextProps.selectedSubjectId !== selectedSubjectId
       || nextProps.enabled !== enabled
-      || nextProps.subjects !== subjects;
+      || nextProps.subjectsForPicker !== subjectsForPicker;
   }
 
   render() {
     const {
-      subjects, selectedSubjectId, onValueChange, enabled,
+      subjectsForPicker, selectedSubjectId, onValueChange, enabled,
     } = this.props;
 
-    const sortedSubjects = formatSubjectsForPicker(subjects);
-
-    return (
-      <View style={[commonStyles.box, styles.container]}>
-        <Text style={styles.label}>
+    const PickerButton = ({ selectedName }) => (
+      <View style={[commonStyles.box, styles.buttonContainer]}>
+        <Text style={[styles.label, !enabled && styles.textDisabled]}>
           {chooseSubject}
         </Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-            items={sortedSubjects}
-            selectedId={selectedSubjectId}
-            onValueChange={onValueChange}
-            enabled={enabled}
-          />
-        </View>
+        <Text style={[styles.pickerText, !enabled && styles.textDisabled]}>
+          {selectedName}
+        </Text>
+      </View>
+    );
+
+    return (
+      <View style={styles.container}>
+        <ModalPicker
+          items={subjectsForPicker}
+          selectedId={selectedSubjectId}
+          onValueChange={onValueChange}
+          disabled={!enabled}
+          ButtonComponent={PickerButton}
+        />
       </View>
     );
   }
