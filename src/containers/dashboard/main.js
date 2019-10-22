@@ -8,7 +8,7 @@ import {
 import { subjectsSelector } from '../../redux/selectors';
 import {
   isSameDay, getToday, getYesterday, getStartOfWeek, getStartOfMonth, subtractDays,
-  Memoizer,
+  getStartOfSemester, Memoizer,
 } from '../../shared/utils';
 import { sumTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
 
@@ -96,6 +96,10 @@ class Dashboard extends React.Component {
       {
         name: 'thisMonth',
         callback: () => this.handleChangeDates(getStartOfMonth(), getToday()),
+      },
+      {
+        name: 'thisSemester',
+        callback: () => this.handleChangeDates(getStartOfSemester(), getToday()),
       },
     ];
   }

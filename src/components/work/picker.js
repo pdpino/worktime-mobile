@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   buttonContainer: {
-    flex: 1,
+    flex: 0,
     padding: 10,
     minWidth: 200,
   },

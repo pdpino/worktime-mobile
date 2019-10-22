@@ -50,8 +50,9 @@ class CategoryForm extends React.Component {
     });
   }
 
-  validChanges() {
-    return this.state.name;
+  isInputValid() {
+    const { name } = this.state;
+    return name && name.trim();
   }
 
   handleChange(key) {
@@ -61,9 +62,17 @@ class CategoryForm extends React.Component {
   }
 
   handleSubmitCategory() {
+    if (!this.isInputValid()) {
+      return;
+    }
+
+    const { name, alias, description } = this.state;
     const data = {
-      ...this.state,
+      name: name.trim(),
+      alias: alias && alias.trim(),
+      description: description && description.trim(),
     };
+
     if (this.props.category) {
       data.id = this.props.category.id;
     }
@@ -96,7 +105,7 @@ class CategoryForm extends React.Component {
 
   render() {
     const { name, alias, description } = this.state;
-    const canSubmit = this.validChanges();
+    const canSubmit = this.isInputValid();
 
     return (
       <CategoryFormComponent

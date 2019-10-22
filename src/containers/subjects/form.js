@@ -21,8 +21,9 @@ class SubjectForm extends React.Component {
     this.handleSubmitSubject = this.handleSubmitSubject.bind(this);
   }
 
-  validChanges() {
-    return this.state.name;
+  isInputValid() {
+    const { name } = this.state;
+    return name && name.trim();
   }
 
   handleChange(key) {
@@ -32,7 +33,7 @@ class SubjectForm extends React.Component {
   }
 
   handleSubmitSubject() {
-    if (!this.validChanges()) {
+    if (!this.isInputValid()) {
       return;
     }
 
@@ -57,7 +58,7 @@ class SubjectForm extends React.Component {
   render() {
     const { name, description, categoryId } = this.state;
     const { categories } = this.props;
-    const canSubmit = this.validChanges();
+    const canSubmit = this.isInputValid();
 
     return (
       <SubjectFormComponent

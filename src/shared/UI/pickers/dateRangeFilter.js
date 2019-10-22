@@ -47,6 +47,7 @@ const shortcutsLabels = {
   lastWeek: 'Last Week',
   thisMonth: 'This Month',
   lastMonth: 'Last Month',
+  thisSemester: 'This Semester',
 };
 
 // DICTIONARY

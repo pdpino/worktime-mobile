@@ -135,6 +135,13 @@ export function getStartOfMonth() {
   return moment().startOf('month');
 }
 
+export function getStartOfSemester() {
+  const today = moment();
+  const currentMonth = today.month();
+  const semesterMonth = currentMonth >= 8 ? 8 : 3;
+  return moment([today.year(), semesterMonth - 1, 1]);
+}
+
 export function subtractDays(date, days) {
   return moment(date).subtract(days, 'days');
 }
