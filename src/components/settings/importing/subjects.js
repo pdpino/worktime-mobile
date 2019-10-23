@@ -3,6 +3,7 @@ import {
   StyleSheet, View, Text, FlatList,
 } from 'react-native';
 import { ItemCheckbox } from '../../../shared/UI/buttons';
+import { unixToDateString, prettyDate } from '../../../shared/utils';
 import commonStyles from './styles';
 
 const styles = StyleSheet.create({
@@ -28,6 +29,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   subjectBadge: {
+    flex: 0,
+    alignSelf: 'center',
     borderRadius: 5,
     paddingHorizontal: 5,
     marginVertical: 1,
@@ -44,45 +47,65 @@ const styles = StyleSheet.create({
 const subjectsLabel = 'subjects';
 
 const SubjectsPreview = ({
-  subjectsPreview, selectedSubjects, onPressSubject,
+  processedSubjects, subjectsSelection, onPressSubject,
 }) => {
-  const amountOfSubjects = subjectsPreview && subjectsPreview.length;
+  const subjectsAmount = processedSubjects && processedSubjects.length;
   const title = (
     <Text style={styles.title}>
-      {`${amountOfSubjects} ${subjectsLabel}`}
+      {`${subjectsAmount} ${subjectsLabel}`}
     </Text>
   );
 
-  const renderSubjectPreview = ({ item }) => (
-    <View style={styles.subjectItem}>
-      <ItemCheckbox
-        text={item.name}
-        checked={selectedSubjects && selectedSubjects[item.name]}
-        containerStyle={styles.checkboxContainer}
-        textStyle={styles.subjectName}
-        onPress={() => onPressSubject(item.name)}
-      />
-      <View style={
-        [
-          styles.subjectBadge,
-          item.exists ? styles.subjectOld : styles.subjectNew,
-        ]}
-      >
+  const renderSubjectPreview = ({ item }) => {
+    const { metadata, data } = item;
+    const fromDate = prettyDate(unixToDateString(metadata.minTimestamp));
+    const toDate = prettyDate(unixToDateString(metadata.maxTimestamp));
+    const period = `${fromDate} - ${toDate}`;
+
+
+    const text = `${data.name} (${metadata.accepted} sessions)`; // DICTIONARY
+    const innerComponent = (
+      <View>
+        <Text style={{ color: 'black' }}>
+          {text}
+        </Text>
         <Text>
-          {item.exists ? 'old' : 'new'}
+          {period}
         </Text>
       </View>
-    </View>
-  );
+    );
 
-  return subjectsPreview ? (
+    return (
+      <View style={styles.subjectItem}>
+        <ItemCheckbox
+          innerComponent={innerComponent}
+          checked={subjectsSelection && subjectsSelection[data.name]}
+          containerStyle={styles.checkboxContainer}
+          textStyle={styles.subjectName}
+          onPress={() => onPressSubject(data.name)}
+        />
+        <View style={
+          [
+            styles.subjectBadge,
+            metadata.exists ? styles.subjectOld : styles.subjectNew,
+          ]}
+        >
+          <Text>
+            {metadata.exists ? 'old' : 'new'}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
+  return processedSubjects ? (
     <View style={[commonStyles.box, styles.container]}>
       {title}
       <FlatList
-        data={subjectsPreview}
+        data={processedSubjects}
         renderItem={renderSubjectPreview}
         keyExtractor={(item, index) => index.toString()}
-        extraData={selectedSubjects}
+        extraData={subjectsSelection}
         scrollEnabled={false}
       />
     </View>

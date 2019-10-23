@@ -8,8 +8,7 @@ import {
   ImportingComponent, FileInput, LoadingPreview, ImportPreview, SubjectsPreview,
 } from '../../components/settings/importing';
 import { openFileSelector, openJsonFile } from '../../services/sharing';
-import { getPreviewSubjects, getImportableSubjects } from '../../shared/porting';
-import { sortByName } from '../../shared/utils';
+import { processSubjects, getImportableSubjects } from '../../shared/porting';
 
 class Importing extends React.Component {
   constructor(props) {
@@ -19,12 +18,13 @@ class Importing extends React.Component {
       path: null,
       isLoadingPreview: false,
       device: null,
-      subjectsPreview: null,
-      selectedSubjects: null,
+      importStats: null,
+      processedSubjects: null,
+      subjectsSelection: null,
       isImporting: false,
     };
 
-    this.incomingSubjects = null;
+    this.incomingRawSubjects = null;
 
     this.handlePressFile = this.handlePressFile.bind(this);
     this.handlePressSubject = this.handlePressSubject.bind(this);
@@ -43,8 +43,9 @@ class Importing extends React.Component {
       path: null,
       isLoadingPreview: false,
       device: null,
-      subjectsPreview: null,
-      selectedSubjects: null,
+      importStats: null,
+      processedSubjects: null,
+      subjectsSelection: null,
     });
   }
 
@@ -58,80 +59,101 @@ class Importing extends React.Component {
         return;
       }
 
-      this.setState({ path, isLoadingPreview: true }, () => {
-        openJsonFile(path).then((fileContent) => {
-          if (!fileContent) {
-            this.displayPreviewError('Not a JSON file');
-            return;
-          }
+      this.setState({ path, isLoadingPreview: true }, async () => {
+        const fileContent = await openJsonFile(path);
+        if (!fileContent) {
+          this.displayPreviewError('Not a JSON file');
+          return;
+        }
 
-          if (!fileContent.device || !fileContent.subjects) {
-            this.displayPreviewError('JSON file does not specify data');
-            return;
-          }
+        if (!fileContent.device || !fileContent.subjects) {
+          this.displayPreviewError('JSON file does not specify data');
+          return;
+        }
 
-          if (fileContent.device === currentDevice) {
-            this.displayPreviewError('Can\'t import data from the same device');
-            return;
-          }
+        if (fileContent.device === currentDevice) {
+          this.displayPreviewError('Can\'t import data from the same device');
+          return;
+        }
 
-          const subjectsPreview = sortByName(getPreviewSubjects(
-            subjects,
-            fileContent.subjects,
-          ));
+        const { metadata, processedSubjects } = await processSubjects(
+          subjects,
+          fileContent.subjects,
+          null,
+          fileContent.device,
+        );
 
-          const selectedSubjects = {};
-          subjectsPreview.forEach((subject) => {
-            selectedSubjects[subject.name] = true;
-          });
-
-          this.setState({
-            isLoadingPreview: false,
-            device: fileContent.device,
-            subjectsPreview,
-            selectedSubjects,
-          });
-
-          this.incomingSubjects = fileContent.subjects;
+        const subjectsSelection = {};
+        processedSubjects.forEach(({ data }) => {
+          subjectsSelection[data.name] = true;
         });
+
+        this.setState({
+          isLoadingPreview: false,
+          device: fileContent.device,
+          processedSubjects,
+          subjectsSelection,
+          importStats: metadata,
+        });
+
+        this.incomingRawSubjects = fileContent.subjects;
       });
     });
   }
 
   handlePressSubject(subjectName) {
-    this.setState(state => ({
-      selectedSubjects: {
-        ...state.selectedSubjects,
-        [subjectName]: !state.selectedSubjects[subjectName],
-      },
-    }));
+    if (!this.incomingRawSubjects) {
+      return;
+    }
+
+    const { subjects } = this.props;
+    const { subjectsSelection, device } = this.state;
+
+    const newSelectedSubjects = {
+      ...subjectsSelection,
+      [subjectName]: !subjectsSelection[subjectName],
+    };
+
+    this.setState({
+      isLoadingPreview: true,
+      subjectsSelection: newSelectedSubjects,
+    }, async () => {
+      const { metadata, processedSubjects } = await processSubjects(
+        subjects,
+        this.incomingRawSubjects,
+        newSelectedSubjects,
+        device,
+      );
+
+      this.setState({
+        isLoadingPreview: false,
+        processedSubjects,
+        importStats: metadata,
+      });
+    });
   }
 
   handlePressImport() {
-    const { subjects } = this.props;
-    const { device, selectedSubjects } = this.state;
+    const { device, processedSubjects, subjectsSelection } = this.state;
 
-    if (!this.incomingSubjects || !device) {
+    if (!processedSubjects || !device) {
       return;
     }
 
     this.setState({ isImporting: true }, () => {
-      getImportableSubjects(
-        subjects,
-        this.incomingSubjects,
-        selectedSubjects,
-        device,
-      ).then((importableSubjects) => {
-        this.props.importFromJson(device, importableSubjects);
-        this.props.navigation.goBack();
-      });
+      const importableSubjects = getImportableSubjects(
+        processedSubjects,
+        subjectsSelection,
+      );
+      this.props.importFromJson(device, importableSubjects);
+      this.props.navigation.goBack();
     });
   }
 
   render() {
     const {
-      path, isLoadingPreview, device, subjectsPreview, selectedSubjects,
-      isImporting,
+      path, isLoadingPreview, device, importStats,
+      processedSubjects, subjectsSelection, isImporting,
     } = this.state;
     const { knownDevices } = this.props.profile;
 
@@ -150,11 +172,12 @@ class Importing extends React.Component {
         />
         <ImportPreview
           device={device}
+          importStats={importStats}
           lastImportedTimestamp={knownDevices[device]}
         />
         <SubjectsPreview
-          subjectsPreview={subjectsPreview}
-          selectedSubjects={selectedSubjects}
+          processedSubjects={processedSubjects}
+          subjectsSelection={subjectsSelection}
           onPressSubject={this.handlePressSubject}
         />
       </ImportingComponent>

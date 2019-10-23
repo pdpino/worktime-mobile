@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { unixToDaysAgo } from '../../../shared/utils';
+import { unixToDateString, unixToDaysAgo, prettyDate } from '../../../shared/utils';
 import commonStyles from './styles';
 
 const styles = StyleSheet.create({
@@ -23,14 +23,17 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginLeft: 10,
     fontSize: 18,
+    flex: 1,
+    flexWrap: 'wrap',
   },
 });
 
 // DICTIONARY
 const deviceLabel = 'Device';
 const lastImportedLabel = 'Last imported';
+const periodLabel = 'Period';
 
-const ImportPreview = ({ device, lastImportedTimestamp }) => {
+const ImportPreview = ({ device, importStats, lastImportedTimestamp }) => {
   const getPreviewLabel = (label, value) => (
     <View style={styles.fieldContainer}>
       <Text style={styles.fieldLabel}>
@@ -44,12 +47,20 @@ const ImportPreview = ({ device, lastImportedTimestamp }) => {
   );
 
   const lastImported = unixToDaysAgo(lastImportedTimestamp);
+  let period = 'None'; // DICTIONARY
+  if (importStats) {
+    const fromDate = prettyDate(unixToDateString(importStats.minTimestamp));
+    const toDate = prettyDate(unixToDateString(importStats.maxTimestamp));
+
+    period = `${fromDate} -- ${toDate}`;
+  }
 
   return device ? (
     <View style={commonStyles.row}>
       <View style={[styles.innerContainer, commonStyles.box]}>
         {getPreviewLabel(deviceLabel, device)}
         {getPreviewLabel(lastImportedLabel, lastImported)}
+        {getPreviewLabel(periodLabel, period)}
       </View>
     </View>
   ) : null;

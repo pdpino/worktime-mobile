@@ -1,4 +1,6 @@
-import { makeFunctionAsync, removeStrAccents, ElementsIndex } from '../utils';
+import {
+  makeFunctionAsync, removeStrAccents, ElementsIndex,
+} from '../utils';
 
 function simplifyName(name) {
   return removeStrAccents((name || '')
@@ -17,22 +19,24 @@ function createWorkSessionsIndex(workSessions) {
   return new ElementsIndex(workSessions, getByTimestamp);
 }
 
-export function getPreviewSubjects(preSubjects, incomingSubjects) {
-  const subjectsIndex = createSubjectsIndex(preSubjects);
+function getTimestampRange(timestamps) {
+  const minTimestamp = Math.min(...timestamps);
+  const maxTimestamp = Math.max(...timestamps);
 
-  return incomingSubjects.map(subject => ({
-    name: subject.name,
-    exists: subjectsIndex.exists(subject),
-  }));
+  return {
+    minTimestamp,
+    maxTimestamp,
+  };
 }
 
-export const getImportableSubjects = makeFunctionAsync((
-  preSubjects, incomingSubjects, selectedSubjects, device,
+export const processSubjects = makeFunctionAsync((
+  preSubjects, incomingSubjects, selectedSubjects, importingDevice,
 ) => {
   const subjectsIndex = createSubjectsIndex(preSubjects);
 
-  return incomingSubjects
-    .filter(incomingSubject => selectedSubjects[incomingSubject.name])
+  let totalIgnored = 0;
+  let totalAccepted = 0;
+  const processedSubjects = incomingSubjects
     .map((incomingSubject) => {
       const existingSubject = subjectsIndex.getWithSameId(incomingSubject);
 
@@ -41,14 +45,80 @@ export const getImportableSubjects = makeFunctionAsync((
         : [];
       const workSessionsIndex = createWorkSessionsIndex(existingWorkSessions);
 
-      const incomingWorkSessions = incomingSubject.workSessions
-        .filter(workSession => !workSessionsIndex.exists(workSession)
-          && workSession.device === device);
+      let ignoredRepeated = 0;
+      let ignoredOtherDevice = 0;
+      const filteredWorkSessions = (incomingSubject.workSessions || [])
+        .filter((workSession) => {
+          const sameDevice = workSession.device === importingDevice;
+          const workSessionExists = workSessionsIndex.exists(workSession);
 
-      return {
+          ignoredRepeated += workSessionExists;
+          ignoredOtherDevice += !sameDevice;
+
+          return !workSessionExists && sameDevice;
+        });
+
+      const { minTimestamp, maxTimestamp } = getTimestampRange(
+        filteredWorkSessions.map(workSession => workSession.timestampStart),
+      );
+
+      const metadata = {
+        exists: !!existingSubject,
+        ignored: ignoredRepeated + ignoredOtherDevice,
+        accepted: filteredWorkSessions.length,
+        minTimestamp,
+        maxTimestamp,
+      };
+
+      // HACK: hacky solution, this function is poorly designed!
+      // The selection only affects the global metadata, but not the actual
+      // processedSubjects array (very confusing!).
+      if (!selectedSubjects || selectedSubjects[incomingSubject.name]) {
+        totalIgnored += metadata.ignored;
+        totalAccepted += metadata.accepted;
+      } else {
+        totalIgnored += metadata.ignored + metadata.accepted;
+      }
+
+      const data = {
         ...incomingSubject,
         id: existingSubject ? existingSubject.id : null,
-        workSessions: incomingWorkSessions,
+        workSessions: filteredWorkSessions,
+      };
+
+      return {
+        data,
+        metadata,
       };
     });
+
+  const { minTimestamp, maxTimestamp } = getTimestampRange(
+    processedSubjects.flatMap(
+      subject => (
+        !selectedSubjects || selectedSubjects[subject.data.name]
+          ? subject.data.workSessions.map(ws => ws.timestampStart)
+          : []
+      ),
+    ),
+  );
+
+  const allMetadata = {
+    minTimestamp,
+    maxTimestamp,
+    ignored: totalIgnored,
+    accepted: totalAccepted,
+  };
+
+  return {
+    metadata: allMetadata,
+    processedSubjects,
+  };
 });
+
+export function getImportableSubjects(processedSubjects, selectedSubjects) {
+  const importableSubjects = processedSubjects.map(({ data }) => data);
+  return selectedSubjects
+    ? importableSubjects
+      .filter(subject => selectedSubjects[subject.name])
+    : importableSubjects;
+}

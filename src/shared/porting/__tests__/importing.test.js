@@ -1,4 +1,4 @@
-import { getPreviewSubjects, getImportableSubjects } from '../importing';
+import { processSubjects, getImportableSubjects } from '../importing';
 
 const generateMockSubjects = () => [
   {
@@ -54,86 +54,50 @@ beforeEach(() => {
   mockSubjects = generateMockSubjects();
 });
 
-describe('getPreviewSubjects', () => {
-  describe('Content returned', () => {
-    const incomingSubjects = [
-      {
-        name: 'old subject',
-        description: '',
-      },
-      {
-        name: 'new subject',
-        description: '',
-      },
-    ];
+describe('getImportableSubjects', () => {
+  let processedSubjects;
 
-    const expectedPreviews = [
-      {
-        name: 'old subject',
-        exists: true,
-      },
-      {
-        name: 'new subject',
-        exists: false,
-      },
+  beforeEach(() => {
+    processedSubjects = [
+      { data: { name: 'subj 1', description: '', workSessions: [] } },
+      { data: { name: 'subj 2', description: '', workSessions: [] } },
+      { data: { name: 'subj 3', description: '', workSessions: [] } },
+      { data: { name: 'subj 4', description: '', workSessions: [] } },
     ];
-
-    it('Contains the correct previews', () => {
-      const subjectPreviews = getPreviewSubjects(
-        mockSubjects,
-        incomingSubjects,
-      );
-      expect(subjectPreviews).toEqual(expectedPreviews);
-    });
   });
 
-  describe('Name handling', () => {
-    it('Matches names with upper case and trailing spaces', () => {
-      mockSubjects[0].name = 'Old Subject ';
-
-      const expectedPreviews = [{ name: ' OLD SUbject', exists: true }];
-      const subjectPreviews = getPreviewSubjects(
-        mockSubjects,
-        [{ name: ' OLD SUbject', description: '' }],
+  describe('Subject selection', () => {
+    it('Selects the correct subjects', async () => {
+      const importableSubjects = getImportableSubjects(
+        processedSubjects,
+        { 'subj 1': true, 'subj 2': false, 'subj 3': true },
       );
-      expect(subjectPreviews).toEqual(expectedPreviews);
+      const isNameInList = name => importableSubjects
+        .find(subject => subject.name === name);
+
+      expect(isNameInList('subj 1')).toBeTruthy();
+      expect(isNameInList('subj 2')).toBeFalsy();
+      expect(isNameInList('subj 3')).toBeTruthy();
+      expect(isNameInList('subj 4')).toBeFalsy();
     });
 
-    it('Matches names with hypens and underscore', () => {
-      mockSubjects[1].name = 'subject number-two';
-
-      const expectedPreviews = [{ name: 'subject_number-two', exists: true }];
-      const subjectPreviews = getPreviewSubjects(
-        mockSubjects,
-        [{ name: 'subject_number-two', description: '' }],
+    it('Allows selecting all', async () => {
+      const importableSubjects = getImportableSubjects(
+        processedSubjects,
+        null,
       );
-      expect(subjectPreviews).toEqual(expectedPreviews);
-    });
+      const isNameInList = name => importableSubjects
+        .find(subject => subject.name === name);
 
-    it('Matches names with accent marks', () => {
-      mockSubjects[0].name = 'áéíóú aeiou';
-      const name = 'aeiou áéíóú';
-
-      const expectedPreviews = [{ name, exists: true }];
-      const subjectPreviews = getPreviewSubjects(
-        mockSubjects,
-        [{ name, description: '' }],
-      );
-      expect(subjectPreviews).toEqual(expectedPreviews);
-    });
-
-    it('Does not match other case', () => {
-      const expectedPreviews = [{ name: 'last--subject', exists: false }];
-      const subjectPreviews = getPreviewSubjects(
-        mockSubjects,
-        [{ name: 'last--subject', description: '' }],
-      );
-      expect(subjectPreviews).toEqual(expectedPreviews);
+      expect(isNameInList('subj 1')).toBeTruthy();
+      expect(isNameInList('subj 2')).toBeTruthy();
+      expect(isNameInList('subj 3')).toBeTruthy();
+      expect(isNameInList('subj 4')).toBeTruthy();
     });
   });
 });
 
-describe('getImportableSubjects', () => {
+describe('processSubjects', () => {
   describe('Repeated work sessions', () => {
     const incomingSubjects = [
       {
@@ -164,13 +128,19 @@ describe('getImportableSubjects', () => {
     ];
 
     it('Imports only non-existing work sessions', async () => {
-      const importableSubjects = await getImportableSubjects(
+      const { processedSubjects } = await processSubjects(
         mockSubjects,
         incomingSubjects,
         { 'old subject': true },
         'laptop',
       );
-      expect(importableSubjects).toEqual(expectedPreviews);
+      expect(processedSubjects.map(s => s.data)).toEqual(expectedPreviews);
+      // expect(metadata).toEqual({
+      //   minDate: unixToDateString(5.321),
+      //   maxDate: unixToDateString(1000.123),
+      //   ignored: 3,
+      //   accepted: 3,
+      // });
     });
   });
 
@@ -204,13 +174,13 @@ describe('getImportableSubjects', () => {
     ];
 
     it('Imports only work sessions from the selected device', async () => {
-      const importableSubjects = await getImportableSubjects(
+      const { processedSubjects } = await processSubjects(
         mockSubjects,
         incomingSubjects,
         { 'new subject': true },
         'laptop',
       );
-      expect(importableSubjects).toEqual(expectedPreviews);
+      expect(processedSubjects.map(s => s.data)).toEqual(expectedPreviews);
     });
   });
 
@@ -224,59 +194,38 @@ describe('getImportableSubjects', () => {
           workSessions: [],
         },
       ];
-      const importableSubjects = await getImportableSubjects(
+      const { processedSubjects } = await processSubjects(
         mockSubjects,
         [{ name: 'old subject', description: '', workSessions: [] }],
         { 'old subject': true },
         'laptop',
       );
-      expect(importableSubjects).toEqual(expectedPreviews);
+      expect(processedSubjects.map(s => s.data)).toEqual(expectedPreviews);
     });
 
     it('Does not set id on a new subject', async () => {
-      const importableSubjects = await getImportableSubjects(
+      const { processedSubjects } = await processSubjects(
         mockSubjects,
         [{ name: 'new subject', description: '', workSessions: [] }],
         { 'new subject': true },
         'laptop',
       );
-      expect(typeof importableSubjects[0].id).not.toBe('number');
-      expect(importableSubjects[0].id).toBeFalsy();
-    });
-  });
-
-  describe('Subject selection', () => {
-    it('Selects the correct subjects', async () => {
-      const incomingSubjects = [
-        { name: 'subj 1', description: '', workSessions: [] },
-        { name: 'subj 2', description: '', workSessions: [] },
-        { name: 'subj 3', description: '', workSessions: [] },
-      ];
-      const importableSubjects = await getImportableSubjects(
-        mockSubjects,
-        incomingSubjects,
-        { 'subj 1': true, 'subj 2': false, 'subj 3': true },
-        'laptop',
-      );
-      const isNameInList = name => importableSubjects
-        .find(subject => subject.name === name);
-
-      expect(isNameInList('subj 1')).toBeTruthy();
-      expect(isNameInList('subj 2')).toBeFalsy();
-      expect(isNameInList('subj 3')).toBeTruthy();
+      const firstSubject = processedSubjects[0].data;
+      expect(typeof firstSubject.id).not.toBe('number');
+      expect(firstSubject.id).toBeFalsy();
     });
   });
 
   describe('Name handling', () => {
     const importAndFindByName = async (name) => {
-      const importableSubjects = await getImportableSubjects(
+      const { processedSubjects } = await processSubjects(
         mockSubjects,
         [{ name, description: '', workSessions: [] }],
         { [name]: true },
         'laptop',
       );
 
-      return importableSubjects.find(subj => subj.name === name);
+      return processedSubjects.find(subj => subj.data.name === name);
     };
 
     it('Matches names with upper case and trailing spaces', async () => {
@@ -287,7 +236,8 @@ describe('getImportableSubjects', () => {
       const subject = await importAndFindByName(name);
 
       expect(subject).toBeTruthy();
-      expect(subject.id).toBe(17);
+      expect(subject.data.id).toBe(17);
+      expect(subject.metadata.exists).toBeTruthy();
     });
 
     it('Matches names with hypens and underscore', async () => {
@@ -298,7 +248,8 @@ describe('getImportableSubjects', () => {
       const subject = await importAndFindByName(name);
 
       expect(subject).toBeTruthy();
-      expect(subject.id).toBe(32);
+      expect(subject.data.id).toBe(32);
+      expect(subject.metadata.exists).toBeTruthy();
     });
 
     it('Matches names with accent marks', async () => {
@@ -309,7 +260,8 @@ describe('getImportableSubjects', () => {
       const subject = await importAndFindByName(name);
 
       expect(subject).toBeTruthy();
-      expect(subject.id).toBe(11);
+      expect(subject.data.id).toBe(11);
+      expect(subject.metadata.exists).toBeTruthy();
     });
 
     it('Does not match other case', async () => {
@@ -318,7 +270,234 @@ describe('getImportableSubjects', () => {
       const subject = await importAndFindByName(name);
 
       expect(subject).toBeTruthy();
-      expect(subject.id).toBeFalsy();
+      expect(subject.data.id).toBeFalsy();
+      expect(subject.metadata.exists).toBeFalsy();
+    });
+  });
+
+  describe('Global metadata', () => {
+    it('Accepts from any', async () => {
+      const incomingSubjects = [
+        {
+          name: 'old subject',
+          description: '',
+          workSessions: [
+            { timestampStart: 20001, device: 'laptop' },
+            { timestampStart: 20002, device: 'laptop' },
+            { timestampStart: 20003, device: 'laptop' },
+          ],
+        },
+      ];
+
+      const { metadata } = await processSubjects(
+        mockSubjects,
+        incomingSubjects,
+        null,
+        'laptop',
+      );
+      expect(metadata).toEqual({
+        minTimestamp: 20001,
+        maxTimestamp: 20003,
+        ignored: 0,
+        accepted: 3,
+      });
+    });
+
+    it('Ignores outside dates', async () => {
+      const incomingSubjects = [
+        {
+          name: 'old subject',
+          description: '',
+          workSessions: [
+            // Must ignore (repeated):
+            { timestampStart: 1, device: 'laptop' },
+            { timestampStart: 2.123, device: 'laptop' },
+            { timestampStart: 3, device: 'laptop' },
+            // Must accept:
+            { timestampStart: 5.321, device: 'laptop' },
+            { timestampStart: 7, device: 'laptop' },
+            { timestampStart: 1000.123, device: 'laptop' },
+          ],
+        },
+      ];
+
+      const { metadata } = await processSubjects(
+        mockSubjects,
+        incomingSubjects,
+        { 'old subject': true },
+        'laptop',
+      );
+      expect(metadata).toEqual({
+        minTimestamp: 5.321,
+        maxTimestamp: 1000.123,
+        ignored: 3,
+        accepted: 3,
+      });
+    });
+
+    it('Ignores other devices', async () => {
+      const incomingSubjects = [
+        {
+          name: 'old subject',
+          description: '',
+          workSessions: [
+            // Must ignore:
+            { timestampStart: 1234, device: 'other' },
+            // Must accept:
+            { timestampStart: 12345, device: 'laptop' },
+            { timestampStart: 123456, device: 'laptop' },
+          ],
+        },
+      ];
+
+      const { metadata } = await processSubjects(
+        mockSubjects,
+        incomingSubjects,
+        { 'old subject': true },
+        'laptop',
+      );
+      expect(metadata).toEqual({
+        minTimestamp: 12345,
+        maxTimestamp: 123456,
+        ignored: 1,
+        accepted: 2,
+      });
+    });
+
+    it('Ignores unselected subjects', async () => {
+      const incomingSubjects = [
+        {
+          name: 'old subject',
+          description: '',
+          workSessions: [
+            { timestampStart: 20001, device: 'laptop' },
+            { timestampStart: 20002, device: 'laptop' },
+            { timestampStart: 20003, device: 'laptop' },
+          ],
+        },
+        {
+          name: 'some subject',
+          description: '',
+          workSessions: [
+            { timestampStart: 1, device: 'laptop' },
+            { timestampStart: 20002, device: 'laptop' },
+            { timestampStart: 30005, device: 'laptop' },
+          ],
+        },
+      ];
+
+      const { metadata } = await processSubjects(
+        mockSubjects,
+        incomingSubjects,
+        { 'old subject': true },
+        'laptop',
+      );
+      expect(metadata).toEqual({
+        minTimestamp: 20001,
+        maxTimestamp: 20003,
+        ignored: 3,
+        accepted: 3,
+      });
+    });
+  });
+
+  describe('Specific metadata', () => {
+    it('Sets exists correctly', async () => {
+      const incomingSubjects = [
+        { name: 'old subject', description: '' },
+        { name: 'new subject', description: '' },
+      ];
+
+      const { processedSubjects } = await processSubjects(
+        mockSubjects,
+        incomingSubjects,
+        null,
+        'laptop',
+      );
+      const metadatas = processedSubjects.map(s => s.metadata);
+      expect(metadatas[0].exists).toBeTruthy();
+      expect(metadatas[1].exists).toBeFalsy();
+    });
+
+    it('Counts ignored and accepted', async () => {
+      const incomingSubjects = [
+        {
+          name: 'old subject',
+          description: '',
+          workSessions: [
+            // Must ignore:
+            { timestampStart: 20001, device: 'other' },
+            { timestampStart: 1.123, device: 'laptop' },
+            // Must accept:
+            { timestampStart: 20002, device: 'laptop' },
+          ],
+        },
+        {
+          name: 'new subject',
+          description: '',
+          workSessions: [
+            // Must ignore:
+            { timestampStart: 20001, device: 'other' },
+            { timestampStart: 20002, device: 'other' },
+            // Must accept:
+            { timestampStart: 20003, device: 'laptop' },
+            { timestampStart: 20004, device: 'laptop' },
+            { timestampStart: 20005, device: 'laptop' },
+          ],
+        },
+      ];
+
+      const { processedSubjects } = await processSubjects(
+        mockSubjects,
+        incomingSubjects,
+        null,
+        'laptop',
+      );
+      const metadatas = processedSubjects.map(s => s.metadata);
+      expect(metadatas[0].ignored).toEqual(2);
+      expect(metadatas[0].accepted).toEqual(1);
+
+      expect(metadatas[1].ignored).toEqual(2);
+      expect(metadatas[1].accepted).toEqual(3);
+    });
+
+    it('Extracts max and min timestamp', async () => {
+      const incomingSubjects = [
+        {
+          name: 'old subject',
+          description: '',
+          workSessions: [
+            // Must ignore:
+            { timestampStart: 1.123, device: 'laptop' },
+            { timestampStart: 3.123, device: 'laptop' },
+            // Must accept:
+            { timestampStart: 20001, device: 'laptop' },
+            { timestampStart: 20002, device: 'laptop' },
+          ],
+        },
+        {
+          name: 'new subject',
+          description: '',
+          workSessions: [
+            { timestampStart: 20001, device: 'laptop' },
+            { timestampStart: 20002, device: 'laptop' },
+            { timestampStart: 20003, device: 'laptop' },
+          ],
+        },
+      ];
+
+      const { processedSubjects } = await processSubjects(
+        mockSubjects,
+        incomingSubjects,
+        null,
+        'laptop',
+      );
+      const metadatas = processedSubjects.map(s => s.metadata);
+      expect(metadatas[0].minTimestamp).toEqual(20001);
+      expect(metadatas[0].maxTimestamp).toEqual(20002);
+
+      expect(metadatas[1].minTimestamp).toEqual(20001);
+      expect(metadatas[1].maxTimestamp).toEqual(20003);
     });
   });
 });
