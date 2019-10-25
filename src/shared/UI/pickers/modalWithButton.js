@@ -33,9 +33,9 @@ export default function asModalWithButton(ButtonComponent, ModalComponent) {
       const { disabled } = this.props;
 
       return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 0 }}>
           <TouchableOpacity
-            style={{ flex: 1 }}
+            style={{ flex: 0 }}
             disabled={disabled}
             onPress={this.openModal}
           >

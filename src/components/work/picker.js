@@ -4,14 +4,11 @@ import commonStyles from './styles';
 import { ModalPicker } from '../../shared/UI/pickers';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 25,
-    paddingHorizontal: 20,
-  },
   buttonContainer: {
     flex: 0,
     padding: 10,
+    marginTop: 25,
+    marginHorizontal: 20,
     minWidth: 200,
   },
   label: {
@@ -62,15 +59,13 @@ class SubjectPicker extends React.Component {
     );
 
     return (
-      <View style={styles.container}>
-        <ModalPicker
-          items={subjectsForPicker}
-          selectedId={selectedSubjectId}
-          onValueChange={onValueChange}
-          disabled={!enabled}
-          ButtonComponent={PickerButton}
-        />
-      </View>
+      <ModalPicker
+        items={subjectsForPicker}
+        selectedId={selectedSubjectId}
+        onValueChange={onValueChange}
+        disabled={!enabled}
+        ButtonComponent={PickerButton}
+      />
     );
   }
 }
