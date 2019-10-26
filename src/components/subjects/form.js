@@ -96,6 +96,7 @@ const SubjectForm = ({
         {categoryLabel}
       </Text>
       <ModalPicker
+        flex={1}
         items={categories}
         selectedId={categoryId}
         buttonStyle={[styles.input, styles.inputCategory]}

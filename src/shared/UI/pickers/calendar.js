@@ -1,31 +1,24 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { Icon } from 'react-native-elements';
 import { Calendar } from 'react-native-calendars';
 import asModalWithButton from './modalWithButton';
 import { prettyDate } from '../../utils';
 
 const styles = StyleSheet.create({
-  button: {
-    color: 'black',
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    marginHorizontal: 5,
-    paddingHorizontal: 5,
-    paddingVertical: 5,
-    width: 110,
+  buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
   iconContainer: {
-    marginLeft: 3,
-    marginRight: 7,
+    marginHorizontal: 3,
   },
   buttonText: {
     flex: 1,
     color: 'black',
     textAlign: 'center',
+    fontSize: 18,
   },
 });
 
@@ -34,16 +27,10 @@ const formatDate = date => date && date.format('YYYY-MM-DD');
 // DICTIONARY
 const noneDateText = 'None';
 
-const CalendarButton = ({ date }) => (
-  <View style={styles.button}>
-    <Icon
-      containerStyle={styles.iconContainer}
-      name="calendar"
-      type="font-awesome"
-      size={17}
-    />
+const CalendarButton = ({ date, buttonContainerStyle }) => (
+  <View style={[styles.buttonContainer, buttonContainerStyle]}>
     <Text style={styles.buttonText}>
-      {date ? prettyDate(date) : noneDateText}
+      {date ? prettyDate(date, false) : noneDateText}
     </Text>
   </View>
 );

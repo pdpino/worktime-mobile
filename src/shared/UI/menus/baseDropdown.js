@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Menu, { MenuItem } from 'react-native-material-menu';
-import { Icon } from 'react-native-elements';
 
 const styles = StyleSheet.create({
   itemText: {
@@ -9,7 +8,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class DropdownMenu extends React.PureComponent {
+class BaseDropdownMenu extends React.PureComponent {
   menu = null;
 
   setMenuRef = (ref) => {
@@ -25,7 +24,7 @@ class DropdownMenu extends React.PureComponent {
   };
 
   render() {
-    const { items, iconSize } = this.props;
+    const { items, buttonComponent } = this.props;
 
     const menuItems = items.map((item, index) => (
       <MenuItem
@@ -40,24 +39,25 @@ class DropdownMenu extends React.PureComponent {
       </MenuItem>
     ));
 
-    const moreIcon = (
-      <Icon
-        name="more-vertical"
-        type="feather"
-        size={iconSize || 26}
-        onPress={this.showMenu}
-      />
-    );
 
+    // HACK: an empty <View /> is passed as button, since is a required component.
     return (
-      <Menu
-        ref={this.setMenuRef}
-        button={moreIcon}
+      <TouchableOpacity
+        style={{ flex: 1 }}
+        onPress={this.showMenu}
       >
-        {menuItems}
-      </Menu>
+        <View>
+          {buttonComponent}
+          <Menu
+            button={<View />}
+            ref={this.setMenuRef}
+          >
+            {menuItems}
+          </Menu>
+        </View>
+      </TouchableOpacity>
     );
   }
 }
 
-export default DropdownMenu;
+export default BaseDropdownMenu;

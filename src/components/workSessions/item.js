@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { prettyDate, prettyDuration } from '../../shared/utils';
-import { DropdownMenu } from '../../shared/UI/menus';
+import { MoreDropdownMenu } from '../../shared/UI/menus';
 
 const styles = StyleSheet.create({
   container: {
@@ -94,7 +94,7 @@ const WorkSessionItem = ({ workSession, onPressDelete }) => {
       {timesItem}
       {workSession.status !== 'stopped' ? statusItem : (
         <View style={styles.moreButtonContainer}>
-          <DropdownMenu
+          <MoreDropdownMenu
             items={[
               {
                 label: 'Delete', // DICTIONARY

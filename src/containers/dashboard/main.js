@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import moment from 'moment'; // REVIEW: try to hide moment
 import {
   SummaryComponent, SubjectsDetailComponent, DateFilterComponent,
+  DateShortcutsComponent,
 } from '../../components/dashboard/main';
 import { subjectsSelector } from '../../redux/selectors';
 import {
-  isSameDay, getToday, getYesterday, getStartOfWeek, getStartOfMonth, subtractDays,
-  getStartOfSemester, Memoizer,
+  isSameDay, getToday, getStartOfWeek, getEndOfWeek, getStartOfMonth,
+  getEndOfMonth, getStartOfSemester, shiftMonths, shiftSemesters, subtractDays,
+  getDiffDays, Memoizer,
 } from '../../shared/utils';
 import { sumTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
 
@@ -31,6 +33,7 @@ class Dashboard extends React.Component {
     this.state = {
       initialDate: getToday(),
       endingDate: getToday(),
+      dateShortcutSelection: { key: 'day', shifted: 0 },
       selectedSubjectsIds: Dashboard.getAllSubjectsSelected(this.props.subjects),
       allSubjectsSelected: true,
       timeStats: getEmptyStats(),
@@ -40,6 +43,7 @@ class Dashboard extends React.Component {
     this.handleChangeInitialDate = this.handleChangeDate('initialDate');
     this.handleChangeEndingDate = this.handleChangeDate('endingDate');
     this.handleChangeDates = this.handleChangeDates.bind(this);
+    this.handleShiftDate = this.handleShiftDate.bind(this);
     this.handleSelectSubject = this.handleSelectSubject.bind(this);
     this.handleSelectAllSubjects = this.handleSelectAllSubjects.bind(this);
 
@@ -69,39 +73,60 @@ class Dashboard extends React.Component {
   }
 
   createShortcuts() {
+    const getDayShifter = amount => (initialDate, endingDate, shift) => ({
+      initialDate: subtractDays(initialDate, -shift * amount),
+      endingDate: subtractDays(endingDate, -shift * amount),
+    });
+
+    // DICTIONARY
     this.shortcuts = [
       {
-        name: 'none',
-        callback: () => this.handleChangeDates(null, null),
+        key: 'day',
+        label: 'Today',
+        callback: () => this.handleChangeDates(getToday(), getToday(), 'day'),
+        shifter: getDayShifter(1),
       },
       {
-        name: 'today',
-        callback: () => this.handleChangeDates(getToday(), getToday()),
+        key: 'week',
+        label: 'This week',
+        callback: () => this.handleChangeDates(
+          getStartOfWeek(),
+          getEndOfWeek(),
+          'week',
+        ),
+        shifter: getDayShifter(7),
       },
       {
-        name: 'yesterday',
-        callback: () => this.handleChangeDates(getYesterday(), getYesterday()),
+        key: 'month',
+        label: 'This month',
+        callback: () => this.handleChangeDates(
+          getStartOfMonth(),
+          getEndOfMonth(),
+          'month',
+        ),
+        shifter: (initialDate, _, shift) => shiftMonths(initialDate, shift),
       },
       {
-        name: 'thisWeek',
-        callback: () => this.handleChangeDates(getStartOfWeek(), getToday()),
+        key: 'semester',
+        label: 'This Semester',
+        callback: () => this.handleChangeDates(
+          getStartOfSemester(),
+          getToday(),
+          'semester',
+        ),
+        shifter: (initialDate, _, shift) => shiftSemesters(initialDate, shift),
       },
       {
-        name: 'lastWeek',
-        callback: () => {
-          const pastMonday = getStartOfWeek();
-          this.handleChangeDates(subtractDays(pastMonday, 7), subtractDays(pastMonday, 1));
-        },
-      },
-      {
-        name: 'thisMonth',
-        callback: () => this.handleChangeDates(getStartOfMonth(), getToday()),
-      },
-      {
-        name: 'thisSemester',
-        callback: () => this.handleChangeDates(getStartOfSemester(), getToday()),
+        key: 'none',
+        label: 'All time',
+        callback: () => this.handleChangeDates(null, getToday(), 'none'),
       },
     ];
+
+    this.dateShifters = {};
+    this.shortcuts.forEach((shortcut) => {
+      this.dateShifters[shortcut.key] = shortcut.shifter;
+    });
   }
 
   handleChangeDate(key) {
@@ -109,11 +134,14 @@ class Dashboard extends React.Component {
       if (Dashboard.isSameDay(this.state[key], dateString)) {
         return;
       }
-      this.setStateWrapper({ [key]: moment(dateString) });
+      this.setStateWrapper({
+        [key]: moment(dateString),
+        dateShortcutSelection: null,
+      });
     };
   }
 
-  handleChangeDates(newInitialDate, newEndingDate) {
+  handleChangeDates(newInitialDate, newEndingDate, shortcutKey) {
     const { initialDate, endingDate } = this.state;
     if (Dashboard.isSameDay(initialDate, newInitialDate)
       && Dashboard.isSameDay(endingDate, newEndingDate)) {
@@ -122,6 +150,40 @@ class Dashboard extends React.Component {
     this.setStateWrapper({
       initialDate: newInitialDate,
       endingDate: newEndingDate,
+      dateShortcutSelection: {
+        key: shortcutKey,
+        shifted: 0,
+      },
+    });
+  }
+
+  handleShiftDate(direction) {
+    const { dateShortcutSelection, initialDate, endingDate } = this.state;
+    const rightShift = direction === 'right' ? 1 : -1;
+
+    let shifter;
+    let shift;
+    let newSelection;
+    if (!dateShortcutSelection) {
+      shifter = this.dateShifters.day;
+      const nDays = getDiffDays(initialDate, endingDate);
+      shift = nDays * rightShift;
+      newSelection = null;
+    } else {
+      const { key, shifted } = dateShortcutSelection;
+      shifter = this.dateShifters[key];
+      if (!shifter) {
+        return;
+      }
+      shift = rightShift;
+      newSelection = { key, shifted: shifted + rightShift };
+    }
+    const newDates = shifter(initialDate, endingDate, shift);
+
+    this.setStateWrapper({
+      dateShortcutSelection: newSelection,
+      initialDate: newDates.initialDate,
+      endingDate: newDates.endingDate,
     });
   }
 
@@ -154,6 +216,7 @@ class Dashboard extends React.Component {
     const { initialDate, endingDate, selectedSubjectsIds } = this.state;
 
     if (!this.memoizer.hasChanged(subjects, initialDate, endingDate, selectedSubjectsIds)) {
+      this.setState({ isLoading: false });
       return;
     }
 
@@ -170,8 +233,8 @@ class Dashboard extends React.Component {
 
   render() {
     const {
-      initialDate, endingDate, selectedSubjectsIds, allSubjectsSelected, isLoading,
-      timeStats,
+      initialDate, endingDate, dateShortcutSelection,
+      selectedSubjectsIds, allSubjectsSelected, isLoading, timeStats,
     } = this.state;
     const { subjectsSummaries, timeTotal } = timeStats;
 
@@ -182,7 +245,14 @@ class Dashboard extends React.Component {
           endingDate={endingDate}
           onChangeInitialDate={this.handleChangeInitialDate}
           onChangeEndingDate={this.handleChangeEndingDate}
+        />
+        <DateShortcutsComponent
           shortcuts={this.shortcuts}
+          shortcutSelection={dateShortcutSelection}
+          initialDate={initialDate}
+          endingDate={endingDate}
+          onPressLeft={() => this.handleShiftDate('left')}
+          onPressRight={() => this.handleShiftDate('right')}
         />
         <SummaryComponent
           timeStats={timeStats}

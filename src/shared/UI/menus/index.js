@@ -1,5 +1,7 @@
-import DropdownMenu from './dropdown';
+import MoreDropdownMenu from './moreDropdown';
+import TextDropdownMenu from './textDropdown';
 
 export {
-  DropdownMenu, // eslint-disable-line import/prefer-default-export
+  MoreDropdownMenu,
+  TextDropdownMenu,
 };

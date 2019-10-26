@@ -30,10 +30,17 @@ export default function asModalWithButton(ButtonComponent, ModalComponent) {
 
     render() {
       const { modalVisible } = this.state;
-      const { disabled } = this.props;
+      const { disabled, flex } = this.props;
 
+      // HACK: hacky solution to pass flex as a prop.
+      // If flex: 1, the button will use all the space available
+      // If the container is oriented horizontally, flex should probably be 1
+      // (see pickers/calendar)
+      // If the container is oriented vertically, flex should probably be 0
+      // (see work/subjectsPicker), otherwise it may use the whole height of
+      // the screen.
       return (
-        <View style={{ flex: 0 }}>
+        <View style={{ flex: flex || 0 }}>
           <TouchableOpacity
             style={{ flex: 0 }}
             disabled={disabled}

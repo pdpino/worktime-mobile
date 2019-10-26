@@ -1,57 +1,67 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { DateRangeFilter } from '../../../shared/UI/pickers';
-import { prettyDaysSpan } from '../../../shared/utils';
+import {
+  StyleSheet, View,
+} from 'react-native';
+import { Icon } from 'react-native-elements';
+import { CalendarPicker } from '../../../shared/UI/pickers';
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    marginVertical: 10,
-    marginHorizontal: 7,
-    paddingHorizontal: 5,
-    paddingTop: 3,
-    paddingBottom: 8,
-    backgroundColor: 'white',
-  },
-  header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 3,
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    marginTop: 10,
+    marginBottom: 10,
+    marginHorizontal: 20,
   },
-  title: {
-    color: 'black',
+  separatorContainer: {
+    backgroundColor: '#3B84B5',
   },
-  periodText: {
-    color: 'gray',
-    fontStyle: 'italic',
+  box: {
+    borderColor: '#3B84B5',
+    borderWidth: 2,
+    paddingHorizontal: 3,
+    paddingVertical: 6,
+  },
+  calendarLeft: {
+    borderBottomLeftRadius: 5,
+    borderTopLeftRadius: 5,
+  },
+  calendarRight: {
+    borderBottomRightRadius: 5,
+    borderTopRightRadius: 5,
   },
 });
 
-// DICTIONARY
-const title = 'Date filter';
-
 const DateFilter = ({
-  initialDate, endingDate, onChangeInitialDate, onChangeEndingDate, shortcuts,
+  initialDate, endingDate, onChangeInitialDate, onChangeEndingDate,
 }) => {
-  const period = prettyDaysSpan(initialDate, endingDate);
+  const separator = (
+    <Icon
+      containerStyle={[styles.box, styles.separatorContainer]}
+      name="calendar"
+      type="font-awesome"
+      size={18}
+      color="white"
+    />
+  );
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>
-          {title}
-        </Text>
-        <Text style={styles.periodText}>
-          {period}
-        </Text>
-      </View>
-      <DateRangeFilter
-        initialDate={initialDate}
-        endingDate={endingDate}
-        onChangeInitialDate={onChangeInitialDate}
-        onChangeEndingDate={onChangeEndingDate}
-        shortcuts={shortcuts}
+      <CalendarPicker
+        flex={1}
+        buttonContainerStyle={[styles.box, styles.calendarLeft]}
+        date={initialDate}
+        maxDate={endingDate}
+        onDayPress={day => onChangeInitialDate(day.dateString)}
+      />
+      {separator}
+      <CalendarPicker
+        flex={1}
+        buttonContainerStyle={[styles.box, styles.calendarRight]}
+        date={endingDate}
+        minDate={initialDate}
+        onDayPress={day => onChangeEndingDate(day.dateString)}
       />
     </View>
   );
