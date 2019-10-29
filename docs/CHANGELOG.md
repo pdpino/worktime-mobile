@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## 1.9.0 - 2019-10-28
+### Added
+* Add categories' tab to Dashboard
+
+
 ## 1.8.0 - 2019-10-25
 ### Changed
 * In dashboard: improve date shortcut handling and overall date-filter styles
