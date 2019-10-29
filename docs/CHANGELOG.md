@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## 1.9.1 - 2019-10-29
+### Added
+* Error handler for production
+
+
 ## 1.9.1-beta - 2019-10-29
 ### Changed
 * Minor Dashboard fixes and performance improvements in time-details
