@@ -38,6 +38,23 @@ const rnIconDefinitions = {
     type: 'material-icons',
     size: 28,
   },
+  back: {
+    name: 'arrow-back',
+    type: 'material-icons',
+    size: 26,
+  },
+  checkboxChecked: {
+    name: 'check-square',
+    type: 'feather',
+    size: 22,
+    color: 'black',
+  },
+  checkboxUnchecked: {
+    name: 'square',
+    type: 'feather',
+    size: 22,
+    color: 'black',
+  },
 };
 
 class ClickableIcon extends React.PureComponent {
@@ -48,6 +65,10 @@ class ClickableIcon extends React.PureComponent {
 
     const iconDefinition = rnIconDefinitions[icon] || rnIconDefinitions.error;
 
+    /**
+     * NOTE: the TouchableOpacity could be removed (Icon can receive onPress),
+     * but is used because the interaction when pressing looks better.
+     */
     return (
       <TouchableOpacity
         style={containerStyle}

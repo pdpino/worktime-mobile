@@ -6,10 +6,11 @@ import {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   bar: {
-    alignSelf: 'center',
-    height: 22,
+    marginTop: 5,
+    height: 15,
   },
   insideText: {
     flex: 1,
@@ -41,9 +42,11 @@ class HorizontalBar extends React.Component {
             width: currentWidth,
           }]}
         >
-          <Text style={styles.insideText}>
-            {text}
-          </Text>
+          {text && (
+            <Text style={styles.insideText}>
+              {text}
+            </Text>
+          )}
         </Animated.View>
       );
     });

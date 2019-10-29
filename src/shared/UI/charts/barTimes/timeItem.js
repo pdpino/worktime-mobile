@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
   },
   checkboxContainer: {
+    justifyContent: 'center',
     marginHorizontal: 5,
   },
   statsContainer: {
@@ -32,14 +33,15 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 16,
   },
+  textTitle: {
+    flex: 1,
+    marginRight: 10,
+  },
 });
 
-// DICTIONARY COLORS
-const colorEffective = '#4fb3bf';
-const colorPaused = '#bdbdbd';
-
 const TimeItem = ({
-  item, checked, widthMultiplier, allItemsTotal, pressEnabled, onToggle, onPress, nameKey,
+  item, checked, widthMultiplier, allItemsTotal, pressEnabled,
+  onToggle, onPress, nameKey, colors,
 }) => {
   const { timeTotal, timeEffective } = item;
   const timePaused = timeTotal - timeEffective;
@@ -62,7 +64,7 @@ const TimeItem = ({
   const stats = (
     <View style={styles.statsContainer}>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>
+        <Text style={[styles.text, styles.textTitle]}>
           {itemTitle}
         </Text>
         {checked && (
@@ -83,7 +85,7 @@ const TimeItem = ({
               width: timePaused * widthMultiplier,
             },
           ]}
-          colors={[colorEffective, colorPaused]}
+          colors={colors}
         />
       )}
     </View>

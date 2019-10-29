@@ -59,13 +59,14 @@ class Dashboard extends React.Component {
     super(props);
 
     this.state = {
-      initialDate: getToday(),
+      initialDate: null, // DEBUG: getToday(),
       endingDate: getToday(),
-      dateShortcutSelection: { key: 'day', shifted: 0 },
+      dateShortcutSelection: { key: 'none', shifted: 0 }, // DEBUG: 'day'
       idsSelection: Dashboard.getAllCategoriesSelection(this.props.categories),
       allSelected: true,
       timeStats: getEmptyStats(),
       isLoading: true,
+      isReloading: false,
       tab: {
         key: 'categories',
         selectedId: null,
@@ -103,7 +104,6 @@ class Dashboard extends React.Component {
   setStateAndSumTimes(params) {
     this.setState({
       ...params,
-      isLoading: true,
     }, () => this.sumTimes());
   }
 
@@ -172,6 +172,7 @@ class Dashboard extends React.Component {
       this.setStateAndSumTimes({
         [key]: moment(dateString),
         dateShortcutSelection: null,
+        isReloading: true,
       });
     };
   }
@@ -189,6 +190,7 @@ class Dashboard extends React.Component {
         key: shortcutKey,
         shifted: 0,
       },
+      isReloading: true,
     });
   }
 
@@ -219,6 +221,7 @@ class Dashboard extends React.Component {
       dateShortcutSelection: newSelection,
       initialDate: newDates.initialDate,
       endingDate: newDates.endingDate,
+      isReloading: true,
     });
   }
 
@@ -238,16 +241,20 @@ class Dashboard extends React.Component {
     ];
 
     if (!this.memoizer.hasChanged(...params)) {
-      this.setState({ isLoading: false });
+      this.setState({
+        isLoading: false,
+        isReloading: false,
+      });
       return;
     }
 
-    if (!this.state.isLoading) {
-      this.setState({ isLoading: true });
-    }
+    // if (!this.state.isLoading) {
+    //   this.setState({ isLoading: true });
+    // }
 
     sumTimesCalc(...params).then(timeStats => this.setState({
       isLoading: false,
+      isReloading: false,
       timeStats,
     }));
   }
@@ -263,6 +270,7 @@ class Dashboard extends React.Component {
     this.setStateAndSumTimes({
       idsSelection,
       allSelected: anySelected,
+      isReloading: true,
     });
   }
 
@@ -277,6 +285,7 @@ class Dashboard extends React.Component {
     this.setStateAndSumTimes({
       idsSelection,
       allSelected: !allSelected,
+      isReloading: true,
     });
   }
 
@@ -298,6 +307,7 @@ class Dashboard extends React.Component {
       },
       idsSelection,
       allSelected: true,
+      isLoading: true,
     });
   }
 
@@ -318,6 +328,7 @@ class Dashboard extends React.Component {
       },
       idsSelection,
       allSelected: true,
+      isLoading: true,
     });
   }
 
@@ -329,6 +340,7 @@ class Dashboard extends React.Component {
       },
       idsSelection: Dashboard.getAllCategoriesSelection(this.props.categories),
       allSelected: true,
+      isLoading: true,
     });
   }
 
@@ -336,7 +348,7 @@ class Dashboard extends React.Component {
     const { categories } = this.props;
     const {
       initialDate, endingDate, dateShortcutSelection,
-      idsSelection, allSelected, isLoading, timeStats, tab,
+      idsSelection, allSelected, timeStats, tab, isLoading, isReloading,
     } = this.state;
     const {
       itemsSummaries, timeTotal,
@@ -373,7 +385,7 @@ class Dashboard extends React.Component {
         />
         <SummaryComponent
           timeStats={timeStats}
-          isLoading={isLoading}
+          isLoading={isLoading || isReloading}
         />
         <TimeDetailsComponent
           itemsSummaries={itemsSummaries}
