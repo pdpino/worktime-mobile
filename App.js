@@ -5,6 +5,7 @@ import configureStore from './src/redux/store';
 import { SplashScreen } from './src/shared/UI/screens';
 import AppStateListener from './src/services/appState';
 import { onAppActivate, onAppDeactivate, checkStoreVersion } from './src/redux/actions';
+import './src/shared/errors';
 
 let store;
 const storeVersionNeeded = 2;
