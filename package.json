@@ -1,6 +1,6 @@
 {
   "name": "Worktime",
-  "version": "1.9.0",
+  "version": "1.9.1-beta",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",

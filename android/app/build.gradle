@@ -105,8 +105,8 @@ android {
         applicationId "com.worktime"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 27
-        versionName "1.9.0"
+        versionCode 28
+        versionName "1.9.1-beta"
     }
     splits {
         abi {
