@@ -1,5 +1,7 @@
 import HorizontalBar from './horizontalBar';
+import BarTimesChart from './barTimes';
 
 export {
-  HorizontalBar, // eslint-disable-line import/prefer-default-export
+  HorizontalBar,
+  BarTimesChart,
 };

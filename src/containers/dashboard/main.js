@@ -3,10 +3,10 @@ import { ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment'; // REVIEW: try to hide moment
 import {
-  SummaryComponent, SubjectsDetailComponent, DateFilterComponent,
+  SummaryComponent, TimeDetailsComponent, DateFilterComponent,
   DateShortcutsComponent,
 } from '../../components/dashboard/main';
-import { subjectsSelector } from '../../redux/selectors';
+import { subjectsSelector, categoriesSelector } from '../../redux/selectors';
 import {
   isSameDay, getToday, getStartOfWeek, getEndOfWeek, getStartOfMonth,
   getEndOfMonth, getStartOfSemester, shiftMonths, shiftSemesters, subtractDays,
@@ -19,12 +19,40 @@ class Dashboard extends React.Component {
     return (!dateA && !dateB) || isSameDay(dateA, dateB);
   }
 
-  static getAllSubjectsSelected(subjects) {
-    const selectedSubjectsIds = {};
-    subjects.forEach((subject) => {
-      selectedSubjectsIds[subject.id] = true;
+  static getAllCategoriesSelection(categories) {
+    const noCategoryId = -1;
+    const idsSelection = { [noCategoryId]: true };
+    categories.forEach((category) => {
+      idsSelection[category.id] = true;
     });
-    return selectedSubjectsIds;
+    return idsSelection;
+  }
+
+  static getAllSubjectsSelection(subjects) {
+    const idsSelection = {};
+    subjects.forEach((subject) => {
+      idsSelection[subject.id] = true;
+    });
+    return idsSelection;
+  }
+
+  static getAllSelection(key, subjects, categories) {
+    if (key === 'subjects') {
+      return Dashboard.getAllSubjectsSelection(subjects);
+    } if (key === 'categories') {
+      return Dashboard.getAllCategoriesSelection(categories);
+    }
+    return {};
+  }
+
+  static getFromCategorySelection(subjects, categoryId) {
+    const idsSelection = {};
+    subjects.forEach((subject) => {
+      if (subject.getCategoryId() === categoryId) {
+        idsSelection[subject.id] = true;
+      }
+    });
+    return idsSelection;
   }
 
   constructor(props) {
@@ -34,18 +62,25 @@ class Dashboard extends React.Component {
       initialDate: getToday(),
       endingDate: getToday(),
       dateShortcutSelection: { key: 'day', shifted: 0 },
-      selectedSubjectsIds: Dashboard.getAllSubjectsSelected(this.props.subjects),
-      allSubjectsSelected: true,
+      idsSelection: Dashboard.getAllCategoriesSelection(this.props.categories),
+      allSelected: true,
       timeStats: getEmptyStats(),
       isLoading: true,
+      tab: {
+        key: 'categories',
+        selectedId: null,
+      },
     };
 
     this.handleChangeInitialDate = this.handleChangeDate('initialDate');
     this.handleChangeEndingDate = this.handleChangeDate('endingDate');
     this.handleChangeDates = this.handleChangeDates.bind(this);
     this.handleShiftDate = this.handleShiftDate.bind(this);
-    this.handleSelectSubject = this.handleSelectSubject.bind(this);
-    this.handleSelectAllSubjects = this.handleSelectAllSubjects.bind(this);
+    this.handleToggleItem = this.handleToggleItem.bind(this);
+    this.handleToggleAllItems = this.handleToggleAllItems.bind(this);
+    this.handlePressTab = this.handlePressTab.bind(this);
+    this.handlePressItem = this.handlePressItem.bind(this);
+    this.handlePressClearItem = this.handlePressClearItem.bind(this);
 
     this.sumTimes = this.sumTimes.bind(this);
     this.memoizer = Memoizer();
@@ -65,7 +100,7 @@ class Dashboard extends React.Component {
     this.willFocusListener.remove();
   }
 
-  setStateWrapper(params) {
+  setStateAndSumTimes(params) {
     this.setState({
       ...params,
       isLoading: true,
@@ -134,7 +169,7 @@ class Dashboard extends React.Component {
       if (Dashboard.isSameDay(this.state[key], dateString)) {
         return;
       }
-      this.setStateWrapper({
+      this.setStateAndSumTimes({
         [key]: moment(dateString),
         dateShortcutSelection: null,
       });
@@ -147,7 +182,7 @@ class Dashboard extends React.Component {
       && Dashboard.isSameDay(endingDate, newEndingDate)) {
       return;
     }
-    this.setStateWrapper({
+    this.setStateAndSumTimes({
       initialDate: newInitialDate,
       endingDate: newEndingDate,
       dateShortcutSelection: {
@@ -180,42 +215,29 @@ class Dashboard extends React.Component {
     }
     const newDates = shifter(initialDate, endingDate, shift);
 
-    this.setStateWrapper({
+    this.setStateAndSumTimes({
       dateShortcutSelection: newSelection,
       initialDate: newDates.initialDate,
       endingDate: newDates.endingDate,
     });
   }
 
-  handleSelectSubject(subjectId) {
-    const selectedSubjectsIds = {
-      ...this.state.selectedSubjectsIds,
-      [subjectId]: !this.state.selectedSubjectsIds[subjectId],
-    };
-    const anySelected = Object.keys(selectedSubjectsIds)
-      .some(key => selectedSubjectsIds[key]);
-
-    this.setStateWrapper({
-      selectedSubjectsIds,
-      allSubjectsSelected: anySelected,
-    });
-  }
-
-  handleSelectAllSubjects() {
-    const { allSubjectsSelected } = this.state;
-    const selectedSubjectsIds = allSubjectsSelected ? {}
-      : Dashboard.getAllSubjectsSelected(this.props.subjects);
-    this.setStateWrapper({
-      selectedSubjectsIds,
-      allSubjectsSelected: !allSubjectsSelected,
-    });
-  }
-
   sumTimes() {
-    const { subjects } = this.props;
-    const { initialDate, endingDate, selectedSubjectsIds } = this.state;
+    const { subjects, categories } = this.props;
+    const {
+      initialDate, endingDate, idsSelection, tab,
+    } = this.state;
 
-    if (!this.memoizer.hasChanged(subjects, initialDate, endingDate, selectedSubjectsIds)) {
+    const params = [
+      subjects,
+      categories,
+      initialDate,
+      endingDate,
+      idsSelection,
+      tab,
+    ];
+
+    if (!this.memoizer.hasChanged(...params)) {
       this.setState({ isLoading: false });
       return;
     }
@@ -224,19 +246,114 @@ class Dashboard extends React.Component {
       this.setState({ isLoading: true });
     }
 
-    sumTimesCalc(subjects, initialDate, endingDate, selectedSubjectsIds)
-      .then(timeStats => this.setState({
-        isLoading: false,
-        timeStats,
-      }));
+    sumTimesCalc(...params).then(timeStats => this.setState({
+      isLoading: false,
+      timeStats,
+    }));
+  }
+
+  handleToggleItem(itemId) {
+    const idsSelection = {
+      ...this.state.idsSelection,
+      [itemId]: !this.state.idsSelection[itemId],
+    };
+    const anySelected = Object.keys(idsSelection)
+      .some(key => idsSelection[key]);
+
+    this.setStateAndSumTimes({
+      idsSelection,
+      allSelected: anySelected,
+    });
+  }
+
+  handleToggleAllItems() {
+    const { subjects, categories } = this.props;
+    const { tab, allSelected } = this.state;
+
+    const idsSelection = allSelected
+      ? {}
+      : Dashboard.getAllSelection(tab.key, subjects, categories);
+
+    this.setStateAndSumTimes({
+      idsSelection,
+      allSelected: !allSelected,
+    });
+  }
+
+  handlePressTab(newKey) {
+    const { key } = this.state.tab;
+    if (key === newKey) return;
+
+    const { subjects, categories } = this.props;
+    const idsSelection = Dashboard.getAllSelection(
+      newKey,
+      subjects,
+      categories,
+    );
+
+    this.setStateAndSumTimes({
+      tab: {
+        key: newKey,
+        selectedId: null,
+      },
+      idsSelection,
+      allSelected: true,
+    });
+  }
+
+  handlePressItem(itemId) {
+    const { key, selectedId } = this.state.tab;
+    if (key === 'subjects'
+      || (key === 'categories' && selectedId != null)) {
+      return;
+    }
+
+    const { subjects } = this.props;
+    const idsSelection = Dashboard.getFromCategorySelection(subjects, itemId);
+
+    this.setStateAndSumTimes({
+      tab: {
+        key,
+        selectedId: itemId,
+      },
+      idsSelection,
+      allSelected: true,
+    });
+  }
+
+  handlePressClearItem() {
+    this.setStateAndSumTimes({
+      tab: {
+        key: 'categories',
+        selectedId: null,
+      },
+      idsSelection: Dashboard.getAllCategoriesSelection(this.props.categories),
+      allSelected: true,
+    });
   }
 
   render() {
+    const { categories } = this.props;
     const {
       initialDate, endingDate, dateShortcutSelection,
-      selectedSubjectsIds, allSubjectsSelected, isLoading, timeStats,
+      idsSelection, allSelected, isLoading, timeStats, tab,
     } = this.state;
-    const { subjectsSummaries, timeTotal } = timeStats;
+    const {
+      itemsSummaries, timeTotal,
+    } = timeStats;
+
+    const { selectedId } = tab;
+
+    let title = null;
+    if (selectedId != null) {
+      if (selectedId === -1) {
+        title = 'No Category'; // DICTIONARY
+      } else {
+        const selectedCategory = categories
+          .find(category => category.id === selectedId);
+        title = selectedCategory && selectedCategory.name;
+      }
+    }
 
     return (
       <ScrollView style={{ flex: 1 }}>
@@ -258,13 +375,19 @@ class Dashboard extends React.Component {
           timeStats={timeStats}
           isLoading={isLoading}
         />
-        <SubjectsDetailComponent
-          subjectsSummaries={subjectsSummaries}
-          selectedSubjectsIds={selectedSubjectsIds}
-          allSubjectsSelected={allSubjectsSelected}
-          subjectsTimeTotal={timeTotal}
-          onSelectSubject={this.handleSelectSubject}
-          onSelectAllSubjects={this.handleSelectAllSubjects}
+        <TimeDetailsComponent
+          itemsSummaries={itemsSummaries}
+          selectedTab={tab}
+          title={title}
+          idsSelection={idsSelection}
+          allSelected={allSelected}
+          allItemsTotal={timeTotal}
+          isLoading={isLoading}
+          onToggleItem={this.handleToggleItem}
+          onToggleAll={this.handleToggleAllItems}
+          onPressTab={this.handlePressTab}
+          onPressItem={this.handlePressItem}
+          onPressClearItem={this.handlePressClearItem}
         />
       </ScrollView>
     );
@@ -273,6 +396,7 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   subjects: subjectsSelector(state, { archived: false }),
+  categories: categoriesSelector(state),
 });
 
 export default connect(mapStateToProps)(Dashboard);

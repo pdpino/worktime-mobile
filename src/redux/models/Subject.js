@@ -46,6 +46,10 @@ class Subject extends Model {
     return this.name;
   }
 
+  getCategoryId() {
+    return this.category ? this.category.id : -1;
+  }
+
   exportable(deviceName) {
     const { name, description, archived } = this;
 
