@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Alert } from 'react-native';
+import { Alert, ToastAndroid } from 'react-native';
 import {
   WorkPlayerComponent, SubjectPickerComponent, PlayerButtonsComponent, StatusDisplayerComponent,
 } from '../../components/work';
@@ -64,7 +64,16 @@ class WorkPlayer extends React.Component {
         { text: 'Cancel', style: 'cancel' },
         {
           text: 'Stop and Discard',
-          onPress: () => this.props.stopAndDiscard(),
+          onPress: () => {
+            this.props.stopAndDiscard();
+            ToastAndroid.showWithGravityAndOffset(
+              'Discarded',
+              ToastAndroid.LONG,
+              ToastAndroid.BOTTOM,
+              0,
+              50,
+            );
+          },
         },
       ],
     );

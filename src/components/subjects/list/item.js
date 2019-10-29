@@ -9,10 +9,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 1,
-    paddingHorizontal: 25,
-    minHeight: 38,
     alignItems: 'center',
+    paddingVertical: 1,
+    paddingRight: 10,
+    paddingLeft: 25,
+    minHeight: 38,
     borderStyle: 'solid',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#cdcdcd',
@@ -24,6 +25,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   detail: {
+    flex: 1,
     flexDirection: 'column',
   },
   name: {
@@ -73,12 +75,11 @@ class SubjectItem extends React.PureComponent {
           ]}
         >
           {detail}
-          <View style={styles.chevronContainer}>
-            <Icon
-              name="chevron-right"
-              type="feather"
-            />
-          </View>
+          <Icon
+            containerStyle={styles.chevronContainer}
+            name="chevron-right"
+            type="feather"
+          />
         </View>
       </TouchableHighlight>
     );
