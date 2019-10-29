@@ -39,9 +39,23 @@ class Subject extends Model {
       : workSessions;
   }
 
-  getNameWithCategory() {
-    if (this.category) {
-      return `${this.category.getShortName()} - ${this.name}`;
+  getNameWithCategory(category) {
+    /**
+     * NOTE: This method can receive a category (object from model)
+     * or used the saved one in subject.category.
+     * If a category is not passed, it can't be ensured that the most updated
+     * category info will be used (name or alias). (i.e., if the name/alias of
+     * the category changed recently, the old name/alias will be returned here).
+     *
+     * If a category object is passed, it should be updated with the latest
+     * changes (i.e. it should come from a selector).
+     *
+     * For instance, `ormSession.Category.withId(subject.getCategoryId())`
+     * could be used in a selector that has access to `ormSession`.
+     */
+    const categoryUsed = category || this.category;
+    if (categoryUsed) {
+      return `${categoryUsed.getShortName()} - ${this.name}`;
     }
     return this.name;
   }

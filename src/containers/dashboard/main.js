@@ -59,9 +59,9 @@ class Dashboard extends React.Component {
     super(props);
 
     this.state = {
-      initialDate: null, // DEBUG: getToday(),
+      initialDate: getToday(),
       endingDate: getToday(),
-      dateShortcutSelection: { key: 'none', shifted: 0 }, // DEBUG: 'day'
+      dateShortcutSelection: { key: 'day', shifted: 0 },
       idsSelection: Dashboard.getAllCategoriesSelection(this.props.categories),
       allSelected: true,
       timeStats: getEmptyStats(),

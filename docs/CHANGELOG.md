@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 * Minor Dashboard fixes and performance improvements in time-details
 
+### Fixed
+* Fix category alias update in other views
+
+
 
 ## 1.9.0 - 2019-10-28
 ### Added

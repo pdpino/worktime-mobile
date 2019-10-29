@@ -24,18 +24,8 @@ export const subjectsForPickerSelector = createOrmSelector(
   subjectsSelector,
   (ormSession, subjects) => {
     const getSubjectNameWithCategory = (subject) => {
-      // FIXME: this function is replicated in models/subject.js,
-      // to be used in TimeStats when calculating SubjectSummaries.
-      // The function here is the correct way, any access should be done from
-      // inside the selectors. See:
-      // https://github.com/redux-orm/redux-orm/issues/218#issuecomment-402448424
-      // In this specific case, this is done this way so whenever the subjects
-      // are retrieved, the category's names/aliases are updated.
-      if (subject.category) {
-        const category = ormSession.Category.withId(subject.category.id);
-        return `${category.getShortName()} - ${subject.name}`;
-      }
-      return subject.name;
+      const category = ormSession.Category.withId(subject.getCategoryId());
+      return subject.getNameWithCategory(category);
     };
 
     return subjects.map(subject => ({

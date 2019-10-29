@@ -50,6 +50,14 @@ class TimeStats {
     this.categoryIdToIdx[-1] = this.categoriesSummaries.length - 1;
   }
 
+  findCategoryById(categories, categoryId) {
+    const index = this.categoryIdToIdx[categoryId];
+    if (!index || index < 0 || index > categories.length) {
+      return null;
+    }
+    return categories[index];
+  }
+
   initSelection(tab, idsSelection) {
     this.selectedTab = { ...tab };
     this.idsSelection = idsSelection;
@@ -156,12 +164,16 @@ class TimeStats {
       addedEffective += subjectEffective;
 
       const { id, name } = subject;
+      const categoryId = subject.getCategoryId();
+
+      /* Category object from Model class */
+      const categoryObj = this.findCategoryById(categories, categoryId);
 
       return {
         id,
         name,
-        nameWithCategory: subject.getNameWithCategory(),
-        categoryId: subject.getCategoryId(),
+        nameWithCategory: subject.getNameWithCategory(categoryObj),
+        categoryId,
         timeTotal: subjectTotal,
         timeEffective: subjectEffective,
       };
