@@ -1,12 +1,9 @@
 import PushNotification from 'react-native-push-notification';
 import { DeviceEventEmitter } from 'react-native';
 
-class Notifications {
-  // REVIEW: maybe u could separate this in two classes,
-  // one to handle generic notifications (adapter to PushNotification library)
-  // and another one to emit specific worktime notifications
-  // overkill?
+let listener;
 
+class Notifications {
   static configure() {
     PushNotification.configure({
       onRegister() { },
@@ -20,12 +17,23 @@ class Notifications {
     const actionNames = Object.keys(actions);
     PushNotification.registerNotificationActions(actionNames);
 
-    DeviceEventEmitter.addListener('notificationActionReceived', ({ dataJSON }) => {
-      const { action } = JSON.parse(dataJSON);
-      if (actions[action]) {
-        actions[action]();
-      }
-    });
+    listener = DeviceEventEmitter.addListener(
+      'notificationActionReceived',
+      ({ dataJSON }) => {
+        const { action } = JSON.parse(dataJSON);
+        const callback = actions[action];
+        if (callback) {
+          callback();
+        }
+      },
+    );
+  }
+
+  static unRegisterActions() {
+    // FIXME: this method is not called from anywhere
+    if (listener) {
+      listener.remove();
+    }
   }
 
   static sendLocal(options) {

@@ -9,9 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * In dashboard, if a category is selected and the back button is pressed,
 the category is unselected
 
-
 ### Changed
 * Don't show "No category" in dashboard if it's empty
+
+### Fixed
+* Buttons on notification
 
 
 ## 1.9.2 - 2019-10-29
@@ -25,9 +27,11 @@ the category is unselected
 * Item overflow in subjects list
 
 
+
 ## 1.9.1 - 2019-10-29
 ### Added
 * Error handler for production
+
 
 
 ## 1.9.1-beta - 2019-10-29
@@ -42,6 +46,7 @@ the category is unselected
 ## 1.9.0 - 2019-10-28
 ### Added
 * Add categories' tab to Dashboard
+
 
 
 ## 1.8.0 - 2019-10-25
@@ -65,11 +70,13 @@ the category is unselected
 * Empty name bug for subjects and categories
 
 
+
 ## 1.7.4 - 2019-08-18
 ### Fixed
 * Subject Picker bugs:
   - When editing a category, the picker gets updated right away.
   - Make it a Dialog again (instead of a dropdown).
+
 
 
 ## 1.7.3 - 2019-08-05
@@ -83,9 +90,11 @@ from each subject.
 * Sort names considering lowercase letters.
 
 
+
 ## 1.7.2 - 2019-07-05
 ### Changed
 * Shorten vibration on item selection (even more).
+
 
 
 ## 1.7.1 - 2019-07-05
@@ -121,6 +130,7 @@ from each subject.
 cleared.
 
 
+
 ## 1.6.0 - 2019-06-01
 ### Added
 * Support archive/unarchive subjects
@@ -129,6 +139,7 @@ cleared.
 * Press and hold fixes:
   - Improve speed when selecting multiple subject
   - Fix deletion
+
 
 
 ## 1.5.0 - 2019-05-31
@@ -141,6 +152,7 @@ cleared.
   - When navigating inside the stack (e.g. subject form)
 
 
+
 ## 1.4.0 - 2019-05-20
 ### Added
 * Support importing data from JSON files
@@ -148,6 +160,7 @@ cleared.
 
 ### Fixed
 * On export, do not save ids or foreign keys, to avoid mixing them up on import
+
 
 
 ## 1.3.1 - 2019-05-08
@@ -170,6 +183,7 @@ cleared.
   another app (e.g. Google Drive). The file contains the user data.
 
 
+
 ## 1.3.0-alpha - 2018-12-10
 ### Added
 * Store versioning
@@ -179,6 +193,7 @@ cleared.
 * "More" button of the last subject is now visible (it had the "new" button on top)
 
 
+
 ## 1.2.3-alpha.1 - 2018-12-04
 ### Changed
 * Details displayed in dashboard can be about days or weeks
@@ -186,6 +201,7 @@ cleared.
 ### Fixed
 * Async time calculations (in subject-show and dashboard). Now they really are async
 * Fix calculations bugs
+
 
 
 ## 1.2.3-alpha - 2018-11-27
@@ -199,12 +215,15 @@ cleared.
 * Smarter re-rendering of subject-show and dashboard. Improves performance
 
 
+
 ## 1.2.2 - 2018-11-21
 ### Added
 * Display time of last worked session in work-player
 
 ### Fixed
 * Deciding when to update a bar in the dashboard
+
+
 
 ## 1.2.1-beta - 2018-11-21
 ### Added
@@ -215,6 +234,8 @@ cleared.
 * When a work session is deleted, also the associated sprints are deleted
 * Fix updating of subject-show view, when changing a work-session (deleting or playing)
 
+
+
 ## 1.2.0-alpha - 2018-11-19
 ### Added
 * Press and hold stop button: stop and discard the work-session (with a confirmation box)
@@ -224,6 +245,7 @@ cleared.
 
 ### Fixed
 * Percentage from total time was outside of borders (to the right)
+
 
 
 ## 1.1.0 - 2018-11-12
@@ -239,6 +261,8 @@ cleared.
 ### Fixed
 * Fix bug that caused subject name to be "undefined" on the notification
 
+
+
 ## 1.0.2-alpha - 2018-11-02
 ### Added
 * Dashboard features
@@ -253,13 +277,18 @@ cleared.
   - "Last week" option now is Monday to Sunday (it was Monday to Monday)
   - Rerendering of the horizontal bars is smarter
 
+
+
 ## 1.0.1-alpha - 2018-10-03
 ### Fixed
 * Set the initial view to Work, instead of Dashboard
 
+
+
 ## 1.0.0-alpha - 2018-10-03
 ### Added
 * Basic dashboard view
+
 
 
 ## 0.2.0 - 2018-09-14
@@ -267,15 +296,22 @@ cleared.
 * Buttons in notifications to resume, pause and stop
 * Added play and pause icons to notifications
 
+
+
 ## 0.1.0 - 2018-08-30
 ### Added
 * Settings menu, with version number
 * Notification to show the user if is playing or paused. Display only title
 
+
+
 ## 0.0.2 - 2018-08-23
 ### Fixed
 * Fix bug when the selected subject is deleted
 * Fix the last session display
+
+
+
 
 ## 0.0.1 - 2018-08-22
 ### Added
