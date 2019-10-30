@@ -1,6 +1,6 @@
 import entities from '../entities';
 import orm from '../../models/orm';
-import { factory, ReduxORMAdapter } from '../../tests';
+import { factory, ReduxORMAdapter } from '../../__tests__';
 
 describe('entities reducer', () => {
   const entitiesReducer = entities(orm);
