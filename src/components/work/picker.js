@@ -5,10 +5,7 @@ import { ModalPicker } from '../../shared/UI/pickers';
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    flex: 0,
     padding: 10,
-    marginTop: 25,
-    marginHorizontal: 20,
     minWidth: 200,
   },
   label: {

@@ -67,6 +67,8 @@ class SubjectItem extends React.PureComponent {
         onLongPress={() => onLongPress(subject.id)}
         underlayColor="#71b3e75F"
         activeOpacity={0.5}
+        delayPressIn={0}
+        delayPressOut={0}
       >
         <View
           style={[

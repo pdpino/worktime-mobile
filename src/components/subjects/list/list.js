@@ -1,14 +1,11 @@
 import React from 'react';
 import {
-  StyleSheet, Text, Dimensions, SectionList, View,
+  StyleSheet, Text, SectionList, View,
 } from 'react-native';
 import SubjectItem from './item';
 import CategoryHeader from './categoryHeader';
 
 const styles = StyleSheet.create({
-  list: {
-    width: Dimensions.get('window').width, // HACK?
-  },
   categoryBottom: {
     marginBottom: 25,
   },

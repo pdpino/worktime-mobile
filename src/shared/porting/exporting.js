@@ -1,7 +1,7 @@
 import { makeFunctionAsync } from '../utils';
 
-function getExportableSubjects(subjectsSet, device) {
-  return subjectsSet.toModelArray().map(subject => subject.exportable(device));
+function getExportableSubjects(subjectsSet) {
+  return subjectsSet.toModelArray().map(subject => subject.exportable());
 }
 
 export const getExportableObject = makeFunctionAsync((options) => {
@@ -13,7 +13,7 @@ export const getExportableObject = makeFunctionAsync((options) => {
   };
 
   if (subjectsSet) {
-    exportObject.subjects = getExportableSubjects(subjectsSet, device);
+    exportObject.subjects = getExportableSubjects(subjectsSet);
   }
 
   return exportObject;

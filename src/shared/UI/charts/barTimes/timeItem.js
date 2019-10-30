@@ -10,9 +10,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    paddingVertical: 5,
+    paddingVertical: 7,
     borderBottomWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#b0b0b0',
   },
   checkboxContainer: {
     justifyContent: 'center',

@@ -11,9 +11,13 @@ the category is unselected
 
 ### Changed
 * Don't show "No category" in dashboard if it's empty
+* When exporting, export all work sessions (not only the ones from this device)
 
 ### Fixed
 * Buttons on notification
+* Visual Feedback on subject items
+* Make work-player responsive
+
 
 
 ## 1.9.2 - 2019-10-29

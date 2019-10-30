@@ -64,12 +64,12 @@ class Subject extends Model {
     return this.category ? this.category.id : -1;
   }
 
-  exportable(deviceName) {
+  exportable() {
     const { name, description, archived } = this;
 
     const workSessions = this.worksessionSet.toModelArray()
       .reduce((filtered, workSession) => {
-        if (workSession.isStopped() && workSession.device === deviceName) {
+        if (workSession.isStopped()) {
           filtered.push(workSession.exportable());
         }
         return filtered;
