@@ -127,10 +127,13 @@ class WorkSession extends Model {
   }
 
   delete() {
-    const { subject } = this;
     this.sprintSet.delete();
     this.update({ subject: null });
-    subject.update({ workSession: this }); // Properly deattach subject from this session
+    const { subject } = this;
+    if (subject) {
+      /* Properly deattach subject from this session */
+      subject.update({ workSession: this });
+    }
     super.delete();
   }
 }

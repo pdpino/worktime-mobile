@@ -1,17 +1,15 @@
 export const defaultState = {
-  storeVersion: 2,
+  storeVersion: 0,
 };
 
 const app = (state = defaultState, action) => {
-  switch (action.type) {
-    case 'APP/UPDATE_STORE':
-      return {
-        ...state,
-        storeVersion: action.payload.nextStoreVersion,
-      };
-    default:
-      return state;
+  if (action.type && action.type.startsWith('APP/UPDATE_STORE')) {
+    return {
+      ...state,
+      storeVersion: action.payload.nextStoreVersion,
+    };
   }
+  return state;
 };
 
 export default app;

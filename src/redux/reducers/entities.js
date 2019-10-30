@@ -79,21 +79,12 @@ const entities = orm => (state, action) => {
       updateWorkSessionDeviceWhere(WorkSession, oldDeviceName, newDeviceName);
       break;
     }
-    case 'APP/UPDATE_STORE': {
-      const { prevStoreVersion, nextStoreVersion } = action.payload;
-      for (
-        let storeVersion = prevStoreVersion + 1;
-        storeVersion <= nextStoreVersion;
-        storeVersion += 1
-      ) {
-        if (storeVersion === 1) {
-          updateWorkSessionDevice(WorkSession, 'mobile');
-        } else if (storeVersion === 2) {
-          addArchivedAttr(Subject);
-        }
-      }
+    case 'APP/UPDATE_STORE_0_1':
+      updateWorkSessionDevice(WorkSession, 'mobile');
       break;
-    }
+    case 'APP/UPDATE_STORE_1_2':
+      addArchivedAttr(Subject);
+      break;
     default:
   }
   return session.state;

@@ -16,13 +16,17 @@ export const checkStoreVersion = storeVersionNeeded => (dispatch, getState) => {
   }
 
   return new Promise((resolve) => {
-    dispatch({
-      type: 'APP/UPDATE_STORE',
-      payload: {
-        prevStoreVersion: storeVersion,
-        nextStoreVersion: storeVersionNeeded,
-      },
-    });
+    for (let i = storeVersion; i + 1 <= storeVersionNeeded; i += 1) {
+      const fromVersion = i;
+      const toVersion = fromVersion + 1;
+      dispatch({
+        type: `APP/UPDATE_STORE_${fromVersion}_${toVersion}`,
+        payload: {
+          prevStoreVersion: fromVersion,
+          nextStoreVersion: toVersion,
+        },
+      });
+    }
     resolve();
   });
 };
