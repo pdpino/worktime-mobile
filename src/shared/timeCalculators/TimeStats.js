@@ -183,6 +183,15 @@ class TimeStats {
     this.stats.timeEffective = addedEffective;
   }
 
+  removeEmptyNoCategoryInPlace(itemsSummaries) {
+    const noCategoryIdx = this.categoryIdToIdx[-1];
+    const { children } = itemsSummaries[noCategoryIdx];
+    const nChildren = Object.keys(children).length;
+    if (nChildren === 0) {
+      itemsSummaries.splice(noCategoryIdx, 1);
+    }
+  }
+
   getItemsSummaries() {
     if (!this.selectedTab) return [];
 
@@ -198,6 +207,7 @@ class TimeStats {
       itemsSummaries = this.subjectsSummaries;
     } else if (key === 'categories') {
       itemsSummaries = this.categoriesSummaries;
+      this.removeEmptyNoCategoryInPlace(itemsSummaries);
     }
 
     const isSelected = id => !this.idsSelection || this.idsSelection[id];

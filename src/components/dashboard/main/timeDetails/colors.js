@@ -1,6 +1,6 @@
 // DICTIONARY COLORS
 const colorEffective = '#4fb3bf';
-const colorPaused = '#ef8c00';
+const colorPaused = '#e48a0b';
 
 export const colors = [colorEffective, colorPaused];
 export const legendDefinition = [

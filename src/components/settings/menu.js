@@ -1,18 +1,13 @@
 import React from 'react';
 import {
-  StyleSheet, View, Text, FlatList, Dimensions,
+  StyleSheet, View, Text, FlatList,
 } from 'react-native';
 import MenuItem from './item';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
   list: {
-    flexGrow: 0,
-    width: Dimensions.get('window').width, // HACK?
+    flex: 0,
+    backgroundColor: 'white',
   },
   emptyList: {
     color: 'black',
@@ -22,7 +17,8 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
   },
   versionContainer: {
-    marginTop: 10,
+    marginVertical: 10,
+    alignSelf: 'center',
   },
   versionText: {
     color: 'gray',
@@ -88,16 +84,14 @@ const SettingsMenu = ({
   );
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        style={styles.list}
-        data={menuItems}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={emptyComponent}
-      />
-      {version}
-    </View>
+    <FlatList
+      style={styles.list}
+      data={menuItems}
+      renderItem={renderItem}
+      keyExtractor={(item, index) => index.toString()}
+      ListEmptyComponent={emptyComponent}
+      ListFooterComponent={version}
+    />
   );
 };
 

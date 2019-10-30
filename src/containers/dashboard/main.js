@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { BackHandler, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment'; // REVIEW: try to hide moment
 import {
@@ -82,15 +82,34 @@ class Dashboard extends React.Component {
     this.handlePressTab = this.handlePressTab.bind(this);
     this.handlePressItem = this.handlePressItem.bind(this);
     this.handlePressClearItem = this.handlePressClearItem.bind(this);
+    this.handleBackPress = this.handleBackPress.bind(this);
 
     this.sumTimes = this.sumTimes.bind(this);
     this.memoizer = Memoizer();
 
     this.createShortcuts();
+
+    this.didFocusListener = props.navigation.addListener(
+      'didFocus',
+      () => BackHandler.addEventListener(
+        'hardwareBackPress',
+        this.handleBackPress,
+      ),
+    );
   }
 
   componentDidMount() {
-    this.willFocusListener = this.props.navigation.addListener('willFocus', this.sumTimes);
+    this.willFocusListener = this.props.navigation.addListener(
+      'willFocus',
+      this.sumTimes,
+    );
+    this.willBlurListener = this.props.navigation.addListener(
+      'willBlur',
+      () => BackHandler.removeEventListener(
+        'hardwareBackPress',
+        this.handleBackPress,
+      ),
+    );
   }
 
   shouldComponentUpdate(nextProps) {
@@ -98,13 +117,23 @@ class Dashboard extends React.Component {
   }
 
   componentWillUnmount() {
-    this.willFocusListener.remove();
+    if (this.didFocusListener) this.didFocusListener.remove();
+    if (this.willFocusListener) this.willFocusListener.remove();
+    if (this.willBlurListener) this.willBlurListener.remove();
   }
 
   setStateAndSumTimes(params) {
     this.setState({
       ...params,
     }, () => this.sumTimes());
+  }
+
+  handleBackPress() {
+    if (this.state.tab.selectedId != null) {
+      this.handlePressClearItem();
+      return true;
+    }
+    return false;
   }
 
   createShortcuts() {
@@ -247,10 +276,6 @@ class Dashboard extends React.Component {
       });
       return;
     }
-
-    // if (!this.state.isLoading) {
-    //   this.setState({ isLoading: true });
-    // }
 
     sumTimesCalc(...params).then(timeStats => this.setState({
       isLoading: false,
