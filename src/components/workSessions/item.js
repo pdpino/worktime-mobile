@@ -44,71 +44,74 @@ const status2Color = {
   stopped: 'red',
 }; // COLORS
 
-const WorkSessionItem = ({ workSession, onPressDelete }) => {
-  // DICTIONARY (text)
-  const {
-    id, nPauses, timeTotal, timeEffective,
-  } = workSession;
+class WorkSessionItem extends React.PureComponent {
+  render() {
+    const { workSession, onPressDelete } = this.props;
+    // DICTIONARY (text)
+    const {
+      id, nPauses, timeTotal, timeEffective,
+    } = workSession;
 
-  const dateTimeItem = (
-    <View style={styles.item}>
-      <Text style={styles.text}>
-        {prettyDate(workSession.date)}
-      </Text>
-      <Text style={styles.text}>
-        {workSession.getPrettyHourStart()}
-        {' - '}
-        {workSession.getPrettyHourEnd()}
-      </Text>
-      <Text style={[styles.text, styles.textDevice]}>
-        {workSession.device}
-      </Text>
-    </View>
-  );
+    const dateTimeItem = (
+      <View style={styles.item}>
+        <Text style={styles.text}>
+          {prettyDate(workSession.date)}
+        </Text>
+        <Text style={styles.text}>
+          {workSession.getPrettyHourStart()}
+          {' - '}
+          {workSession.getPrettyHourEnd()}
+        </Text>
+        <Text style={[styles.text, styles.textDevice]}>
+          {workSession.device}
+        </Text>
+      </View>
+    );
 
-  const timesItem = (
-    <View style={styles.item}>
-      <Text style={styles.text}>
-        {`Total: ${prettyDuration(timeTotal)}`}
-      </Text>
-      <Text style={styles.text}>
-        {`Effective: ${prettyDuration(timeEffective)}`}
-      </Text>
-      <Text style={styles.text}>
-        {`${nPauses || 0} pauses`}
-      </Text>
-    </View>
-  );
+    const timesItem = (
+      <View style={styles.item}>
+        <Text style={styles.text}>
+          {`Total: ${prettyDuration(timeTotal)}`}
+        </Text>
+        <Text style={styles.text}>
+          {`Effective: ${prettyDuration(timeEffective)}`}
+        </Text>
+        <Text style={styles.text}>
+          {`${nPauses || 0} pauses`}
+        </Text>
+      </View>
+    );
 
-  const statusItem = (
-    <View style={styles.item}>
-      <Text style={[styles.text, { color: status2Color[workSession.status] }]}>
-        {status2Text[workSession.status]}
-      </Text>
-    </View>
-  );
+    const statusItem = (
+      <View style={styles.item}>
+        <Text style={[styles.text, { color: status2Color[workSession.status] }]}>
+          {status2Text[workSession.status]}
+        </Text>
+      </View>
+    );
 
-  return (
-    <View style={styles.container}>
-      {dateTimeItem}
-      {timesItem}
-      {workSession.status !== 'stopped' ? statusItem : (
-        <View style={styles.moreButtonContainer}>
-          <MoreDropdownMenu
-            items={[
-              {
-                label: 'Delete', // DICTIONARY
-                callback: () => onPressDelete(id),
-                textStyle: {
-                  color: '#d50000',
+    return (
+      <View style={styles.container}>
+        {dateTimeItem}
+        {timesItem}
+        {workSession.status !== 'stopped' ? statusItem : (
+          <View style={styles.moreButtonContainer}>
+            <MoreDropdownMenu
+              items={[
+                {
+                  label: 'Delete', // DICTIONARY
+                  callback: () => onPressDelete(id),
+                  textStyle: {
+                    color: '#d50000',
+                  },
                 },
-              },
-            ]}
-          />
-        </View>
-      )}
-    </View>
-  );
-};
+              ]}
+            />
+          </View>
+        )}
+      </View>
+    );
+  }
+}
 
 export default WorkSessionItem;

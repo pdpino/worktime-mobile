@@ -145,17 +145,21 @@ describe('processSubjects', () => {
   });
 
   describe('Device handling', () => {
+    const workSessions = [
+      { timestampStart: 1, device: 'laptop' },
+      { timestampStart: 2, device: 'desktop' },
+      { timestampStart: 3, device: 'tablet' },
+      { timestampStart: 4, device: 'laptop' },
+      { timestampStart: 5, device: 'mobile' },
+      { timestampStart: 6, device: 'laptop' },
+    ];
+
     const incomingSubjects = [
       {
         name: 'new subject',
         description: '',
         workSessions: [
-          { timestampStart: 1, device: 'laptop' },
-          { timestampStart: 2, device: 'desktop' },
-          { timestampStart: 3, device: 'tablet' },
-          { timestampStart: 4, device: 'laptop' },
-          { timestampStart: 5, device: 'mobile' },
-          { timestampStart: 6, device: 'laptop' },
+          ...workSessions,
         ],
       },
     ];
@@ -166,14 +170,12 @@ describe('processSubjects', () => {
         name: 'new subject',
         description: '',
         workSessions: [
-          { timestampStart: 1, device: 'laptop' },
-          { timestampStart: 4, device: 'laptop' },
-          { timestampStart: 6, device: 'laptop' },
+          ...workSessions,
         ],
       },
     ];
 
-    it('Imports only work sessions from the selected device', async () => {
+    it('Imports work sessions from all devices', async () => {
       const { processedSubjects } = await processSubjects(
         mockSubjects,
         incomingSubjects,
@@ -335,15 +337,14 @@ describe('processSubjects', () => {
       });
     });
 
-    it('Ignores other devices', async () => {
+    it('Includes other devices', async () => {
       const incomingSubjects = [
         {
           name: 'old subject',
           description: '',
           workSessions: [
-            // Must ignore:
-            { timestampStart: 1234, device: 'other' },
             // Must accept:
+            { timestampStart: 1234, device: 'other' },
             { timestampStart: 12345, device: 'laptop' },
             { timestampStart: 123456, device: 'laptop' },
           ],
@@ -357,10 +358,10 @@ describe('processSubjects', () => {
         'laptop',
       );
       expect(metadata).toEqual({
-        minTimestamp: 12345,
+        minTimestamp: 1234,
         maxTimestamp: 123456,
-        ignored: 1,
-        accepted: 2,
+        ignored: 0,
+        accepted: 3,
       });
     });
 
@@ -426,9 +427,9 @@ describe('processSubjects', () => {
           description: '',
           workSessions: [
             // Must ignore:
-            { timestampStart: 20001, device: 'other' },
             { timestampStart: 1.123, device: 'laptop' },
             // Must accept:
+            { timestampStart: 20001, device: 'other' },
             { timestampStart: 20002, device: 'laptop' },
           ],
         },
@@ -436,10 +437,9 @@ describe('processSubjects', () => {
           name: 'new subject',
           description: '',
           workSessions: [
-            // Must ignore:
+            // Must accept:
             { timestampStart: 20001, device: 'other' },
             { timestampStart: 20002, device: 'other' },
-            // Must accept:
             { timestampStart: 20003, device: 'laptop' },
             { timestampStart: 20004, device: 'laptop' },
             { timestampStart: 20005, device: 'laptop' },
@@ -454,11 +454,11 @@ describe('processSubjects', () => {
         'laptop',
       );
       const metadatas = processedSubjects.map(s => s.metadata);
-      expect(metadatas[0].ignored).toEqual(2);
-      expect(metadatas[0].accepted).toEqual(1);
+      expect(metadatas[0].ignored).toEqual(1);
+      expect(metadatas[0].accepted).toEqual(2);
 
-      expect(metadatas[1].ignored).toEqual(2);
-      expect(metadatas[1].accepted).toEqual(3);
+      expect(metadatas[1].ignored).toEqual(0);
+      expect(metadatas[1].accepted).toEqual(5);
     });
 
     it('Extracts max and min timestamp', async () => {

@@ -50,7 +50,6 @@ class Importing extends React.Component {
   }
 
   handlePressFile() {
-    const currentDevice = this.props.profile.deviceName;
     const { subjects } = this.props;
 
     // DICTIONARY
@@ -71,16 +70,10 @@ class Importing extends React.Component {
           return;
         }
 
-        if (fileContent.device === currentDevice) {
-          this.displayPreviewError('Can\'t import data from the same device');
-          return;
-        }
-
         const { metadata, processedSubjects } = await processSubjects(
           subjects,
           fileContent.subjects,
           null,
-          fileContent.device,
         );
 
         const subjectsSelection = {};
@@ -107,7 +100,7 @@ class Importing extends React.Component {
     }
 
     const { subjects } = this.props;
-    const { subjectsSelection, device } = this.state;
+    const { subjectsSelection } = this.state;
 
     const newSelectedSubjects = {
       ...subjectsSelection,
@@ -122,7 +115,6 @@ class Importing extends React.Component {
         subjects,
         this.incomingRawSubjects,
         newSelectedSubjects,
-        device,
       );
 
       this.setState({

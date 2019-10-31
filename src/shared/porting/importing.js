@@ -30,7 +30,7 @@ function getTimestampRange(timestamps) {
 }
 
 export const processSubjects = makeFunctionAsync((
-  preSubjects, incomingSubjects, selectedSubjects, importingDevice,
+  preSubjects, incomingSubjects, selectedSubjects,
 ) => {
   const subjectsIndex = createSubjectsIndex(preSubjects);
 
@@ -46,16 +46,18 @@ export const processSubjects = makeFunctionAsync((
       const workSessionsIndex = createWorkSessionsIndex(existingWorkSessions);
 
       let ignoredRepeated = 0;
-      let ignoredOtherDevice = 0;
       const filteredWorkSessions = (incomingSubject.workSessions || [])
         .filter((workSession) => {
-          const sameDevice = workSession.device === importingDevice;
           const workSessionExists = workSessionsIndex.exists(workSession);
 
+          // NOTE: the ignored could be calculated from incoming-length
+          // and outgoing-length (subtraction), but it is done like this
+          // to leave the possibility of different reasons to ignore a
+          // work-session (e.g. import only from a certain device,
+          // from a certain date forward, etc)
           ignoredRepeated += workSessionExists;
-          ignoredOtherDevice += !sameDevice;
 
-          return !workSessionExists && sameDevice;
+          return !workSessionExists;
         });
 
       const { minTimestamp, maxTimestamp } = getTimestampRange(
@@ -64,7 +66,7 @@ export const processSubjects = makeFunctionAsync((
 
       const metadata = {
         exists: !!existingSubject,
-        ignored: ignoredRepeated + ignoredOtherDevice,
+        ignored: ignoredRepeated,
         accepted: filteredWorkSessions.length,
         minTimestamp,
         maxTimestamp,
@@ -115,10 +117,10 @@ export const processSubjects = makeFunctionAsync((
   };
 });
 
-export function getImportableSubjects(processedSubjects, selectedSubjects) {
+export function getImportableSubjects(processedSubjects, subjectSelection) {
   const importableSubjects = processedSubjects.map(({ data }) => data);
-  return selectedSubjects
+  return subjectSelection
     ? importableSubjects
-      .filter(subject => selectedSubjects[subject.name])
+      .filter(subject => subjectSelection[subject.name])
     : importableSubjects;
 }
