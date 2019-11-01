@@ -1,5 +1,7 @@
 import { createStackNavigator } from 'react-navigation';
-import { createSubjectsList, SubjectForm, SubjectShow } from '../containers/subjects';
+import {
+  createSubjectsList, SubjectForm, SubjectShow, BulkSubjectForm,
+} from '../containers/subjects';
 import { CategoryForm } from '../containers/categories';
 import headerOptions from './header';
 
@@ -29,6 +31,12 @@ const SubjectsStack = createStackNavigator({
     }),
   },
   categoryForm: CategoryForm,
+  bulkEditSubject: {
+    screen: BulkSubjectForm,
+    navigationOptions: {
+      title: 'Edit Subjects', // DICTIONARY
+    },
+  },
 },
 {
   initialRouteName: 'subjectsList',

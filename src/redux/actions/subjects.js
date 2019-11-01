@@ -5,6 +5,14 @@ export const upsertSubject = attributes => ({
   },
 });
 
+export const updateSubjects = (ids, attributes) => ({
+  type: 'UPDATE_SUBJECTS',
+  payload: {
+    ids,
+    attributes,
+  },
+});
+
 export const archiveSubjects = (ids, archived) => ({
   type: 'ARCHIVE_SUBJECTS',
   payload: {

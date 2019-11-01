@@ -28,6 +28,14 @@ const entities = orm => (state, action) => {
     case 'UPSERT_SUBJECT':
       Subject.upsert(action.payload.attributes);
       break;
+    case 'UPDATE_SUBJECTS': {
+      const { ids, attributes } = action.payload;
+      Subject
+        .all()
+        .filter(subject => ids.has(subject.id))
+        .update(attributes);
+      break;
+    }
     case 'ARCHIVE_SUBJECTS':
       action.payload.ids.forEach((id) => {
         if (Subject.idExists(id)) {

@@ -12,10 +12,10 @@ import withItemSelection from '../../hoc/itemSelection';
 
 export default function createSubjectsList(isArchive) {
   class SubjectsListContainer extends React.Component {
-    static getSelectionActions(navigation, amountSelected) {
+    static getSelectionActions(navigation) {
       return [
         {
-          enabled: amountSelected === 1,
+          enabled: true,
           icon: 'edit',
           handlePress: navigation.getParam('handleEditSelected'),
         },
@@ -145,14 +145,20 @@ export default function createSubjectsList(isArchive) {
 
     handleEditSelected() {
       const selectedIds = this.props.getSelectionArray();
-      if (selectedIds.length !== 1) {
-        return;
-      }
+      if (selectedIds.length > 1) {
+        const { subjects, selection } = this.props;
+        const selectedSubjects = subjects.filter(subj => selection[subj.id]);
 
-      const subject = this.findSubject(selectedIds[0]);
-      if (subject) {
         this.props.clearSelection();
-        this.props.navigation.navigate('editSubject', { subject });
+        this.props.navigation.navigate('bulkEditSubject', {
+          subjects: selectedSubjects,
+        });
+      } else {
+        const subject = this.findSubject(selectedIds[0]);
+        if (subject) {
+          this.props.clearSelection();
+          this.props.navigation.navigate('editSubject', { subject });
+        }
       }
     }
 

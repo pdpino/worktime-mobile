@@ -115,8 +115,9 @@ const ExpandedSummary = ({ timeStats, initialDate, endingDate }) => {
     },
   ]);
 
-  const showFirstDate = !initialDate || !isSameDay(initialDate, firstDate);
-  const showLastDate = !isSameDay(endingDate, lastDate);
+  const showFirstDate = firstDate
+    && (!initialDate || !isSameDay(initialDate, firstDate));
+  const showLastDate = lastDate && !isSameDay(endingDate, lastDate);
 
   return (
     <View style={styles.container}>
