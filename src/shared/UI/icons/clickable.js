@@ -55,6 +55,18 @@ const rnIconDefinitions = {
     size: 22,
     color: 'black',
   },
+  chevronDown: {
+    name: 'chevron-down',
+    type: 'feather',
+    size: 30,
+    color: 'black',
+  },
+  chevronUp: {
+    name: 'chevron-up',
+    type: 'feather',
+    size: 30,
+    color: 'black',
+  },
 };
 
 class ClickableIcon extends React.PureComponent {

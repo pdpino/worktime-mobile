@@ -3,7 +3,7 @@ import {
   View, StyleSheet, Text,
 } from 'react-native';
 import { ItemCheckbox } from '../../../../shared/UI/buttons';
-import { legendDefinition } from './colors';
+import { legendDefinition } from '../colors';
 
 const styles = StyleSheet.create({
   container: {

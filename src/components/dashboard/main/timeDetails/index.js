@@ -6,7 +6,7 @@ import { BarTimesChart } from '../../../../shared/UI/charts';
 import { BackIcon } from '../../../../shared/UI/icons';
 import Tabs from './tabs';
 import SubHeader from './subHeader';
-import { colors } from './colors';
+import { colorEffective, colorPaused } from '../colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,6 +32,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+
+const colors = [colorEffective, colorPaused];
 
 const TimeDetails = ({
   itemsSummaries, selectedTab, title, idsSelection, allSelected, allItemsTotal,

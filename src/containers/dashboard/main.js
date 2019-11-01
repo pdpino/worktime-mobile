@@ -410,6 +410,8 @@ class Dashboard extends React.Component {
         />
         <SummaryComponent
           timeStats={timeStats}
+          initialDate={initialDate}
+          endingDate={endingDate}
           isLoading={isLoading || isReloading}
         />
         <TimeDetailsComponent
