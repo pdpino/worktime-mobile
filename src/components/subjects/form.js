@@ -118,7 +118,10 @@ const SubjectForm = ({
   );
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
       {nameInput}
       {descriptionInput}
       {categoryInput}

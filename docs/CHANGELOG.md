@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Edit button in SubjectShow
 * Delete button in SubjectEdit
 
+### Fixed
+* Double tap was needed when keyboard is visible
+
 
 
 ## 1.9.4 - 2019-10-31
