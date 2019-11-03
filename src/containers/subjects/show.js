@@ -47,7 +47,10 @@ class SubjectShow extends React.Component {
   }
 
   componentDidMount() {
-    this.willFocusListener = this.props.navigation.addListener('willFocus', this.sumTimes);
+    this.willFocusListener = this.props.navigation.addListener(
+      'willFocus',
+      this.sumTimes,
+    );
   }
 
   shouldComponentUpdate(nextProps) {
@@ -130,6 +133,7 @@ class SubjectShow extends React.Component {
           isLoading={isLoading}
         />
         <WorkSessionsListComponent
+          subject={subject}
           workSessions={workSessions}
           onPressDelete={this.handleDeleteWorkSession}
         />

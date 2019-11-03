@@ -8,7 +8,7 @@ export const upsertSubject = attributes => ({
 export const updateSubjects = (ids, attributes) => ({
   type: 'UPDATE_SUBJECTS',
   payload: {
-    ids,
+    idsSet: new Set(ids),
     attributes,
   },
 });

@@ -31,7 +31,7 @@ class BulkSubjectForm extends React.Component {
     const { subjects } = this.props;
     const { categoryId } = this.state;
 
-    const subjectIds = new Set(subjects.map(subj => subj.id));
+    const subjectIds = subjects.map(subj => subj.id);
 
     this.props.updateSubjects(subjectIds, { category: categoryId });
     this.props.navigation.goBack();

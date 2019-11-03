@@ -29,10 +29,10 @@ const entities = orm => (state, action) => {
       Subject.upsert(action.payload.attributes);
       break;
     case 'UPDATE_SUBJECTS': {
-      const { ids, attributes } = action.payload;
+      const { idsSet, attributes } = action.payload;
       Subject
         .all()
-        .filter(subject => ids.has(subject.id))
+        .filter(subject => idsSet.has(subject.id))
         .update(attributes);
       break;
     }

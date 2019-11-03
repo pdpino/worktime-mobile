@@ -25,39 +25,51 @@ const styles = StyleSheet.create({
 });
 
 // DICTIONARY
-const noWorkSessions = 'No sessions';
-const titleText = 'Work Sessions';
+const dictNoSessions = 'No sessions';
+const dictWorkSessions = 'Work Sessions';
 
-const WorkSessionsList = ({ workSessions, onPressDelete }) => {
-  const title = (
-    <Text style={styles.title}>
-      {titleText}
-    </Text>
-  );
+class WorkSessionsList extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    // NOTE: the subject is only passed as a prop to be used here
+    // The workSessions array always change, since its re-calculated in
+    // Subject.getWorkSessions()
+    // (If any of the work-sessions change, the subject will change, hence
+    // this component will get updated)
+    return nextProps.subject !== this.props.subject;
+  }
 
-  const emptyComponent = (
-    <Text style={styles.emptyList}>
-      {noWorkSessions}
-    </Text>
-  );
+  render() {
+    const { workSessions, onPressDelete } = this.props;
+    const title = (
+      <Text style={styles.title}>
+        {dictWorkSessions}
+      </Text>
+    );
 
-  return (
-    <View style={styles.container}>
-      {title}
-      <FlatList
-        data={workSessions}
-        renderItem={({ item }) => (
-          <WorkSessionItem
-            workSession={item}
-            onPressDelete={onPressDelete}
-          />
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={emptyComponent}
-        enableScroll={false}
-      />
-    </View>
-  );
-};
+    const emptyComponent = (
+      <Text style={styles.emptyList}>
+        {dictNoSessions}
+      </Text>
+    );
+
+    return (
+      <View style={styles.container}>
+        {title}
+        <FlatList
+          data={workSessions}
+          renderItem={({ item }) => (
+            <WorkSessionItem
+              workSession={item}
+              onPressDelete={onPressDelete}
+            />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={emptyComponent}
+          enableScroll={false}
+        />
+      </View>
+    );
+  }
+}
 
 export default WorkSessionsList;

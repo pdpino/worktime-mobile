@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 ### Added
 * Bulk edit for subjects
+* Edit button in SubjectShow
+* Delete button in SubjectEdit
 
 
 
