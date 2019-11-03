@@ -6,6 +6,12 @@ import { updateSubjects } from '../../redux/actions';
 import { categoriesSelector } from '../../redux/selectors';
 
 class BulkSubjectForm extends React.Component {
+  static navigationOptions() {
+    return {
+      title: 'Edit Subjects', // DICTIONARY
+    };
+  }
+
   constructor(props) {
     super(props);
 

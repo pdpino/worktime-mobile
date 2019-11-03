@@ -6,37 +6,13 @@ import { CategoryForm } from '../containers/categories';
 import headerOptions from './header';
 
 const SubjectsStack = createStackNavigator({
-  subjectsList: {
-    screen: createSubjectsList(false),
-  },
-  subjectsArchiveList: {
-    screen: createSubjectsList(true),
-  },
-  newSubject: {
-    screen: SubjectForm,
-    navigationOptions: {
-      title: 'New Subject', // DICTIONARY
-    },
-  },
-  editSubject: {
-    screen: SubjectForm,
-    navigationOptions: ({ navigation }) => ({
-      title: `${navigation.state.params.subject.name}`,
-    }),
-  },
-  showSubject: {
-    screen: SubjectShow,
-    navigationOptions: ({ navigation }) => ({
-      title: `${navigation.state.params.subject.name}`,
-    }),
-  },
+  subjectsList: createSubjectsList(false),
+  subjectsArchiveList: createSubjectsList(true),
+  newSubject: SubjectForm,
+  editSubject: SubjectForm,
+  showSubject: SubjectShow,
   categoryForm: CategoryForm,
-  bulkEditSubject: {
-    screen: BulkSubjectForm,
-    navigationOptions: {
-      title: 'Edit Subjects', // DICTIONARY
-    },
-  },
+  bulkEditSubject: BulkSubjectForm,
 },
 {
   initialRouteName: 'subjectsList',

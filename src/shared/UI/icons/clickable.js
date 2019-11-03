@@ -27,6 +27,7 @@ const rnIconDefinitions = {
     name: 'delete',
     type: 'material-icons',
     size: 28,
+    color: '#f23021',
   },
   error: {
     name: 'error',

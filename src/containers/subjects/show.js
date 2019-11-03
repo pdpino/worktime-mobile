@@ -5,11 +5,28 @@ import { ScrollView, Alert } from 'react-native';
 import WorkSessionsListComponent from '../../components/workSessions/list';
 import SubjectInfoComponent from '../../components/subjects/info';
 import { subjectSelector } from '../../redux/selectors';
-import { deleteWorkSession } from '../../redux/actions';
+import { deleteWorkSession, deleteSubjects } from '../../redux/actions';
 import { Memoizer } from '../../shared/utils';
 import { sumSubjectTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
+import { HeaderActions } from '../../shared/UI/headers';
 
 class SubjectShow extends React.Component {
+  static navigationOptions({ navigation }) {
+    const { subjectName } = navigation.state.params;
+
+    const actions = [
+      {
+        icon: 'edit',
+        handlePress: navigation.getParam('goEditSubject'),
+      },
+    ];
+
+    return {
+      title: subjectName || 'Subject', // DICTIONARY
+      headerRight: <HeaderActions actions={actions} />,
+    };
+  }
+
   constructor(props) {
     super(props);
 
@@ -21,6 +38,12 @@ class SubjectShow extends React.Component {
     this.handleDeleteWorkSession = this.handleDeleteWorkSession.bind(this);
     this.sumTimes = this.sumTimes.bind(this);
     this.memoizer = Memoizer();
+
+    this.goEditSubject = this.goEditSubject.bind(this);
+
+    this.props.navigation.setParams({
+      goEditSubject: this.goEditSubject,
+    });
   }
 
   componentDidMount() {
@@ -29,6 +52,19 @@ class SubjectShow extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     return nextProps.navigation.isFocused();
+  }
+
+  componentDidUpdate(prevProps) {
+    // HACK:
+    // From this view u can navigate to 'editSubject', change the subject name,
+    // and comeback to this view. If that happens, the header title must be
+    // updated
+    const { subject } = this.props;
+    const prevName = prevProps.subject && prevProps.subject.name;
+    const newName = subject && subject.name;
+    if (prevName !== newName) {
+      this.props.navigation.setParams({ subjectName: newName });
+    }
   }
 
   componentWillUnmount() {
@@ -71,6 +107,11 @@ class SubjectShow extends React.Component {
       }));
   }
 
+  goEditSubject() {
+    const { subject } = this.props;
+    this.props.navigation.navigate('editSubject', { subject });
+  }
+
   render() {
     const { subject } = this.props;
     const workSessions = subject.getWorkSessions({ sorted: true }); // REVIEW: make this call async?
@@ -97,15 +138,14 @@ class SubjectShow extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { id: subjectId } = ownProps.navigation.getParam('subject');
-  // OPTIMIZE (see TODOs)
-  return {
-    subject: subjectSelector(state, { subjectId }),
-  };
-};
+const mapStateToProps = (state, ownProps) => ({
+  subject: subjectSelector(state, {
+    subjectId: ownProps.navigation.getParam('subjectId'),
+  }),
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  deleteSubjects,
   deleteWorkSession,
 }, dispatch);
 

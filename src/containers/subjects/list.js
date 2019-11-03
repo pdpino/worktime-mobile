@@ -15,18 +15,16 @@ export default function createSubjectsList(isArchive) {
     static getSelectionActions(navigation) {
       return [
         {
-          enabled: true,
           icon: 'edit',
           handlePress: navigation.getParam('handleEditSelected'),
         },
         {
-          enabled: true,
           icon: isArchive ? 'unarchive' : 'archive',
           handlePress: navigation.getParam('handleArchiveSelected'),
         },
         {
-          enabled: true,
           icon: 'delete',
+          color: '#d8463b',
           handlePress: navigation.getParam('handleDeleteSelected'),
         },
       ];
@@ -42,7 +40,6 @@ export default function createSubjectsList(isArchive) {
 
       const actions = [
         {
-          enabled: true,
           icon: 'archivedFolder',
           handlePress: navigation.getParam('handlePressArchive'),
         },
@@ -110,7 +107,10 @@ export default function createSubjectsList(isArchive) {
       } else {
         const subject = this.findSubject(id);
         if (subject) {
-          this.props.navigation.navigate('showSubject', { subject });
+          this.props.navigation.navigate('showSubject', {
+            subjectId: subject.id,
+            subjectName: subject.name,
+          });
         }
       }
     }

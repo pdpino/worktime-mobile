@@ -12,7 +12,6 @@ class CategoryForm extends React.Component {
     if (category) {
       const actions = [
         {
-          enabled: true,
           icon: 'delete',
           handlePress: navigation.getParam('handleDeleteCategory'),
         },

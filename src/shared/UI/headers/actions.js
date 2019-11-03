@@ -9,10 +9,11 @@ const HeaderActions = ({ actions }) => (
     contentContainerStyle={{ paddingRight: 5 }}
     data={actions}
     renderItem={({ item }) => (
-      item.enabled ? (
+      !item.disabled ? (
         <ClickableIcon
           containerStyle={commonStyles.iconContainer}
           icon={item.icon}
+          color={item.color}
           onPress={item.handlePress}
         />
       ) : null
