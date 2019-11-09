@@ -1,6 +1,7 @@
 import { smartDivision } from '../utils';
 import {
-  isBetween, isBefore, getDateCopy, getStartOfDay, getEndOfDay, countWeeks,
+  isBetween, isBefore, getDateCopy, getStartOfDay, getEndOfDay, getWeeksDiff,
+  dateToDateString,
 } from '../dates';
 
 class TimeStats {
@@ -99,7 +100,7 @@ class TimeStats {
 
   updateDates(date) {
     const { firstDate, lastDate } = this.stats;
-    this.stats.daysWorked[date] = true;
+    this.stats.daysWorked[dateToDateString(date)] = true;
 
     if (!firstDate || isBefore(date, firstDate)) {
       this.stats.firstDate = getDateCopy(date);
@@ -240,7 +241,7 @@ class TimeStats {
     const dayAvg = smartDivision(timeTotal, nDaysWorked, false);
 
     const nWeeksWorked = (firstDate && lastDate)
-      ? countWeeks(firstDate, lastDate) : 0;
+      ? getWeeksDiff(firstDate, lastDate) : 0;
     const weekAvg = smartDivision(timeTotal, nWeeksWorked, false);
 
     return {

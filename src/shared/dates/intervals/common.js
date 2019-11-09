@@ -1,12 +1,12 @@
 import {
-  addMonths, subDays, isWithinInterval, differenceInDays,
+  addMonths, subDays, isWithinInterval, differenceInCalendarDays,
   startOfMonth, endOfMonth, isBefore,
 } from 'date-fns';
 import { toMaxFixed, isValidDate } from '../../utils';
 
 function decidePluralLabel(singular, plural) {
   return (amount) => {
-    const label = amount > 1 || amount === 0 ? plural : singular;
+    const label = amount === 1 ? singular : plural;
     return `${amount} ${label}`;
   };
 }
@@ -26,8 +26,18 @@ export const prettySpanFunctions = {
   year: prettyYears,
 };
 
-export function getDiffDays(initialDate, endingDate) {
-  return differenceInDays(endingDate, initialDate) + 1; // +1: inclusive limits
+/**
+ * Returns the amount of days between two dates, with inclusive limits.
+ */
+export function getDaysInclusiveDiff(initialDate, endingDate) {
+  return differenceInCalendarDays(endingDate, initialDate) + 1;
+}
+
+/**
+ * Returns the amount of weeks (can be half a week) between two dates.
+ */
+export function getWeeksDiff(initialDate, endingDate) {
+  return toMaxFixed(differenceInCalendarDays(endingDate, initialDate) / 7, 1);
 }
 
 function daysToInterval(nDays, amount1, amount2, pretty1, pretty2) {
@@ -44,7 +54,7 @@ export function prettyDaysSpan(initialDate, endingDate) {
     return 'Infinite time'; // DICTIONARY
   }
 
-  const diffDays = getDiffDays(initialDate, endingDate);
+  const diffDays = getDaysInclusiveDiff(initialDate, endingDate);
 
   // DICTIONARY
   if (diffDays < 7) {
@@ -80,10 +90,6 @@ export function shiftMonths(date, shift) {
 
 export function subtractDays(date, days) {
   return subDays(date, days);
-}
-
-export function countWeeks(initialDate, endingDate) {
-  return toMaxFixed(differenceInDays(initialDate, endingDate) / 7, 1);
 }
 
 export {

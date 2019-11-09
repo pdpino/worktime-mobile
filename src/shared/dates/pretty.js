@@ -1,5 +1,5 @@
 import {
-  format, formatDistanceStrict, differenceInDays,
+  format, formatDistanceStrict, differenceInCalendarDays,
 } from 'date-fns';
 import { toLocalDate, getTimezoneOffset } from './timestamp';
 import { isNumber, isValidDate } from '../utils';
@@ -11,7 +11,7 @@ export function prettyDate(date, useNames = true) {
   }
 
   const today = new Date();
-  const diffDays = differenceInDays(date, today);
+  const diffDays = differenceInCalendarDays(today, date);
   const diffYears = today.getFullYear() - dateYear;
 
   // DICTIONARY

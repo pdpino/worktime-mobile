@@ -57,3 +57,6 @@ buck-out/
 
 # Other docs
 docs/develop.md
+
+# Testing
+coverage/

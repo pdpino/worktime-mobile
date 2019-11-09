@@ -9,7 +9,7 @@ import { subjectsSelector, categoriesSelector } from '../../redux/selectors';
 import { Memoizer } from '../../shared/utils';
 import {
   getStartOfWeek, getEndOfWeek, getStartOfMonth, getEndOfMonth, shiftMonths,
-  getStartOfSemester, shiftSemesters, subtractDays, getDiffDays, isSameDay,
+  getStartOfSemester, shiftSemesters, subtractDays, getDaysInclusiveDiff, isSameDay,
   getToday,
 } from '../../shared/dates';
 import { sumTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
@@ -235,7 +235,7 @@ class Dashboard extends React.Component {
     let newSelection;
     if (!dateShortcutSelection) {
       shifter = this.dateShifters.day;
-      const nDays = getDiffDays(initialDate, endingDate);
+      const nDays = getDaysInclusiveDiff(initialDate, endingDate);
       shift = nDays * rightShift;
       newSelection = null;
     } else {

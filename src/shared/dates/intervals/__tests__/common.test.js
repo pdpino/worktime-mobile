@@ -1,4 +1,4 @@
-import { isBetween } from '../common';
+import { isBetween, getDaysInclusiveDiff, getWeeksDiff } from '../common';
 
 describe('isBetween', () => {
   describe('Invalid input handling', () => {
@@ -53,5 +53,69 @@ describe('isBetween', () => {
       expect(isBetween(dateA, dateB, new Date(2019, 1, 7))).toBeFalse();
       expect(isBetween(dateA, dateB, new Date(2020, 1, 5))).toBeFalse();
     });
+  });
+});
+
+describe('getDaysInclusiveDiff', () => {
+  const testDaysDiff = (
+    dateA,
+    dateB,
+    amount,
+  ) => expect(getDaysInclusiveDiff(dateA, dateB)).toEqual(amount);
+
+  it('Returns correctly positive differences', () => {
+    testDaysDiff(new Date(2019, 10, 1), new Date(2019, 10, 1), 1);
+    testDaysDiff(new Date(2019, 10, 1), new Date(2019, 10, 2), 2);
+    testDaysDiff(new Date(2019, 10, 1), new Date(2019, 10, 3), 3);
+  });
+
+  it('Returns correctly for any time of day', () => {
+    testDaysDiff(
+      new Date(2019, 10, 1, 18, 40),
+      new Date(2019, 10, 2, 0, 1),
+      2,
+    );
+    testDaysDiff(
+      new Date(2019, 10, 1, 23, 59),
+      new Date(2019, 10, 3, 0, 1),
+      3,
+    );
+    testDaysDiff(
+      new Date(2019, 10, 2, 0, 0),
+      new Date(2019, 10, 3, 0, 1),
+      2,
+    );
+  });
+});
+
+describe('getWeeksDiff', () => {
+  const testWeeksDiff = (
+    dateA,
+    dateB,
+    amount,
+  ) => expect(getWeeksDiff(dateA, dateB)).toEqual(amount);
+
+  it('Returns correctly positive differences', () => {
+    testWeeksDiff(new Date(2019, 10, 1), new Date(2019, 10, 8), 1);
+    testWeeksDiff(new Date(2019, 10, 1), new Date(2019, 10, 11), 1.4);
+    testWeeksDiff(new Date(2019, 10, 1), new Date(2019, 10, 15), 2);
+  });
+
+  it('Returns correctly for any time of day', () => {
+    testWeeksDiff(
+      new Date(2019, 10, 1, 18, 40),
+      new Date(2019, 10, 8, 0, 1),
+      1,
+    );
+    testWeeksDiff(
+      new Date(2019, 10, 1, 23, 59),
+      new Date(2019, 10, 11, 0, 1),
+      1.4,
+    );
+    testWeeksDiff(
+      new Date(2019, 10, 1, 14, 0),
+      new Date(2019, 10, 15, 11, 30),
+      2,
+    );
   });
 });

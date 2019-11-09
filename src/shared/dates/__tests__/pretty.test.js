@@ -14,7 +14,45 @@ describe('prettyDate', () => {
   });
 
   describe('Result correctness', () => {
-    // TODO: needs mocking up dates // Add tests on other functions
+    // DICTIONARY
+    const dictToday = 'Today';
+    const dictYesterday = 'Yesterday';
+    const dictTomorrow = 'Tomorrow';
+
+    const fixedDay = new Date(2019, 10, 9, 14, 0, 0);
+    let nowDefaultFunction;
+    beforeAll(() => {
+      nowDefaultFunction = Date.now;
+      Date.now = jest.fn(() => fixedDay.getTime());
+    });
+
+    afterAll(() => {
+      Date.now = nowDefaultFunction;
+    });
+
+    it('Returns today correctly', () => {
+      expect(prettyDate(fixedDay)).toEqual(dictToday);
+      expect(prettyDate(new Date(fixedDay.getTime()))).toEqual(dictToday);
+    });
+
+    it('Returns yesterday correctly', () => {
+      expect(prettyDate(new Date(2019, 10, 7))).not.toEqual(dictYesterday);
+      expect(prettyDate(new Date(2019, 10, 8))).toEqual(dictYesterday);
+      expect(prettyDate(new Date(2019, 10, 8, 0, 1))).toEqual(dictYesterday);
+      expect(prettyDate(new Date(2019, 10, 8, 23, 59))).toEqual(dictYesterday);
+    });
+
+    it('Returns tomorrow correctly', () => {
+      expect(prettyDate(new Date(2019, 10, 11))).not.toEqual(dictTomorrow);
+      expect(prettyDate(new Date(2019, 10, 10))).toEqual(dictTomorrow);
+      expect(prettyDate(new Date(2019, 10, 10, 0, 1))).toEqual(dictTomorrow);
+      expect(prettyDate(new Date(2019, 10, 10, 23, 59))).toEqual(dictTomorrow);
+    });
+
+    it('Returns other dates correctly', () => {
+      expect(prettyDate(new Date(2018, 10, 7))).toEqual('Wed 7 Nov 2018');
+      expect(prettyDate(new Date(2019, 10, 7))).toEqual('Thu 7 Nov');
+    });
   });
 });
 

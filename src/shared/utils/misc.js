@@ -13,7 +13,7 @@ export function prettyPercentage(value, divider) {
 
 export function toMaxFixed(number, decimals) {
   const roundedNumber = number.toFixed(decimals);
-  const hasDecimals = roundedNumber % 1 === 0;
+  const hasDecimals = roundedNumber % 1 !== 0;
   const numberStr = hasDecimals ? roundedNumber : number.toFixed(0);
   return parseFloat(numberStr);
 }

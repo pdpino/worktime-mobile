@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { prettyDaysAgo, timeToPrettyDate } from '../../../shared/dates';
+import { timeToPrettyDate } from '../../../shared/dates';
 import commonStyles from './styles';
 
 const styles = StyleSheet.create({
@@ -32,6 +32,8 @@ const styles = StyleSheet.create({
 const deviceLabel = 'Device';
 const lastImportedLabel = 'Last imported';
 const periodLabel = 'Period';
+const dictNever = 'Never';
+const dictNone = 'None';
 
 const ImportPreview = ({ device, importStats, lastImportedTimestamp }) => {
   const getPreviewLabel = (label, value) => (
@@ -46,8 +48,10 @@ const ImportPreview = ({ device, importStats, lastImportedTimestamp }) => {
     </View>
   );
 
-  const lastImported = prettyDaysAgo(lastImportedTimestamp);
-  let period = 'None'; // DICTIONARY
+  const lastImported = lastImportedTimestamp
+    ? timeToPrettyDate(lastImportedTimestamp)
+    : dictNever;
+  let period = dictNone;
   if (importStats) {
     const fromDate = timeToPrettyDate(importStats.minTimestamp);
     const toDate = timeToPrettyDate(importStats.maxTimestamp);
