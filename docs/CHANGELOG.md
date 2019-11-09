@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 ### Fixed
-* In dashboard amount of days and weeks fixed
+* In dashboard summary:
+  - Amount of days and weeks fixed
+  - Fix height moving
 * Small fixes
 
 

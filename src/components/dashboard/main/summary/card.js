@@ -12,8 +12,6 @@ const styles = StyleSheet.create({
     marginVertical: 7,
     paddingHorizontal: 7,
     paddingVertical: 3,
-    // HACK: minHeight hardcoded, equal to height when displaying text
-    minHeight: 71,
   },
   loadingContainer: {
     flex: 1,
@@ -21,10 +19,18 @@ const styles = StyleSheet.create({
   },
 });
 
+let minHeight = 0;
+const saveMinHeight = (event) => {
+  minHeight = event.nativeEvent.layout.height;
+};
+
 const SummaryCard = ({
   isLoading, children,
 }) => (
-  <View style={styles.container}>
+  <View
+    style={[styles.container, isLoading && { minHeight }]}
+    onLayout={saveMinHeight}
+  >
     {isLoading ? (
       <View style={styles.loadingContainer}>
         <ActivityIndicator />
