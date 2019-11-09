@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@redux-offline/redux-offline": "^2.4.0",
+    "date-fns": "^2.6.0",
     "lodash": "^4.17.13",
     "memoize-one": "^5.0.4",
     "moment": "^2.22.2",
@@ -51,12 +52,16 @@
     "eslint-plugin-react": "^7.10.0",
     "factory-girl": "^5.0.4",
     "jest": "^24.8.0",
+    "jest-extended": "^0.11.2",
     "metro-react-native-babel-preset": "^0.54.0",
     "react-test-renderer": "16.8.3",
     "redux-mock-store": "^1.5.3"
   },
   "jest": {
     "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "jest-extended"
+    ],
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
     },
