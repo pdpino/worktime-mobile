@@ -1,9 +1,16 @@
-// Redux test utilities
+/**
+ * Redux test utilities
+ */
 
 import ReduxORMAdapter from './adapter';
 import factory from './factories';
 
 export {
-  factory,
   ReduxORMAdapter,
+  factory,
 };
+
+export function getORMFactory(session) {
+  factory.setAdapter(new ReduxORMAdapter(session));
+  return factory;
+}

@@ -135,12 +135,6 @@ describe('processSubjects', () => {
         'laptop',
       );
       expect(processedSubjects.map(s => s.data)).toEqual(expectedPreviews);
-      // expect(metadata).toEqual({
-      //   minDate: unixToDateString(5.321),
-      //   maxDate: unixToDateString(1000.123),
-      //   ignored: 3,
-      //   accepted: 3,
-      // });
     });
   });
 
