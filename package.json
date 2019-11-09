@@ -15,7 +15,6 @@
     "date-fns": "^2.6.0",
     "lodash": "^4.17.13",
     "memoize-one": "^5.0.4",
-    "moment": "^2.22.2",
     "react": "16.8.3",
     "react-native": "0.59.8",
     "react-native-action-button": "^2.8.4",
