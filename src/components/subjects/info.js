@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, Text, ActivityIndicator,
 } from 'react-native';
-import { daysAgo, prettyDuration } from '../../shared/utils';
+import { prettyDaysAgo, prettyDuration } from '../../shared/dates';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,13 +29,13 @@ const styles = StyleSheet.create({
 
 // DICTIONARY
 const titleText = 'Summary';
-const lastWorkedText = 'Last worked on: ';
+const lastWorkedText = 'Last worked: ';
 const timeTotalText = 'Total time: ';
 const timeEffectiveText = 'Effective time: ';
 const nDaysWorkedText = 'Days worked: ';
 
 const SubjectInfo = ({
-  lastWorkedDate, timeTotal, timeEffective, nDaysWorked, isLoading,
+  lastSession, timeTotal, timeEffective, nDaysWorked, isLoading,
 }) => {
   const title = (
     <Text style={styles.title}>
@@ -46,7 +46,7 @@ const SubjectInfo = ({
   const lastWorkedInfo = (
     <Text style={styles.text}>
       {lastWorkedText}
-      {daysAgo(lastWorkedDate)}
+      {prettyDaysAgo(lastSession && lastSession.timestampStart)}
     </Text>
   );
 

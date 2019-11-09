@@ -30,11 +30,6 @@ export function extractFilename(filePath) {
   return splitted[splitted.length - 1];
 }
 
-export function isNumber(value) {
-  const parsedValue = Number(value);
-  return parsedValue || parsedValue === 0;
-}
-
 export const sortByName = memoizeOne((array) => {
   const getName = elem => (elem && elem.name && elem.name.toLowerCase()) || '';
   return array.sort(

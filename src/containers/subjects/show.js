@@ -126,7 +126,7 @@ class SubjectShow extends React.Component {
     return (
       <ScrollView>
         <SubjectInfoComponent
-          lastWorkedDate={lastSession && lastSession.date}
+          lastSession={lastSession}
           timeTotal={timeTotal}
           timeEffective={timeEffective}
           nDaysWorked={nDaysWorked}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { prettyDate, prettyDuration } from '../../shared/utils';
+import { prettyDuration } from '../../shared/dates';
 import { MoreDropdownMenu } from '../../shared/UI/menus';
 
 const styles = StyleSheet.create({
@@ -55,7 +55,7 @@ class WorkSessionItem extends React.PureComponent {
     const dateTimeItem = (
       <View style={styles.item}>
         <Text style={styles.text}>
-          {prettyDate(workSession.date)}
+          {workSession.getPrettyDate()}
         </Text>
         <Text style={styles.text}>
           {workSession.getPrettyHourStart()}

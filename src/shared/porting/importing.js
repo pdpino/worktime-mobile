@@ -1,6 +1,4 @@
-import {
-  makeFunctionAsync, removeStrAccents, ElementsIndex,
-} from '../utils';
+import { makeFunctionAsync, removeStrAccents, ElementsIndex } from '../utils';
 
 function simplifyName(name) {
   return removeStrAccents((name || '')

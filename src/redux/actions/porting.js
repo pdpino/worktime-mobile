@@ -1,4 +1,4 @@
-import { getTimestamp } from '../../shared/utils';
+import { getTimestamp } from '../../shared/dates';
 
 // eslint-disable-next-line import/prefer-default-export
 export const importFromJson = (device, importableSubjects) => ({

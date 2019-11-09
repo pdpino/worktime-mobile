@@ -2,10 +2,10 @@ import React from 'react';
 import {
   StyleSheet, View, Text,
 } from 'react-native';
+import { prettyPercentage } from '../../../../shared/utils';
 import {
-  prettyDuration, prettyDays, prettyWeeks, prettyPercentage, prettyDate,
-  isSameDay,
-} from '../../../../shared/utils';
+  prettyDate, prettyDuration, prettyDays, prettyWeeks, isSameDay,
+} from '../../../../shared/dates';
 
 const styles = StyleSheet.create({
   container: {

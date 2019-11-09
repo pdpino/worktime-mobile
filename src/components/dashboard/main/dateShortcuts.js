@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TextDropdownMenu } from '../../../shared/UI/menus';
-import { prettyDaysSpan, prettyShortcutSelection } from '../../../shared/utils';
+import { prettyDaysSpan, prettyShortcutSelection } from '../../../shared/dates';
 
 const styles = StyleSheet.create({
   container: {

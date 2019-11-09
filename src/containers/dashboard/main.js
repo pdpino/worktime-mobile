@@ -1,17 +1,17 @@
 import React from 'react';
 import { BackHandler, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import moment from 'moment'; // REVIEW: try to hide moment
 import {
   SummaryComponent, TimeDetailsComponent, DateFilterComponent,
   DateShortcutsComponent,
 } from '../../components/dashboard/main';
 import { subjectsSelector, categoriesSelector } from '../../redux/selectors';
+import { Memoizer } from '../../shared/utils';
 import {
-  isSameDay, getToday, getStartOfWeek, getEndOfWeek, getStartOfMonth,
-  getEndOfMonth, getStartOfSemester, shiftMonths, shiftSemesters, subtractDays,
-  getDiffDays, Memoizer,
-} from '../../shared/utils';
+  getStartOfWeek, getEndOfWeek, getStartOfMonth, getEndOfMonth, shiftMonths,
+  getStartOfSemester, shiftSemesters, subtractDays, getDiffDays, isSameDay,
+  getToday,
+} from '../../shared/dates';
 import { sumTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
 
 class Dashboard extends React.Component {
@@ -194,12 +194,12 @@ class Dashboard extends React.Component {
   }
 
   handleChangeDate(key) {
-    return (dateString) => {
-      if (Dashboard.isSameDay(this.state[key], dateString)) {
+    return (date) => {
+      if (Dashboard.isSameDay(this.state[key], date)) {
         return;
       }
       this.setStateAndSumTimes({
-        [key]: moment(dateString),
+        [key]: date,
         dateShortcutSelection: null,
         isReloading: true,
       });

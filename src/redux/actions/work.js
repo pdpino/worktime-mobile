@@ -2,9 +2,12 @@ import {
   runningSessionIdSelector, lastWorkSessionSelector, selectedSubjectSelector,
   profileSelector,
 } from '../selectors';
-import { getTimestamp } from '../../shared/utils';
+import { getTimestamp, getTimezoneOffset } from '../../shared/dates';
 
-const createActionForRunningSession = (type, sendSubject) => () => (dispatch, getState) => {
+const createActionForRunningSession = (
+  type,
+  sendSubject,
+) => () => (dispatch, getState) => {
   const store = getState();
   const runningSessionId = runningSessionIdSelector(store);
   const timestamp = getTimestamp();
@@ -29,6 +32,7 @@ export const start = subject => (dispatch, getState) => {
     type: 'PLAYER/STARTING',
     payload: {
       timestamp: getTimestamp(),
+      tzOffset: getTimezoneOffset(),
       subject,
       deviceName: profileSelector(getState()).deviceName,
     },

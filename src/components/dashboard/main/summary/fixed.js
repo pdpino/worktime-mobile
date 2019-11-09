@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { prettyDuration } from '../../../../shared/utils';
+import { prettyDuration } from '../../../../shared/dates';
 import { ClickableIcon } from '../../../../shared/UI/icons';
 import { colorTotal, colorEffective } from '../colors';
 

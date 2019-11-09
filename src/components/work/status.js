@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import commonStyles from './styles';
-import { prettyDuration } from '../../shared/utils/dates';
+import { prettyDuration } from '../../shared/dates';
 
 const styles = StyleSheet.create({
   container: {

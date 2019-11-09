@@ -4,7 +4,8 @@ import {
 } from 'react-native';
 import HorizontalBar from '../horizontalBar';
 import { CheckboxIcon } from '../../icons';
-import { prettyDuration, prettyPercentage } from '../../../utils';
+import { prettyDuration } from '../../../dates';
+import { prettyPercentage } from '../../../utils';
 
 const styles = StyleSheet.create({
   container: {

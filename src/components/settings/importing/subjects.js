@@ -3,7 +3,7 @@ import {
   StyleSheet, View, Text, FlatList,
 } from 'react-native';
 import { ItemCheckbox } from '../../../shared/UI/buttons';
-import { unixToDateString, prettyDate } from '../../../shared/utils';
+import { timeToPrettyDate } from '../../../shared/dates';
 import commonStyles from './styles';
 
 const styles = StyleSheet.create({
@@ -58,8 +58,8 @@ const SubjectsPreview = ({
 
   const renderSubjectPreview = ({ item }) => {
     const { metadata, data } = item;
-    const fromDate = prettyDate(unixToDateString(metadata.minTimestamp));
-    const toDate = prettyDate(unixToDateString(metadata.maxTimestamp));
+    const fromDate = timeToPrettyDate(metadata.minTimestamp);
+    const toDate = timeToPrettyDate(metadata.maxTimestamp);
     const period = `${fromDate} - ${toDate}`;
 
 

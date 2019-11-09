@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import asModalWithButton from './modalWithButton';
-import { prettyDate } from '../../utils';
+import { prettyDate, dateToDateString, getDate } from '../../dates';
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -22,8 +22,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const formatDate = date => date && date.format('YYYY-MM-DD');
-
 // DICTIONARY
 const noneDateText = 'None';
 
@@ -38,7 +36,7 @@ const CalendarButton = ({ date, buttonContainerStyle }) => (
 const CalendarPicker = ({
   date, minDate, maxDate, onDayPress, closeModal,
 }) => {
-  const formattedCurrentDate = formatDate(date);
+  const formattedCurrentDate = dateToDateString(date);
 
   return (
     <Calendar
@@ -46,12 +44,13 @@ const CalendarPicker = ({
       markedDates={{
         [formattedCurrentDate]: { selected: true },
       }}
-      onDayPress={(day) => {
+      onDayPress={(datePressed) => {
+        const { day, month, year } = datePressed;
         closeModal();
-        onDayPress(day);
+        onDayPress(getDate(year, month, day));
       }}
-      minDate={formatDate(minDate)}
-      maxDate={formatDate(maxDate)}
+      minDate={dateToDateString(minDate)}
+      maxDate={dateToDateString(maxDate)}
       firstDay={1}
     />
   );

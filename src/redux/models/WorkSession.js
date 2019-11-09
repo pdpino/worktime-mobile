@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { fk, attr, Model } from 'redux-orm';
-import { unixToDateString, unixToHour } from '../../shared/utils';
+import { toLocalDate, timeToPrettyDate, prettyHour } from '../../shared/dates';
 
 const portingWhiteList = [
-  'date', 'device', 'timestampStart', 'timestampEnd',
+  'device', 'timestampStart', 'timestampEnd', 'tzOffset',
   'timeTotal', 'timeEffective', 'nPauses', 'status',
 ];
 
@@ -26,13 +26,13 @@ class WorkSession extends Model {
         .import(workSession, importableSprint));
   }
 
-  static start(timestamp, subjectId, deviceName) {
+  static start(timestamp, tzOffset, subjectId, deviceName) {
     // eslint-disable-next-line no-shadow
     const { Subject, WorkSession } = this.session;
     const props = {
-      date: unixToDateString(timestamp),
       timestampStart: timestamp,
       timestampEnd: timestamp,
+      tzOffset,
       timeTotal: 0,
       timeEffective: 0,
       nPauses: 0,
@@ -107,12 +107,20 @@ class WorkSession extends Model {
     return this.status === 'stopped';
   }
 
+  getLocalDate() {
+    return toLocalDate(this.timestampStart, this.tzOffset);
+  }
+
+  getPrettyDate() {
+    return timeToPrettyDate(this.timestampStart, this.tzOffset);
+  }
+
   getPrettyHourStart() {
-    return unixToHour(this.timestampStart);
+    return prettyHour(this.timestampStart, this.tzOffset);
   }
 
   getPrettyHourEnd() {
-    return unixToHour(this.timestampEnd);
+    return prettyHour(this.timestampEnd, this.tzOffset);
   }
 
   getSprints() {
@@ -142,10 +150,10 @@ WorkSession.modelName = 'WorkSession';
 
 WorkSession.fields = {
   id: attr(),
-  date: attr(),
   device: attr(),
   timestampStart: attr(),
   timestampEnd: attr(),
+  tzOffset: attr(),
   timeTotal: attr(),
   timeEffective: attr(),
   nPauses: attr(),

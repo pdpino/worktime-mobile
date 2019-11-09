@@ -8,7 +8,7 @@ import { onAppActivate, onAppDeactivate, checkStoreVersion } from './src/redux/a
 import './src/shared/errors';
 
 let store;
-const storeVersionNeeded = 2;
+const storeVersionNeeded = 4;
 
 class App extends React.Component {
   constructor(props) {

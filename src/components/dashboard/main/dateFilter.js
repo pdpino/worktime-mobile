@@ -53,7 +53,7 @@ const DateFilter = ({
         buttonContainerStyle={[styles.box, styles.calendarLeft]}
         date={initialDate}
         maxDate={endingDate}
-        onDayPress={day => onChangeInitialDate(day.dateString)}
+        onDayPress={onChangeInitialDate}
       />
       {separator}
       <CalendarPicker
@@ -61,7 +61,7 @@ const DateFilter = ({
         buttonContainerStyle={[styles.box, styles.calendarRight]}
         date={endingDate}
         minDate={initialDate}
-        onDayPress={day => onChangeEndingDate(day.dateString)}
+        onDayPress={onChangeEndingDate}
       />
     </View>
   );

@@ -6,5 +6,5 @@ export {
   ElementsIndex,
 };
 
-export * from './dates';
 export * from './misc';
+export * from './types';

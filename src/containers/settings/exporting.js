@@ -4,7 +4,7 @@ import share from '../../services/sharing';
 import { subjectsSetSelector, profileSelector } from '../../redux/selectors';
 import ExportingComponent from '../../components/settings/exporting';
 import { getExportableObject, getExportFilename } from '../../shared/porting';
-import { getTimestampString } from '../../shared/utils';
+import { getTimestampString } from '../../shared/dates';
 
 class Exporting extends React.Component {
   constructor(props) {

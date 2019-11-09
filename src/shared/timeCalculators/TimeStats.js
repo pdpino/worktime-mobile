@@ -1,6 +1,7 @@
+import { smartDivision } from '../utils';
 import {
-  isBetween, isBefore, getDateCopy, smartDivision, countWeeks,
-} from '../utils';
+  isBetween, isBefore, getDateCopy, getStartOfDay, getEndOfDay, countWeeks,
+} from '../dates';
 
 class TimeStats {
   constructor() {
@@ -15,6 +16,8 @@ class TimeStats {
     this.categoriesSelection = null;
     this.idsSelection = null;
 
+    this.initialDate = null;
+    this.endingDate = null;
 
     /* Overall stats calculated in the process and returned */
     this.stats = {
@@ -79,6 +82,11 @@ class TimeStats {
     return !this.subjectsSelection || this.subjectsSelection[subjectId];
   }
 
+  initDates(initialDate, endingDate) {
+    this.initialDate = getStartOfDay(initialDate);
+    this.endingDate = getEndOfDay(endingDate);
+  }
+
   updateDates(date) {
     const { firstDate, lastDate } = this.stats;
     this.stats.daysWorked[date] = true;
@@ -102,7 +110,7 @@ class TimeStats {
     this.categoriesSummaries[index].children[subjectId] = true;
   }
 
-  sumSubjectTimesReturn(subject, initialDate, endingDate) {
+  sumSubjectTimesReturn(subject) {
     const subjectId = subject.id;
     const categoryId = subject.getCategoryId();
     let timeTotal = 0;
@@ -117,11 +125,14 @@ class TimeStats {
       };
     }
 
+    const { initialDate, endingDate } = this;
+
     subject.getWorkSessions({ sorted: false }).forEach((workSession) => {
-      if (!isBetween(initialDate, endingDate, workSession.date)) {
+      const workSessionDate = workSession.getLocalDate();
+      if (!isBetween(initialDate, endingDate, workSessionDate)) {
         return;
       }
-      this.updateDates(workSession.date);
+      this.updateDates(workSessionDate);
       timeTotal += workSession.timeTotal;
       timeEffective += workSession.timeEffective;
     });
@@ -134,8 +145,9 @@ class TimeStats {
     };
   }
 
-  sumSubjectTimes(...params) {
-    const { timeTotal, timeEffective } = this.sumSubjectTimesReturn(...params);
+  sumSubjectTimes(subject, initialDate, endingDate) {
+    this.initDates(initialDate, endingDate);
+    const { timeTotal, timeEffective } = this.sumSubjectTimesReturn(subject);
     this.stats.timeTotal = timeTotal;
     this.stats.timeEffective = timeEffective;
   }
@@ -150,6 +162,7 @@ class TimeStats {
   ) {
     this.initCategories(categories);
     this.initSelection(tab, idsSelection);
+    this.initDates(initialDate, endingDate);
 
     let addedTotal = 0;
     let addedEffective = 0;
@@ -158,7 +171,7 @@ class TimeStats {
       const {
         timeTotal: subjectTotal,
         timeEffective: subjectEffective,
-      } = this.sumSubjectTimesReturn(subject, initialDate, endingDate);
+      } = this.sumSubjectTimesReturn(subject);
 
       addedTotal += subjectTotal;
       addedEffective += subjectEffective;
