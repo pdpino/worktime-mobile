@@ -61,6 +61,16 @@ class TimeStats {
     return categories[index];
   }
 
+  updateCategoryTimes(subjectId, categoryId, timeTotal, timeEffective) {
+    const index = this.categoryIdToIdx[categoryId];
+    if (!index && index !== 0) return;
+
+    this.categoriesSummaries[index].timeTotal += timeTotal;
+    this.categoriesSummaries[index].timeEffective += timeEffective;
+
+    this.categoriesSummaries[index].children[subjectId] = true;
+  }
+
   initSelection(tab, idsSelection) {
     this.selectedTab = { ...tab };
     this.idsSelection = idsSelection;
@@ -98,16 +108,6 @@ class TimeStats {
     if (!lastDate || isBefore(lastDate, date)) {
       this.stats.lastDate = getDateCopy(date);
     }
-  }
-
-  updateCategoryTimes(subjectId, categoryId, timeTotal, timeEffective) {
-    const index = this.categoryIdToIdx[categoryId];
-    if (!index && index !== 0) return;
-
-    this.categoriesSummaries[index].timeTotal += timeTotal;
-    this.categoriesSummaries[index].timeEffective += timeEffective;
-
-    this.categoriesSummaries[index].children[subjectId] = true;
   }
 
   sumSubjectTimesReturn(subject) {

@@ -84,6 +84,9 @@ class Dashboard extends React.Component {
     this.handlePressClearItem = this.handlePressClearItem.bind(this);
     this.handleBackPress = this.handleBackPress.bind(this);
 
+    this.handlePressLeft = () => this.handleShiftDate('left');
+    this.handlePressRight = () => this.handleShiftDate('right');
+
     this.sumTimes = this.sumTimes.bind(this);
     this.memoizer = Memoizer();
 
@@ -405,8 +408,8 @@ class Dashboard extends React.Component {
           shortcutSelection={dateShortcutSelection}
           initialDate={initialDate}
           endingDate={endingDate}
-          onPressLeft={() => this.handleShiftDate('left')}
-          onPressRight={() => this.handleShiftDate('right')}
+          onPressLeft={this.handlePressLeft}
+          onPressRight={this.handlePressRight}
         />
         <SummaryComponent
           timeStats={timeStats}

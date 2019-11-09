@@ -33,38 +33,42 @@ const styles = StyleSheet.create({
   },
 });
 
-const DateFilter = ({
-  initialDate, endingDate, onChangeInitialDate, onChangeEndingDate,
-}) => {
-  const separator = (
-    <Icon
-      containerStyle={[styles.box, styles.separatorContainer]}
-      name="calendar"
-      type="font-awesome"
-      size={18}
-      color="white"
-    />
-  );
+class DateFilter extends React.PureComponent {
+  render() {
+    const {
+      initialDate, endingDate, onChangeInitialDate, onChangeEndingDate,
+    } = this.props;
 
-  return (
-    <View style={styles.container}>
-      <CalendarPicker
-        flex={1}
-        buttonContainerStyle={[styles.box, styles.calendarLeft]}
-        date={initialDate}
-        maxDate={endingDate}
-        onDayPress={onChangeInitialDate}
+    const separator = (
+      <Icon
+        containerStyle={[styles.box, styles.separatorContainer]}
+        name="calendar"
+        type="font-awesome"
+        size={18}
+        color="white"
       />
-      {separator}
-      <CalendarPicker
-        flex={1}
-        buttonContainerStyle={[styles.box, styles.calendarRight]}
-        date={endingDate}
-        minDate={initialDate}
-        onDayPress={onChangeEndingDate}
-      />
-    </View>
-  );
-};
+    );
+
+    return (
+      <View style={styles.container}>
+        <CalendarPicker
+          flex={1}
+          buttonContainerStyle={[styles.box, styles.calendarLeft]}
+          date={initialDate}
+          maxDate={endingDate}
+          onDayPress={onChangeInitialDate}
+        />
+        {separator}
+        <CalendarPicker
+          flex={1}
+          buttonContainerStyle={[styles.box, styles.calendarRight]}
+          date={endingDate}
+          minDate={initialDate}
+          onDayPress={onChangeEndingDate}
+        />
+      </View>
+    );
+  }
+}
 
 export default DateFilter;

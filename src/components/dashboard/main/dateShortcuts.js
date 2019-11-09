@@ -35,49 +35,58 @@ const styles = StyleSheet.create({
   },
 });
 
-const Arrow = ({ direction, onPress }) => {
-  const directionStyles = direction === 'left'
-    ? styles.arrowLeft
-    : styles.arrowRight;
+class Arrow extends React.PureComponent {
+  render() {
+    const { direction, onPress } = this.props;
 
-  return (
-    <Icon
-      containerStyle={[styles.arrowContainer, directionStyles]}
-      name={`caret-${direction}`}
-      type="font-awesome"
-      color="white"
-      size={22}
-      onPress={onPress}
-      underlayColor="#71b3e7"
-    />
-  );
-};
+    const directionStyles = direction === 'left'
+      ? styles.arrowLeft
+      : styles.arrowRight;
 
-const DateShortcuts = ({
-  shortcuts, shortcutSelection, initialDate, endingDate, onPressLeft, onPressRight,
-}) => {
-  const periodText = shortcutSelection
-    ? prettyShortcutSelection(shortcutSelection)
-    : prettyDaysSpan(initialDate, endingDate);
+    return (
+      <Icon
+        containerStyle={[styles.arrowContainer, directionStyles]}
+        name={`caret-${direction}`}
+        type="font-awesome"
+        color="white"
+        size={22}
+        onPress={onPress}
+        underlayColor="#71b3e7"
+      />
+    );
+  }
+}
 
-  return (
-    <View style={styles.container}>
-      <Arrow
-        direction="left"
-        onPress={onPressLeft}
-      />
-      <TextDropdownMenu
-        containerStyle={styles.textContainer}
-        textStyle={styles.text}
-        text={periodText}
-        items={shortcuts}
-      />
-      <Arrow
-        direction="right"
-        onPress={onPressRight}
-      />
-    </View>
-  );
-};
+class DateShortcuts extends React.PureComponent {
+  render() {
+    const {
+      shortcuts, shortcutSelection, initialDate, endingDate,
+      onPressLeft, onPressRight,
+    } = this.props;
+
+    const periodText = shortcutSelection
+      ? prettyShortcutSelection(shortcutSelection)
+      : prettyDaysSpan(initialDate, endingDate);
+
+    return (
+      <View style={styles.container}>
+        <Arrow
+          direction="left"
+          onPress={onPressLeft}
+        />
+        <TextDropdownMenu
+          containerStyle={styles.textContainer}
+          textStyle={styles.text}
+          text={periodText}
+          items={shortcuts}
+        />
+        <Arrow
+          direction="right"
+          onPress={onPressRight}
+        />
+      </View>
+    );
+  }
+}
 
 export default DateShortcuts;
