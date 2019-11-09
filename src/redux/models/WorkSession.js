@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import { fk, attr, Model } from 'redux-orm';
-import { toLocalDate, timeToPrettyDate, prettyHour } from '../../shared/dates';
+import {
+  toLocalDate, prettyTimezoneOffset, timeToPrettyDate, prettyHour,
+} from '../../shared/dates';
 
 const portingWhiteList = [
   'device', 'timestampStart', 'timestampEnd', 'tzOffset',
@@ -109,6 +111,10 @@ class WorkSession extends Model {
 
   getLocalDate() {
     return toLocalDate(this.timestampStart, this.tzOffset);
+  }
+
+  getPrettyTimezoneOffset() {
+    return prettyTimezoneOffset(this.tzOffset);
   }
 
   getPrettyDate() {

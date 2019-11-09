@@ -1,7 +1,7 @@
 import {
   format, formatDistanceStrict, differenceInDays,
 } from 'date-fns';
-import { toLocalDate } from './timestamp';
+import { toLocalDate, getTimezoneOffset } from './timestamp';
 import { isNumber, isValidDate } from '../utils';
 
 export function prettyDate(date, useNames = true) {
@@ -81,4 +81,13 @@ export function prettyDuration(totalSeconds, includeSeconds = false) {
 
 export function dateToDateString(date) {
   return isValidDate(date) && format(date, 'yyyy-MM-dd');
+}
+
+export function prettyTimezoneOffset(tzOffset) {
+  const offsetUsed = tzOffset != null ? tzOffset : getTimezoneOffset();
+  const offsetHours = offsetUsed / 3600;
+  if (offsetUsed === 0) return 'UTC';
+  if (offsetUsed > 0) return `+${offsetHours}`;
+
+  return offsetHours.toString();
 }

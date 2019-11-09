@@ -49,8 +49,9 @@ class WorkSessionItem extends React.PureComponent {
     const { workSession, onPressDelete } = this.props;
     // DICTIONARY (text)
     const {
-      id, nPauses, timeTotal, timeEffective,
+      id, nPauses, timeTotal, timeEffective, device,
     } = workSession;
+    const tzOffset = workSession.getPrettyTimezoneOffset();
 
     const dateTimeItem = (
       <View style={styles.item}>
@@ -63,7 +64,7 @@ class WorkSessionItem extends React.PureComponent {
           {workSession.getPrettyHourEnd()}
         </Text>
         <Text style={[styles.text, styles.textDevice]}>
-          {workSession.device}
+          {`${device} (${tzOffset})`}
         </Text>
       </View>
     );
