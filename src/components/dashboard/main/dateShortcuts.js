@@ -4,12 +4,13 @@ import { Icon } from 'react-native-elements';
 import { TextDropdownMenu } from '../../../shared/UI/menus';
 import { prettyDaysSpan, prettyShortcutSelection } from '../../../shared/dates';
 
+// COLORS
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
     elevation: 2,
-    backgroundColor: '#3B84B5',
+    backgroundColor: '#dedede',
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#3B84B5',
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   arrowContainer: {
+    backgroundColor: '#3B84B5',
     paddingHorizontal: 15,
   },
 });

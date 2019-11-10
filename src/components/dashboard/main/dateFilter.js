@@ -5,13 +5,14 @@ import {
 import { Icon } from 'react-native-elements';
 import { CalendarPicker } from '../../../shared/UI/pickers';
 
+// COLORS
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'stretch',
     elevation: 2,
-    backgroundColor: 'white',
+    backgroundColor: '#dedede',
     borderRadius: 2,
     borderColor: '#3B84B5',
     borderWidth: 1,

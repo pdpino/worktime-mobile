@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    backgroundColor: '#dedede',
   },
   tabContainer: {
     flex: 1,
