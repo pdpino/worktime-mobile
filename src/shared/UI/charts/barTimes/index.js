@@ -19,7 +19,7 @@ function getWidthUnits(data, key) {
   if (!data) return 1;
 
   const deviceWidth = Dimensions.get('window').width;
-  const maxWidthUsed = deviceWidth - 60; // FIXME: hardcoded
+  const maxWidthUsed = deviceWidth - 70; // FIXME: hardcoded
 
   const maxValue = Math.max(...data.map(item => item[key]));
 

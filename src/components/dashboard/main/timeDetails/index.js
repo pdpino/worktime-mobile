@@ -11,14 +11,20 @@ import { colorEffective, colorPaused } from '../colors';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    elevation: 2,
     backgroundColor: 'white',
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: '#3B84B5',
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
   headerContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginBottom: 5,
+    marginVertical: 5,
     paddingBottom: 8,
     paddingHorizontal: 8,
     borderBottomWidth: 1,

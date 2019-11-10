@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
+// COLORS
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -15,8 +16,8 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
     minHeight: 38,
     borderStyle: 'solid',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#cdcdcd',
+    borderBottomWidth: 1,
+    borderBottomColor: '#b3b3b3',
   },
   selectedContainer: {
     backgroundColor: '#71b3e74A',

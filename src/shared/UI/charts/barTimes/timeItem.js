@@ -7,13 +7,14 @@ import { CheckboxIcon } from '../../icons';
 import { prettyDuration } from '../../../dates';
 import { prettyPercentage } from '../../../utils';
 
+// COLORS
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
     paddingVertical: 7,
     borderBottomWidth: 1,
-    borderColor: '#b0b0b0',
+    borderColor: '#b3b3b3',
   },
   checkboxContainer: {
     justifyContent: 'center',

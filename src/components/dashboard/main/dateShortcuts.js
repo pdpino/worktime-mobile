@@ -8,13 +8,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginHorizontal: 20,
+    elevation: 2,
+    backgroundColor: '#3B84B5',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#3B84B5',
     marginBottom: 10,
+    marginHorizontal: 10,
   },
   textContainer: {
-    borderColor: '#3B84B5',
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
     paddingVertical: 4,
   },
   text: {
@@ -22,16 +24,6 @@ const styles = StyleSheet.create({
   },
   arrowContainer: {
     paddingHorizontal: 15,
-    backgroundColor: '#3B84B5',
-    borderColor: '#3B84B5',
-  },
-  arrowLeft: {
-    borderBottomLeftRadius: 5,
-    borderTopLeftRadius: 5,
-  },
-  arrowRight: {
-    borderBottomRightRadius: 5,
-    borderTopRightRadius: 5,
   },
 });
 
@@ -39,13 +31,9 @@ class Arrow extends React.PureComponent {
   render() {
     const { direction, onPress } = this.props;
 
-    const directionStyles = direction === 'left'
-      ? styles.arrowLeft
-      : styles.arrowRight;
-
     return (
       <Icon
-        containerStyle={[styles.arrowContainer, directionStyles]}
+        containerStyle={styles.arrowContainer}
         name={`caret-${direction}`}
         type="font-awesome"
         color="white"

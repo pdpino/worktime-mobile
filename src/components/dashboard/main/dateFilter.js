@@ -10,26 +10,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'stretch',
-    marginTop: 10,
-    marginBottom: 10,
-    marginHorizontal: 20,
+    elevation: 2,
+    backgroundColor: 'white',
+    borderRadius: 2,
+    borderColor: '#3B84B5',
+    borderWidth: 1,
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
   separatorContainer: {
     backgroundColor: '#3B84B5',
+    paddingHorizontal: 8,
   },
-  box: {
-    borderColor: '#3B84B5',
-    borderWidth: 2,
+  dateContainer: {
     paddingHorizontal: 3,
-    paddingVertical: 6,
-  },
-  calendarLeft: {
-    borderBottomLeftRadius: 5,
-    borderTopLeftRadius: 5,
-  },
-  calendarRight: {
-    borderBottomRightRadius: 5,
-    borderTopRightRadius: 5,
+    paddingVertical: 5,
   },
 });
 
@@ -41,7 +36,7 @@ class DateFilter extends React.PureComponent {
 
     const separator = (
       <Icon
-        containerStyle={[styles.box, styles.separatorContainer]}
+        containerStyle={styles.separatorContainer}
         name="calendar"
         type="font-awesome"
         size={18}
@@ -53,7 +48,7 @@ class DateFilter extends React.PureComponent {
       <View style={styles.container}>
         <CalendarPicker
           flex={1}
-          buttonContainerStyle={[styles.box, styles.calendarLeft]}
+          buttonContainerStyle={styles.dateContainer}
           date={initialDate}
           maxDate={endingDate}
           onDayPress={onChangeInitialDate}
@@ -61,7 +56,7 @@ class DateFilter extends React.PureComponent {
         {separator}
         <CalendarPicker
           flex={1}
-          buttonContainerStyle={[styles.box, styles.calendarRight]}
+          buttonContainerStyle={styles.dateContainer}
           date={endingDate}
           minDate={initialDate}
           onDayPress={onChangeEndingDate}

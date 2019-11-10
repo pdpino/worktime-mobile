@@ -2,13 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
+// COLORS
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#b3b3b3',
     padding: 10,
   },
   iconContainer: {

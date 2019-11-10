@@ -10,9 +10,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 5,
+    paddingVertical: 5,
     borderBottomWidth: 1,
     borderColor: 'black',
-    paddingBottom: 5,
   },
   legendContainer: {
     flexDirection: 'row',

@@ -3,11 +3,12 @@ import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 5,
+    paddingTop: 5,
+    paddingBottom: 2,
     paddingHorizontal: 15,
     borderStyle: 'solid',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#aeaeae',
+    borderBottomWidth: 1,
+    borderBottomColor: '#005885',
   },
   text: {
     fontWeight: '500',

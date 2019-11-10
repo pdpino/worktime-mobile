@@ -3,6 +3,7 @@ import {
   View, StyleSheet, Text, TouchableOpacity,
 } from 'react-native';
 
+// COLORS
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -13,16 +14,21 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingVertical: 10,
-    marginBottom: 5,
-    backgroundColor: '#efefef',
+    paddingVertical: 8,
+    backgroundColor: 'white',
+    borderColor: '#3B84B5',
+    borderBottomWidth: 1,
   },
   tabContainerSelected: {
-    borderBottomWidth: 5,
-    borderColor: '#005885',
+    elevation: 1,
+    borderBottomWidth: 3,
+    borderColor: '#3B84B5',
+  },
+  textContainerSelected: {
+    fontWeight: 'bold',
   },
   text: {
-    color: 'black',
+    color: '#3B84B5',
     fontSize: 18,
   },
 });
@@ -44,24 +50,32 @@ class Tabs extends React.PureComponent {
 
     return (
       <View style={styles.container}>
-        {tabsDefinition.map((tabDef, index) => (
-          <TouchableOpacity
-            style={{ flex: 1 }}
-            key={index.toString()}
-            onPress={() => onPressTab(tabDef.key)}
-          >
-            <View
-              style={[
-                styles.tabContainer,
-                tabDef.key === selectedTabKey && styles.tabContainerSelected,
-              ]}
+        {tabsDefinition.map((tabDef, index) => {
+          const isSelected = tabDef.key === selectedTabKey;
+          return (
+            <TouchableOpacity
+              style={{ flex: 1 }}
+              key={index.toString()}
+              onPress={() => onPressTab(tabDef.key)}
             >
-              <Text style={styles.text}>
-                {tabDef.label}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+              <View
+                style={[
+                  styles.tabContainer,
+                  isSelected && styles.tabContainerSelected,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.text,
+                    isSelected && styles.textContainerSelected,
+                  ]}
+                >
+                  {tabDef.label}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </View>
     );
   }

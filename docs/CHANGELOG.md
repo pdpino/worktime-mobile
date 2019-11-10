@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - Amount of days and weeks fixed
   - Fix height moving
 * Small fixes
+* Dashboard styles
 
 
 ## 1.10.0 - 2019-11-08
