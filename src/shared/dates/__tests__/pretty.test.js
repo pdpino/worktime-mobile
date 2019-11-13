@@ -2,6 +2,7 @@ import {
   prettyDate, timeToPrettyDate, prettyHour, prettyDaysAgo, prettyDuration,
   dateToDateString,
 } from '../pretty';
+import { mockToday, restoreMock, ODate } from './dateMock';
 
 describe('prettyDate', () => {
   describe('Invalid date handling', () => {
@@ -20,38 +21,36 @@ describe('prettyDate', () => {
     const dictTomorrow = 'Tomorrow';
 
     const fixedDay = new Date(2019, 10, 9, 14, 0, 0);
-    let nowDefaultFunction;
     beforeAll(() => {
-      nowDefaultFunction = Date.now;
-      Date.now = jest.fn(() => fixedDay.getTime());
+      mockToday(fixedDay);
     });
 
     afterAll(() => {
-      Date.now = nowDefaultFunction;
+      restoreMock();
     });
 
     it('Returns today correctly', () => {
       expect(prettyDate(fixedDay)).toEqual(dictToday);
-      expect(prettyDate(new Date(fixedDay.getTime()))).toEqual(dictToday);
+      expect(prettyDate(new ODate(fixedDay.getTime()))).toEqual(dictToday);
     });
 
     it('Returns yesterday correctly', () => {
-      expect(prettyDate(new Date(2019, 10, 7))).not.toEqual(dictYesterday);
-      expect(prettyDate(new Date(2019, 10, 8))).toEqual(dictYesterday);
-      expect(prettyDate(new Date(2019, 10, 8, 0, 1))).toEqual(dictYesterday);
-      expect(prettyDate(new Date(2019, 10, 8, 23, 59))).toEqual(dictYesterday);
+      expect(prettyDate(new ODate(2019, 10, 7))).not.toEqual(dictYesterday);
+      expect(prettyDate(new ODate(2019, 10, 8))).toEqual(dictYesterday);
+      expect(prettyDate(new ODate(2019, 10, 8, 0, 1))).toEqual(dictYesterday);
+      expect(prettyDate(new ODate(2019, 10, 8, 23, 59))).toEqual(dictYesterday);
     });
 
     it('Returns tomorrow correctly', () => {
-      expect(prettyDate(new Date(2019, 10, 11))).not.toEqual(dictTomorrow);
-      expect(prettyDate(new Date(2019, 10, 10))).toEqual(dictTomorrow);
-      expect(prettyDate(new Date(2019, 10, 10, 0, 1))).toEqual(dictTomorrow);
-      expect(prettyDate(new Date(2019, 10, 10, 23, 59))).toEqual(dictTomorrow);
+      expect(prettyDate(new ODate(2019, 10, 11))).not.toEqual(dictTomorrow);
+      expect(prettyDate(new ODate(2019, 10, 10))).toEqual(dictTomorrow);
+      expect(prettyDate(new ODate(2019, 10, 10, 0, 1))).toEqual(dictTomorrow);
+      expect(prettyDate(new ODate(2019, 10, 10, 23, 59))).toEqual(dictTomorrow);
     });
 
     it('Returns other dates correctly', () => {
-      expect(prettyDate(new Date(2018, 10, 7))).toEqual('Wed 7 Nov 2018');
-      expect(prettyDate(new Date(2019, 10, 7))).toEqual('Thu 7 Nov');
+      expect(prettyDate(new ODate(2018, 10, 7))).toEqual('Wed 7 Nov 2018');
+      expect(prettyDate(new ODate(2019, 10, 7))).toEqual('Thu 7 Nov');
     });
   });
 });
