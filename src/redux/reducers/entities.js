@@ -72,21 +72,39 @@ const entities = orm => (state, action) => {
     case 'PLAYER/STARTED':
     case 'PLAYER/UPDATE_TIMES': {
       const { runningSessionId, timestamp } = action.payload;
-      WorkSession.withId(runningSessionId).updateTimes(timestamp);
+      if (WorkSession.idExists(runningSessionId)) {
+        WorkSession.withId(runningSessionId).updateTimes(timestamp);
+      }
       break;
     }
-    case 'PLAYER/RESUME':
-      WorkSession.withId(action.payload.runningSessionId).resume(action.payload.timestamp);
+    case 'PLAYER/RESUME': {
+      const { runningSessionId, timestamp } = action.payload;
+      if (WorkSession.idExists(runningSessionId)) {
+        WorkSession.withId(runningSessionId).resume(timestamp);
+      }
       break;
-    case 'PLAYER/PAUSE':
-      WorkSession.withId(action.payload.runningSessionId).pause(action.payload.timestamp);
+    }
+    case 'PLAYER/PAUSE': {
+      const { runningSessionId, timestamp } = action.payload;
+      if (WorkSession.idExists(runningSessionId)) {
+        WorkSession.withId(runningSessionId).pause(timestamp);
+      }
       break;
-    case 'PLAYER/STOP':
-      WorkSession.withId(action.payload.runningSessionId).stop(action.payload.timestamp);
+    }
+    case 'PLAYER/STOP': {
+      const { runningSessionId, timestamp } = action.payload;
+      if (WorkSession.idExists(runningSessionId)) {
+        WorkSession.withId(runningSessionId).stop(timestamp);
+      }
       break;
-    case 'PLAYER/STOP_DISCARD':
-      WorkSession.withId(action.payload.runningSessionId).delete();
+    }
+    case 'PLAYER/STOP_DISCARD': {
+      const { runningSessionId } = action.payload;
+      if (WorkSession.idExists(runningSessionId)) {
+        WorkSession.withId(runningSessionId).delete();
+      }
       break;
+    }
     case 'IMPORT_SUBJECTS_DATA':
       action.payload.importableSubjects
         .forEach(importableSubject => Subject.import(importableSubject));
