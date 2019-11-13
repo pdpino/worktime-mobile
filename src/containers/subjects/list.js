@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Alert } from 'react-native';
 import { SubjectsListComponent, SubjectsList } from '../../components/subjects/list';
 import { subjectsSelector, categoriesSelector } from '../../redux/selectors';
 import { archiveSubjects, deleteSubjects } from '../../redux/actions';
@@ -9,6 +8,7 @@ import { MultipleNewButton } from '../../shared/UI/buttons';
 import { HeaderActions } from '../../shared/UI/headers';
 import { getSubjectsAsSectionList } from '../../shared/utils';
 import withItemSelection from '../../hoc/itemSelection';
+import { alertDelete } from '../../shared/alerts';
 
 export default function createSubjectsList(isArchive) {
   class SubjectsListContainer extends React.Component {
@@ -188,20 +188,13 @@ export default function createSubjectsList(isArchive) {
       }
 
       // DICTIONARY
-      Alert.alert(
-        'Confirmation',
-        `Delete ${deletionSelected}?`,
-        [
-          { text: 'Cancel', style: 'cancel' },
-          {
-            text: 'Delete',
-            onPress: () => {
-              this.props.deleteSubjects(selectedIds);
-              this.props.clearSelection();
-            },
-          },
-        ],
-      );
+      alertDelete({
+        title: `Delete ${deletionSelected}?`,
+        onDelete: () => {
+          this.props.deleteSubjects(selectedIds);
+          this.props.clearSelection();
+        },
+      });
     }
 
     handlePressArchive() {

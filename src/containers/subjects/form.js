@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Alert } from 'react-native';
 import SubjectFormComponent from '../../components/subjects/form';
 import { upsertSubject, deleteSubjects } from '../../redux/actions';
 import { categoriesSelector } from '../../redux/selectors';
 import { HeaderActions } from '../../shared/UI/headers';
+import { alertDelete } from '../../shared/alerts';
 
 class SubjectForm extends React.Component {
   static navigationOptions({ navigation }) {
@@ -91,22 +91,14 @@ class SubjectForm extends React.Component {
     if (!subject) {
       return;
     }
-
     // DICTIONARY
-    Alert.alert(
-      'Confirmation',
-      `Delete ${subject.name}?`,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Delete',
-          onPress: () => {
-            this.props.navigation.goBack();
-            this.props.deleteSubjects([subject.id]);
-          },
-        },
-      ],
-    );
+    alertDelete({
+      title: `Delete ${subject.name}?`,
+      onDelete: () => {
+        this.props.navigation.goBack();
+        this.props.deleteSubjects([subject.id]);
+      },
+    });
   }
 
   render() {

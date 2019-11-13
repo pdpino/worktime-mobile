@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Alert, ToastAndroid } from 'react-native';
+import { ToastAndroid } from 'react-native';
 import {
   WorkPlayerComponent, SubjectPickerComponent, PlayerButtonsComponent, StatusDisplayerComponent,
 } from '../../components/work';
@@ -12,6 +12,8 @@ import {
   subjectsForPickerSelector, selectedSubjectSelector,
   runningSessionSelector, lastRunningSessionSelector,
 } from '../../redux/selectors';
+import { alertDelete } from '../../shared/alerts';
+
 
 class WorkPlayer extends React.Component {
   constructor(props) {
@@ -57,26 +59,20 @@ class WorkPlayer extends React.Component {
       return;
     }
     // DICTIONARY
-    Alert.alert(
-      'Stop and discard',
-      'Do you want to discard this work session?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Stop and Discard',
-          onPress: () => {
-            this.props.stopAndDiscard();
-            ToastAndroid.showWithGravityAndOffset(
-              'Discarded',
-              ToastAndroid.LONG,
-              ToastAndroid.BOTTOM,
-              0,
-              50,
-            );
-          },
-        },
-      ],
-    );
+    alertDelete({
+      title: 'Discard this session?',
+      deleteMessage: 'Stop and Discard',
+      onDelete: () => {
+        this.props.stopAndDiscard();
+        ToastAndroid.showWithGravityAndOffset(
+          'Discarded',
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          0,
+          50,
+        );
+      },
+    });
   }
 
   handleSelectSubject(selectedSubjectId) {

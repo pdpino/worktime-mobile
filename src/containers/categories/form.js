@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Alert } from 'react-native';
 import CategoryFormComponent from '../../components/categories/form';
 import { upsertCategory, deleteCategory } from '../../redux/actions';
 import { HeaderActions } from '../../shared/UI/headers';
+import { alertDelete } from '../../shared/alerts';
 
 class CategoryForm extends React.Component {
   static navigationOptions({ navigation }) {
@@ -86,20 +86,13 @@ class CategoryForm extends React.Component {
       return;
     }
     // DICTIONARY
-    Alert.alert(
-      'Confirmation',
-      `Delete ${category.name}?`,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Delete',
-          onPress: () => {
-            this.props.deleteCategory(category.id);
-            this.props.navigation.goBack();
-          },
-        },
-      ],
-    );
+    alertDelete({
+      title: `Delete ${category.name}?`,
+      onDelete: () => {
+        this.props.deleteCategory(category.id);
+        this.props.navigation.goBack();
+      },
+    });
   }
 
   render() {

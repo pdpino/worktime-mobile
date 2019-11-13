@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ScrollView, Alert } from 'react-native';
+import { ScrollView } from 'react-native';
 import WorkSessionsListComponent from '../../components/workSessions/list';
 import SubjectInfoComponent from '../../components/subjects/info';
 import { subjectSelector } from '../../redux/selectors';
@@ -9,6 +9,7 @@ import { deleteWorkSession, deleteSubjects } from '../../redux/actions';
 import { Memoizer } from '../../shared/utils';
 import { sumSubjectTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
 import { HeaderActions } from '../../shared/UI/headers';
+import { alertDelete } from '../../shared/alerts';
 
 class SubjectShow extends React.Component {
   static navigationOptions({ navigation }) {
@@ -76,20 +77,13 @@ class SubjectShow extends React.Component {
 
   handleDeleteWorkSession(id) {
     // DICTIONARY
-    Alert.alert(
-      'Confirmation',
-      'Are you sure you want to delete the work session?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Delete',
-          onPress: () => {
-            this.props.deleteWorkSession(id);
-            this.sumTimes();
-          },
-        },
-      ],
-    );
+    alertDelete({
+      title: 'Delete the work session?',
+      onDelete: () => {
+        this.props.deleteWorkSession(id);
+        this.sumTimes();
+      },
+    });
   }
 
   sumTimes() {

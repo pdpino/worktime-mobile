@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Alert } from 'react-native';
 import { importFromJson } from '../../redux/actions';
 import { subjectsSelector, profileSelector } from '../../redux/selectors';
 import {
@@ -9,6 +8,7 @@ import {
 } from '../../components/settings/importing';
 import { openFileSelector, openJsonFile } from '../../services/sharing';
 import { processSubjects, getImportableSubjects } from '../../shared/porting';
+import { alertError } from '../../shared/alerts';
 
 class Importing extends React.Component {
   constructor(props) {
@@ -32,13 +32,7 @@ class Importing extends React.Component {
   }
 
   displayPreviewError(errorText) {
-    Alert.alert(
-      'Error',
-      errorText,
-      [
-        { text: 'Ok' },
-      ],
-    );
+    alertError({ message: errorText });
     this.setState({
       path: null,
       isLoadingPreview: false,
