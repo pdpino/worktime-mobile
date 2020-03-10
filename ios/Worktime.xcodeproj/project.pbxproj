@@ -57,6 +57,8 @@
 		D2B202CAD9464C95BF54F936 /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DDDF21DE40314E999CFB893A /* libRNShare.a */; };
 		3D36DC13B3EE433A82463278 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6FABE6DCFA414FB7AB5182 /* libRNFS.a */; };
 		53B2AA34FC394426ABA9B08B /* libRNFileSelector.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 265D0DF34DED41CFA13E8AAA /* libRNFileSelector.a */; };
+		5D477E1C550A4A478B089BC9 /* libRNLocalize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE5096F7ECD648489835A377 /* libRNLocalize.a */; };
+		69CF382B0C454181B277CE04 /* libRNLocalize-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 26506FC3FD4545E1B5C0C096 /* libRNLocalize-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -387,6 +389,9 @@
 		CB6FABE6DCFA414FB7AB5182 /* libRNFS.a */ = {isa = PBXFileReference; name = "libRNFS.a"; path = "libRNFS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		A99BAFBEA25F40F9B23AF526 /* RNFileSelector.xcodeproj */ = {isa = PBXFileReference; name = "RNFileSelector.xcodeproj"; path = "../node_modules/react-native-file-selector/ios/RNFileSelector.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		265D0DF34DED41CFA13E8AAA /* libRNFileSelector.a */ = {isa = PBXFileReference; name = "libRNFileSelector.a"; path = "libRNFileSelector.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		72D1C35202314AD39808A9A4 /* RNLocalize.xcodeproj */ = {isa = PBXFileReference; name = "RNLocalize.xcodeproj"; path = "../node_modules/react-native-localize/ios/RNLocalize.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		AE5096F7ECD648489835A377 /* libRNLocalize.a */ = {isa = PBXFileReference; name = "libRNLocalize.a"; path = "libRNLocalize.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		26506FC3FD4545E1B5C0C096 /* libRNLocalize-tvOS.a */ = {isa = PBXFileReference; name = "libRNLocalize-tvOS.a"; path = "libRNLocalize-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -420,6 +425,7 @@
 				D2B202CAD9464C95BF54F936 /* libRNShare.a in Frameworks */,
 				3D36DC13B3EE433A82463278 /* libRNFS.a in Frameworks */,
 				53B2AA34FC394426ABA9B08B /* libRNFileSelector.a in Frameworks */,
+				5D477E1C550A4A478B089BC9 /* libRNLocalize.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +442,7 @@
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
 				83144F363A06441CA1AFA10F /* libRNDeviceInfo-tvOS.a in Frameworks */,
+				69CF382B0C454181B277CE04 /* libRNLocalize-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +619,7 @@
 				85AB053004734805A55338A7 /* RNShare.xcodeproj */,
 				7EE64626F138496E8274BCA2 /* RNFS.xcodeproj */,
 				A99BAFBEA25F40F9B23AF526 /* RNFileSelector.xcodeproj */,
+				72D1C35202314AD39808A9A4 /* RNLocalize.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1275,6 +1283,8 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Worktime.app/Worktime";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1283,6 +1293,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-file-selector/ios",
+					"$(SRCROOT)/../node_modules/react-native-localize/ios",
 				);
 			};
 			name = Debug;
@@ -1303,6 +1314,8 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Worktime.app/Worktime";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1311,6 +1324,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-file-selector/ios",
+					"$(SRCROOT)/../node_modules/react-native-localize/ios",
 				);
 			};
 			name = Release;
@@ -1337,6 +1351,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-file-selector/ios",
+					"$(SRCROOT)/../node_modules/react-native-localize/ios",
 				);
 			};
 			name = Debug;
@@ -1362,6 +1377,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-file-selector/ios",
+					"$(SRCROOT)/../node_modules/react-native-localize/ios",
 				);
 			};
 			name = Release;
@@ -1391,6 +1407,8 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1399,6 +1417,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-file-selector/ios",
+					"$(SRCROOT)/../node_modules/react-native-localize/ios",
 				);
 			};
 			name = Debug;
@@ -1428,6 +1447,8 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1436,6 +1457,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-file-selector/ios",
+					"$(SRCROOT)/../node_modules/react-native-localize/ios",
 				);
 			};
 			name = Release;
@@ -1464,6 +1486,8 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1472,6 +1496,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-file-selector/ios",
+					"$(SRCROOT)/../node_modules/react-native-localize/ios",
 				);
 			};
 			name = Debug;
@@ -1500,6 +1525,8 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1508,6 +1535,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-file-selector/ios",
+					"$(SRCROOT)/../node_modules/react-native-localize/ios",
 				);
 			};
 			name = Release;
