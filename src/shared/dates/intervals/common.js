@@ -2,21 +2,15 @@ import {
   addMonths, subDays, isWithinInterval, differenceInCalendarDays,
   startOfMonth, endOfMonth, isBefore,
 } from 'date-fns';
+import i18n from '../../i18n';
 import { toMaxFixed, isValidDate } from '../../utils';
 
-function decidePluralLabel(singular, plural) {
-  return (amount) => {
-    const label = amount === 1 ? singular : plural;
-    return `${amount} ${label}`;
-  };
-}
-
-// DICTIONARY
-export const prettyDays = decidePluralLabel('day', 'days');
-export const prettyWeeks = decidePluralLabel('week', 'weeks');
-const prettyMonths = decidePluralLabel('month', 'months');
-const prettySemesters = decidePluralLabel('semester', 'semesters');
-const prettyYears = decidePluralLabel('year', 'years');
+const getDictFunction = key => count => i18n.t(`datePeriods.${key}`, { count });
+export const prettyDays = getDictFunction('day');
+export const prettyWeeks = getDictFunction('week');
+const prettyMonths = getDictFunction('month');
+const prettySemesters = getDictFunction('semester');
+const prettyYears = getDictFunction('year');
 
 export const prettySpanFunctions = {
   day: prettyDays,
@@ -51,12 +45,11 @@ function daysToInterval(nDays, amount1, amount2, pretty1, pretty2) {
 
 export function prettyDaysSpan(initialDate, endingDate) {
   if (!initialDate || !endingDate) {
-    return 'Infinite time'; // DICTIONARY
+    return i18n.t('datePeriods.infinite');
   }
 
   const diffDays = getDaysInclusiveDiff(initialDate, endingDate);
 
-  // DICTIONARY
   if (diffDays < 7) {
     return prettyDays(diffDays);
   } if (diffDays < 30) {

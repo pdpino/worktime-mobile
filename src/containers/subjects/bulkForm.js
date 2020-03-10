@@ -4,11 +4,12 @@ import { bindActionCreators } from 'redux';
 import BulkSubjectFormComponent from '../../components/subjects/bulkForm';
 import { updateSubjects } from '../../redux/actions';
 import { categoriesSelector } from '../../redux/selectors';
+import i18n from '../../shared/i18n';
 
 class BulkSubjectForm extends React.Component {
   static navigationOptions() {
     return {
-      title: 'Edit Subjects', // DICTIONARY
+      title: i18n.t('entities.editSubjects'),
     };
   }
 

@@ -6,6 +6,7 @@ import { upsertSubject, deleteSubjects } from '../../redux/actions';
 import { categoriesSelector } from '../../redux/selectors';
 import { HeaderActions } from '../../shared/UI/headers';
 import { alertDelete } from '../../shared/alerts';
+import i18n from '../../shared/i18n';
 
 class SubjectForm extends React.Component {
   static navigationOptions({ navigation }) {
@@ -13,7 +14,7 @@ class SubjectForm extends React.Component {
 
     if (!subject) {
       return {
-        title: 'New Subject', // DICTIONARY
+        title: i18n.t('entities.newSubject'),
       };
     }
 
@@ -25,7 +26,7 @@ class SubjectForm extends React.Component {
     ];
 
     return {
-      title: 'Edit Subject', // DICTIONARY
+      title: i18n.t('entities.editSubject'),
       headerRight: <HeaderActions actions={actions} />,
     };
   }
@@ -91,9 +92,8 @@ class SubjectForm extends React.Component {
     if (!subject) {
       return;
     }
-    // DICTIONARY
     alertDelete({
-      title: `Delete ${subject.name}?`,
+      title: i18n.t('deletion.deleteThis', { element: subject.name }),
       onDelete: () => {
         this.props.navigation.goBack();
         this.props.deleteSubjects([subject.id]);

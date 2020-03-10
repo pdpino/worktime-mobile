@@ -1,4 +1,5 @@
 import { Alert } from 'react-native';
+import i18n from '../i18n';
 
 const productionErrorHandler = (error, isFatal) => {
   /* eslint-disable no-console */
@@ -7,7 +8,7 @@ const productionErrorHandler = (error, isFatal) => {
   /* eslint-enable no-console */
 
   Alert.alert(
-    'Error', // DICTIONARY
+    i18n.t('error'),
     error.message,
     [{ text: 'OK' }],
   );

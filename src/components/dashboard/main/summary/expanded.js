@@ -6,6 +6,7 @@ import { prettyPercentage } from '../../../../shared/utils';
 import {
   prettyDate, prettyDuration, prettyDays, prettyWeeks, isSameDay,
 } from '../../../../shared/dates';
+import i18n from '../../../../shared/i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,15 +41,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
 });
-
-// DICTIONARY
-const dictPercentage = 'Effective time';
-const dictWorked = 'worked';
-const dictPerDay = 'per day';
-const dictPerWeek = 'per week';
-const dictFirstDay = 'First day worked';
-const dictLastDay = 'Last day worked';
-
 
 const ExpandedSummary = ({ timeStats, initialDate, endingDate }) => {
   const {
@@ -93,25 +85,25 @@ const ExpandedSummary = ({ timeStats, initialDate, endingDate }) => {
     </View>
   );
 
-  const daysRow = getMultipleRow('Daily', [
+  const daysRow = getMultipleRow(i18n.t('datePeriods.daily'), [
     {
       prefix: prettyDuration(dayAvg),
-      suffix: dictPerDay,
+      suffix: i18n.t('times.perDay'),
     },
     {
       prefix: prettyDays(nDaysWorked),
-      suffix: dictWorked,
+      suffix: i18n.t('times.worked', { count: nDaysWorked }),
     },
   ]);
 
-  const weeksRow = getMultipleRow('Weekly', [
+  const weeksRow = getMultipleRow(i18n.t('datePeriods.weekly'), [
     {
       prefix: prettyDuration(weekAvg),
-      suffix: dictPerWeek,
+      suffix: i18n.t('times.perWeek'),
     },
     {
       prefix: prettyWeeks(nWeeksWorked),
-      suffix: dictWorked,
+      suffix: i18n.t('times.worked', { count: nWeeksWorked }),
     },
   ]);
 
@@ -121,11 +113,17 @@ const ExpandedSummary = ({ timeStats, initialDate, endingDate }) => {
 
   return (
     <View style={styles.container}>
-      {getSimpleRow(dictPercentage, percentage)}
+      {getSimpleRow(i18n.t('times.effectiveTime'), percentage)}
       {daysRow}
       {weeksRow}
-      {showFirstDate && getSimpleRow(dictFirstDay, prettyDate(firstDate))}
-      {showLastDate && getSimpleRow(dictLastDay, prettyDate(lastDate))}
+      {showFirstDate && getSimpleRow(
+        i18n.t('times.firstDayWorked'),
+        prettyDate(firstDate),
+      )}
+      {showLastDate && getSimpleRow(
+        i18n.t('times.lastDayWorked'),
+        prettyDate(lastDate),
+      )}
     </View>
   );
 };

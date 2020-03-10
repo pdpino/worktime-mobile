@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Picker } from 'react-native';
+import i18n from '../../i18n';
 
 // DEPRECATED: this Component is deprecated, prefer ModalPicker
 
@@ -20,10 +21,9 @@ const PickerWrapper = ({
     />
   ));
 
-  // DICTIONARY
   itemsList.push(
     <Picker.Item
-      label="None"
+      label={i18n.t('none')}
       value={-1}
       key={-1}
     />,

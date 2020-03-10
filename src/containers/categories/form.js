@@ -5,6 +5,7 @@ import CategoryFormComponent from '../../components/categories/form';
 import { upsertCategory, deleteCategory } from '../../redux/actions';
 import { HeaderActions } from '../../shared/UI/headers';
 import { alertDelete } from '../../shared/alerts';
+import i18n from '../../shared/i18n';
 
 class CategoryForm extends React.Component {
   static navigationOptions({ navigation }) {
@@ -85,9 +86,8 @@ class CategoryForm extends React.Component {
     if (!category) {
       return;
     }
-    // DICTIONARY
     alertDelete({
-      title: `Delete ${category.name}?`,
+      title: i18n.t('deletion.deleteThis', { element: category.name }),
       onDelete: () => {
         this.props.deleteCategory(category.id);
         this.props.navigation.goBack();

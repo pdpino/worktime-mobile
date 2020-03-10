@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, Text, FlatList,
 } from 'react-native';
+import i18n from '../../../shared/i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,14 +32,11 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const dictSubjectsSelected = 'Subjects selected';
-
 class SubjectsInfo extends React.PureComponent {
   static renderSubject(subject) {
     const categoryName = subject.category
       ? subject.category.name
-      : 'No category';
+      : i18n.t('entities.noCategory');
     const categoryText = ` (${categoryName})`;
     return (
       <View style={styles.item}>
@@ -58,7 +56,7 @@ class SubjectsInfo extends React.PureComponent {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
-          {dictSubjectsSelected}
+          {i18n.t('entities.subjectsSelected')}
           :
         </Text>
         <FlatList

@@ -54,8 +54,10 @@ class DateShortcuts extends React.PureComponent {
       onPressLeft, onPressRight,
     } = this.props;
 
-    const periodText = shortcutSelection
-      ? prettyShortcutSelection(shortcutSelection)
+    const { key, shifted } = shortcutSelection || {};
+
+    const periodText = key
+      ? prettyShortcutSelection(key, shifted)
       : prettyDaysSpan(initialDate, endingDate);
 
     return (

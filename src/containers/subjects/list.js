@@ -6,9 +6,10 @@ import { subjectsSelector, categoriesSelector } from '../../redux/selectors';
 import { archiveSubjects, deleteSubjects } from '../../redux/actions';
 import { MultipleNewButton } from '../../shared/UI/buttons';
 import { HeaderActions } from '../../shared/UI/headers';
-import { getSubjectsAsSectionList } from '../../shared/utils';
 import withItemSelection from '../../hoc/itemSelection';
 import { alertDelete } from '../../shared/alerts';
+import i18n from '../../shared/i18n';
+import { getSubjectsAsSectionList } from './utils';
 
 export default function createSubjectsList(isArchive) {
   class SubjectsListContainer extends React.Component {
@@ -32,9 +33,8 @@ export default function createSubjectsList(isArchive) {
 
     static navigationOptions({ navigation }) {
       if (isArchive) {
-        // DICTIONARY
         return {
-          title: 'Archive',
+          title: i18n.t('archive'),
         };
       }
 
@@ -45,9 +45,8 @@ export default function createSubjectsList(isArchive) {
         },
       ];
 
-      // DICTIONARY
       return {
-        title: 'Subjects',
+        title: i18n.t('entities.subjects'),
         headerRight: <HeaderActions actions={actions} />,
       };
     }
@@ -74,16 +73,15 @@ export default function createSubjectsList(isArchive) {
         handlePressArchive: this.handlePressArchive,
       });
 
-      // DICTIONARY
       // COLORS
       this.newActions = [
         {
-          title: 'Category',
+          title: i18n.t('entities.category'),
           handlePress: this.handlePressNewCategory,
           color: '#d50000',
         },
         {
-          title: 'Subject',
+          title: i18n.t('entities.subject'),
           handlePress: this.handlePressNewSubject,
           color: '#ef8c00',
         },
@@ -187,9 +185,8 @@ export default function createSubjectsList(isArchive) {
         deletionSelected = `${selectedIds.length} subjects`;
       }
 
-      // DICTIONARY
       alertDelete({
-        title: `Delete ${deletionSelected}?`,
+        title: i18n.t('deletion.deleteThis', { element: deletionSelected }),
         onDelete: () => {
           this.props.deleteSubjects(selectedIds);
           this.props.clearSelection();

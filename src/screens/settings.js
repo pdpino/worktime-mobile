@@ -4,31 +4,32 @@ import Profile from '../containers/settings/profile';
 import Exporting from '../containers/settings/exporting';
 import Importing from '../containers/settings/importing';
 import headerOptions from './header';
+import i18n from '../shared/i18n';
 
 const SettingsStack = createStackNavigator({
   menu: {
     screen: SettingsMenu,
-    navigationOptions: {
-      title: 'Settings', // DICTIONARY
-    },
+    navigationOptions: () => ({
+      title: i18n.t('settings'),
+    }),
   },
   profile: {
     screen: Profile,
-    navigationOptions: {
-      title: 'Profile', // DICTIONARY
-    },
+    navigationOptions: () => ({
+      title: i18n.t('profile'),
+    }),
   },
   exporting: {
     screen: Exporting,
-    navigationOptions: {
-      title: 'Export data', // DICTIONARY
-    },
+    navigationOptions: () => ({
+      title: i18n.t('porting.exportData'),
+    }),
   },
   importing: {
     screen: Importing,
-    navigationOptions: {
-      title: 'Import data', // DICTIONARY
-    },
+    navigationOptions: () => ({
+      title: i18n.t('porting.importData'),
+    }),
   },
 },
 {

@@ -13,6 +13,7 @@ import {
   getToday,
 } from '../../shared/dates';
 import { sumTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
+import i18n from '../../shared/i18n';
 
 class Dashboard extends React.Component {
   static isSameDay(dateA, dateB) {
@@ -145,17 +146,16 @@ class Dashboard extends React.Component {
       endingDate: subtractDays(endingDate, -shift * amount),
     });
 
-    // DICTIONARY
     this.shortcuts = [
       {
         key: 'day',
-        label: 'Today',
+        label: i18n.t('dates.today'),
         callback: () => this.handleChangeDates(getToday(), getToday(), 'day'),
         shifter: getDayShifter(1),
       },
       {
         key: 'week',
-        label: 'This week',
+        label: i18n.t('dates.thisWeek'),
         callback: () => this.handleChangeDates(
           getStartOfWeek(),
           getEndOfWeek(),
@@ -165,7 +165,7 @@ class Dashboard extends React.Component {
       },
       {
         key: 'month',
-        label: 'This month',
+        label: i18n.t('dates.thisMonth'),
         callback: () => this.handleChangeDates(
           getStartOfMonth(),
           getEndOfMonth(),
@@ -175,7 +175,7 @@ class Dashboard extends React.Component {
       },
       {
         key: 'semester',
-        label: 'This Semester',
+        label: i18n.t('dates.thisSemester'),
         callback: () => this.handleChangeDates(
           getStartOfSemester(),
           getToday(),
@@ -185,7 +185,7 @@ class Dashboard extends React.Component {
       },
       {
         key: 'none',
-        label: 'All time',
+        label: i18n.t('dates.allTime'),
         callback: () => this.handleChangeDates(null, getToday(), 'none'),
       },
     ];
@@ -387,7 +387,7 @@ class Dashboard extends React.Component {
     let title = null;
     if (selectedId != null) {
       if (selectedId === -1) {
-        title = 'No Category'; // DICTIONARY
+        title = i18n.t('entities.noCategory');
       } else {
         const selectedCategory = categories
           .find(category => category.id === selectedId);

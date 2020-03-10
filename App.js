@@ -5,6 +5,7 @@ import configureStore from './src/redux/store';
 import { SplashScreen } from './src/shared/UI/screens';
 import AppStateListener from './src/services/appState';
 import { onAppActivate, onAppDeactivate, checkStoreVersion } from './src/redux/actions';
+import I18N from './src/shared/i18n';
 import './src/shared/errors';
 
 let store;
@@ -20,15 +21,23 @@ class App extends React.Component {
 
     store = configureStore(this.finishRehydrating.bind(this));
     this.appState = new AppStateListener();
+    I18N.setup();
   }
 
   componentDidMount() {
     this.appState.listenOnActivate(() => store.dispatch(onAppActivate()));
     this.appState.listenOnDeactivate(() => store.dispatch(onAppDeactivate()));
+
+    I18N.listenLocaleChanges(() => {
+      if (this.state.storeReady) {
+        this.forceUpdate();
+      }
+    });
   }
 
   componentWillUnmount() {
     this.appState.removeListeners();
+    I18N.removeListeners();
   }
 
   finishRehydrating() {

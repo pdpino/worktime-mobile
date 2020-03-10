@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, Text, TextInput, Button,
 } from 'react-native';
+import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,13 +33,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const namePlaceholder = 'Name';
-const aliasPlaceholder = 'Short name';
-const descriptionPlaceholder = 'Work on this and that...';
-const nameLabel = 'Name';
-const aliasLabel = 'Alias';
-const descriptionLabel = 'Description';
+const formScope = { scope: 'formFields' };
 
 const CategoryForm = ({
   name, alias, description,
@@ -47,12 +42,12 @@ const CategoryForm = ({
   const nameInput = (
     <View style={styles.formItem}>
       <Text style={styles.label}>
-        {nameLabel}
+        {i18n.t('name', formScope)}
       </Text>
       <TextInput
         style={styles.input}
         value={name}
-        placeholder={namePlaceholder}
+        placeholder={i18n.t('name', formScope)}
         onChangeText={onChangeName}
       />
     </View>
@@ -61,12 +56,12 @@ const CategoryForm = ({
   const aliasInput = (
     <View style={styles.formItem}>
       <Text style={styles.label}>
-        {aliasLabel}
+        {i18n.t('alias', formScope)}
       </Text>
       <TextInput
         style={styles.input}
         value={alias}
-        placeholder={aliasPlaceholder}
+        placeholder={i18n.t('shortName', formScope)}
         onChangeText={onChangeAlias}
       />
     </View>
@@ -75,19 +70,19 @@ const CategoryForm = ({
   const descriptionInput = (
     <View style={styles.formItem}>
       <Text style={styles.label}>
-        {descriptionLabel}
+        {i18n.t('description', formScope)}
       </Text>
       <TextInput
         style={[styles.input, styles.inputDescription]}
         value={description}
-        placeholder={descriptionPlaceholder}
+        placeholder={i18n.t('workOnThisAndThat', formScope)}
         onChangeText={onChangeDescription}
         multiline
       />
     </View>
   );
 
-  const submitText = 'Save'; // DICTIONARY
+  const submitText = i18n.t('save');
   const submitButton = (
     <View style={[styles.formItem, styles.button]}>
       <Button

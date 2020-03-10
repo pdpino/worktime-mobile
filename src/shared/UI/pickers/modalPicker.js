@@ -3,6 +3,7 @@ import {
   StyleSheet, View, Text, FlatList, TouchableOpacity,
 } from 'react-native';
 import asModalWithButton from './modalWithButton';
+import i18n from '../../i18n';
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -20,14 +21,11 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const noneText = 'None';
-
 const TextButton = ({
   items, selectedId, buttonStyle, textStyle, ButtonComponent,
 }) => {
   const selectedItem = items.find(item => item.id === selectedId);
-  const selectedName = selectedItem ? selectedItem.name : noneText;
+  const selectedName = selectedItem ? selectedItem.name : i18n.t('none');
 
   if (ButtonComponent) {
     return (
@@ -71,7 +69,7 @@ const Picker = ({
       <FlatList
         data={[
           ...items,
-          { id: -1, name: noneText },
+          { id: -1, name: i18n.t('none') },
         ]}
         keyExtractor={item => item.id.toString()}
         renderItem={renderItem}

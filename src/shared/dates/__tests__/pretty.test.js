@@ -2,6 +2,7 @@ import {
   prettyDate, timeToPrettyDate, prettyHour, prettyDaysAgo, prettyDuration,
   dateToDateString,
 } from '../pretty';
+import i18n from '../../i18n';
 import { mockToday, restoreMock, ODate } from './dateMock';
 
 describe('prettyDate', () => {
@@ -15,10 +16,9 @@ describe('prettyDate', () => {
   });
 
   describe('Result correctness', () => {
-    // DICTIONARY
-    const dictToday = 'Today';
-    const dictYesterday = 'Yesterday';
-    const dictTomorrow = 'Tomorrow';
+    const dictToday = i18n.t('dates.today');
+    const dictYesterday = i18n.t('dates.yesterday');
+    const dictTomorrow = i18n.t('dates.tomorrow');
 
     const fixedDay = new Date(2019, 10, 9, 14, 0, 0);
     beforeAll(() => {

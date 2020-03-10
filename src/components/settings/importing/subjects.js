@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { ItemCheckbox } from '../../../shared/UI/buttons';
 import { timeToPrettyDate } from '../../../shared/dates';
+import i18n from '../../../shared/i18n';
 import commonStyles from './styles';
 
 const styles = StyleSheet.create({
@@ -43,16 +44,13 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const subjectsLabel = 'subjects';
-
 const SubjectsPreview = ({
   processedSubjects, subjectsSelection, onPressSubject,
 }) => {
   const subjectsAmount = processedSubjects && processedSubjects.length;
   const title = (
     <Text style={styles.title}>
-      {`${subjectsAmount} ${subjectsLabel}`}
+      {i18n.t('nSubjects', { count: subjectsAmount })}
     </Text>
   );
 
@@ -62,8 +60,8 @@ const SubjectsPreview = ({
     const toDate = timeToPrettyDate(metadata.maxTimestamp);
     const period = `${fromDate} - ${toDate}`;
 
-
-    const text = `${data.name} (${metadata.accepted} sessions)`; // DICTIONARY
+    const nSessions = i18n.t('entities.nSessions', { count: metadata.accepted });
+    const text = `${data.name} (${nSessions})`;
     const innerComponent = (
       <View>
         <Text style={{ color: 'black' }}>
@@ -91,7 +89,7 @@ const SubjectsPreview = ({
           ]}
         >
           <Text>
-            {metadata.exists ? 'old' : 'new'}
+            {metadata.exists ? i18n.t('old') : i18n.t('new')}
           </Text>
         </View>
       </View>

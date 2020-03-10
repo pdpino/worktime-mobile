@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import SubjectItem from './item';
 import CategoryHeader from './categoryHeader';
+import i18n from '../../../shared/i18n';
 
 const styles = StyleSheet.create({
   categoryBottom: {
@@ -22,10 +23,6 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
 });
-
-// DICTIONARY
-const labelNoSubjects = 'No subjects';
-const labelEmpty = 'Empty';
 
 const SubjectsList = ({
   subjectsByCategories, selectedSubjects,
@@ -49,7 +46,7 @@ const SubjectsList = ({
 
   const renderCategoryFooter = ({ section }) => section.data.length === 0 && (
     <Text style={[styles.emptyCategory, styles.categoryBottom]}>
-      {labelEmpty}
+      {i18n.t('empty')}
     </Text>
   );
 
@@ -59,7 +56,7 @@ const SubjectsList = ({
 
   const emptyListComponent = (
     <Text style={styles.emptyList}>
-      {labelNoSubjects}
+      {i18n.t('entities.noSubjects')}
     </Text>
   );
 

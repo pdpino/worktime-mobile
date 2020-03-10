@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { prettyDuration } from '../../../../shared/dates';
 import { ClickableIcon } from '../../../../shared/UI/icons';
+import i18n from '../../../../shared/i18n';
 import { colorTotal, colorEffective } from '../colors';
 
 const styles = StyleSheet.create({
@@ -45,11 +46,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const dictTotal = 'Total';
-const dictEffective = 'Effective';
-const dictSummary = 'Summary';
-
 const FixedSummary = ({
   timeStats, isCollapsed, toggleCollapse,
 }) => {
@@ -60,7 +56,7 @@ const FixedSummary = ({
   const title = (
     <View style={styles.titleContainer}>
       <Text style={styles.title}>
-        {dictSummary}
+        {i18n.t('summary')}
       </Text>
     </View>
   );
@@ -87,8 +83,8 @@ const FixedSummary = ({
     <View style={styles.container}>
       {title}
       <View style={styles.itemsContainer}>
-        {createTimeItem(dictTotal, timeTotal, colorTotal)}
-        {createTimeItem(dictEffective, timeEffective, colorEffective)}
+        {createTimeItem(i18n.t('times.total'), timeTotal, colorTotal)}
+        {createTimeItem(i18n.t('times.effective'), timeEffective, colorEffective)}
         {toggleIcon}
       </View>
     </View>

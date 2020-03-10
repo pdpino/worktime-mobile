@@ -2,6 +2,7 @@ import React from 'react';
 import {
   View, StyleSheet, Text, TouchableOpacity,
 } from 'react-native';
+import i18n from '../../../../shared/i18n';
 
 // COLORS
 const styles = StyleSheet.create({
@@ -37,11 +38,11 @@ const styles = StyleSheet.create({
 const tabsDefinition = [
   {
     key: 'categories',
-    label: 'Categories', // DICTIONARY
+    getLabel: () => i18n.t('entities.categories'),
   },
   {
     key: 'subjects',
-    label: 'Subjects', // DICTIONARY
+    getLabel: () => i18n.t('entities.subjects'),
   },
 ];
 
@@ -71,7 +72,7 @@ class Tabs extends React.PureComponent {
                     isSelected && styles.textContainerSelected,
                   ]}
                 >
-                  {tabDef.label}
+                  {tabDef.getLabel()}
                 </Text>
               </View>
             </TouchableOpacity>

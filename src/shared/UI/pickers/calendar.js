@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import asModalWithButton from './modalWithButton';
 import { prettyDate, dateToDateString, getDate } from '../../dates';
+import i18n from '../../i18n';
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -22,13 +23,10 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const noneDateText = 'None';
-
 const CalendarButton = ({ date, buttonContainerStyle }) => (
   <View style={[styles.buttonContainer, buttonContainerStyle]}>
     <Text style={styles.buttonText}>
-      {date ? prettyDate(date, false) : noneDateText}
+      {date ? prettyDate(date, false) : i18n.t('none')}
     </Text>
   </View>
 );

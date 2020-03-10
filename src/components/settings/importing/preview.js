@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { timeToPrettyDate } from '../../../shared/dates';
+import i18n from '../../../shared/i18n';
 import commonStyles from './styles';
 
 const styles = StyleSheet.create({
@@ -28,13 +29,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const deviceLabel = 'Device';
-const lastImportedLabel = 'Last imported';
-const periodLabel = 'Period';
-const dictNever = 'Never';
-const dictNone = 'None';
-
 const ImportPreview = ({ device, importStats, lastImportedTimestamp }) => {
   const getPreviewLabel = (label, value) => (
     <View style={styles.fieldContainer}>
@@ -50,8 +44,8 @@ const ImportPreview = ({ device, importStats, lastImportedTimestamp }) => {
 
   const lastImported = lastImportedTimestamp
     ? timeToPrettyDate(lastImportedTimestamp)
-    : dictNever;
-  let period = dictNone;
+    : i18n.t('never');
+  let period = i18n.t('none');
   if (importStats) {
     const fromDate = timeToPrettyDate(importStats.minTimestamp);
     const toDate = timeToPrettyDate(importStats.maxTimestamp);
@@ -62,9 +56,9 @@ const ImportPreview = ({ device, importStats, lastImportedTimestamp }) => {
   return device ? (
     <View style={commonStyles.row}>
       <View style={[styles.innerContainer, commonStyles.box]}>
-        {getPreviewLabel(deviceLabel, device)}
-        {getPreviewLabel(lastImportedLabel, lastImported)}
-        {getPreviewLabel(periodLabel, period)}
+        {getPreviewLabel(i18n.t('device'), device)}
+        {getPreviewLabel(i18n.t('porting.lastImported'), lastImported)}
+        {getPreviewLabel(i18n.t('times.period'), period)}
       </View>
     </View>
   ) : null;

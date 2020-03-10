@@ -1,15 +1,15 @@
-// DICTIONARY COLORS
+// COLORS
 export const colorTotal = 'green';
 export const colorEffective = '#4fb3bf';
 export const colorPaused = '#e48a0b';
 
 export const legendDefinition = [
   {
-    label: 'Effective',
+    labelKey: 'dashboardLegend.effective',
     color: colorEffective,
   },
   {
-    label: 'Paused',
+    labelKey: 'dashboardLegend.paused',
     color: colorPaused,
   },
 ];

@@ -3,6 +3,7 @@ import {
   StyleSheet, View, Text, ActivityIndicator,
 } from 'react-native';
 import { prettyDaysAgo, prettyDuration } from '../../shared/dates';
+import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,46 +28,43 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const titleText = 'Summary';
-const lastWorkedText = 'Last worked: ';
-const timeTotalText = 'Total time: ';
-const timeEffectiveText = 'Effective time: ';
-const nDaysWorkedText = 'Days worked: ';
-
 const SubjectInfo = ({
   lastSession, timeTotal, timeEffective, nDaysWorked, isLoading,
 }) => {
   const title = (
     <Text style={styles.title}>
-      {titleText}
+      {i18n.t('summary')}
     </Text>
   );
 
   const lastWorkedInfo = (
     <Text style={styles.text}>
-      {lastWorkedText}
+      {i18n.t('times.lastWorked')}
+      {': '}
       {prettyDaysAgo(lastSession && lastSession.timestampStart)}
     </Text>
   );
 
   const timeTotalInfo = (
     <Text style={styles.text}>
-      {timeTotalText}
+      {i18n.t('times.totalTime')}
+      {': '}
       {prettyDuration(timeTotal)}
     </Text>
   );
 
   const timeEffectiveInfo = (
     <Text style={styles.text}>
-      {timeEffectiveText}
+      {i18n.t('times.effectiveTime')}
+      {': '}
       {prettyDuration(timeEffective)}
     </Text>
   );
 
   const nDaysWorkedInfo = (
     <Text style={styles.text}>
-      {nDaysWorkedText}
+      {i18n.t('times.daysWorked')}
+      {': '}
       {nDaysWorked}
     </Text>
   );

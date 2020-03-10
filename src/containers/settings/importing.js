@@ -9,6 +9,7 @@ import {
 import { openFileSelector, openJsonFile } from '../../services/sharing';
 import { processSubjects, getImportableSubjects } from '../../shared/porting';
 import { alertError } from '../../shared/alerts';
+import i18n from '../../shared/i18n';
 
 class Importing extends React.Component {
   constructor(props) {
@@ -46,8 +47,7 @@ class Importing extends React.Component {
   handlePressFile() {
     const { subjects } = this.props;
 
-    // DICTIONARY
-    openFileSelector('Files').then((path) => {
+    openFileSelector(i18n.t('files')).then((path) => {
       if (!path) {
         return;
       }
@@ -55,12 +55,12 @@ class Importing extends React.Component {
       this.setState({ path, isLoadingPreview: true }, async () => {
         const fileContent = await openJsonFile(path);
         if (!fileContent) {
-          this.displayPreviewError('Not a JSON file');
+          this.displayPreviewError(i18n.t('porting.errors.notJsonFile'));
           return;
         }
 
         if (!fileContent.device || !fileContent.subjects) {
-          this.displayPreviewError('JSON file does not specify data');
+          this.displayPreviewError(i18n.t('porting.errors.noData'));
           return;
         }
 

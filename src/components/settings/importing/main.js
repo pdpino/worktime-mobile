@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { SubmitButton } from '../../../shared/UI/buttons';
+import i18n from '../../../shared/i18n';
 import commonStyles from './styles';
 
 const styles = StyleSheet.create({
@@ -15,9 +16,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const importLabel = 'Import';
-
 const Importing = ({
   isImporting, onPressImport, canPressImport, children,
 }) => (
@@ -25,7 +23,7 @@ const Importing = ({
     {children}
     <View style={[commonStyles.row, styles.submitButtonContainer]}>
       <SubmitButton
-        text={importLabel}
+        text={i18n.t('porting.import')}
         isLoading={isImporting}
         disabled={!canPressImport}
         onPress={onPressImport}

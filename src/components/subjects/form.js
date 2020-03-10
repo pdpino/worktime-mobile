@@ -3,6 +3,7 @@ import {
   StyleSheet, ScrollView, View, Text, TextInput, Button,
 } from 'react-native';
 import { ModalPicker } from '../../shared/UI/pickers';
+import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -49,12 +50,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const namePlaceholder = 'Short and memorable name';
-const descriptionPlaceholder = 'Work on this and that...';
-const nameLabel = 'Name';
-const descriptionLabel = 'Description';
-const categoryLabel = 'Category';
+const formScope = { scope: 'formFields' };
 
 const SubjectForm = ({
   name, description, categoryId, categories,
@@ -64,12 +60,12 @@ const SubjectForm = ({
   const nameInput = (
     <View style={styles.formItem}>
       <Text style={styles.label}>
-        {nameLabel}
+        {i18n.t('name', formScope)}
       </Text>
       <TextInput
         style={[styles.input, styles.inputName]}
         value={name}
-        placeholder={namePlaceholder}
+        placeholder={i18n.t('shortAndMemorableName', formScope)}
         onChangeText={onChangeName}
       />
     </View>
@@ -78,12 +74,12 @@ const SubjectForm = ({
   const descriptionInput = (
     <View style={styles.formItem}>
       <Text style={styles.label}>
-        {descriptionLabel}
+        {i18n.t('description', formScope)}
       </Text>
       <TextInput
         style={[styles.input, styles.inputDescription]}
         value={description}
-        placeholder={descriptionPlaceholder}
+        placeholder={i18n.t('workOnThisAndThat', formScope)}
         onChangeText={onChangeDescription}
         multiline
       />
@@ -93,7 +89,7 @@ const SubjectForm = ({
   const categoryInput = (
     <View style={[styles.formItem, styles.categoryFormItem]}>
       <Text style={styles.label}>
-        {categoryLabel}
+        {i18n.t('entities.category')}
       </Text>
       <ModalPicker
         flex={1}
@@ -106,7 +102,7 @@ const SubjectForm = ({
     </View>
   );
 
-  const submitText = 'Save'; // DICTIONARY
+  const submitText = i18n.t('save');
   const submitButton = (
     <View style={[styles.formItem, styles.button]}>
       <Button

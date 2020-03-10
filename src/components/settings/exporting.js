@@ -3,6 +3,7 @@ import {
   StyleSheet, View, Text,
 } from 'react-native';
 import { SubmitButton } from '../../shared/UI/buttons';
+import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,20 +25,18 @@ const styles = StyleSheet.create({
 });
 
 const Exporting = ({ isPreparingData, onPressExport }) => {
-  // DICTIONARY
   const helpSection = (
     <View style={styles.row}>
       <Text style={styles.helpText}>
-        Export your data to a file
+        {i18n.t('porting.exportYourDataToFile')}
       </Text>
     </View>
   );
 
-  // DICTIONARY
   const exportButton = (
     <View style={styles.row}>
       <SubmitButton
-        text="Export"
+        text={i18n.t('porting.export')}
         isLoading={isPreparingData}
         onPress={onPressExport}
       />

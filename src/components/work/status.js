@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import commonStyles from './styles';
 import { prettyDuration } from '../../shared/dates';
+import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,22 +30,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const status2Text = {
-  playing: 'Playing',
-  paused: 'Paused',
-  stopped: 'Stopped',
-}; // DICTIONARY
-
 const status2Color = {
   playing: 'green',
   paused: 'orange',
   stopped: 'red',
 }; // COLORS
-
-// DICTIONARY
-const statusLabel = 'Status';
-const timeTotalLabel = 'Total';
-const timeEffectiveLabel = 'Effective';
 
 class StatusDisplayer extends React.PureComponent {
   static timeRow(label, seconds) {
@@ -68,7 +58,7 @@ class StatusDisplayer extends React.PureComponent {
     const currentStatusRow = (
       <View style={styles.row}>
         <Text style={styles.text}>
-          {statusLabel}
+          {i18n.t('status')}
         </Text>
         <Text style={
           [
@@ -77,7 +67,7 @@ class StatusDisplayer extends React.PureComponent {
             { color: status2Color[status] },
           ]}
         >
-          {status2Text[status] || 'Stopped'}
+          {i18n.t(status, { scope: 'workPlayer' })}
         </Text>
       </View>
     );
@@ -85,8 +75,8 @@ class StatusDisplayer extends React.PureComponent {
     return (
       <View style={[commonStyles.box, styles.container]}>
         {currentStatusRow}
-        {StatusDisplayer.timeRow(timeTotalLabel, timeTotal)}
-        {StatusDisplayer.timeRow(timeEffectiveLabel, timeEffective)}
+        {StatusDisplayer.timeRow(i18n.t('times.total'), timeTotal)}
+        {StatusDisplayer.timeRow(i18n.t('times.effective'), timeEffective)}
       </View>
     );
   }

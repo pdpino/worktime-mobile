@@ -1,23 +1,22 @@
 import { prettySpanFunctions } from './common';
+import i18n from '../../i18n';
+
+function translateDateShifts(key, shifted) {
+  let shiftedKey = null;
+  if (shifted === 0) shiftedKey = 'today';
+  else if (shifted === 1) shiftedKey = 'tomorrow';
+  else if (shifted === -1) shiftedKey = 'yesterday';
+  else if (shifted > 0) shiftedKey = 'positive';
+  else shiftedKey = 'negative';
+
+  return i18n.t(['dateShifts', key, shiftedKey], {
+    count: Math.abs(shifted),
+  });
+}
 
 // eslint-disable-next-line import/prefer-default-export
-export function prettyShortcutSelection(selection) {
-  // FIXME: this is coupled with the selection object from Dashboard
-  const { key, shifted } = selection;
+export function prettyShortcutSelection(key, shifted) {
+  if (!prettySpanFunctions[key]) return i18n.t('datePeriods.infinite');
 
-  const prettySpan = prettySpanFunctions[key];
-  if (!prettySpan) return 'Infinite time'; // DICTIONARY, HACK: copied
-
-  // DICTIONARY
-  if (shifted === 0) {
-    return key === 'day' ? 'Today' : `This ${key}`;
-  }
-  if (shifted === -1) {
-    return key === 'day' ? 'Yesterday' : `Last ${key}`;
-  }
-  if (shifted === 1) {
-    return key === 'day' ? 'Tomorrow' : `Next ${key}`;
-  }
-
-  return `${prettySpan(-shifted)} ago`;
+  return translateDateShifts(key, shifted);
 }

@@ -1,5 +1,6 @@
 import PushNotification from 'react-native-push-notification';
 import { DeviceEventEmitter } from 'react-native';
+import i18n from '../shared/i18n';
 
 let listener;
 
@@ -41,7 +42,7 @@ class Notifications {
     PushNotification.localNotification({
       id: '0',
       title,
-      message: 'Tap to go to worktime',
+      message: i18n.t('notif.tapToGoToWorktime'),
       largeIcon: icon,
       smallIcon: icon,
       color: 'red',
@@ -59,7 +60,7 @@ class Notifications {
 
   static resume(subject) {
     Notifications.sendLocal({
-      title: `${subject.name} playing`, // DICTIONARY
+      title: i18n.t('workPlayer.workingOnSubject', { subject: subject.name }),
       icon: 'play',
       actions: ['Pause', 'Stop'],
     });
@@ -67,7 +68,7 @@ class Notifications {
 
   static pause(subject) {
     Notifications.sendLocal({
-      title: `${subject.name} paused`, // DICTIONARY
+      title: i18n.t('workPlayer.subjectPaused', { subject: subject.name }),
       icon: 'pause',
       actions: ['Resume', 'Stop'],
     });

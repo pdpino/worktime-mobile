@@ -1,16 +1,16 @@
 import { Alert } from 'react-native';
+import i18n from '../i18n';
 
 export function alertDelete({
   title, message, deleteMessage, onDelete,
 }) {
-  // DICTIONARY
   Alert.alert(
-    title || 'Delete?',
-    message || 'This can\'t be undone',
+    title || i18n.t('deletion.deleteQuestion'),
+    message || i18n.t('deletion.cantBeUndone'),
     [
-      { text: 'Cancel', style: 'cancel' },
+      { text: i18n.t('cancel'), style: 'cancel' },
       {
-        text: deleteMessage || 'Delete',
+        text: deleteMessage || i18n.t('deletion.delete'),
         onPress: onDelete,
         style: 'destructive', // NOTE: style works only for iOS
       },
@@ -19,12 +19,11 @@ export function alertDelete({
 }
 
 export function alertError({ title, message }) {
-  // DICTIONARY
   Alert.alert(
-    title || 'Error',
+    title || i18n.t('error'),
     message,
     [
-      { text: 'Ok' },
+      { text: i18n.t('ok') },
     ],
   );
 }

@@ -3,6 +3,7 @@ import {
   StyleSheet, View, Text, FlatList,
 } from 'react-native';
 import MenuItem from './item';
+import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
   list: {
@@ -26,26 +27,23 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const noSettingsAvailable = 'No settings available yet!';
-
 const itemsConfig = {
   profile: {
-    text: 'Profile', // DICTIONARY
+    getText: () => i18n.t('profile'),
     icon: {
       name: 'person',
       type: 'material-icons',
     },
   },
   exporting: {
-    text: 'Export', // DICTIONARY
+    getText: () => i18n.t('porting.export'),
     icon: {
       name: 'share',
       type: 'entypo',
     },
   },
   importing: {
-    text: 'Import', // DICTIONARY
+    getText: () => i18n.t('porting.import'),
     icon: {
       name: 'file',
       type: 'feather',
@@ -60,7 +58,7 @@ const SettingsMenu = ({
     const config = itemsConfig[item.key];
     return (
       <MenuItem
-        text={config.text}
+        text={config.getText()}
         iconName={config.icon.name}
         iconType={config.icon.type}
         onPress={() => onPressItem(item.key)}
@@ -68,17 +66,10 @@ const SettingsMenu = ({
     );
   };
 
-  const emptyComponent = (
-    <Text style={styles.emptyList}>
-      {noSettingsAvailable}
-    </Text>
-  );
-
-  // DICTIONARY
   const version = (
     <View style={styles.versionContainer}>
       <Text style={styles.versionText}>
-        {`Worktime version: ${versionNumber}`}
+        {i18n.t('worktimeVersion', { version: versionNumber })}
       </Text>
     </View>
   );
@@ -89,7 +80,6 @@ const SettingsMenu = ({
       data={menuItems}
       renderItem={renderItem}
       keyExtractor={(item, index) => index.toString()}
-      ListEmptyComponent={emptyComponent}
       ListFooterComponent={version}
     />
   );

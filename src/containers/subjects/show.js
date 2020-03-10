@@ -10,6 +10,7 @@ import { Memoizer } from '../../shared/utils';
 import { sumSubjectTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
 import { HeaderActions } from '../../shared/UI/headers';
 import { alertDelete } from '../../shared/alerts';
+import i18n from '../../shared/i18n';
 
 class SubjectShow extends React.Component {
   static navigationOptions({ navigation }) {
@@ -23,7 +24,7 @@ class SubjectShow extends React.Component {
     ];
 
     return {
-      title: subjectName || 'Subject', // DICTIONARY
+      title: subjectName,
       headerRight: <HeaderActions actions={actions} />,
     };
   }
@@ -76,9 +77,8 @@ class SubjectShow extends React.Component {
   }
 
   handleDeleteWorkSession(id) {
-    // DICTIONARY
     alertDelete({
-      title: 'Delete the work session?',
+      title: i18n.t('deletion.deleteWorkSession'),
       onDelete: () => {
         this.props.deleteWorkSession(id);
         this.sumTimes();

@@ -3,6 +3,7 @@ import {
   StyleSheet, View, FlatList, Text,
 } from 'react-native';
 import WorkSessionItem from './item';
+import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,10 +25,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const dictNoSessions = 'No sessions';
-const dictWorkSessions = 'Work Sessions';
-
 class WorkSessionsList extends React.Component {
   shouldComponentUpdate(nextProps) {
     // NOTE: the subject is only passed as a prop to be used here
@@ -42,13 +39,13 @@ class WorkSessionsList extends React.Component {
     const { workSessions, onPressDelete } = this.props;
     const title = (
       <Text style={styles.title}>
-        {dictWorkSessions}
+        {i18n.t('entities.workSessions')}
       </Text>
     );
 
     const emptyComponent = (
       <Text style={styles.emptyList}>
-        {dictNoSessions}
+        {i18n.t('entities.noSessions')}
       </Text>
     );
 

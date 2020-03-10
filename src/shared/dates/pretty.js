@@ -1,8 +1,10 @@
 import {
   format, formatDistanceStrict, differenceInCalendarDays,
 } from 'date-fns';
-import { toLocalDate, getTimezoneOffset } from './timestamp';
 import { isNumber, isValidDate } from '../utils';
+import i18n from '../i18n';
+import { toLocalDate, getTimezoneOffset } from './timestamp';
+import getCurrentLocale from './locales';
 
 export function prettyDate(date, useNames = true) {
   const dateYear = date && date.getFullYear && date.getFullYear();
@@ -14,21 +16,22 @@ export function prettyDate(date, useNames = true) {
   const diffDays = differenceInCalendarDays(today, date);
   const diffYears = today.getFullYear() - dateYear;
 
-  // DICTIONARY
   if (useNames) {
     if (diffDays === 0) {
-      return 'Today';
+      return i18n.t('dates.today');
     } if (diffDays === 1) {
-      return 'Yesterday';
+      return i18n.t('dates.yesterday');
     } if (diffDays === -1) {
-      return 'Tomorrow';
+      return i18n.t('dates.tomorrow');
     }
   }
 
+  const locale = getCurrentLocale(i18n.currentLocale);
+
   if (diffYears === 0) {
-    return format(date, 'E d MMM');
+    return format(date, 'E d MMM', { locale });
   }
-  return format(date, 'E d MMM yyyy');
+  return format(date, 'E d MMM yyyy', { locale });
 }
 
 export function timeToPrettyDate(timestamp, tzOffset, useNames = true) {
@@ -44,7 +47,7 @@ export function prettyHour(timestamp, tzOffset) {
 export function prettyDaysAgo(timestamp) {
   const date = toLocalDate(timestamp);
   if (!date) {
-    return 'Never'; // DICTIONARY
+    return i18n.t('never');
   }
   return formatDistanceStrict(date, new Date(), {
     unit: 'day',

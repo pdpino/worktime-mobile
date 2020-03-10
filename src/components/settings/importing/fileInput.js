@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { extractFilename } from '../../../shared/utils';
 import commonStyles from './styles';
+import i18n from '../../../shared/i18n';
 
 const styles = StyleSheet.create({
   label: {
@@ -27,14 +28,10 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const filenameLabel = 'File';
-const filenamePlaceholder = 'Select file';
-
 const FileInput = ({ path, onPressFile }) => (
   <View style={commonStyles.row}>
     <Text style={styles.label}>
-      {filenameLabel}
+      {i18n.t('file')}
     </Text>
     <View style={[styles.inputContainer, commonStyles.box]}>
       <TouchableOpacity
@@ -46,7 +43,7 @@ const FileInput = ({ path, onPressFile }) => (
             path ? styles.inputTextPresent : styles.inputTextPlaceholder,
           ]}
         >
-          {path ? extractFilename(path) : filenamePlaceholder}
+          {path ? extractFilename(path) : i18n.t('porting.selectFile')}
         </Text>
       </TouchableOpacity>
     </View>

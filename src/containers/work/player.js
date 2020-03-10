@@ -13,6 +13,7 @@ import {
   runningSessionSelector, lastRunningSessionSelector,
 } from '../../redux/selectors';
 import { alertDelete } from '../../shared/alerts';
+import i18n from '../../shared/i18n';
 
 
 class WorkPlayer extends React.Component {
@@ -58,14 +59,13 @@ class WorkPlayer extends React.Component {
     if (this.getStatus() === 'stopped') {
       return;
     }
-    // DICTIONARY
     alertDelete({
-      title: 'Discard this session?',
-      deleteMessage: 'Stop and Discard',
+      title: i18n.t('deletion.discardSession'),
+      deleteMessage: i18n.t('deletion.stopAndDiscard'),
       onDelete: () => {
         this.props.stopAndDiscard();
         ToastAndroid.showWithGravityAndOffset(
-          'Discarded',
+          i18n.t('deletion.discarded'),
           ToastAndroid.LONG,
           ToastAndroid.BOTTOM,
           0,

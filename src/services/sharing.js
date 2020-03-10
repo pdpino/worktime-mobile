@@ -1,6 +1,7 @@
 import Share from 'react-native-share';
 import { PermissionsAndroid } from 'react-native';
 import RNFileSelector from 'react-native-file-selector';
+import i18n from '../shared/i18n';
 
 const RNFS = require('react-native-fs');
 
@@ -11,7 +12,7 @@ export default function share(filename, obj) {
 
   return RNFS.writeFile(path, content, 'utf8').then(() => Share.open({
     url,
-    title: 'Export data', // DICTIONARY
+    title: i18n.t('porting.exportData'),
     subject: filename,
     type: 'text/plain',
   }));

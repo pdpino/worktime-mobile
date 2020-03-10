@@ -3,6 +3,7 @@ import {
   View, StyleSheet, Text,
 } from 'react-native';
 import { ItemCheckbox } from '../../../../shared/UI/buttons';
+import i18n from '../../../../shared/i18n';
 import { legendDefinition } from '../colors';
 
 const styles = StyleSheet.create({
@@ -33,18 +34,15 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const allButtonLabel = 'All';
-
 class Legend extends React.PureComponent {
   render() {
     return (
       <View style={styles.legendContainer}>
-        {legendDefinition.map(({ label, color }, index) => (
+        {legendDefinition.map(({ labelKey, color }, index) => (
           <View key={index.toString()} style={styles.legendItem}>
             <View style={[styles.rectangle, { backgroundColor: color }]} />
             <Text style={styles.legendText}>
-              {label}
+              {i18n.t(labelKey)}
             </Text>
           </View>
         ))}
@@ -67,7 +65,7 @@ class SubHeader extends React.PureComponent {
 
     const allButton = (
       <ItemCheckbox
-        text={allButtonLabel}
+        text={i18n.t('all')}
         checked={allSelected}
         onPress={onToggleAll}
       />

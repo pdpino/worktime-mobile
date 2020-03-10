@@ -3,6 +3,7 @@ import {
   isBetween, isBefore, getDateCopy, getStartOfDay, getEndOfDay, getWeeksDiff,
   dateToDateString,
 } from '../dates';
+import i18n from '../i18n';
 
 class TimeStats {
   constructor() {
@@ -46,7 +47,7 @@ class TimeStats {
 
     this.categoriesSummaries.push({
       id: -1,
-      name: 'No Category', // DICTIONARY
+      name: i18n.t('entities.noCategory'),
       timeTotal: 0,
       timeEffective: 0,
       children: {},

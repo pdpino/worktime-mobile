@@ -5,6 +5,7 @@ import SubjectsStack from './subjects';
 import WorkStack from './work';
 import DashboardStack from './dashboard';
 import SettingsStack from './settings';
+import i18n from '../shared/i18n';
 
 const iconConfiguration = {
   subjects: {
@@ -29,27 +30,27 @@ const iconConfiguration = {
 const Root = createBottomTabNavigator({
   subjects: {
     screen: SubjectsStack,
-    navigationOptions: {
-      tabBarLabel: 'Subjects', // DICTIONARY
-    },
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('entities.subjects'),
+    }),
   },
   work: {
     screen: WorkStack,
-    navigationOptions: {
-      tabBarLabel: 'Work', // DICTIONARY
-    },
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('work'),
+    }),
   },
   dashboard: {
     screen: DashboardStack,
-    navigationOptions: {
-      tabBarLabel: 'Dashboard', // DICTIONARY
-    },
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('dashboard'),
+    }),
   },
   settings: {
     screen: SettingsStack,
-    navigationOptions: {
-      tabBarLabel: 'Settings', // DICTIONARY
-    },
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('settings'),
+    }),
   },
 },
 {
@@ -58,7 +59,9 @@ const Root = createBottomTabNavigator({
     tabBarVisible: navigation.state.index === 0,
     tabBarIcon: ({ tintColor }) => {
       const { routeName } = navigation.state;
-      return <Icon color={tintColor} size={22} {...iconConfiguration[routeName]} />;
+      return (
+        <Icon color={tintColor} size={22} {...iconConfiguration[routeName]} />
+      );
     },
   }),
 });

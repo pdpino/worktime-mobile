@@ -3,6 +3,7 @@ import {
   View, Text, StyleSheet, FlatList, Dimensions,
 } from 'react-native';
 import TimeItem from './timeItem';
+import i18n from '../../../i18n';
 
 const styles = StyleSheet.create({
   emptyComponent: {
@@ -26,11 +27,10 @@ function getWidthUnits(data, key) {
   return maxWidthUsed / maxValue;
 }
 
-// DICTIONARY
 const emptyComponent = (
   <View style={styles.emptyComponent}>
     <Text style={styles.emptyText}>
-      No items
+      {i18n.t('entities.noItems')}
     </Text>
   </View>
 );

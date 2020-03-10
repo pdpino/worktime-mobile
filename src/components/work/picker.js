@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import commonStyles from './styles';
 import { ModalPicker } from '../../shared/UI/pickers';
+import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -25,9 +26,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const chooseSubject = 'Choose subject';
-
 class SubjectPicker extends React.Component {
   shouldComponentUpdate(nextProps) {
     const {
@@ -47,7 +45,7 @@ class SubjectPicker extends React.Component {
     const PickerButton = ({ selectedName }) => (
       <View style={[commonStyles.box, styles.buttonContainer]}>
         <Text style={[styles.label, !enabled && styles.textDisabled]}>
-          {chooseSubject}
+          {i18n.t('workPlayer.chooseSubject')}
         </Text>
         <Text style={[styles.pickerText, !enabled && styles.textDisabled]}>
           {selectedName}

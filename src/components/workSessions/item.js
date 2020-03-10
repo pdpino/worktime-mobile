@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { prettyDuration } from '../../shared/dates';
 import { MoreDropdownMenu } from '../../shared/UI/menus';
+import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,13 +32,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
-const status2Text = {
-  playing: 'Playing',
-  paused: 'Paused',
-  stopped: 'Stopped',
-}; // DICTIONARY
-
 const status2Color = {
   playing: 'green',
   paused: 'orange',
@@ -47,7 +41,6 @@ const status2Color = {
 class WorkSessionItem extends React.PureComponent {
   render() {
     const { workSession, onPressDelete } = this.props;
-    // DICTIONARY (text)
     const {
       id, nPauses, timeTotal, timeEffective, device,
     } = workSession;
@@ -72,13 +65,13 @@ class WorkSessionItem extends React.PureComponent {
     const timesItem = (
       <View style={styles.item}>
         <Text style={styles.text}>
-          {`Total: ${prettyDuration(timeTotal)}`}
+          {`${i18n.t('times.total')}: ${prettyDuration(timeTotal)}`}
         </Text>
         <Text style={styles.text}>
-          {`Effective: ${prettyDuration(timeEffective)}`}
+          {`${i18n.t('times.effective')}: ${prettyDuration(timeEffective)}`}
         </Text>
         <Text style={styles.text}>
-          {`${nPauses || 0} pauses`}
+          {i18n.t('times.nPauses', { count: nPauses || 0 })}
         </Text>
       </View>
     );
@@ -86,7 +79,7 @@ class WorkSessionItem extends React.PureComponent {
     const statusItem = (
       <View style={styles.item}>
         <Text style={[styles.text, { color: status2Color[workSession.status] }]}>
-          {status2Text[workSession.status]}
+          {i18n.t(workSession.status, { scope: 'workPlayer' })}
         </Text>
       </View>
     );
@@ -100,7 +93,7 @@ class WorkSessionItem extends React.PureComponent {
             <MoreDropdownMenu
               items={[
                 {
-                  label: 'Delete', // DICTIONARY
+                  label: i18n.t('deletion.delete'),
                   callback: () => onPressDelete(id),
                   textStyle: {
                     color: '#d50000',

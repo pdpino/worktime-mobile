@@ -3,6 +3,7 @@ import {
   StyleSheet, ScrollView, View, Text, Button,
 } from 'react-native';
 import { ModalPicker } from '../../../shared/UI/pickers';
+import i18n from '../../../shared/i18n';
 import SubjectsInfo from './info';
 
 const styles = StyleSheet.create({
@@ -46,16 +47,13 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const dictCategory = 'Category';
-
 const BulkSubjectsForm = ({
   subjects, categoryId, categories, onChangeCategory, onSubmit,
 }) => {
   const categoryInput = (
     <View style={[styles.formItem, styles.categoryFormItem]}>
       <Text style={styles.label}>
-        {dictCategory}
+        {i18n.t('entities.category')}
       </Text>
       <ModalPicker
         flex={1}
@@ -68,7 +66,7 @@ const BulkSubjectsForm = ({
     </View>
   );
 
-  const submitText = 'Save'; // DICTIONARY
+  const submitText = i18n.t('save');
   const submitButton = (
     <View style={[styles.formItem, styles.button]}>
       <Button

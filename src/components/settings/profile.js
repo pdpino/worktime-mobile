@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, Text, TextInput, Button,
 } from 'react-native';
+import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,9 +34,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// DICTIONARY
-const deviceNamePlaceholder = 'Short and memorable name';
-const deviceNameLabel = 'Device name';
+const formScope = { scope: 'formFields' };
 
 const Profile = ({
   deviceName, onChangeDeviceName, onSubmit,
@@ -43,18 +42,18 @@ const Profile = ({
   const deviceNameInput = (
     <View style={styles.formItem}>
       <Text style={styles.label}>
-        {deviceNameLabel}
+        {i18n.t('deviceName', formScope)}
       </Text>
       <TextInput
         style={[styles.input, styles.inputName]}
         value={deviceName}
-        placeholder={deviceNamePlaceholder}
+        placeholder={i18n.t('shortName', formScope)}
         onChangeText={onChangeDeviceName}
       />
     </View>
   );
 
-  const submitText = 'Save'; // DICTIONARY
+  const submitText = i18n.t('save');
   const submitButton = (
     <View style={[styles.formItem, styles.button]}>
       <Button
