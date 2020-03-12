@@ -6,15 +6,15 @@ import HorizontalBar from '../horizontalBar';
 import { CheckboxIcon } from '../../icons';
 import { prettyDuration } from '../../../dates';
 import { prettyPercentage } from '../../../utils';
+import { colors } from '../../../styles';
 
-// COLORS
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
     paddingVertical: 7,
     borderBottomWidth: 1,
-    borderColor: '#b3b3b3',
+    borderColor: colors.lightGray,
   },
   checkboxContainer: {
     justifyContent: 'center',
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
 const TimeItem = ({
   item, checked, widthMultiplier, allItemsTotal, pressEnabled,
-  onToggle, onPress, nameKey, colors,
+  onToggle, onPress, nameKey, palette,
 }) => {
   const { timeTotal, timeEffective } = item;
   const timePaused = timeTotal - timeEffective;
@@ -87,7 +87,7 @@ const TimeItem = ({
               width: timePaused * widthMultiplier,
             },
           ]}
-          colors={colors}
+          palette={palette}
         />
       )}
     </View>

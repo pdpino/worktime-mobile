@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { colors } from '../../styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
 
 const Splash = () => (
   <View style={styles.container}>
-    <ActivityIndicator color="#3B84B5" size="large" />
+    <ActivityIndicator color={colors.mainBlue} size="large" />
   </View>
 );
 

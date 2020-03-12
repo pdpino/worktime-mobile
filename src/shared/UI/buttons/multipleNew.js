@@ -1,20 +1,21 @@
 import React from 'react';
 import ActionButton from 'react-native-action-button';
 import { Icon } from 'react-native-elements';
+import { colors } from '../../styles';
 
 const MultipleNewButton = ({ disabled, actions }) => {
   let activeOpacity = 0.2;
-  let buttonColor = '#3B84B5';
+  let buttonColor = colors.mainBlue;
 
   if (disabled) {
     activeOpacity = 1;
-    buttonColor = '#bdbdbd';
+    buttonColor = colors.lightGray;
   }
 
   const buttons = actions.map((action, index) => (
     <ActionButton.Item
       key={index.toString()}
-      buttonColor={action.color || '#71b3e7'}
+      buttonColor={action.color || colors.lightBlue}
       title={action.title}
       onPress={action.handlePress}
       textContainerStyle={{ height: 'auto' }}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { colors } from '../../../../shared/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -7,7 +8,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderRadius: 2,
     borderWidth: 1,
-    borderColor: '#3B84B5',
+    borderColor: colors.mainBlue,
     marginHorizontal: 10,
     marginVertical: 7,
     paddingHorizontal: 7,

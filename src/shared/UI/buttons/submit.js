@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, Text, TouchableOpacity, ActivityIndicator,
 } from 'react-native';
+import { colors } from '../../styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,11 +15,11 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   enabled: {
-    backgroundColor: '#2196F3',
+    backgroundColor: colors.enabledSubmitButton,
     elevation: 4,
   },
   disabled: {
-    backgroundColor: '#bdbdbd',
+    backgroundColor: colors.lightGray,
   },
   text: {
     textAlign: 'center',

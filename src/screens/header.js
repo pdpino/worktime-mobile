@@ -1,6 +1,8 @@
+import { colors } from '../shared/styles';
+
 const headerOptions = {
   headerStyle: {
-    backgroundColor: '#3B84B5',
+    backgroundColor: colors.mainBlue,
   },
   headerTintColor: 'white',
 };

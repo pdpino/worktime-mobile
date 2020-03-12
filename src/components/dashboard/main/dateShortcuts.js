@@ -3,17 +3,17 @@ import { StyleSheet, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TextDropdownMenu } from '../../../shared/UI/menus';
 import { prettyDaysSpan, prettyShortcutSelection } from '../../../shared/dates';
+import { colors } from '../../../shared/styles';
 
-// COLORS
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
     elevation: 2,
-    backgroundColor: '#dedede',
+    backgroundColor: colors.lighterGray,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#3B84B5',
+    borderColor: colors.mainBlue,
     marginBottom: 10,
     marginHorizontal: 10,
   },
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   arrowContainer: {
-    backgroundColor: '#3B84B5',
+    backgroundColor: colors.mainBlue,
     paddingHorizontal: 15,
   },
 });
@@ -41,7 +41,7 @@ class Arrow extends React.PureComponent {
         color="white"
         size={22}
         onPress={onPress}
-        underlayColor="#71b3e7"
+        underlayColor={colors.lightBlue}
       />
     );
   }

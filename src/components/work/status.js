@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import commonStyles from './styles';
 import { prettyDuration } from '../../shared/dates';
 import i18n from '../../shared/i18n';
+import { status2Color } from '../../shared/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,12 +30,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
-
-const status2Color = {
-  playing: 'green',
-  paused: 'orange',
-  stopped: 'red',
-}; // COLORS
 
 class StatusDisplayer extends React.PureComponent {
   static timeRow(label, seconds) {

@@ -2,6 +2,7 @@ import React from 'react';
 import { CrossIcon } from '../icons';
 import HeaderActions from './actions';
 import commonStyles from './styles';
+import { colors } from '../../styles';
 
 const getSelectionHeaderParams = ({
   amountSelected, actions, handleUnselection,
@@ -15,7 +16,7 @@ const getSelectionHeaderParams = ({
   ),
   headerRight: <HeaderActions actions={actions} />,
   headerStyle: {
-    backgroundColor: '#005885',
+    backgroundColor: colors.darkBlue,
   },
 });
 

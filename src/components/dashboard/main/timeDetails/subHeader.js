@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { ItemCheckbox } from '../../../../shared/UI/buttons';
 import i18n from '../../../../shared/i18n';
-import { legendDefinition } from '../colors';
+import { legendDefinition } from '../legend';
 
 const styles = StyleSheet.create({
   container: {

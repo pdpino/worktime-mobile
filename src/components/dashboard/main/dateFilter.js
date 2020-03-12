@@ -4,23 +4,23 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { CalendarPicker } from '../../../shared/UI/pickers';
+import { colors } from '../../../shared/styles';
 
-// COLORS
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'stretch',
     elevation: 2,
-    backgroundColor: '#dedede',
+    backgroundColor: colors.lighterGray,
     borderRadius: 2,
-    borderColor: '#3B84B5',
+    borderColor: colors.mainBlue,
     borderWidth: 1,
     marginHorizontal: 10,
     marginVertical: 10,
   },
   separatorContainer: {
-    backgroundColor: '#3B84B5',
+    backgroundColor: colors.mainBlue,
     paddingHorizontal: 8,
   },
   dateContainer: {

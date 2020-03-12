@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { prettyDuration } from '../../shared/dates';
 import { MoreDropdownMenu } from '../../shared/UI/menus';
 import i18n from '../../shared/i18n';
+import { colors, status2Color } from '../../shared/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,12 +32,6 @@ const styles = StyleSheet.create({
     right: 15,
   },
 });
-
-const status2Color = {
-  playing: 'green',
-  paused: 'orange',
-  stopped: 'red',
-}; // COLORS
 
 class WorkSessionItem extends React.PureComponent {
   render() {
@@ -96,7 +91,7 @@ class WorkSessionItem extends React.PureComponent {
                   label: i18n.t('deletion.delete'),
                   callback: () => onPressDelete(id),
                   textStyle: {
-                    color: '#d50000',
+                    color: colors.deletionRed,
                   },
                 },
               ]}

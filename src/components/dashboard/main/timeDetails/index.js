@@ -4,9 +4,10 @@ import {
 } from 'react-native';
 import { BarTimesChart } from '../../../../shared/UI/charts';
 import { BackIcon } from '../../../../shared/UI/icons';
+import { colors } from '../../../../shared/styles';
 import Tabs from './tabs';
 import SubHeader from './subHeader';
-import { colorEffective, colorPaused } from '../colors';
+import { colorPalette } from '../legend';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 3,
     borderWidth: 1,
-    borderColor: '#3B84B5',
+    borderColor: colors.mainBlue,
     marginHorizontal: 10,
     marginVertical: 10,
   },
@@ -38,8 +39,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
-
-const colors = [colorEffective, colorPaused];
 
 const TimeDetails = ({
   itemsSummaries, selectedTab, title, idsSelection, allSelected, allItemsTotal,
@@ -87,7 +86,7 @@ const TimeDetails = ({
           onToggleItem={onToggleItem}
           onPressItem={onPressItem}
           nameKey={useNameWithCategory ? 'nameWithCategory' : 'name'}
-          colors={colors}
+          palette={colorPalette}
         />
       )}
     </View>

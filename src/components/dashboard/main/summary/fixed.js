@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { prettyDuration } from '../../../../shared/dates';
 import { ClickableIcon } from '../../../../shared/UI/icons';
 import i18n from '../../../../shared/i18n';
-import { colorTotal, colorEffective } from '../colors';
+import { timeColors } from '../../../../shared/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
   },
   timeLabel: {
     textAlign: 'center',
-    color: 'gray',
     fontSize: 15,
     marginRight: 5,
   },
@@ -83,8 +82,8 @@ const FixedSummary = ({
     <View style={styles.container}>
       {title}
       <View style={styles.itemsContainer}>
-        {createTimeItem(i18n.t('times.total'), timeTotal, colorTotal)}
-        {createTimeItem(i18n.t('times.effective'), timeEffective, colorEffective)}
+        {createTimeItem(i18n.t('times.total'), timeTotal, timeColors.total)}
+        {createTimeItem(i18n.t('times.effective'), timeEffective, timeColors.effective)}
         {toggleIcon}
       </View>
     </View>

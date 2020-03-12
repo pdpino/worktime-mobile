@@ -3,8 +3,8 @@ import {
   StyleSheet, View, TouchableHighlight, Text,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { colors } from '../../../shared/styles';
 
-// COLORS
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
     minHeight: 38,
     borderStyle: 'solid',
     borderBottomWidth: 1,
-    borderBottomColor: '#b3b3b3',
+    borderBottomColor: colors.lightGray,
   },
   selectedContainer: {
-    backgroundColor: '#71b3e74A',
+    backgroundColor: colors.selectedSubject,
   },
   unselectedContainer: {
     backgroundColor: 'white',
@@ -66,7 +66,7 @@ class SubjectItem extends React.PureComponent {
       <TouchableHighlight
         onPress={() => onPress(subject.id)}
         onLongPress={() => onLongPress(subject.id)}
-        underlayColor="#71b3e75F"
+        underlayColor={colors.selectedSubjectUnderlay}
         activeOpacity={0.5}
         delayPressIn={0}
         delayPressOut={0}

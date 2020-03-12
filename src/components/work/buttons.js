@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
+import { colors } from '../../shared/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -54,13 +55,13 @@ const PlayerButtons = ({
   <View style={styles.container}>
     <PlayerButton
       iconName={showPlay ? 'play' : 'pause'}
-      backgroundColor={showPlay ? 'darkcyan' : '#ef8c00'}
+      backgroundColor={showPlay ? 'darkcyan' : colors.orange}
       onPress={onPressPlayPause}
       disabled={!playerEnabled}
     />
     <PlayerButton
       iconName="stop"
-      backgroundColor="#d50000"
+      backgroundColor={colors.red}
       onPress={onPressStop}
       onLongPress={onLongPressStop}
       disabled={!playerEnabled || stopDisabled}

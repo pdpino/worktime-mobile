@@ -28,7 +28,7 @@ class HorizontalBar extends React.Component {
   }
 
   render() {
-    const { values, colors } = this.props;
+    const { values, palette } = this.props;
 
     const bars = values.map((value, idx) => {
       const { width, text } = value;
@@ -38,7 +38,7 @@ class HorizontalBar extends React.Component {
         <Animated.View
           key={idx.toString()}
           style={[styles.bar, {
-            backgroundColor: colors[idx],
+            backgroundColor: palette[idx],
             width: currentWidth,
           }]}
         >

@@ -1,15 +1,16 @@
 import React from 'react';
 import ActionButton from 'react-native-action-button';
+import { colors } from '../../styles';
 
 const NewButton = ({ disabled, onPress }) => {
   let handlePress = onPress;
   let activeOpacity = 0.2;
-  let buttonColor = '#3B84B5';
+  let buttonColor = colors.mainBlue;
 
   if (disabled) {
     handlePress = () => {};
     activeOpacity = 1;
-    buttonColor = '#bdbdbd';
+    buttonColor = colors.lightGray;
   }
 
   return (

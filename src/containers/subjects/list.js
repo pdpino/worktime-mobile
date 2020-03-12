@@ -9,6 +9,7 @@ import { HeaderActions } from '../../shared/UI/headers';
 import withItemSelection from '../../hoc/itemSelection';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
+import { colors } from '../../shared/styles';
 import { getSubjectsAsSectionList } from './utils';
 
 export default function createSubjectsList(isArchive) {
@@ -25,7 +26,7 @@ export default function createSubjectsList(isArchive) {
         },
         {
           icon: 'delete',
-          color: '#d8463b',
+          color: colors.deletionRedLighter,
           handlePress: navigation.getParam('handleDeleteSelected'),
         },
       ];
@@ -73,17 +74,16 @@ export default function createSubjectsList(isArchive) {
         handlePressArchive: this.handlePressArchive,
       });
 
-      // COLORS
       this.newActions = [
         {
           title: i18n.t('entities.category'),
           handlePress: this.handlePressNewCategory,
-          color: '#d50000',
+          color: colors.red,
         },
         {
           title: i18n.t('entities.subject'),
           handlePress: this.handlePressNewSubject,
-          color: '#ef8c00',
+          color: colors.orange,
         },
       ];
     }

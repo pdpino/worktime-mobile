@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { colors } from '../../../shared/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,11 +9,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderStyle: 'solid',
     borderBottomWidth: 1,
-    borderBottomColor: '#005885',
+    borderBottomColor: colors.darkBlue,
   },
   text: {
     fontWeight: '500',
-    color: '#005885',
+    color: colors.darkBlue,
     fontSize: 15,
   },
 });

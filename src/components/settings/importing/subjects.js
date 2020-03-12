@@ -5,6 +5,7 @@ import {
 import { ItemCheckbox } from '../../../shared/UI/buttons';
 import { timeToPrettyDate } from '../../../shared/dates';
 import i18n from '../../../shared/i18n';
+import { colors } from '../../../shared/styles';
 import commonStyles from './styles';
 
 const styles = StyleSheet.create({
@@ -37,10 +38,10 @@ const styles = StyleSheet.create({
     marginVertical: 1,
   },
   subjectOld: {
-    backgroundColor: '#9BBBFF',
+    backgroundColor: colors.lightBlue,
   },
   subjectNew: {
-    backgroundColor: '#EF8C00',
+    backgroundColor: colors.orange,
   },
 });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { colors } from '../../styles';
 
 const rnIconDefinitions = {
   archive: {
@@ -27,7 +28,7 @@ const rnIconDefinitions = {
     name: 'delete',
     type: 'material-icons',
     size: 28,
-    color: '#f23021',
+    color: colors.deletionRed,
   },
   error: {
     name: 'error',

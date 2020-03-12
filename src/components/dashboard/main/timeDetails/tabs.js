@@ -3,14 +3,14 @@ import {
   View, StyleSheet, Text, TouchableOpacity,
 } from 'react-native';
 import i18n from '../../../../shared/i18n';
+import { colors } from '../../../../shared/styles';
 
-// COLORS
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    backgroundColor: '#dedede',
+    backgroundColor: colors.lighterGray,
   },
   tabContainer: {
     flex: 1,
@@ -18,19 +18,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 8,
     backgroundColor: 'white',
-    borderColor: '#3B84B5',
+    borderColor: colors.mainBlue,
     borderBottomWidth: 1,
   },
   tabContainerSelected: {
     elevation: 1,
     borderBottomWidth: 3,
-    borderColor: '#3B84B5',
+    borderColor: colors.mainBlue,
   },
   textContainerSelected: {
     fontWeight: 'bold',
   },
   text: {
-    color: '#3B84B5',
+    color: colors.mainBlue,
     fontSize: 18,
   },
 });

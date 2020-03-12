@@ -37,7 +37,7 @@ const emptyComponent = (
 
 const BarTimes = ({
   itemsSummaries, idsSelection, allItemsTotal, itemPressEnabled,
-  onToggleItem, onPressItem, nameKey, colors,
+  onToggleItem, onPressItem, nameKey, palette,
 }) => {
   const widthMultiplier = getWidthUnits(itemsSummaries, 'timeTotal');
 
@@ -51,7 +51,7 @@ const BarTimes = ({
       onToggle={() => onToggleItem(item.id)}
       onPress={() => onPressItem(item.id)}
       nameKey={nameKey}
-      colors={colors}
+      palette={palette}
     />
   );
 
