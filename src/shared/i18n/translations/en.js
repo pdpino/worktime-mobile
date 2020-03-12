@@ -73,6 +73,7 @@ export default {
     importData: 'Import data',
     exportData: 'Export data',
     exportYourDataToFile: 'Export your data to a file',
+    exportedOn: 'Exported on',
     selectFile: 'Select file',
     lastImported: 'Last imported',
     errors: {

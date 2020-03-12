@@ -19,6 +19,7 @@ class Importing extends React.Component {
       path: null,
       isLoadingPreview: false,
       device: null,
+      exportedTimestamp: null,
       importStats: null,
       processedSubjects: null,
       subjectsSelection: null,
@@ -38,6 +39,7 @@ class Importing extends React.Component {
       path: null,
       isLoadingPreview: false,
       device: null,
+      exportedTimestamp: null,
       importStats: null,
       processedSubjects: null,
       subjectsSelection: null,
@@ -78,6 +80,7 @@ class Importing extends React.Component {
         this.setState({
           isLoadingPreview: false,
           device: fileContent.device,
+          exportedTimestamp: fileContent.timestamp,
           processedSubjects,
           subjectsSelection,
           importStats: metadata,
@@ -138,7 +141,7 @@ class Importing extends React.Component {
 
   render() {
     const {
-      path, isLoadingPreview, device, importStats,
+      path, isLoadingPreview, device, importStats, exportedTimestamp,
       processedSubjects, subjectsSelection, isImporting,
     } = this.state;
     const { knownDevices } = this.props.profile;
@@ -160,6 +163,7 @@ class Importing extends React.Component {
           device={device}
           importStats={importStats}
           lastImportedTimestamp={knownDevices[device]}
+          exportedTimestamp={exportedTimestamp}
         />
         <SubjectsPreview
           processedSubjects={processedSubjects}
