@@ -2,10 +2,14 @@
  * Use cpu for some time doing nothing
  * Dummy function used for testing
  */
-export function pauseFor(millis) { // eslint-disable-line import/prefer-default-export
-  const date = Date.now();
-  let curDate;
+export function waitSync(millis) {
+  const start = Date.now();
+  let current;
   do {
-    curDate = Date.now();
-  } while (curDate - date < millis);
+    current = Date.now();
+  } while (current - start < millis);
+}
+
+export function waitAsync(millis) {
+  return new Promise(resolve => setTimeout(() => resolve(), millis));
 }

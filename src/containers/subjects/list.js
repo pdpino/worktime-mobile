@@ -186,7 +186,12 @@ export default function createSubjectsList(isArchive) {
       }
 
       alertDelete({
-        title: i18n.t('deletion.deleteThis', { element: deletionSelected }),
+        title: i18n.t('deletion.deleteElementQuestion', {
+          element: deletionSelected,
+        }),
+        toastMessage: i18n.t('deletion.elementDeleted', {
+          element: deletionSelected,
+        }),
         onDelete: () => {
           this.props.deleteSubjects(selectedIds);
           this.props.clearSelection();

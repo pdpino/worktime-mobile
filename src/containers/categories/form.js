@@ -87,10 +87,15 @@ class CategoryForm extends React.Component {
       return;
     }
     alertDelete({
-      title: i18n.t('deletion.deleteThis', { element: category.name }),
+      title: i18n.t('deletion.deleteElementQuestion', {
+        element: category.name,
+      }),
+      toastMessage: i18n.t('deletion.elementDeleted', {
+        element: category.name,
+      }),
       onDelete: () => {
+        this.props.navigation.navigate('subjectsList');
         this.props.deleteCategory(category.id);
-        this.props.navigation.goBack();
       },
     });
   }

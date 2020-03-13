@@ -93,9 +93,17 @@ class SubjectForm extends React.Component {
       return;
     }
     alertDelete({
-      title: i18n.t('deletion.deleteThis', { element: subject.name }),
+      title: i18n.t('deletion.deleteElementQuestion', {
+        element: subject.name,
+      }),
+      toastMessage: i18n.t('deletion.elementDeleted', {
+        element: subject.name,
+      }),
       onDelete: () => {
-        this.props.navigation.goBack();
+        // NOTE: the navigation has to be before the deletion.
+        // If the deletion goes first, the component may try to update,
+        // and will fail since the props.subject will be null
+        this.props.navigation.navigate('subjectsList');
         this.props.deleteSubjects([subject.id]);
       },
     });

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ToastAndroid } from 'react-native';
 import {
   WorkPlayerComponent, SubjectPickerComponent, PlayerButtonsComponent, StatusDisplayerComponent,
 } from '../../components/work';
@@ -60,18 +59,10 @@ class WorkPlayer extends React.Component {
       return;
     }
     alertDelete({
-      title: i18n.t('deletion.discardSession'),
+      title: i18n.t('deletion.discardSessionQuestion'),
       deleteMessage: i18n.t('deletion.stopAndDiscard'),
-      onDelete: () => {
-        this.props.stopAndDiscard();
-        ToastAndroid.showWithGravityAndOffset(
-          i18n.t('deletion.discarded'),
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          0,
-          50,
-        );
-      },
+      toastMessage: i18n.t('deletion.discarded'),
+      onDelete: () => this.props.stopAndDiscard(),
     });
   }
 

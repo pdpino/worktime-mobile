@@ -51,13 +51,16 @@ export default {
   },
   deletion: {
     delete: 'Delete',
-    deleteThis: 'Delete %{element}?',
+    deleteElementQuestion: 'Delete %{element}?',
     deleteQuestion: 'Delete?',
-    deleteWorkSession: 'Delete work session?',
+    deleteWorkSessionQuestion: 'Delete work session?',
     cantBeUndone: 'Can\'t be undone',
-    discardSession: 'Discard this session?',
+    discardSessionQuestion: 'Discard this session?',
     stopAndDiscard: 'Stop and discard',
     discarded: 'Discarded',
+    deleted: 'Deleted',
+    elementDeleted: '%{element} deleted',
+    workSessionDeleted: 'Work session deleted',
   },
   workPlayer: {
     playing: 'Working', // FIXME: the key is coupled with the WS status

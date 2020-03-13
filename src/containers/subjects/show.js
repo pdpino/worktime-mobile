@@ -78,7 +78,8 @@ class SubjectShow extends React.Component {
 
   handleDeleteWorkSession(id) {
     alertDelete({
-      title: i18n.t('deletion.deleteWorkSession'),
+      title: i18n.t('deletion.deleteWorkSessionQuestion'),
+      toastMessage: i18n.t('deletion.workSessionDeleted'),
       onDelete: () => {
         this.props.deleteWorkSession(id);
         this.sumTimes();

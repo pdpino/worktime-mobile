@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 * Add translations support, with english and spanish languages
 * Add "exported on" timestamp on importing view
+* Add toast message after deletion
+
+### Fixed
+* Missing translation in importing view
+* Fix bug when deleting subject in form
 
 
 ## 1.10.1 - 2019-11-09

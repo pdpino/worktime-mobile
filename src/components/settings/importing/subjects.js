@@ -51,7 +51,7 @@ const SubjectsPreview = ({
   const subjectsAmount = processedSubjects && processedSubjects.length;
   const title = (
     <Text style={styles.title}>
-      {i18n.t('nSubjects', { count: subjectsAmount })}
+      {i18n.t('entities.nSubjects', { count: subjectsAmount })}
     </Text>
   );
 
