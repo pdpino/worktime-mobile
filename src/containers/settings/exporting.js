@@ -6,7 +6,7 @@ import ExportingComponent from '../../components/settings/exporting';
 import { getExportableObject, getExportFilename } from '../../shared/porting';
 import { getTimestampString } from '../../shared/dates';
 
-class Exporting extends React.Component {
+export class Exporting extends React.Component {
   constructor(props) {
     super(props);
 

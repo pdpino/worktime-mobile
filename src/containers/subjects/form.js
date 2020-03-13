@@ -8,7 +8,7 @@ import { HeaderActions } from '../../shared/UI/headers';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 
-class SubjectForm extends React.Component {
+export class SubjectForm extends React.Component {
   static navigationOptions({ navigation }) {
     const subject = navigation.getParam('subject');
 

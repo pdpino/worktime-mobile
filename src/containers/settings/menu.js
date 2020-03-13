@@ -14,7 +14,7 @@ const menuItems = [
   },
 ];
 
-class SettingsMenu extends React.Component {
+export class SettingsMenu extends React.Component {
   constructor(props) {
     super(props);
 

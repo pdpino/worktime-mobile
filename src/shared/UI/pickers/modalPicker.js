@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 const TextButton = ({
   items, selectedId, buttonStyle, textStyle, ButtonComponent,
 }) => {
-  const selectedItem = items.find(item => item.id === selectedId);
+  const selectedItem = items && items.find(item => item.id === selectedId);
   const selectedName = selectedItem ? selectedItem.name : i18n.t('none');
 
   if (ButtonComponent) {
@@ -68,7 +68,7 @@ const Picker = ({
     <View style={styles.listContainer}>
       <FlatList
         data={[
-          ...items,
+          ...(items || []),
           { id: -1, name: i18n.t('none') },
         ]}
         keyExtractor={item => item.id.toString()}

@@ -6,7 +6,7 @@ import { updateSubjects } from '../../redux/actions';
 import { categoriesSelector } from '../../redux/selectors';
 import i18n from '../../shared/i18n';
 
-class BulkSubjectForm extends React.Component {
+export class BulkSubjectForm extends React.Component {
   static navigationOptions() {
     return {
       title: i18n.t('entities.editSubjects'),

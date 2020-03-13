@@ -14,8 +14,7 @@ import {
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 
-
-class WorkPlayer extends React.Component {
+export class WorkPlayer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -76,11 +75,11 @@ class WorkPlayer extends React.Component {
       subjectsForPicker, selectedSubject, runningSession, lastRunningSession,
     } = this.props;
     const selectedSubjectId = selectedSubject ? selectedSubject.id : -1;
-    const { timeTotal, timeEffective } = runningSession;
+    const { timeTotal, timeEffective } = (runningSession || {});
     const {
       timeTotal: lastTimeTotal,
       timeEffective: lastTimeEffective,
-    } = lastRunningSession;
+    } = (lastRunningSession || {});
 
     return (
       <WorkPlayerComponent>

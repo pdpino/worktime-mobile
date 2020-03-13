@@ -11,7 +11,7 @@ import { processSubjects, getImportableSubjects } from '../../shared/porting';
 import { alertError } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 
-class Importing extends React.Component {
+export class Importing extends React.Component {
   constructor(props) {
     super(props);
 

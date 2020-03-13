@@ -1,5 +1,6 @@
 import { processSubjects, getImportableSubjects } from '../importing';
 
+// TODO: use factory?
 const generateMockSubjects = () => [
   {
     id: 1,
@@ -49,6 +50,11 @@ const generateMockSubjects = () => [
 ];
 
 let mockSubjects;
+
+// NOTE: this is needed since the jest setup calls jest.useFakeTimers(),
+// which breaks the (hacky) use of setTimeout as async caller in makeFunctionAsync
+beforeAll(() => jest.useRealTimers());
+afterAll(() => jest.useFakeTimers());
 
 beforeEach(() => {
   mockSubjects = generateMockSubjects();

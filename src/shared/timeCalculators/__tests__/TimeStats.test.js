@@ -1,4 +1,4 @@
-import { getORMFactory } from '../../../redux/__tests__';
+import { getFactory } from '../../../redux/__tests__';
 import TimeStats from '../TimeStats';
 
 const getWorkSessionData = ({ dateStart, timeTotal, ...rest }) => {
@@ -11,7 +11,7 @@ const getWorkSessionData = ({ dateStart, timeTotal, ...rest }) => {
   };
 };
 
-const factory = getORMFactory();
+const factory = getFactory();
 
 describe('sumSubjectTimes', () => {
   let subject;

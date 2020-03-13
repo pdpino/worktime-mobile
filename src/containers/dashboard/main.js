@@ -15,7 +15,7 @@ import {
 import { sumTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
 import i18n from '../../shared/i18n';
 
-class Dashboard extends React.Component {
+export class Dashboard extends React.Component {
   static isSameDay(dateA, dateB) {
     return (!dateA && !dateB) || isSameDay(dateA, dateB);
   }

@@ -12,7 +12,7 @@ import { HeaderActions } from '../../shared/UI/headers';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 
-class SubjectShow extends React.Component {
+export class SubjectShow extends React.Component {
   static navigationOptions({ navigation }) {
     const { subjectName } = navigation.state.params;
 

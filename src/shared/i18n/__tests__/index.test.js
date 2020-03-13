@@ -1,5 +1,5 @@
 import i18n from '../index';
-import { mockBestLocale, restoreMock } from './mockRNLocale';
+import { mockBestLocale } from './mockRNLocale';
 
 describe('i18n', () => {
   const checkWithLowerCase = (key, expected) => {
@@ -32,24 +32,20 @@ describe('i18n', () => {
   });
 
   describe('setup function', () => {
-    afterEach(() => {
-      restoreMock();
-    });
-
-    it('return english strings', () => {
-      mockBestLocale('en-US');
-
-      i18n.setup();
-
-      checkWithLowerCase('all', 'all');
-    });
-
-    it('return english strings', () => {
+    it('changes translations to spanish', () => {
       mockBestLocale('es-US');
 
       i18n.setup();
 
       checkWithLowerCase('all', 'todos');
+    });
+
+    it('changes translations to english', () => {
+      mockBestLocale('en-US');
+
+      i18n.setup();
+
+      checkWithLowerCase('all', 'all');
     });
   });
 });

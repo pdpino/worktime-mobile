@@ -60,12 +60,15 @@
   },
   "jest": {
     "preset": "react-native",
+    "setupFiles": [
+      "./src/__tests__/setup.js"
+    ],
     "setupFilesAfterEnv": [
       "jest-extended"
     ],
-    "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
-    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-navigation|react-navigation-redux-helpers)"
+    ],
     "testRegex": "(/__tests__/.*|\\.|/)(test|spec)\\.[jt]sx?$"
   }
 }

@@ -1,19 +1,12 @@
 import * as RNLocalize from 'react-native-localize';
 
-const originalFindBestAvailableLanguage = RNLocalize.findBestAvailableLanguage;
-
 const mockBestLocale = (languageTag) => {
-  RNLocalize.findBestAvailableLanguage = () => ({
+  RNLocalize.findBestAvailableLanguage.mockReturnValue({
     languageTag,
     isRTL: false,
   });
 };
 
-const restoreMock = () => {
-  RNLocalize.findBestAvailableLanguage = originalFindBestAvailableLanguage;
-};
-
 export {
-  mockBestLocale,
-  restoreMock,
+  mockBestLocale, // eslint-disable-line import/prefer-default-export
 };

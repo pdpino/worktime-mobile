@@ -5,7 +5,7 @@ import ProfileComponent from '../../components/settings/profile';
 import { updateDeviceName } from '../../redux/actions';
 import { profileSelector } from '../../redux/selectors';
 
-class Profile extends React.Component {
+export class Profile extends React.Component {
   constructor(props) {
     super(props);
 

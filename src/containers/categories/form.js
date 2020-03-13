@@ -7,7 +7,7 @@ import { HeaderActions } from '../../shared/UI/headers';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 
-class CategoryForm extends React.Component {
+export class CategoryForm extends React.Component {
   static navigationOptions({ navigation }) {
     const category = navigation.getParam('category');
     if (category) {
