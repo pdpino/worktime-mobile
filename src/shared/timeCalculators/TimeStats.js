@@ -130,7 +130,7 @@ class TimeStats {
     const { initialDate, endingDate } = this;
 
     subject.getWorkSessions({ sorted: false }).forEach((workSession) => {
-      const workSessionDate = workSession.getLocalDate();
+      const workSessionDate = workSession.getLocalStartDate();
       if (!isBetween(initialDate, endingDate, workSessionDate)) {
         return;
       }

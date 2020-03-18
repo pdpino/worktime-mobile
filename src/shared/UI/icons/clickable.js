@@ -69,6 +69,12 @@ const rnIconDefinitions = {
     size: 30,
     color: 'black',
   },
+  columns: {
+    name: 'columns',
+    type: 'font-awesome',
+    size: 22,
+    color: 'white',
+  },
 };
 
 class ClickableIcon extends React.PureComponent {

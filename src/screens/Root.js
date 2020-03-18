@@ -5,6 +5,7 @@ import SubjectsStack from './subjects';
 import WorkStack from './work';
 import DashboardStack from './dashboard';
 import SettingsStack from './settings';
+import WeekStack from './week';
 import i18n from '../shared/i18n';
 
 const iconConfiguration = {
@@ -20,6 +21,10 @@ const iconConfiguration = {
   dashboard: {
     name: 'dashboard',
     type: 'font-awesome',
+  },
+  week: {
+    name: 'view-week',
+    type: 'material',
   },
   settings: {
     name: 'settings',
@@ -44,6 +49,12 @@ const Root = createBottomTabNavigator({
     screen: DashboardStack,
     navigationOptions: () => ({
       tabBarLabel: i18n.t('dashboard'),
+    }),
+  },
+  week: {
+    screen: WeekStack,
+    navigationOptions: () => ({
+      tabBarLabel: i18n.t('week'),
     }),
   },
   settings: {

@@ -18,6 +18,7 @@ export default {
   settings: 'Ajustes',
   status: 'Estado',
   summary: 'Resumen',
+  week: 'Semana',
   worktimeVersion: 'Version Worktime %{version}',
   work: 'Trabajar',
   formFields: {
@@ -183,5 +184,8 @@ export default {
   dashboardLegend: {
     effective: 'efectivo',
     paused: 'pausa',
+  },
+  weekView: {
+    numberOfDays: 'Número de días',
   },
 };

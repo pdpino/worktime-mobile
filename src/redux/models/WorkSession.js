@@ -109,8 +109,12 @@ class WorkSession extends Model {
     return this.status === 'stopped';
   }
 
-  getLocalDate() {
+  getLocalStartDate() {
     return toLocalDate(this.timestampStart, this.tzOffset);
+  }
+
+  getLocalEndDate() {
+    return toLocalDate(this.timestampEnd, this.tzOffset);
   }
 
   getPrettyTimezoneOffset() {
