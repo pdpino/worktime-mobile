@@ -25,6 +25,7 @@ export default {
     alias: 'Alias',
     shortName: 'Short name',
     description: 'Description',
+    color: 'Color',
     shortAndMemorableName: 'Short and memorable name',
     workOnThisAndThat: 'Work on this and that...',
     deviceName: 'Device name',

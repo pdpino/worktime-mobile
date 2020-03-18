@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { SubjectsListComponent, SubjectsList } from '../../components/subjects/list';
+import SubjectsCollectionComponent from '../../components/subjects/collection';
 import { subjectsSelector, categoriesSelector } from '../../redux/selectors';
 import { archiveSubjects, deleteSubjects } from '../../redux/actions';
 import { MultipleNewButton } from '../../shared/UI/buttons';
@@ -10,9 +10,9 @@ import withItemSelection from '../../hoc/itemSelection';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 import { colors } from '../../shared/styles';
-import { getSubjectsAsSectionList } from './utils';
+import { getCategoriesWithSubjects } from './utils';
 
-export default function createSubjectsList(isArchive) {
+export default function createSubjectsCollection(isArchive) {
   class SubjectsListContainer extends React.Component {
     static getSelectionActions(navigation) {
       return [
@@ -204,7 +204,7 @@ export default function createSubjectsList(isArchive) {
         return;
       }
       this.props.clearSelection();
-      this.props.navigation.navigate('subjectsArchiveList');
+      this.props.navigation.navigate('subjectsArchiveCollection');
     }
 
     render() {
@@ -212,27 +212,26 @@ export default function createSubjectsList(isArchive) {
         subjects, categories, selection, amountSelected,
       } = this.props;
 
-      const subjectsByCategories = getSubjectsAsSectionList(
+      const categoriesWithSubjects = getCategoriesWithSubjects(
         subjects,
         categories,
       );
 
       return (
-        <SubjectsListComponent>
-          <SubjectsList
-            subjectsByCategories={subjectsByCategories}
-            selectedSubjects={selection}
-            onPressSubject={this.handlePressSubject}
-            onLongPressSubject={this.handleLongPressSubject}
-            onPressCategory={this.handlePressCategory}
-          />
+        <SubjectsCollectionComponent
+          categoriesWithSubjects={categoriesWithSubjects}
+          selectedSubjects={selection}
+          onPressSubject={this.handlePressSubject}
+          onLongPressSubject={this.handleLongPressSubject}
+          onPressCategory={this.handlePressCategory}
+        >
           {!isArchive && (
             <MultipleNewButton
               disabled={amountSelected > 0}
               actions={this.newActions}
             />
           )}
-        </SubjectsListComponent>
+        </SubjectsCollectionComponent>
       );
     }
   }

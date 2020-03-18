@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  StyleSheet, View, Text, TextInput, Button,
+  StyleSheet, ScrollView, View, Text, TextInput, Button,
 } from 'react-native';
+import { ColorPicker } from '../../shared/UI/pickers';
 import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
@@ -25,6 +26,9 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     padding: 10,
   },
+  colorPicker: {
+    marginVertical: 5,
+  },
   inputDescription: {
     height: 100,
   },
@@ -36,8 +40,9 @@ const styles = StyleSheet.create({
 const formScope = { scope: 'formFields' };
 
 const CategoryForm = ({
-  name, alias, description,
-  onChangeName, onChangeAlias, onChangeDescription, onSubmit, canSubmit,
+  name, alias, description, color,
+  onChangeName, onChangeAlias, onChangeDescription, onChangeColor,
+  onSubmit, canSubmit,
 }) => {
   const nameInput = (
     <View style={styles.formItem}>
@@ -67,6 +72,19 @@ const CategoryForm = ({
     </View>
   );
 
+  const colorInput = (
+    <View style={styles.formItem}>
+      <Text style={styles.label}>
+        {i18n.t('color', formScope)}
+      </Text>
+      <ColorPicker
+        style={styles.colorPicker}
+        selectedColor={color}
+        onSelect={onChangeColor}
+      />
+    </View>
+  );
+
   const descriptionInput = (
     <View style={styles.formItem}>
       <Text style={styles.label}>
@@ -82,11 +100,10 @@ const CategoryForm = ({
     </View>
   );
 
-  const submitText = i18n.t('save');
   const submitButton = (
     <View style={[styles.formItem, styles.button]}>
       <Button
-        title={submitText}
+        title={i18n.t('save')}
         onPress={onSubmit}
         disabled={!canSubmit}
       />
@@ -94,12 +111,13 @@ const CategoryForm = ({
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {nameInput}
       {aliasInput}
+      {colorInput}
       {descriptionInput}
       {submitButton}
-    </View>
+    </ScrollView>
   );
 };
 

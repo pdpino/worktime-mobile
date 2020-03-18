@@ -25,6 +25,7 @@ export default {
     alias: 'Alias',
     shortName: 'Nombre corto',
     description: 'Descripción',
+    color: 'Color',
     shortAndMemorableName: 'Nombre corto y recordable',
     workOnThisAndThat: 'Trabajar en...',
     deviceName: 'Nombre del dispositivo',

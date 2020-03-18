@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { FactoryHandler } from '../../../redux/__tests__';
-import createSubjectsList from '../list';
+import createSubjectsCollection from '../collection';
 
 const navigation = {
   navigate: jest.fn(),
@@ -22,8 +22,8 @@ beforeEach(() => {
   factoryHandler.reset();
 });
 
-describe('<SubjectsList>', () => {
-  const SubjectsList = createSubjectsList(false);
+describe('<SubjectsCollection>', () => {
+  const SubjectsCollection = createSubjectsCollection(false);
 
   it('renders with basic props', async () => {
     await factoryHandler.factory.createMany('Subject', 3);
@@ -33,7 +33,7 @@ describe('<SubjectsList>', () => {
     });
     renderer.create(
       <Provider store={store}>
-        <SubjectsList navigation={navigation} />
+        <SubjectsCollection navigation={navigation} />
       </Provider>,
     );
   });
@@ -44,15 +44,15 @@ describe('<SubjectsList>', () => {
     });
     renderer.create(
       <Provider store={store}>
-        <SubjectsList navigation={navigation} />
+        <SubjectsCollection navigation={navigation} />
       </Provider>,
     );
   });
 });
 
 
-describe('<ArchivedSubjectsList>', () => {
-  const ArchivedSubjectsList = createSubjectsList(true);
+describe('<ArchivedSubjectsCollection>', () => {
+  const ArchivedSubjectsCollection = createSubjectsCollection(true);
 
   it('renders with basic props', async () => {
     await factoryHandler.factory.createMany('Subject', 3);
@@ -62,7 +62,7 @@ describe('<ArchivedSubjectsList>', () => {
 
     renderer.create(
       <Provider store={store}>
-        <ArchivedSubjectsList navigation={navigation} />
+        <ArchivedSubjectsCollection navigation={navigation} />
       </Provider>,
     );
   });
@@ -73,7 +73,7 @@ describe('<ArchivedSubjectsList>', () => {
     });
     renderer.create(
       <Provider store={store}>
-        <ArchivedSubjectsList navigation={navigation} />
+        <ArchivedSubjectsCollection navigation={navigation} />
       </Provider>,
     );
   });

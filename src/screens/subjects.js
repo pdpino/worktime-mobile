@@ -1,13 +1,13 @@
 import { createStackNavigator } from 'react-navigation';
 import {
-  createSubjectsList, SubjectForm, SubjectShow, BulkSubjectForm,
+  createSubjectsCollection, SubjectForm, SubjectShow, BulkSubjectForm,
 } from '../containers/subjects';
 import { CategoryForm } from '../containers/categories';
 import headerOptions from './header';
 
 const SubjectsStack = createStackNavigator({
-  subjectsList: createSubjectsList(false),
-  subjectsArchiveList: createSubjectsList(true),
+  subjectsCollection: createSubjectsCollection(false),
+  subjectsArchiveCollection: createSubjectsCollection(true),
   newSubject: SubjectForm,
   editSubject: SubjectForm,
   showSubject: SubjectShow,
@@ -15,7 +15,7 @@ const SubjectsStack = createStackNavigator({
   bulkEditSubject: BulkSubjectForm,
 },
 {
-  initialRouteName: 'subjectsList',
+  initialRouteName: 'subjectsCollection',
   navigationOptions: {
     ...headerOptions,
   },

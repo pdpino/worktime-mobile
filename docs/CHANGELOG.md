@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 ### Added
+* Add color to categories
 * Add translations support, with english and spanish languages
 * Add "exported on" timestamp on importing view
 * Add toast message after deletion

@@ -1,3 +1,5 @@
+export * from './palette';
+
 const colors = {
   red: '#d50000',
   orange: '#ef8c00',

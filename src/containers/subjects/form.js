@@ -103,7 +103,7 @@ export class SubjectForm extends React.Component {
         // NOTE: the navigation has to be before the deletion.
         // If the deletion goes first, the component may try to update,
         // and will fail since the props.subject will be null
-        this.props.navigation.navigate('subjectsList');
+        this.props.navigation.navigate('subjectsCollection');
         this.props.deleteSubjects([subject.id]);
       },
     });

@@ -1,4 +1,5 @@
 import memoizeOne from 'memoize-one';
+import Category from '../../redux/models/Category';
 import i18n from '../../shared/i18n';
 
 /* eslint-disable import/prefer-default-export */
@@ -11,23 +12,21 @@ import i18n from '../../shared/i18n';
  * [
  *   {
  *     name: 'Work',
- *     data: [
+ *     subjects: [
  *       { id: '1', name: 'subj 1' },
  *       { id: '2', name: 'subj 2', description: 'do this and that' },
  *     ],
  *   },
- *   { name: 'other', data: [] },
- *   { name: 'Personal stuff', data: [{ id: '5', name: 'subj 5' }] },
- *   { name: 'No Category', data: [{ id: '6', name: 'subj 6' }] },
+ *   { name: 'other', subjects: [] },
+ *   { name: 'Personal stuff', subjects: [{ id: '5', name: 'subj 5' }] },
+ *   { name: 'No Category', subjects: [{ id: '6', name: 'subj 6' }] },
  * ];
  * Subjects returned are from the Subject Model, but categories are plain
  * objects.
  */
-export const getSubjectsAsSectionList = memoizeOne((subjects, categories) => {
-  const noCategoryId = -1;
-
+export const getCategoriesWithSubjects = memoizeOne((subjects, categories) => {
   const categoryToSubjects = {
-    [noCategoryId]: [],
+    [Category.noCategoryId]: [],
   };
 
   categories.forEach((category) => {
@@ -35,29 +34,33 @@ export const getSubjectsAsSectionList = memoizeOne((subjects, categories) => {
   });
 
   subjects.forEach((subject) => {
-    const categoryId = subject.category ? subject.category.id : noCategoryId;
+    const categoryId = subject.category
+      ? subject.category.id
+      : Category.noCategoryId;
     categoryToSubjects[categoryId].push(subject);
   });
 
-  const subjectsByCategories = categories.map(category => ({
+  const categoriesWithSubjects = categories.map(category => ({
     id: category.id,
     name: category.name,
-    data: categoryToSubjects[category.id],
+    color: category.color,
+    subjects: categoryToSubjects[category.id],
   }));
 
-  const orphanSubjects = categoryToSubjects[noCategoryId];
+  const orphanSubjects = categoryToSubjects[Category.noCategoryId];
   if (orphanSubjects && orphanSubjects.length) {
-    subjectsByCategories.push({
-      id: noCategoryId,
+    categoriesWithSubjects.push({
+      id: Category.noCategoryId,
       name: i18n.t('entities.noCategory'),
-      data: orphanSubjects,
+      color: Category.noCategoryColor,
+      subjects: orphanSubjects,
     });
   }
 
   // OPTIMIZE: do this more efficiently?
-  return subjectsByCategories.sort((category1, category2) => {
-    const length1 = category1.data.length;
-    const length2 = category2.data.length;
+  return categoriesWithSubjects.sort((category1, category2) => {
+    const length1 = category1.subjects.length;
+    const length2 = category2.subjects.length;
     if (length1 === 0 && length2 > 0) {
       // 2 goes first
       return 1;

@@ -1,10 +1,10 @@
-import createSubjectsList from './list';
+import createSubjectsCollection from './collection';
 import SubjectForm from './form';
 import BulkSubjectForm from './bulkForm';
 import SubjectShow from './show';
 
 export {
-  createSubjectsList,
+  createSubjectsCollection,
   SubjectForm,
   BulkSubjectForm,
   SubjectShow,

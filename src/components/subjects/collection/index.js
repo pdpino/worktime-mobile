@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import SubjectsCollection from './subjectsCollection';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,10 +11,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const SubjectsListComponent = ({ children }) => (
+const SubjectsCollectionWrapper = ({ children, ...props }) => (
   <View style={styles.container}>
+    <SubjectsCollection {...props} />
     {children}
   </View>
 );
 
-export default SubjectsListComponent;
+export default SubjectsCollectionWrapper;

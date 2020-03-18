@@ -32,15 +32,22 @@ export class CategoryForm extends React.Component {
   constructor(props) {
     super(props);
 
-    const { name, alias, description } = this.props.category || {};
+    const {
+      name, alias, description, color,
+    } = this.props.category || {};
 
     this.state = {
       name,
       alias,
       description,
+      color,
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeName = this.getChangeHandler('name');
+    this.handleChangeAlias = this.getChangeHandler('alias');
+    this.handleChangeDescription = this.getChangeHandler('description');
+    this.handleChangeColor = this.getChangeHandler('color');
+
     this.handleSubmitCategory = this.handleSubmitCategory.bind(this);
 
     this.handleDeleteCategory = this.handleDeleteCategory.bind(this);
@@ -50,15 +57,15 @@ export class CategoryForm extends React.Component {
     });
   }
 
-  isInputValid() {
-    const { name } = this.state;
-    return name && name.trim();
-  }
-
-  handleChange(key) {
+  getChangeHandler(key) {
     return (value) => {
       this.setState({ [key]: value });
     };
+  }
+
+  isInputValid() {
+    const { name } = this.state;
+    return name && name.trim();
   }
 
   handleSubmitCategory() {
@@ -66,11 +73,14 @@ export class CategoryForm extends React.Component {
       return;
     }
 
-    const { name, alias, description } = this.state;
+    const {
+      name, alias, description, color,
+    } = this.state;
     const data = {
       name: name.trim(),
       alias: alias && alias.trim(),
       description: description && description.trim(),
+      color,
     };
 
     if (this.props.category) {
@@ -94,14 +104,16 @@ export class CategoryForm extends React.Component {
         element: category.name,
       }),
       onDelete: () => {
-        this.props.navigation.navigate('subjectsList');
+        this.props.navigation.navigate('subjectsCollection');
         this.props.deleteCategory(category.id);
       },
     });
   }
 
   render() {
-    const { name, alias, description } = this.state;
+    const {
+      name, alias, description, color,
+    } = this.state;
     const canSubmit = this.isInputValid();
 
     return (
@@ -109,9 +121,11 @@ export class CategoryForm extends React.Component {
         name={name}
         alias={alias}
         description={description}
-        onChangeName={this.handleChange('name')}
-        onChangeAlias={this.handleChange('alias')}
-        onChangeDescription={this.handleChange('description')}
+        color={color}
+        onChangeName={this.handleChangeName}
+        onChangeAlias={this.handleChangeAlias}
+        onChangeDescription={this.handleChangeDescription}
+        onChangeColor={this.handleChangeColor}
         onSubmit={this.handleSubmitCategory}
         canSubmit={canSubmit}
       />

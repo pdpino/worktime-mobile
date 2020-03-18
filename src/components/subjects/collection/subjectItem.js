@@ -3,7 +3,7 @@ import {
   StyleSheet, View, TouchableHighlight, Text,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { colors } from '../../../shared/styles';
+import { colors, getLightColor } from '../../../shared/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,42 +11,38 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 1,
-    paddingRight: 10,
-    paddingLeft: 25,
-    minHeight: 38,
-    borderStyle: 'solid',
-    borderBottomWidth: 1,
-    borderBottomColor: colors.lightGray,
+    paddingVertical: 5,
   },
   selectedContainer: {
     backgroundColor: colors.selectedSubject,
   },
   unselectedContainer: {
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
   },
   detail: {
     flex: 1,
     flexDirection: 'column',
+    paddingRight: 10,
+    marginBottom: 3,
   },
   name: {
-    fontSize: 20,
+    fontSize: 15,
     color: 'black',
   },
   description: {
-    fontSize: 12,
-    color: 'black',
-    paddingLeft: 8,
+    fontSize: 15,
+    color: 'gray',
   },
-  chevronContainer: {
+  iconContainer: {
     justifyContent: 'center',
+    marginHorizontal: 8,
   },
 });
 
 class SubjectItem extends React.PureComponent {
   render() {
     const {
-      subject, isSelected, onPress, onLongPress,
+      subject, isSelected, categoryColor, onPress, onLongPress,
     } = this.props;
 
     const detail = (
@@ -77,12 +73,14 @@ class SubjectItem extends React.PureComponent {
             isSelected ? styles.selectedContainer : styles.unselectedContainer,
           ]}
         >
-          {detail}
           <Icon
-            containerStyle={styles.chevronContainer}
-            name="chevron-right"
-            type="feather"
+            containerStyle={styles.iconContainer}
+            name="work"
+            type="material-icons"
+            size={14}
+            color={getLightColor(categoryColor)}
           />
+          {detail}
         </View>
       </TouchableHighlight>
     );
