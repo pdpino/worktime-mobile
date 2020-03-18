@@ -23,14 +23,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     paddingRight: 10,
-    marginBottom: 3,
   },
   name: {
-    fontSize: 15,
+    fontSize: 16,
     color: 'black',
   },
   description: {
-    fontSize: 15,
+    fontSize: 16,
     color: 'gray',
   },
   iconContainer: {

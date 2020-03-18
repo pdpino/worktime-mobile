@@ -8,23 +8,17 @@ import { colors, getStrongColor, getMediumColor } from '../../../shared/styles';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: colors.lighterGray,
-  },
-  colorColumn: {
-    borderLeftWidth: 8,
-  },
-  textColumn: {
-    flex: 1,
     flexDirection: 'column',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.lighterGray,
+    borderLeftWidth: 8,
     padding: 5,
     paddingLeft: 0,
   },
   categoryName: {
     fontWeight: '500',
-    fontSize: 15,
-    marginLeft: 3,
+    fontSize: 16,
+    marginLeft: 10,
   },
 });
 
@@ -35,42 +29,39 @@ class CategoryItem extends React.PureComponent {
       onPressSubject, onLongPressSubject, onPressCategory,
     } = this.props;
 
-    const colorColumn = (
-      <View
+    const categoryName = (
+      <Text
         style={[
-          styles.colorColumn,
-          { borderColor: getStrongColor(category.color) },
+          styles.categoryName,
+          { color: getMediumColor(category.color) },
         ]}
-      />
+      >
+        {category.name}
+      </Text>
     );
 
-    const textColumn = (
-      <View style={styles.textColumn}>
-        <Text
-          style={[
-            styles.categoryName,
-            { color: getMediumColor(category.color) },
-          ]}
-        >
-          {category.name}
-        </Text>
-        <SubjectList
-          subjects={category.subjects}
-          selectedSubjects={selectedSubjects}
-          categoryColor={category.color}
-          onPressSubject={onPressSubject}
-          onLongPressSubject={onLongPressSubject}
-        />
-      </View>
+    const subjectsList = (
+      <SubjectList
+        subjects={category.subjects}
+        selectedSubjects={selectedSubjects}
+        categoryColor={category.color}
+        onPressSubject={onPressSubject}
+        onLongPressSubject={onLongPressSubject}
+      />
     );
 
     return (
       <TouchableOpacity
         onPress={() => onPressCategory(category.id)}
       >
-        <View style={styles.container}>
-          {colorColumn}
-          {textColumn}
+        <View
+          style={[
+            styles.container,
+            { borderLeftColor: getStrongColor(category.color) },
+          ]}
+        >
+          {categoryName}
+          {subjectsList}
         </View>
       </TouchableOpacity>
     );

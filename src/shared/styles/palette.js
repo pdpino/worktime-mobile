@@ -6,7 +6,7 @@ const colorDefs = [
   ['green', '#639b41', '#71be41', '#4fc507'], // hue 97
   ['lightBlue', '#4ba5b9', '#28bbdc', '#0eccf6'], // hue 191
   ['blue', '#4476ab', '#287bd4', '#0b5eb8'], // hue 211
-  ['purple', '#7779c7', '#6568e0', '#585bf5'], // hue 239
+  ['purple', '#6668c2', '#5b5fea', '#4f52fe'], // hue 239
   ['pink', '#9a77a1', '#bd75c9', '#c11bde'], // hue 291
   ['brown', '#967963', '#614e40', '#6e2e00'], // hue 25
 ];
