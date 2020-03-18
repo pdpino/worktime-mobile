@@ -5,9 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+
+
+## 1.11.0 - 2020-03-17
 ### Added
 * Add color to categories
-* Add translations support, with english and spanish languages
+* Add translations support, with English and Spanish languages
 * Add "exported on" timestamp on importing view
 * Add toast message after deletion
 
