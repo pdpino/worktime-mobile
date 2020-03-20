@@ -6,10 +6,16 @@ import Modal from 'react-native-modal';
 import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
-  listContainer: {
+  container: {
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'white',
+  },
+  listContainer: {
+    // NOTE: passing these styles to FlatList as prop does not work as intended
+    // i.e. items do not use full-width
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   title: {
     marginTop: 5,
@@ -18,7 +24,6 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     marginVertical: 10,
-    marginLeft: 10,
   },
   itemText: {
     textAlign: 'center',
@@ -58,13 +63,15 @@ const NDaysPicker = ({ isVisible, onValueChange, closeModal }) => {
       onBackButtonPress={closeModal}
       onBackdropPress={closeModal}
     >
-      <View style={styles.listContainer}>
+      <View style={styles.container}>
         {title}
-        <FlatList
-          data={availableNDaysValues}
-          keyExtractor={item => item.toString()}
-          renderItem={renderItem}
-        />
+        <View style={styles.listContainer}>
+          <FlatList
+            data={availableNDaysValues}
+            keyExtractor={item => item.toString()}
+            renderItem={renderItem}
+          />
+        </View>
       </View>
     </Modal>
   );

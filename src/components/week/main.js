@@ -8,7 +8,7 @@ class WeekView extends React.PureComponent {
       workSessions, nDays, selectedDate,
     } = this.props;
 
-    const events = workSessions.map((workSession) => {
+    const events = (workSessions || []).map((workSession) => {
       const { subject } = workSession;
       const { category } = subject;
       const color = category ? category.color : 'gray'; // HACK: default hardcoded
