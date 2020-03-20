@@ -65,7 +65,7 @@ const Root = createBottomTabNavigator({
   },
 },
 {
-  initialRouteName: 'work',
+  initialRouteName: 'week',
   navigationOptions: ({ navigation }) => ({
     tabBarVisible: navigation.state.index === 0,
     tabBarIcon: ({ tintColor }) => {
