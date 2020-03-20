@@ -60,6 +60,3 @@ docs/develop.md
 
 # Testing
 coverage/
-
-# Custom scripts
-postBuild.sh
