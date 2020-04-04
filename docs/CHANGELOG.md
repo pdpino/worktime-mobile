@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## 1.12.0-alpha.2 - 2020-04-03
+### Fixed
+* Set initial screen to Work
+
+
 ## 1.12.0-alpha.1 - 2020-03-20
 ### Fixed
 * Avoid extra re-renders on WeekView
