@@ -8,6 +8,9 @@ import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 
 export class CategoryForm extends React.Component {
+  // HACK: default-color hardcoded
+  static defaultColor = 'gray';
+
   static navigationOptions({ navigation }) {
     const category = navigation.getParam('category');
     if (category) {
@@ -40,7 +43,7 @@ export class CategoryForm extends React.Component {
       name,
       alias,
       description,
-      color,
+      color: color || CategoryForm.defaultColor,
     };
 
     this.handleChangeName = this.getChangeHandler('name');
@@ -80,7 +83,7 @@ export class CategoryForm extends React.Component {
       name: name.trim(),
       alias: alias && alias.trim(),
       description: description && description.trim(),
-      color,
+      color: color || CategoryForm.defaultColor,
     };
 
     if (this.props.category) {

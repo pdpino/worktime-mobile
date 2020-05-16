@@ -30,6 +30,9 @@ class WeekView extends React.PureComponent {
         headerStyle={{
           backgroundColor: colors.lightBlue,
         }}
+        headerTextColor="white"
+        hoursInDisplay={18}
+        startHour={8}
       />
     );
   }

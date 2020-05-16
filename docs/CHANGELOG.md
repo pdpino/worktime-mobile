@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## 1.12.0-alpha.3 - 2020-05-15
+### Fixed
+* Set gray as default color for CategoryForm
+* In WeekView: display more hours in the same screen, and start at 8am by default
+
+
 ## 1.12.0-alpha.2 - 2020-04-03
 ### Fixed
 * Set initial screen to Work
