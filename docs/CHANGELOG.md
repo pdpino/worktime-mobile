@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## 1.12.0-alpha.4 - 2020-05-18
+### Added
+* Option for 5 days in WeekView
+
+### Fixed
+* Improve WeekView performance
+
+
+
 ## 1.12.0-alpha.3 - 2020-05-15
 ### Fixed
 * Set gray as default color for CategoryForm

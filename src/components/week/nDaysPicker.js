@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 });
 
 // NOTE: This is defined in react-native-week-view
-const availableNDaysValues = [1, 3, 7];
+const availableNDaysValues = [1, 3, 5, 7];
 
 const NDaysPicker = ({ isVisible, onValueChange, closeModal }) => {
   const title = (

@@ -5726,9 +5726,9 @@ react-native-vector-icons@^5.0.0:
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
-"react-native-week-view@git://github.com/pdpino/react-native-week-view.git#feature/vertical-scroll":
+"react-native-week-view@git://github.com/pdpino/react-native-week-view.git#refactor/preprocess-events":
   version "0.0.10"
-  resolved "git://github.com/pdpino/react-native-week-view.git#1184aac6f1d79ef61ff7741ba9b6eee22f470e9c"
+  resolved "git://github.com/pdpino/react-native-week-view.git#0e8281522a206fe86899f8d40561b024ce1303e1"
   dependencies:
     moment "^2.19.3"
     prop-types "^15.7.2"
