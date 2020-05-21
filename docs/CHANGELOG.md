@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## 1.12.0-alpha.5 - 2020-05-20
+### Changed
+* Display 7 days as default in WeekView
+
+### Fixed
+* Further improve WeekView performance
+
+
+
 ## 1.12.0-alpha.4 - 2020-05-18
 ### Added
 * Option for 5 days in WeekView
@@ -23,9 +32,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * In WeekView: display more hours in the same screen, and start at 8am by default
 
 
+
 ## 1.12.0-alpha.2 - 2020-04-03
 ### Fixed
 * Set initial screen to Work
+
 
 
 ## 1.12.0-alpha.1 - 2020-03-20
@@ -34,12 +45,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Minor style fixes in WeekView
 
 
+
 ## 1.12.0-alpha - 2020-03-18
 ### Added
 * Week View tab (experimental)
 
 ### Fixed
 * Small style fixes in subjects-collection
+
 
 
 ## 1.11.0 - 2020-03-17
@@ -54,6 +67,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Fix bug when deleting subject in form
 
 
+
 ## 1.10.1 - 2019-11-09
 ### Fixed
 * In dashboard summary:
@@ -61,6 +75,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - Fix height moving
 * Dashboard styles
 * Other minor fixes
+
 
 
 ## 1.10.0 - 2019-11-08

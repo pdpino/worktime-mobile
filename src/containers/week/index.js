@@ -25,7 +25,7 @@ export class WeekView extends React.Component {
     super(props);
 
     this.state = {
-      nDays: 3,
+      nDays: 7,
       nDaysMenuVisible: false,
       selectedDate: getToday(),
     };
