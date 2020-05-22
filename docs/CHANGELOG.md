@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 
 
+## 1.12.0 - 2020-05-21
+### Changed
+* Set WeekView background color to white
+
+### Fixed
+* Add spinner on WeekView when loading
+
+
 
 ## 1.12.0-alpha.5 - 2020-05-20
 ### Changed

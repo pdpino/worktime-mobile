@@ -1,10 +1,17 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import WeekView from './main';
 import NDaysPicker from './nDaysPicker';
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+})
+
 const WeekViewWrapper = ({ children, ...props }) => (
-  <View style={{ flex: 1 }}>
+  <View style={styles.container}>
     <WeekView {...props} />
     {children}
   </View>
