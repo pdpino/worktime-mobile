@@ -5731,9 +5731,9 @@ react-native-vector-icons@^5.0.0:
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
-"react-native-week-view@git://github.com/pdpino/react-native-week-view.git#feature/async-load":
-  version "0.0.10"
-  resolved "git://github.com/pdpino/react-native-week-view.git#cfd065b1d5a773a12faf62a8c61793e3310be34a"
+"react-native-week-view@git://github.com/pdpino/react-native-week-view.git#feature/visual-improvements":
+  version "0.0.11"
+  resolved "git://github.com/pdpino/react-native-week-view.git#e14332260c2762970ebe0b4a25431a25d10b21bb"
   dependencies:
     moment "^2.19.3"
     prop-types "^15.7.2"

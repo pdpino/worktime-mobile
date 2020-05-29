@@ -44,10 +44,7 @@ const NDaysPicker = ({ isVisible, onValueChange, closeModal }) => {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => {
-        closeModal();
-        onValueChange(item);
-      }}
+      onPress={() => onValueChange(item)}
     >
       <View style={styles.itemContainer}>
         <Text style={styles.itemText}>
@@ -77,4 +74,4 @@ const NDaysPicker = ({ isVisible, onValueChange, closeModal }) => {
   );
 };
 
-export default NDaysPicker;
+export default React.memo(NDaysPicker);

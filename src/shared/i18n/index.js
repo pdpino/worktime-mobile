@@ -1,8 +1,8 @@
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
-import { LocaleConfig } from 'react-native-calendars';
 import translations from './translations';
-import './calendars';
+import setRNCalendarsLocale from './calendars';
+import setRNWeekViewLocale from './week-view';
 
 const defaultLocale = 'en';
 
@@ -31,7 +31,9 @@ class I18NHandler {
 
     const useLocale = languageTag || defaultLocale;
     i18n.locale = useLocale;
-    LocaleConfig.defaultLocale = useLocale;
+
+    setRNCalendarsLocale(useLocale);
+    setRNWeekViewLocale(useLocale);
 
     const changed = this.currentLocale !== useLocale;
     this.currentLocale = useLocale;

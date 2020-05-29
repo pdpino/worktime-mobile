@@ -75,6 +75,12 @@ const rnIconDefinitions = {
     size: 22,
     color: 'white',
   },
+  today: {
+    name: 'today',
+    type: 'material-icons',
+    size: 23,
+    color: 'white',
+  },
 };
 
 class ClickableIcon extends React.PureComponent {

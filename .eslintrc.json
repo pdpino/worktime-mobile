@@ -12,5 +12,8 @@
     "react/prop-types": "off",
     "react/destructuring-assignment": "off",
     "import/no-named-as-default": "off"
+  },
+  "globals": {
+    "requestAnimationFrame": "readonly"
   }
 }
