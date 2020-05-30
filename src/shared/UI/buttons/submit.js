@@ -6,8 +6,11 @@ import { colors } from '../../styles';
 
 const styles = StyleSheet.create({
   container: {
-    width: 220,
+    flexDirection: 'row',
+    alignSelf: 'center',
     height: 32,
+    marginVertical: 15,
+    marginHorizontal: 10,
   },
   button: {
     flex: 1,
@@ -47,4 +50,4 @@ const SubmitButton = ({
   </View>
 );
 
-export default SubmitButton;
+export default React.memo(SubmitButton);

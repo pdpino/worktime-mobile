@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { SubmitButton } from '../../../shared/UI/buttons';
 import i18n from '../../../shared/i18n';
-import commonStyles from './styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,9 +10,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
-  submitButtonContainer: {
-    alignSelf: 'center',
-  },
 });
 
 const Importing = ({
@@ -21,14 +17,12 @@ const Importing = ({
 }) => (
   <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.container}>
     {children}
-    <View style={[commonStyles.row, styles.submitButtonContainer]}>
-      <SubmitButton
-        text={i18n.t('porting.import')}
-        isLoading={isImporting}
-        disabled={!canPressImport}
-        onPress={onPressImport}
-      />
-    </View>
+    <SubmitButton
+      text={i18n.t('porting.import')}
+      isLoading={isImporting}
+      disabled={!canPressImport}
+      onPress={onPressImport}
+    />
   </ScrollView>
 );
 

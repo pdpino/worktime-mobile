@@ -34,13 +34,11 @@ const Exporting = ({ isPreparingData, onPressExport }) => {
   );
 
   const exportButton = (
-    <View style={styles.row}>
-      <SubmitButton
-        text={i18n.t('porting.export')}
-        isLoading={isPreparingData}
-        onPress={onPressExport}
-      />
-    </View>
+    <SubmitButton
+      text={i18n.t('porting.export')}
+      isLoading={isPreparingData}
+      onPress={onPressExport}
+    />
   );
 
   return (
