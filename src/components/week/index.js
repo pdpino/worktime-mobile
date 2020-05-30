@@ -15,6 +15,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  header: {
+    backgroundColor: colors.lightBlue,
+    elevation: 1,
+  },
   loadingSpinner: {
     position: 'absolute',
     top: CONTAINER_HEIGHT / 2,
@@ -33,9 +37,7 @@ const WeekViewWrapper = ({
       events={workSessions}
       numberOfDays={nDays}
       selectedDate={selectedDate}
-      headerStyle={{
-        backgroundColor: colors.lightBlue,
-      }}
+      headerStyle={styles.header}
       headerTextColor="white"
       hoursInDisplay={18}
       startHour={8}

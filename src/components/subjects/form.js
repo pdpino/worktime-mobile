@@ -1,116 +1,79 @@
 import React from 'react';
 import {
-  StyleSheet, ScrollView, View, Text, TextInput, Button,
+  StyleSheet, ScrollView, View,
 } from 'react-native';
-import { ModalPicker } from '../../shared/UI/pickers';
+import { IconPicker } from '../../shared/UI/pickers';
+import { TextField, CategoryField } from '../../shared/UI/inputs';
+import { SubmitButton } from '../../shared/UI/buttons';
+import { getLightColor } from '../../shared/styles';
 import i18n from '../../shared/i18n';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  formItem: {
-    marginHorizontal: 16,
-    marginVertical: 8,
-  },
-  categoryFormItem: {
+  nameAndIconRow: {
     flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 10,
   },
-  label: {
-    fontSize: 18,
-    color: 'black',
-    marginBottom: 2,
-  },
-  input: {
-    fontSize: 16,
-    borderWidth: 1,
-    borderRadius: 3,
-    backgroundColor: 'white',
-    textAlignVertical: 'top',
-    padding: 10,
-  },
-  inputName: { },
-  inputDescription: {
-    height: 100,
-  },
-  inputCategory: {
+  nameContainer: {
     flex: 1,
-    marginLeft: 10,
-    paddingVertical: 3,
-    paddingHorizontal: 5,
-  },
-  inputCategoryText: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: 'black',
-  },
-  button: {
-    marginTop: 5,
   },
 });
 
 const formScope = { scope: 'formFields' };
 
 const SubjectForm = ({
-  name, description, categoryId, categories,
-  onChangeName, onChangeDescription, onChangeCategory,
+  name, description, categoryId, icon, color, categories,
+  onChangeName, onChangeDescription, onChangeCategory, onChangeIcon,
   onSubmit, canSubmit,
 }) => {
-  const nameInput = (
-    <View style={styles.formItem}>
-      <Text style={styles.label}>
-        {i18n.t('name', formScope)}
-      </Text>
-      <TextInput
-        style={[styles.input, styles.inputName]}
+  const nameAndIconRow = (
+    <View style={styles.nameAndIconRow}>
+      <IconPicker
+        name={name}
+        icon={icon}
+        size={30}
+        color={getLightColor(color)}
+        onSelect={onChangeIcon}
+      />
+      <TextField
+        containerStyle={styles.nameContainer}
+        label={i18n.t('name', formScope)}
         value={name}
         placeholder={i18n.t('shortAndMemorableName', formScope)}
-        onChangeText={onChangeName}
+        onChange={onChangeName}
       />
     </View>
   );
 
   const descriptionInput = (
-    <View style={styles.formItem}>
-      <Text style={styles.label}>
-        {i18n.t('description', formScope)}
-      </Text>
-      <TextInput
-        style={[styles.input, styles.inputDescription]}
-        value={description}
-        placeholder={i18n.t('workOnThisAndThat', formScope)}
-        onChangeText={onChangeDescription}
-        multiline
-      />
-    </View>
+    <TextField
+      label={i18n.t('description', formScope)}
+      value={description}
+      placeholder={i18n.t('workOnThisAndThat', formScope)}
+      onChange={onChangeDescription}
+      multiline
+    />
   );
 
   const categoryInput = (
-    <View style={[styles.formItem, styles.categoryFormItem]}>
-      <Text style={styles.label}>
-        {i18n.t('entities.category')}
-      </Text>
-      <ModalPicker
-        flex={1}
-        items={categories}
-        selectedId={categoryId}
-        buttonStyle={[styles.input, styles.inputCategory]}
-        textStyle={styles.inputCategoryText}
-        onValueChange={onChangeCategory}
-      />
-    </View>
+    <CategoryField
+      label={i18n.t('entities.category')}
+      value={categoryId}
+      onChange={onChangeCategory}
+      categories={categories}
+    />
   );
 
-  const submitText = i18n.t('save');
   const submitButton = (
-    <View style={[styles.formItem, styles.button]}>
-      <Button
-        title={submitText}
-        onPress={onSubmit}
-        disabled={!canSubmit}
-      />
-    </View>
+    <SubmitButton
+      text={i18n.t('save')}
+      onPress={onSubmit}
+      disabled={!canSubmit}
+    />
   );
 
   return (
@@ -118,7 +81,7 @@ const SubjectForm = ({
       style={styles.container}
       keyboardShouldPersistTaps="handled"
     >
-      {nameInput}
+      {nameAndIconRow}
       {descriptionInput}
       {categoryInput}
       {submitButton}

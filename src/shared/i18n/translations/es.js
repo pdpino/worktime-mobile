@@ -188,4 +188,20 @@ export default {
   weekView: {
     numberOfDays: 'Número de días',
   },
+  iconCategories: {
+    people: 'Personas',
+    office: 'Oficina',
+    school: 'Escuela',
+    lab: 'Lab',
+    charts: 'Gráficos',
+    audiovisual: 'Audiovisual',
+    money: 'Dinero',
+    dateTime: 'Tiempo',
+    medical: 'Médico',
+    coding: 'Programación',
+    technology: 'Tecnología',
+    sports: 'Deportes',
+    transport: 'Transporte',
+    others: 'Otros',
+  },
 };
