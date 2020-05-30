@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TextDropdownMenu } from '../../../shared/UI/menus';
 import { prettyDaysSpan, prettyShortcutSelection } from '../../../shared/dates';
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
   arrowContainer: {
     backgroundColor: colors.mainBlue,
     paddingHorizontal: 15,
+    paddingVertical: 5,
   },
 });
 
@@ -34,15 +35,19 @@ class Arrow extends React.PureComponent {
     const { direction, onPress } = this.props;
 
     return (
-      <Icon
-        containerStyle={styles.arrowContainer}
-        name={`caret-${direction}`}
-        type="font-awesome"
-        color="white"
-        size={22}
+      <TouchableOpacity
         onPress={onPress}
         underlayColor={colors.lightBlue}
-      />
+        activeOpacity={0.4}
+      >
+        <Icon
+          iconStyle={styles.arrowContainer}
+          name={`caret-${direction}`}
+          type="font-awesome"
+          color="white"
+          size={22}
+        />
+      </TouchableOpacity>
     );
   }
 }

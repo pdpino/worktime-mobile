@@ -16,9 +16,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: 'gray',
   },
-  buttonContainerView: {
+  buttonContainer: {
     elevation: 5,
     borderRadius: 4,
+    marginHorizontal: 10,
   },
 });
 
@@ -30,7 +31,7 @@ class PlayerButton extends React.PureComponent {
 
     return (
       <Button
-        containerViewStyle={styles.buttonContainerView}
+        containerStyle={styles.buttonContainer}
         buttonStyle={[
           styles.button,
           { backgroundColor },
@@ -39,6 +40,7 @@ class PlayerButton extends React.PureComponent {
           type: 'font-awesome',
           size: 30,
           style: { marginRight: 0 },
+          color: 'white',
           name: iconName,
         }}
         onPress={onPress}
