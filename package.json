@@ -16,7 +16,7 @@
     "@redux-offline/redux-offline": "^2.4.0",
     "date-fns": "^2.6.0",
     "i18n-js": "^3.5.0",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.19",
     "memoize-one": "^5.0.4",
     "react": "16.8.3",
     "react-native": "0.59.8",
