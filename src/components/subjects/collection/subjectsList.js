@@ -4,9 +4,6 @@ import SubjectItem from './subjectItem';
 import i18n from '../../../shared/i18n';
 
 const styles = StyleSheet.create({
-  container: {
-    marginLeft: 10,
-  },
   emptyList: {
     marginTop: 5,
     marginLeft: 25,
@@ -37,7 +34,6 @@ const SubjectsList = ({
 
   return (
     <FlatList
-      style={styles.container}
       data={subjects}
       renderItem={renderSubject}
       keyExtractor={(item, index) => index.toString()}

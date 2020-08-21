@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch',
     elevation: 2,
-    backgroundColor: colors.lighterGray,
+    backgroundColor: colors.mainBlue,
     borderRadius: 2,
     borderColor: colors.mainBlue,
     borderWidth: 1,
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   separatorContainer: {
-    backgroundColor: colors.mainBlue,
+    alignSelf: 'center',
     paddingHorizontal: 8,
   },
   dateContainer: {

@@ -97,6 +97,7 @@ Subject.fields = {
   description: attr(),
   archived: attr(),
   category: fk('Category'),
+  icon: attr(),
 };
 
 export default Subject;

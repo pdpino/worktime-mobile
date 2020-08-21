@@ -1,6 +1,6 @@
 {
   "name": "Worktime",
-  "version": "1.12.1",
+  "version": "1.13.0",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -24,7 +24,7 @@
     "react-native-calendars": "^1.20.0",
     "react-native-collapsible": "^1.5.1",
     "react-native-device-info": "^0.22.5",
-    "react-native-elements": "^0.19.1",
+    "react-native-elements": "^2.0.0",
     "react-native-file-selector": "^0.0.6",
     "react-native-fs": "2.11.17",
     "react-native-localize": "^1.3.1",
@@ -32,8 +32,8 @@
     "react-native-modal": "^6.5.0",
     "react-native-push-notification": "3.1.1",
     "react-native-share": "^1.1.3",
-    "react-native-vector-icons": "^5.0.0",
-    "react-native-week-view": "git://github.com/pdpino/react-native-week-view.git#feature/visual-improvements",
+    "react-native-vector-icons": "^6.6.0",
+    "react-native-week-view": "git://github.com/pdpino/react-native-week-view.git#develop",
     "react-navigation": "^2.11.2",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",

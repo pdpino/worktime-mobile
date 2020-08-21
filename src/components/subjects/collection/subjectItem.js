@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, TouchableHighlight, Text,
 } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { AssignableIcon } from '../../../shared/UI/icons/assignable';
 import { colors, getLightColor } from '../../../shared/styles';
 
 const styles = StyleSheet.create({
@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 5,
+    paddingLeft: 2,
   },
   selectedContainer: {
     backgroundColor: colors.selectedSubject,
@@ -31,10 +32,6 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     color: 'gray',
-  },
-  iconContainer: {
-    justifyContent: 'center',
-    marginHorizontal: 8,
   },
 });
 
@@ -72,11 +69,10 @@ class SubjectItem extends React.PureComponent {
             isSelected ? styles.selectedContainer : styles.unselectedContainer,
           ]}
         >
-          <Icon
-            containerStyle={styles.iconContainer}
-            name="work"
-            type="material-icons"
-            size={14}
+          <AssignableIcon
+            name={subject.name}
+            icon={subject.icon}
+            size={25}
             color={getLightColor(categoryColor)}
           />
           {detail}
