@@ -1,44 +1,33 @@
 package com.worktime;
 
 import android.app.Application;
-
+import android.content.Context;
+import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.reactcommunity.rnlocalize.RNLocalizePackage;
-import ui.fileselector.RNFileSelectorPackage;
-import com.rnfs.RNFSPackage;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.oblador.vectoricons.VectorIconsPackage;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import cl.json.RNSharePackage;
 import cl.json.ShareApplication;
 
-import java.util.Arrays;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class MainApplication extends Application implements ShareApplication, ReactApplication {
 
-  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
-    @Override
-    public boolean getUseDeveloperSupport() {
-      return BuildConfig.DEBUG;
-    }
+  private final ReactNativeHost mReactNativeHost =
+      new ReactNativeHost(this) {
+        @Override
+        public boolean getUseDeveloperSupport() {
+          return BuildConfig.DEBUG;
+        }
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new RNLocalizePackage(),
-            new RNFileSelectorPackage(),
-            new RNFSPackage(),
-            new ReactNativePushNotificationPackage(),
-            new RNDeviceInfo(),
-            new VectorIconsPackage(),
-            new RNSharePackage()
-      );
+      @SuppressWarnings("UnnecessaryLocalVariable")
+      List<ReactPackage> packages = new PackageList(this).getPackages();
+
+      return packages;
     }
 
     @Override
@@ -56,10 +45,42 @@ public class MainApplication extends Application implements ShareApplication, Re
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+  }
+
+  /**
+   * Loads Flipper in React Native templates. Call this in the onCreate method with something like
+   * initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+   *
+   * @param context
+   * @param reactInstanceManager
+   */
+  private static void initializeFlipper(
+      Context context, ReactInstanceManager reactInstanceManager) {
+    if (BuildConfig.DEBUG) {
+      try {
+        /*
+         We use reflection here to pick up the class that initializes Flipper,
+        since Flipper library is not available in release mode
+        */
+        Class<?> aClass = Class.forName("com.worktime.ReactNativeFlipper");
+        aClass
+            .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
+            .invoke(null, context, reactInstanceManager);
+      } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+      } catch (NoSuchMethodException e) {
+        e.printStackTrace();
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      } catch (InvocationTargetException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   @Override
   public String getFileProviderAuthority() {
-    return "com.worktime.fileprovider";
+    return BuildConfig.APPLICATION_ID + ".provider";
   }
 }

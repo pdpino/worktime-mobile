@@ -1,4 +1,4 @@
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import WorkPlayer from '../containers/work/player';
 import headerOptions from './header';
 import i18n from '../shared/i18n';
@@ -13,7 +13,7 @@ const WorkStack = createStackNavigator({
 },
 {
   initialRouteName: 'work',
-  navigationOptions: {
+  defaultNavigationOptions: {
     ...headerOptions,
   },
 });

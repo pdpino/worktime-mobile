@@ -25,7 +25,7 @@ export class SubjectShow extends React.Component {
 
     return {
       title: subjectName,
-      headerRight: <HeaderActions actions={actions} />,
+      headerRight: () => <HeaderActions actions={actions} />,
     };
   }
 

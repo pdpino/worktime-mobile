@@ -1,10 +1,12 @@
-import { AppRegistry, YellowBox } from 'react-native';
+import { AppRegistry, LogBox } from 'react-native';
+import { enableScreens } from 'react-native-screens';
 import App from './App';
 import { name as appName } from './app.json';
 
+enableScreens();
+
 AppRegistry.registerComponent(appName, () => App);
 
-YellowBox.ignoreWarnings([
-  'Warning: Async Storage has been extracted',
-  'Warning: NetInfo has been extracted',
+LogBox.ignoreLogs([
+  // Add warnings to ignore here...
 ]);

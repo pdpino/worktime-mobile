@@ -8,13 +8,13 @@ const getSelectionHeaderParams = ({
   amountSelected, actions, handleUnselection,
 }) => ({
   title: amountSelected.toString(),
-  headerLeft: (
+  headerLeft: () => (
     <CrossIcon
       containerStyle={commonStyles.iconContainer}
       onPress={handleUnselection}
     />
   ),
-  headerRight: <HeaderActions actions={actions} />,
+  headerRight: () => <HeaderActions actions={actions} />,
   headerStyle: {
     backgroundColor: colors.darkBlue,
   },

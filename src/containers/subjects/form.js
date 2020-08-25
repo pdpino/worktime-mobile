@@ -27,7 +27,7 @@ export class SubjectForm extends React.Component {
 
     return {
       title: i18n.t('entities.editSubject'),
-      headerRight: <HeaderActions actions={actions} />,
+      headerRight: () => <HeaderActions actions={actions} />,
     };
   }
 

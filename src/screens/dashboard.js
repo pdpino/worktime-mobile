@@ -1,4 +1,4 @@
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import Dashboard from '../containers/dashboard/main';
 import headerOptions from './header';
 import i18n from '../shared/i18n';
@@ -13,7 +13,7 @@ const DashboardStack = createStackNavigator({
 },
 {
   initialRouteName: 'main',
-  navigationOptions: {
+  defaultNavigationOptions: {
     ...headerOptions,
   },
 });

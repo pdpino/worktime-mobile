@@ -1,4 +1,4 @@
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import WeekView from '../containers/week';
 import headerOptions from './header';
 
@@ -7,7 +7,7 @@ const WeekStack = createStackNavigator({
 },
 {
   initialRouteName: 'weekView',
-  navigationOptions: {
+  defaultNavigationOptions: {
     ...headerOptions,
   },
 });

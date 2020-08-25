@@ -48,7 +48,7 @@ export default function createSubjectsCollection(isArchive) {
 
       return {
         title: i18n.t('entities.subjects'),
-        headerRight: <HeaderActions actions={actions} />,
+        headerRight: () => <HeaderActions actions={actions} />,
       };
     }
 

@@ -1,12 +1,19 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import { ClickableIcon } from '../icons';
 import commonStyles from './styles';
+
+const styles = StyleSheet.create({
+  list: {
+    paddingRight: 5,
+    alignItems: 'center',
+  },
+});
 
 const HeaderActions = ({ actions }) => (
   <FlatList
     horizontal
-    contentContainerStyle={{ paddingRight: 5 }}
+    contentContainerStyle={styles.list}
     data={actions}
     renderItem={({ item }) => (
       !item.disabled ? (

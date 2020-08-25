@@ -25,7 +25,7 @@ export class WeekView extends React.Component {
 
     return {
       title: i18n.t('week'),
-      headerRight: <HeaderActions actions={actions} />,
+      headerRight: () => <HeaderActions actions={actions} />,
     };
   }
 

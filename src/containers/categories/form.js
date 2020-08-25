@@ -23,7 +23,7 @@ export class CategoryForm extends React.Component {
 
       return {
         title: category.name,
-        headerRight: <HeaderActions actions={actions} />,
+        headerRight: () => <HeaderActions actions={actions} />,
       };
     }
 

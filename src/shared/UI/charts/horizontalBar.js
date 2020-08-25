@@ -33,7 +33,10 @@ class HorizontalBar extends React.Component {
     const bars = values.map((value, idx) => {
       const { width, text } = value;
       const currentWidth = new Animated.Value(0);
-      Animated.timing(currentWidth, { toValue: width }).start();
+      Animated.timing(currentWidth, {
+        toValue: width,
+        useNativeDriver: false,
+      }).start();
       return (
         <Animated.View
           key={idx.toString()}

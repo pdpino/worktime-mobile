@@ -1,5 +1,6 @@
 import React from 'react';
-import { createBottomTabNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Icon } from 'react-native-elements';
 import SubjectsStack from './subjects';
 import WorkStack from './work';
@@ -66,7 +67,7 @@ const Root = createBottomTabNavigator({
 },
 {
   initialRouteName: 'work',
-  navigationOptions: ({ navigation }) => ({
+  defaultNavigationOptions: ({ navigation }) => ({
     tabBarVisible: navigation.state.index === 0,
     tabBarIcon: ({ tintColor }) => {
       const { routeName } = navigation.state;
@@ -77,4 +78,4 @@ const Root = createBottomTabNavigator({
   }),
 });
 
-export default Root;
+export default createAppContainer(Root);

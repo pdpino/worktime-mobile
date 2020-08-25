@@ -1,4 +1,4 @@
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import SettingsMenu from '../containers/settings/menu';
 import Profile from '../containers/settings/profile';
 import Exporting from '../containers/settings/exporting';
@@ -34,7 +34,7 @@ const SettingsStack = createStackNavigator({
 },
 {
   initialRouteName: 'menu',
-  navigationOptions: {
+  defaultNavigationOptions: {
     ...headerOptions,
   },
 });
