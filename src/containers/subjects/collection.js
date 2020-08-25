@@ -90,12 +90,12 @@ export default function createSubjectsCollection(isArchive) {
 
     findSubject(id) {
       const numericId = Number(id);
-      return this.props.subjects.find(subj => subj.id === numericId);
+      return this.props.subjects.find((subj) => subj.id === numericId);
     }
 
     findCategory(id) {
       const numericId = Number(id);
-      return this.props.categories.find(category => category.id === numericId);
+      return this.props.categories.find((category) => category.id === numericId);
     }
 
     handlePressSubject(id) {
@@ -145,7 +145,7 @@ export default function createSubjectsCollection(isArchive) {
       const selectedIds = this.props.getSelectionArray();
       if (selectedIds.length > 1) {
         const { subjects, selection } = this.props;
-        const selectedSubjects = subjects.filter(subj => selection[subj.id]);
+        const selectedSubjects = subjects.filter((subj) => selection[subj.id]);
 
         this.props.clearSelection();
         this.props.navigation.navigate('bulkEditSubject', {
@@ -236,12 +236,12 @@ export default function createSubjectsCollection(isArchive) {
     }
   }
 
-  const mapStateToProps = state => ({
+  const mapStateToProps = (state) => ({
     subjects: subjectsSelector(state, { archived: isArchive }),
     categories: categoriesSelector(state),
   });
 
-  const mapDispatchToProps = dispatch => bindActionCreators({
+  const mapDispatchToProps = (dispatch) => bindActionCreators({
     archiveSubjects,
     deleteSubjects,
   }, dispatch);

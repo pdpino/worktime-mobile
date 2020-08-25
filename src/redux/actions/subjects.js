@@ -1,4 +1,4 @@
-export const upsertSubject = attributes => ({
+export const upsertSubject = (attributes) => ({
   type: 'UPSERT_SUBJECT',
   payload: {
     attributes,
@@ -21,7 +21,7 @@ export const archiveSubjects = (ids, archived) => ({
   },
 });
 
-export const deleteSubjects = ids => ({
+export const deleteSubjects = (ids) => ({
   type: 'DELETE_SUBJECTS',
   payload: {
     ids,

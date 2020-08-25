@@ -16,7 +16,6 @@ const colors = {
   enabledSubmitButton: '#2196F3',
 };
 
-
 const timeColors = {
   total: 'green',
   effective: '#4fb3bf',

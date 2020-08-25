@@ -70,7 +70,7 @@ export default function withItemSelection(Component) {
 
     getSelectionArray() {
       const { selectedIds } = this.state;
-      return Object.keys(selectedIds).filter(id => selectedIds[id]);
+      return Object.keys(selectedIds).filter((id) => selectedIds[id]);
     }
 
     updateSelection(selectedIds, amountSelected) {

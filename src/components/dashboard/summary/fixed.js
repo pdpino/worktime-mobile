@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { prettyDuration } from '../../../../shared/dates';
-import { ClickableIcon } from '../../../../shared/UI/icons';
-import i18n from '../../../../shared/i18n';
-import { timeColors } from '../../../../shared/styles';
+import { prettyDuration } from '../../../shared/dates';
+import { ClickableIcon } from '../../../shared/UI/icons';
+import i18n from '../../../shared/i18n';
+import { timeColors } from '../../../shared/styles';
 
 const styles = StyleSheet.create({
   container: {

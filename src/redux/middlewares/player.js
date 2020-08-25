@@ -20,7 +20,7 @@ const playerMiddleware = (store) => {
 
   const isWorking = () => runningSessionSelector(store.getState());
 
-  return next => (action) => {
+  return (next) => (action) => {
     switch (action.type) {
       case 'APP/ACTIVATE':
         if (isWorking()) {

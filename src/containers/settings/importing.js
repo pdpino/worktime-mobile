@@ -175,12 +175,12 @@ export class Importing extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   subjects: subjectsSelector(state, { archived: 'all' }),
   profile: profileSelector(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   importFromJson,
 }, dispatch);
 

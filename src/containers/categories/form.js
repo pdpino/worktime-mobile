@@ -140,7 +140,7 @@ const mapStateToProps = (state, ownProps) => ({
   category: ownProps.navigation.getParam('category'),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   upsertCategory,
   deleteCategory,
 }, dispatch);

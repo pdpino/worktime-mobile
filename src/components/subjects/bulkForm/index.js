@@ -33,5 +33,4 @@ const BulkSubjectsForm = ({
   </ScrollView>
 );
 
-
 export default BulkSubjectsForm;

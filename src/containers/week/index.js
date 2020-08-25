@@ -74,7 +74,7 @@ export class WeekView extends React.Component {
   }
 
   handlePressNDaysMenu() {
-    this.setState(state => ({
+    this.setState((state) => ({
       nDaysMenuVisible: !state.nDaysMenuVisible,
     }));
   }
@@ -154,7 +154,7 @@ export class WeekView extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   workSessions: workSessionsSelector(state),
 });
 

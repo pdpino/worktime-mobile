@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
   SummaryComponent, TimeDetailsComponent, DateFilterComponent,
   DateShortcutsComponent,
-} from '../../components/dashboard/main';
+} from '../../components/dashboard';
 import { subjectsSelector, categoriesSelector } from '../../redux/selectors';
 import { Memoizer } from '../../shared/utils';
 import {
@@ -141,7 +141,7 @@ export class Dashboard extends React.Component {
   }
 
   createShortcuts() {
-    const getDayShifter = amount => (initialDate, endingDate, shift) => ({
+    const getDayShifter = (amount) => (initialDate, endingDate, shift) => ({
       initialDate: subtractDays(initialDate, -shift * amount),
       endingDate: subtractDays(endingDate, -shift * amount),
     });
@@ -280,7 +280,7 @@ export class Dashboard extends React.Component {
       return;
     }
 
-    sumTimesCalc(...params).then(timeStats => this.setState({
+    sumTimesCalc(...params).then((timeStats) => this.setState({
       isLoading: false,
       isReloading: false,
       timeStats,
@@ -293,7 +293,7 @@ export class Dashboard extends React.Component {
       [itemId]: !this.state.idsSelection[itemId],
     };
     const anySelected = Object.keys(idsSelection)
-      .some(key => idsSelection[key]);
+      .some((key) => idsSelection[key]);
 
     this.setStateAndSumTimes({
       idsSelection,
@@ -390,7 +390,7 @@ export class Dashboard extends React.Component {
         title = i18n.t('entities.noCategory');
       } else {
         const selectedCategory = categories
-          .find(category => category.id === selectedId);
+          .find((category) => category.id === selectedId);
         title = selectedCategory && selectedCategory.name;
       }
     }
@@ -436,7 +436,7 @@ export class Dashboard extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   subjects: subjectsSelector(state, { archived: false }),
   categories: categoriesSelector(state),
 });

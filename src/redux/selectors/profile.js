@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/prefer-default-export
-export const profileSelector = state => state.profile;
+export const profileSelector = (state) => state.profile;

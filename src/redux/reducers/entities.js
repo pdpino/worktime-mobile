@@ -6,7 +6,7 @@ function updateWorkSessionDevice(WorkSession, device) {
 
 function updateWorkSessionDeviceWhere(WorkSession, oldName, newName) {
   WorkSession.all()
-    .filter(workSession => workSession.device === oldName)
+    .filter((workSession) => workSession.device === oldName)
     .update({ device: newName });
 }
 
@@ -19,7 +19,7 @@ function addTimezoneOffset(WorkSession) {
   WorkSession.all().update({ tzOffset });
 }
 
-const entities = orm => (state, action) => {
+const entities = (orm) => (state, action) => {
   const session = orm.session(state);
   const { Category, Subject, WorkSession } = session;
 
@@ -39,7 +39,7 @@ const entities = orm => (state, action) => {
       const { idsSet, attributes } = action.payload;
       Subject
         .all()
-        .filter(subject => idsSet.has(subject.id))
+        .filter((subject) => idsSet.has(subject.id))
         .update(attributes);
       break;
     }
@@ -107,7 +107,7 @@ const entities = orm => (state, action) => {
     }
     case 'IMPORT_SUBJECTS_DATA':
       action.payload.importableSubjects
-        .forEach(importableSubject => Subject.import(importableSubject));
+        .forEach((importableSubject) => Subject.import(importableSubject));
       break;
     case 'UPDATE_DEVICE_NAME': {
       const { oldDeviceName, newDeviceName } = action.payload;

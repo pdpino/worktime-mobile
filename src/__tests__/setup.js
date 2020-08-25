@@ -15,7 +15,7 @@ const ignoreErrors = [
 
 console.error = (message) => {
   const messageStr = message.toString();
-  const shouldIgnore = ignoreErrors.some(str => messageStr.includes(str));
+  const shouldIgnore = ignoreErrors.some((str) => messageStr.includes(str));
   if (!shouldIgnore) {
     originalErrorFn(message);
   }

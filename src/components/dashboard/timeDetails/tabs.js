@@ -2,8 +2,8 @@ import React from 'react';
 import {
   View, StyleSheet, Text, TouchableOpacity,
 } from 'react-native';
-import i18n from '../../../../shared/i18n';
-import { colors } from '../../../../shared/styles';
+import i18n from '../../../shared/i18n';
+import { colors } from '../../../shared/styles';
 
 const styles = StyleSheet.create({
   container: {

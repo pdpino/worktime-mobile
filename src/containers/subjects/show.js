@@ -99,7 +99,7 @@ export class SubjectShow extends React.Component {
     }
 
     sumSubjectTimesCalc(subject, null, null)
-      .then(timeStats => this.setState({
+      .then((timeStats) => this.setState({
         isLoading: false,
         timeStats,
       }));
@@ -143,7 +143,7 @@ const mapStateToProps = (state, ownProps) => ({
   }),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   deleteSubjects,
   deleteWorkSession,
 }, dispatch);

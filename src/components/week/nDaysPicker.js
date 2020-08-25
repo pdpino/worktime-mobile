@@ -65,7 +65,7 @@ const NDaysPicker = ({ isVisible, onValueChange, closeModal }) => {
         <View style={styles.listContainer}>
           <FlatList
             data={availableNDaysValues}
-            keyExtractor={item => item.toString()}
+            keyExtractor={(item) => item.toString()}
             renderItem={renderItem}
           />
         </View>

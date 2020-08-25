@@ -1,4 +1,4 @@
-import asCollapsible from '../../../../shared/UI/common/collapsible';
+import asCollapsible from '../../../shared/UI/common/collapsible';
 import SummaryCard from './card';
 import FixedSummary from './fixed';
 import ExpandedSummary from './expanded';

@@ -27,7 +27,7 @@ export const stop = createActionForRunningSession('PLAYER/STOP', false);
 export const stopAndDiscard = createActionForRunningSession('PLAYER/STOP_DISCARD', false);
 export const updateWorkTimes = createActionForRunningSession('PLAYER/UPDATE_TIMES', false);
 
-export const start = subject => (dispatch, getState) => {
+export const start = (subject) => (dispatch, getState) => {
   dispatch({
     type: 'PLAYER/STARTING',
     payload: {
@@ -48,7 +48,7 @@ export const start = subject => (dispatch, getState) => {
   });
 };
 
-export const selectWorkSubject = selectedSubjectId => ({
+export const selectWorkSubject = (selectedSubjectId) => ({
   type: 'SELECT_WORK_SUBJECT',
   payload: {
     selectedSubjectId,

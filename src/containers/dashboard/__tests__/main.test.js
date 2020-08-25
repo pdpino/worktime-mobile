@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import { getFactory } from '../../../redux/__tests__';
-import { Dashboard } from '../main';
+import { Dashboard } from '../index';
 
 const navigation = {
   navigate: jest.fn(),

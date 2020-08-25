@@ -1,7 +1,7 @@
 import { makeFunctionAsync } from '../utils';
 
 function getExportableSubjects(subjectsSet) {
-  return subjectsSet.toModelArray().map(subject => subject.exportable());
+  return subjectsSet.toModelArray().map((subject) => subject.exportable());
 }
 
 export const getExportableObject = makeFunctionAsync((options) => {

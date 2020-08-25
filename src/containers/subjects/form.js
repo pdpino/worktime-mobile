@@ -121,7 +121,7 @@ export class SubjectForm extends React.Component {
   findCategoryColor() {
     const { categories } = this.props;
     const { categoryId } = this.state;
-    const category = (categories || []).find(cat => cat.id === categoryId);
+    const category = (categories || []).find((cat) => cat.id === categoryId);
     return category && category.color;
   }
 
@@ -157,7 +157,7 @@ const mapStateToProps = (state, ownProps) => ({
   categories: categoriesSelector(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   upsertSubject,
   deleteSubjects,
 }, dispatch);

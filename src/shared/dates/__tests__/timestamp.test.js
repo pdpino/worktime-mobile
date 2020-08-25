@@ -152,7 +152,7 @@ describe('toLocalDate', () => {
   });
 
   describe('Calculates date correctly from the offset', () => {
-    const testCases = cases => cases.forEach((testCase) => {
+    const testCases = (cases) => cases.forEach((testCase) => {
       const { timestamp, offset, outcome } = testCase;
       const date = toLocalDate(timestamp, offset);
 

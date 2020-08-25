@@ -83,11 +83,10 @@ const SubjectsPreview = ({
           textStyle={styles.subjectName}
           onPress={() => onPressSubject(data.name)}
         />
-        <View style={
-          [
-            styles.subjectBadge,
-            metadata.exists ? styles.subjectOld : styles.subjectNew,
-          ]}
+        <View style={[
+          styles.subjectBadge,
+          metadata.exists ? styles.subjectOld : styles.subjectNew,
+        ]}
         >
           <Text>
             {metadata.exists ? i18n.t('old') : i18n.t('new')}

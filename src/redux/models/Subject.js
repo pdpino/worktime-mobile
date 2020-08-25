@@ -28,7 +28,7 @@ class Subject extends Model {
     }
 
     importableSubject.workSessions
-      .forEach(workSession => WorkSession.import(subject, workSession));
+      .forEach((workSession) => WorkSession.import(subject, workSession));
   }
 
   getWorkSessions(options = {}) {
@@ -84,7 +84,7 @@ class Subject extends Model {
   }
 
   delete() {
-    this.worksessionSet.toModelArray().forEach(workSession => workSession.delete());
+    this.worksessionSet.toModelArray().forEach((workSession) => workSession.delete());
     super.delete();
   }
 }

@@ -1,5 +1,5 @@
 import { createStackNavigator } from 'react-navigation-stack';
-import Dashboard from '../containers/dashboard/main';
+import Dashboard from '../containers/dashboard';
 import headerOptions from './header';
 import i18n from '../shared/i18n';
 

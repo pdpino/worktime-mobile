@@ -22,7 +22,7 @@ function getWidthUnits(data, key) {
   const deviceWidth = Dimensions.get('window').width;
   const maxWidthUsed = deviceWidth - 70; // FIXME: hardcoded
 
-  const maxValue = Math.max(...data.map(item => item[key]));
+  const maxValue = Math.max(...data.map((item) => item[key]));
 
   return maxWidthUsed / maxValue;
 }
@@ -59,7 +59,7 @@ const BarTimes = ({
   return itemsSummaries ? (
     <FlatList
       data={itemsSummaries}
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={(item) => item.id.toString()}
       renderItem={renderItem}
       extraData={idsSelection}
       ListEmptyComponent={emptyComponent}

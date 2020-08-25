@@ -3,7 +3,7 @@ import memoizeOne from 'memoize-one';
 
 export function smartDivision(divide, by, percentage = false, decimals = 1) {
   const perc = percentage ? 100 : 1;
-  return by !== 0 ? (divide / by * perc).toFixed(decimals) : 0;
+  return by !== 0 ? ((divide / by) * perc).toFixed(decimals) : 0;
 }
 
 export function prettyPercentage(value, divider) {
@@ -31,7 +31,7 @@ export function extractFilename(filePath) {
 }
 
 export const sortByName = memoizeOne((array) => {
-  const getName = elem => (elem && elem.name && elem.name.toLowerCase()) || '';
+  const getName = (elem) => (elem && elem.name && elem.name.toLowerCase()) || '';
   return array.sort(
     (elem1, elem2) => (getName(elem1) <= getName(elem2) ? -1 : 1),
   );

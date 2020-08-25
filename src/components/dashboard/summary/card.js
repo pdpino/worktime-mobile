@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
-import { colors } from '../../../../shared/styles';
+import { colors } from '../../../shared/styles';
 
 const styles = StyleSheet.create({
   container: {

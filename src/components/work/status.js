@@ -55,12 +55,11 @@ class StatusDisplayer extends React.PureComponent {
         <Text style={styles.text}>
           {i18n.t('status')}
         </Text>
-        <Text style={
-          [
-            styles.text,
-            styles.currentStatus,
-            { color: status2Color[status] },
-          ]}
+        <Text style={[
+          styles.text,
+          styles.currentStatus,
+          { color: status2Color[status] },
+        ]}
         >
           {i18n.t(status, { scope: 'workPlayer' })}
         </Text>

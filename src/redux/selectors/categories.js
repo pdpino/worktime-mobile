@@ -3,5 +3,5 @@ import { sortByName } from '../../shared/utils';
 
 // eslint-disable-next-line import/prefer-default-export
 export const categoriesSelector = createOrmSelector(
-  ormSession => sortByName(ormSession.Category.all().toModelArray()),
+  (ormSession) => sortByName(ormSession.Category.all().toModelArray()),
 );

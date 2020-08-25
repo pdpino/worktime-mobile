@@ -8,12 +8,12 @@ function simplifyName(name) {
 }
 
 function createSubjectsIndex(subjects) {
-  const getByName = subject => simplifyName(subject.name);
+  const getByName = (subject) => simplifyName(subject.name);
   return new ElementsIndex(subjects, getByName);
 }
 
 function createWorkSessionsIndex(workSessions) {
-  const getByTimestamp = workSession => Math.floor(workSession.timestampStart);
+  const getByTimestamp = (workSession) => Math.floor(workSession.timestampStart);
   return new ElementsIndex(workSessions, getByTimestamp);
 }
 
@@ -59,7 +59,7 @@ export const processSubjects = makeFunctionAsync((
         });
 
       const { minTimestamp, maxTimestamp } = getTimestampRange(
-        filteredWorkSessions.map(workSession => workSession.timestampStart),
+        filteredWorkSessions.map((workSession) => workSession.timestampStart),
       );
 
       const metadata = {
@@ -94,9 +94,9 @@ export const processSubjects = makeFunctionAsync((
 
   const { minTimestamp, maxTimestamp } = getTimestampRange(
     processedSubjects.flatMap(
-      subject => (
+      (subject) => (
         !selectedSubjects || selectedSubjects[subject.data.name]
-          ? subject.data.workSessions.map(ws => ws.timestampStart)
+          ? subject.data.workSessions.map((ws) => ws.timestampStart)
           : []
       ),
     ),
@@ -119,6 +119,6 @@ export function getImportableSubjects(processedSubjects, subjectSelection) {
   const importableSubjects = processedSubjects.map(({ data }) => data);
   return subjectSelection
     ? importableSubjects
-      .filter(subject => subjectSelection[subject.name])
+      .filter((subject) => subjectSelection[subject.name])
     : importableSubjects;
 }

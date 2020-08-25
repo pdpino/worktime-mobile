@@ -1,4 +1,4 @@
-import { timeColors } from '../../../shared/styles';
+import { timeColors } from '../../shared/styles';
 
 export const legendDefinition = [
   {
@@ -11,4 +11,4 @@ export const legendDefinition = [
   },
 ];
 
-export const colorPalette = legendDefinition.map(def => def.color);
+export const colorPalette = legendDefinition.map((def) => def.color);

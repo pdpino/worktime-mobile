@@ -32,8 +32,7 @@ const getCircleSize = (size) => {
   };
 };
 
-const getFontSize = size => size * 3 / 5;
-
+const getFontSize = (size) => Math.floor(size * (3 / 5));
 
 const AssignableIcon = ({
   containerStyle, name, icon, color, size,

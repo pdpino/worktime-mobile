@@ -28,7 +28,7 @@ const colorPalette = colorDefs.map((item) => {
   };
 });
 
-const colorGetterFunctionFor = level => (key) => {
+const colorGetterFunctionFor = (level) => (key) => {
   if (!key) return null;
   const spectrum = colorPaletteByKey[key] || colorPaletteByKey.gray;
   return spectrum[level];

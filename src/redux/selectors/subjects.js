@@ -1,7 +1,7 @@
 import { createOrmSelector, ormSessionUnMemoized } from './orm';
 import { sortByName } from '../../shared/utils';
 
-export const subjectsSetSelector = state => ormSessionUnMemoized(state).Subject.all();
+export const subjectsSetSelector = (state) => ormSessionUnMemoized(state).Subject.all();
 
 export const subjectsSelector = createOrmSelector(
   (state, props) => props && props.archived,
@@ -9,7 +9,7 @@ export const subjectsSelector = createOrmSelector(
     const allSubjects = ormSession.Subject.all();
     const subjects = archived === 'all'
       ? allSubjects
-      : allSubjects.filter(subject => (archived && subject.archived)
+      : allSubjects.filter((subject) => (archived && subject.archived)
                                    || (!archived && !subject.archived));
     return sortByName(subjects.toModelArray());
   },
@@ -28,7 +28,7 @@ export const subjectsForPickerSelector = createOrmSelector(
       return subject.getNameWithCategory(category);
     };
 
-    return subjects.map(subject => ({
+    return subjects.map((subject) => ({
       id: subject.id,
       name: getSubjectNameWithCategory(subject),
       hasCategory: !!subject.category,

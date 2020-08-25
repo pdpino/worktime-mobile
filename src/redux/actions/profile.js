@@ -1,7 +1,7 @@
 import { profileSelector } from '../selectors';
 
 // eslint-disable-next-line import/prefer-default-export
-export const updateDeviceName = newDeviceName => (dispatch, getState) => {
+export const updateDeviceName = (newDeviceName) => (dispatch, getState) => {
   const profile = profileSelector(getState());
   const oldDeviceName = profile.deviceName;
   if (oldDeviceName === newDeviceName) {

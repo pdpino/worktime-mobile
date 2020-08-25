@@ -24,7 +24,7 @@ class WorkSession extends Model {
     });
 
     importableWorkSession.sprints
-      .forEach(importableSprint => Sprint
+      .forEach((importableSprint) => Sprint
         .import(workSession, importableSprint));
   }
 
@@ -140,7 +140,7 @@ class WorkSession extends Model {
   exportable() {
     return {
       ...filterWhiteList(this.ref),
-      sprints: this.getSprints().map(sprint => sprint.exportable()),
+      sprints: this.getSprints().map((sprint) => sprint.exportable()),
     };
   }
 

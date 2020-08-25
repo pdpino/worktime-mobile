@@ -11,5 +11,5 @@ export function waitSync(millis) {
 }
 
 export function waitAsync(millis) {
-  return new Promise(resolve => setTimeout(() => resolve(), millis));
+  return new Promise((resolve) => setTimeout(() => resolve(), millis));
 }

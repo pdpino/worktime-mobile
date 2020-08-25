@@ -21,20 +21,20 @@ export default function share(filename, obj) {
 function requestExternalStoragePermission() {
   return PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-  ).then(granted => granted === PermissionsAndroid.RESULTS.GRANTED);
+  ).then((granted) => granted === PermissionsAndroid.RESULTS.GRANTED);
 }
 
 export function openFileSelector(title) {
   return requestExternalStoragePermission()
-    .then(hasPermission => hasPermission
-      && new Promise(resolve => RNFileSelector.Show({
+    .then((hasPermission) => hasPermission
+      && new Promise((resolve) => RNFileSelector.Show({
         title,
-        onDone: path => resolve(path),
+        onDone: (path) => resolve(path),
       })));
 }
 
 export function openJsonFile(path) {
   return RNFS.readFile(path, 'utf8')
-    .then(fileContent => JSON.parse(fileContent))
+    .then((fileContent) => JSON.parse(fileContent))
     .catch(() => Promise.resolve(null));
 }

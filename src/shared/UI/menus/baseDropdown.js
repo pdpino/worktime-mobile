@@ -39,7 +39,6 @@ class BaseDropdownMenu extends React.PureComponent {
       </MenuItem>
     ));
 
-
     // HACK: an empty <View /> is passed as button, since is a required component.
     return (
       <TouchableOpacity

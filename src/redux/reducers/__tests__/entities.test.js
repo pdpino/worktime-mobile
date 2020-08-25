@@ -34,10 +34,10 @@ describe('entities reducer', () => {
     });
     it('Adds the \'device\' attribute', () => {
       initialWorkSessions.forEach(
-        workSession => expect(workSession.device).toBeUndefined(),
+        (workSession) => expect(workSession.device).toBeUndefined(),
       );
       workSessions.forEach(
-        workSession => expect(workSession.device).toEqual('mobile'),
+        (workSession) => expect(workSession.device).toEqual('mobile'),
       );
     });
   });
@@ -67,10 +67,10 @@ describe('entities reducer', () => {
     });
     it('Adds the \'archived\' attribute', () => {
       initialSubjects.forEach(
-        subject => expect(subject.archived).toBeUndefined(),
+        (subject) => expect(subject.archived).toBeUndefined(),
       );
       subjects.forEach(
-        subject => expect(subject.archived).toEqual(false),
+        (subject) => expect(subject.archived).toEqual(false),
       );
     });
   });

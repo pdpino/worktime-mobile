@@ -216,7 +216,7 @@ class TimeStats {
     if (selectedId != null) {
       if (key === 'categories') {
         itemsSummaries = this.subjectsSummaries
-          .filter(subject => selectedId === subject.categoryId);
+          .filter((subject) => selectedId === subject.categoryId);
       }
     } else if (key === 'subjects') {
       itemsSummaries = this.subjectsSummaries;
@@ -225,7 +225,7 @@ class TimeStats {
       this.removeEmptyNoCategoryInPlace(itemsSummaries);
     }
 
-    const isSelected = id => !this.idsSelection || this.idsSelection[id];
+    const isSelected = (id) => !this.idsSelection || this.idsSelection[id];
 
     return itemsSummaries.sort((item1, item2) => {
       const onlyOneSelected = isSelected(item2.id) - isSelected(item1.id);

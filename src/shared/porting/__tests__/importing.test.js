@@ -78,8 +78,8 @@ describe('getImportableSubjects', () => {
         processedSubjects,
         { 'subj 1': true, 'subj 2': false, 'subj 3': true },
       );
-      const isNameInList = name => importableSubjects
-        .find(subject => subject.name === name);
+      const isNameInList = (name) => importableSubjects
+        .find((subject) => subject.name === name);
 
       expect(isNameInList('subj 1')).toBeTruthy();
       expect(isNameInList('subj 2')).toBeFalsy();
@@ -92,8 +92,8 @@ describe('getImportableSubjects', () => {
         processedSubjects,
         null,
       );
-      const isNameInList = name => importableSubjects
-        .find(subject => subject.name === name);
+      const isNameInList = (name) => importableSubjects
+        .find((subject) => subject.name === name);
 
       expect(isNameInList('subj 1')).toBeTruthy();
       expect(isNameInList('subj 2')).toBeTruthy();
@@ -140,7 +140,7 @@ describe('processSubjects', () => {
         { 'old subject': true },
         'laptop',
       );
-      expect(processedSubjects.map(s => s.data)).toEqual(expectedPreviews);
+      expect(processedSubjects.map((s) => s.data)).toEqual(expectedPreviews);
     });
   });
 
@@ -182,7 +182,7 @@ describe('processSubjects', () => {
         { 'new subject': true },
         'laptop',
       );
-      expect(processedSubjects.map(s => s.data)).toEqual(expectedPreviews);
+      expect(processedSubjects.map((s) => s.data)).toEqual(expectedPreviews);
     });
   });
 
@@ -202,7 +202,7 @@ describe('processSubjects', () => {
         { 'old subject': true },
         'laptop',
       );
-      expect(processedSubjects.map(s => s.data)).toEqual(expectedPreviews);
+      expect(processedSubjects.map((s) => s.data)).toEqual(expectedPreviews);
     });
 
     it('Does not set id on a new subject', async () => {
@@ -227,7 +227,7 @@ describe('processSubjects', () => {
         'laptop',
       );
 
-      return processedSubjects.find(subj => subj.data.name === name);
+      return processedSubjects.find((subj) => subj.data.name === name);
     };
 
     it('Matches names with upper case and trailing spaces', async () => {
@@ -415,7 +415,7 @@ describe('processSubjects', () => {
         null,
         'laptop',
       );
-      const metadatas = processedSubjects.map(s => s.metadata);
+      const metadatas = processedSubjects.map((s) => s.metadata);
       expect(metadatas[0].exists).toBeTruthy();
       expect(metadatas[1].exists).toBeFalsy();
     });
@@ -453,7 +453,7 @@ describe('processSubjects', () => {
         null,
         'laptop',
       );
-      const metadatas = processedSubjects.map(s => s.metadata);
+      const metadatas = processedSubjects.map((s) => s.metadata);
       expect(metadatas[0].ignored).toEqual(1);
       expect(metadatas[0].accepted).toEqual(2);
 
@@ -492,7 +492,7 @@ describe('processSubjects', () => {
         null,
         'laptop',
       );
-      const metadatas = processedSubjects.map(s => s.metadata);
+      const metadatas = processedSubjects.map((s) => s.metadata);
       expect(metadatas[0].minTimestamp).toEqual(20001);
       expect(metadatas[0].maxTimestamp).toEqual(20002);
 

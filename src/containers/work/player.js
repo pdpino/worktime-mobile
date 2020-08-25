@@ -107,14 +107,14 @@ export class WorkPlayer extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   subjectsForPicker: subjectsForPickerSelector(state, { archived: false }),
   selectedSubject: selectedSubjectSelector(state),
   runningSession: runningSessionSelector(state),
   lastRunningSession: lastRunningSessionSelector(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   start,
   resume,
   pause,

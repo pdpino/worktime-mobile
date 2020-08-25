@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 const PickerWrapper = ({
   items, selectedId, onValueChange, enabled,
 }) => {
-  const itemsList = items.map(item => (
+  const itemsList = items.map((item) => (
     <Picker.Item
       label={item.name}
       value={item.id}

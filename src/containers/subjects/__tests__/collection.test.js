@@ -50,7 +50,6 @@ describe('<SubjectsCollection>', () => {
   });
 });
 
-
 describe('<ArchivedSubjectsCollection>', () => {
   const ArchivedSubjectsCollection = createSubjectsCollection(true);
 

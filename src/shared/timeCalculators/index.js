@@ -1,7 +1,7 @@
 import { makeFunctionAsync } from '../utils';
 import TimeStats from './TimeStats';
 
-const calculatorCreator = action => makeFunctionAsync((...params) => {
+const calculatorCreator = (action) => makeFunctionAsync((...params) => {
   const timeStats = new TimeStats();
   timeStats[action](...params);
   return timeStats.getStats();

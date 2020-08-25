@@ -2,9 +2,9 @@ import React from 'react';
 import {
   View, StyleSheet, Text,
 } from 'react-native';
-import { BarTimesChart } from '../../../../shared/UI/charts';
-import { BackIcon } from '../../../../shared/UI/icons';
-import { colors } from '../../../../shared/styles';
+import { BarTimesChart } from '../../../shared/UI/charts';
+import { BackIcon } from '../../../shared/UI/icons';
+import { colors } from '../../../shared/styles';
 import Tabs from './tabs';
 import SubHeader from './subHeader';
 import { colorPalette } from '../legend';

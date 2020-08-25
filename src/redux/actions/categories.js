@@ -1,11 +1,11 @@
-export const upsertCategory = attributes => ({
+export const upsertCategory = (attributes) => ({
   type: 'UPSERT_CATEGORY',
   payload: {
     attributes,
   },
 });
 
-export const deleteCategory = id => ({
+export const deleteCategory = (id) => ({
   type: 'DELETE_CATEGORY',
   payload: {
     id,

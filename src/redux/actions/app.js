@@ -8,7 +8,7 @@ export const onAppDeactivate = () => ({
   payload: {},
 });
 
-export const checkStoreVersion = storeVersionNeeded => (dispatch, getState) => {
+export const checkStoreVersion = (storeVersionNeeded) => (dispatch, getState) => {
   const { storeVersion } = getState().app;
 
   if (storeVersion === storeVersionNeeded) {

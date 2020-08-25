@@ -5,7 +5,7 @@ import {
 import i18n from '../../i18n';
 import { toMaxFixed, isValidDate } from '../../utils';
 
-const getDictFunction = key => count => i18n.t(`datePeriods.${key}`, { count });
+const getDictFunction = (key) => (count) => i18n.t(`datePeriods.${key}`, { count });
 export const prettyDays = getDictFunction('day');
 export const prettyWeeks = getDictFunction('week');
 const prettyMonths = getDictFunction('month');

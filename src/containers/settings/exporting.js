@@ -26,7 +26,7 @@ export class Exporting extends React.Component {
         timestamp: getTimestampString(),
         device,
         subjectsSet: this.props.subjectsSet,
-      }).then(exportObject => share(filename, exportObject))
+      }).then((exportObject) => share(filename, exportObject))
         .finally(() => this.setState({ isPreparingData: false }));
     });
   }
@@ -43,7 +43,7 @@ export class Exporting extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   subjectsSet: subjectsSetSelector(state),
   profile: profileSelector(state),
 });
