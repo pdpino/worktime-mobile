@@ -8,5 +8,5 @@ enableScreens();
 AppRegistry.registerComponent(appName, () => App);
 
 LogBox.ignoreLogs([
-  // Add warnings to ignore here...
+  'VirtualizedLists should never be nested inside plain ScrollViews with the same orientation',
 ]);

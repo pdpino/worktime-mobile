@@ -87,6 +87,9 @@ const TimeDetails = ({
           onPressItem={onPressItem}
           nameKey={useNameWithCategory ? 'nameWithCategory' : 'name'}
           palette={colorPalette}
+          listProps={{
+            scrollEnabled: false,
+          }}
         />
       )}
     </View>

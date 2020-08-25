@@ -38,6 +38,7 @@ const emptyComponent = (
 const BarTimes = ({
   itemsSummaries, idsSelection, allItemsTotal, itemPressEnabled,
   onToggleItem, onPressItem, nameKey, palette,
+  listProps,
 }) => {
   const widthMultiplier = getWidthUnits(itemsSummaries, 'timeTotal');
 
@@ -61,8 +62,8 @@ const BarTimes = ({
       keyExtractor={item => item.id.toString()}
       renderItem={renderItem}
       extraData={idsSelection}
-      scrollEnabled={false}
       ListEmptyComponent={emptyComponent}
+      {...listProps}
     />
   ) : null;
 };
