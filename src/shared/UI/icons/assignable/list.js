@@ -24,10 +24,6 @@ const iconsConfigByCategory = {
       name: 'user-graduate',
       type: 'font-awesome-5',
     },
-    worker: {
-      name: 'worker',
-      type: 'material-community',
-    },
     handshake: {
       name: 'handshake',
       type: 'font-awesome-5',
@@ -111,7 +107,7 @@ const iconsConfigByCategory = {
       type: 'material-community',
     },
     ruby: {
-      name: 'ruby',
+      name: 'language-ruby',
       type: 'material-community',
     },
     network: {
@@ -278,9 +274,9 @@ const iconsConfigByCategory = {
     },
   },
   money: {
-    coin: {
-      name: 'coin',
-      type: 'material-community',
+    coins: {
+      name: 'coins',
+      type: 'font-awesome-5',
     },
     bitcoin: {
       name: 'bitcoin',

@@ -18,7 +18,8 @@ function getSemesterIndex(date) {
 
 export function getStartOfSemester() {
   const today = new Date();
-  const currentMonth = today.getMonth();
+  const currentMonth = today.getMonth() + 1;
+  // Semesters are hardcoded here
   const semesterMonth = currentMonth >= 8 ? 8 : 3;
   return new Date(today.getFullYear(), semesterMonth - 1, 1);
 }

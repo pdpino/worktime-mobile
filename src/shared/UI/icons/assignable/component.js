@@ -33,6 +33,7 @@ const getCircleSize = (size) => {
 };
 
 const getFontSize = (size) => Math.floor(size * (3 / 5));
+const DEFAULT_COLOR = colors.lightGray;
 
 const AssignableIcon = ({
   containerStyle, name, icon, color, size,
@@ -42,7 +43,7 @@ const AssignableIcon = ({
       <Icon
         containerStyle={[styles.container, containerStyle]}
         size={size}
-        color={color}
+        color={color || DEFAULT_COLOR}
         {...iconsConfigByName[icon]}
       />
     );
@@ -53,7 +54,7 @@ const AssignableIcon = ({
       style={[
         styles.container,
         getCircleSize(size),
-        { backgroundColor: color || colors.lightGray },
+        { backgroundColor: color || DEFAULT_COLOR },
       ]}
     >
       <Text

@@ -15,7 +15,7 @@ export default function share(filename, obj) {
     title: i18n.t('porting.exportData'),
     subject: filename,
     type: 'text/plain',
-  }));
+  })).catch(() => {});
 }
 
 function requestExternalStoragePermission() {
