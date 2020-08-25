@@ -76,7 +76,8 @@
   "jest": {
     "preset": "react-native",
     "setupFiles": [
-      "./src/__tests__/setup.js"
+      "./src/__tests__/setup.js",
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
     ],
     "setupFilesAfterEnv": [
       "jest-extended"

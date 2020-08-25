@@ -6,17 +6,13 @@ import './mocks';
 const originalErrorFn = console.error.bind(console.error);
 
 const ignoreErrors = [
-  // These errors are caused by redux-offline and RN version mismatch:
-  // RN deprecated NetInfo and Async Storage, and redux-offline hasn't
-  // been updated to support this.
-  'NetInfo has been extracted from react-native core',
-  'Async Storage has been extracted from react-native core',
+  // Add strings here...
 ];
 
-console.error = (message) => {
-  const messageStr = message.toString();
-  const shouldIgnore = ignoreErrors.some((str) => messageStr.includes(str));
+jest.spyOn(console, 'error').mockImplementation((...args) => {
+  const string = args.join(' ');
+  const shouldIgnore = ignoreErrors.some((str) => string.match(str));
   if (!shouldIgnore) {
-    originalErrorFn(message);
+    originalErrorFn(...args);
   }
-};
+});
