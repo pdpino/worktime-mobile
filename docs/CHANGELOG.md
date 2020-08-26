@@ -5,9 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+
+
+## 1.14.0 - 2020-08-26
 ### Changed
 * Upgrade to RN v0.63.2 plus multiple libraries
 * Min SDK version to: 21 (Android Lollipop 5.0)
+
+### Fixed
+* Don't vibrate on notification
 
 
 
