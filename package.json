@@ -1,6 +1,6 @@
 {
-  "name": "Worktime",
-  "version": "1.13.0",
+  "name": "worktime",
+  "version": "1.14.0",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -12,7 +12,7 @@
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "release": "react-native run-android --variant=release",
     "build": "cd android && ./gradlew assembleRelease",
-    "postBuild": "./postBuild.sh"
+    "post-build": "./postBuild.sh"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.0",
