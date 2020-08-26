@@ -1,40 +1,40 @@
 import PushNotification from 'react-native-push-notification';
-import { DeviceEventEmitter } from 'react-native';
-import i18n from '../shared/i18n';
+import i18n from '../../shared/i18n';
+import ActionsHandler from './actions';
 
-let listener;
+let actionsHandler;
 
 class Notifications {
-  static configure() {
+  static updateTranslations() {
+    if (actionsHandler) {
+      actionsHandler.updateTranslations();
+    }
+  }
+
+  static configure({ actions }) {
+    actionsHandler = new ActionsHandler(actions);
+
     PushNotification.configure({
       onRegister() { },
       onNotification() { },
-      popInitialNotification: false,
-      requestPermissions: true,
-    });
-  }
+      onAction(notification) {
+        const { action } = notification;
+        if (!action) return;
 
-  static registerActions(actions) {
-    const actionNames = Object.keys(actions);
-    PushNotification.registerNotificationActions(actionNames);
-
-    listener = DeviceEventEmitter.addListener(
-      'notificationActionReceived',
-      ({ dataJSON }) => {
-        const { action } = JSON.parse(dataJSON);
-        const callback = actions[action];
+        const callback = actionsHandler.labelToCallback(action);
         if (callback) {
           callback();
         }
       },
-    );
+      popInitialNotification: false,
+      requestPermissions: false,
+    });
   }
 
-  static unRegisterActions() {
-    // FIXME: this method is not called from anywhere
-    if (listener) {
-      listener.remove();
-    }
+  static parseActions(actions) {
+    return actions.map(
+      (actionName) => actionsHandler.nameToLabel(actionName),
+    );
   }
 
   static sendLocal(options) {
@@ -49,8 +49,10 @@ class Notifications {
       autoCancel: false,
       vibrate: false,
       ongoing: false,
+      channelId: 'player-state',
       playSound: false,
-      actions: JSON.stringify(actions),
+      invokeApp: false,
+      actions: Notifications.parseActions(actions),
     });
   }
 
@@ -62,7 +64,7 @@ class Notifications {
     Notifications.sendLocal({
       title: i18n.t('workPlayer.workingOnSubject', { subject: subject.name }),
       icon: 'play',
-      actions: ['Pause', 'Stop'],
+      actions: ['pause', 'stop'],
     });
   }
 
@@ -70,7 +72,7 @@ class Notifications {
     Notifications.sendLocal({
       title: i18n.t('workPlayer.subjectPaused', { subject: subject.name }),
       icon: 'pause',
-      actions: ['Resume', 'Stop'],
+      actions: ['resume', 'stop'],
     });
   }
 

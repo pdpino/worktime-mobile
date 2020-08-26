@@ -4,6 +4,7 @@ import RootContainer from './src/screens/Root';
 import configureStore from './src/redux/store';
 import { SplashScreen } from './src/shared/UI/screens';
 import AppStateListener from './src/services/appState';
+import NotificationsService from './src/services/notifications';
 import { onAppActivate, onAppDeactivate, checkStoreVersion } from './src/redux/actions';
 import I18N from './src/shared/i18n';
 import './src/shared/errors';
@@ -29,6 +30,7 @@ class App extends React.Component {
     this.appState.listenOnDeactivate(() => store.dispatch(onAppDeactivate()));
 
     I18N.listenLocaleChanges(() => {
+      NotificationsService.updateTranslations();
       if (this.state.storeReady) {
         this.forceUpdate();
       }

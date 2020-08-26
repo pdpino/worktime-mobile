@@ -6,11 +6,12 @@ import {
 import { runningSessionSelector } from '../selectors';
 
 const playerMiddleware = (store) => {
-  NotificationsService.configure();
-  NotificationsService.registerActions({
-    Resume: () => store.dispatch(resume()),
-    Pause: () => store.dispatch(pause()),
-    Stop: () => store.dispatch(stop()),
+  NotificationsService.configure({
+    actions: {
+      resume: () => store.dispatch(resume()),
+      pause: () => store.dispatch(pause()),
+      stop: () => store.dispatch(stop()),
+    },
   });
 
   const workTimesService = OnIntervalService(

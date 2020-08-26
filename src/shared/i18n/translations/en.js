@@ -88,6 +88,11 @@ export default {
   },
   notif: {
     tapToGoToWorktime: 'Tap to go to worktime',
+    actions: {
+      pause: 'Pause',
+      stop: 'Stop',
+      resume: 'Resume',
+    },
   },
   times: {
     effective: 'Effective',

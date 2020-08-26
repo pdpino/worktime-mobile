@@ -88,6 +88,11 @@ export default {
   },
   notif: {
     tapToGoToWorktime: 'Presiona para abrir worktime',
+    actions: {
+      pause: 'Pausar',
+      stop: 'Detener',
+      resume: 'Continuar',
+    },
   },
   times: {
     effective: 'Efectivo',
