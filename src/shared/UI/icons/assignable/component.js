@@ -6,12 +6,13 @@ import { Icon } from 'react-native-elements';
 import { iconsConfigByName } from './list';
 import { colors } from '../../../styles';
 
+const CONTAINER_MARGIN = 8;
+
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
-    padding: 5,
+    margin: CONTAINER_MARGIN,
   },
   initialLetter: {
     textAlign: 'center',
@@ -21,30 +22,40 @@ const styles = StyleSheet.create({
   },
 });
 
-const iconToCircleSize = 1.3; // set by hand
+const DEFAULT_COLOR = colors.lightGray;
+// NOTE: values manually set
+const FONT_FACTOR = 0.6;
+const WIDTH_FACTOR = 1.4;
+const CIRCLE_FACTOR = 1.2;
+const CIRCLE_MARGIN = (WIDTH_FACTOR - CIRCLE_FACTOR) / 2;
 
-const getCircleSize = (size) => {
-  const circleSize = size * iconToCircleSize;
+const getCircleStyle = (size) => {
+  const circleSize = size * CIRCLE_FACTOR;
+  const margin = size * CIRCLE_MARGIN;
   return {
     width: circleSize,
     height: circleSize,
+    margin: margin + CONTAINER_MARGIN,
     borderRadius: circleSize / 2,
   };
 };
 
-const getFontSize = (size) => Math.floor(size * (3 / 5));
-const DEFAULT_COLOR = colors.lightGray;
+const getFontSize = (size) => Math.floor(size * FONT_FACTOR);
 
 const AssignableIcon = ({
-  containerStyle, name, icon, color, size,
+  name, icon, color, size,
 }) => {
-  if (icon) {
+  const iconConfig = icon && iconsConfigByName[icon];
+  if (iconConfig) {
     return (
       <Icon
-        containerStyle={[styles.container, containerStyle]}
+        containerStyle={[
+          styles.container,
+          { width: size * WIDTH_FACTOR },
+        ]}
         size={size}
         color={color || DEFAULT_COLOR}
-        {...iconsConfigByName[icon]}
+        {...iconConfig}
       />
     );
   }
@@ -53,7 +64,7 @@ const AssignableIcon = ({
     <View
       style={[
         styles.container,
-        getCircleSize(size),
+        getCircleStyle(size),
         { backgroundColor: color || DEFAULT_COLOR },
       ]}
     >

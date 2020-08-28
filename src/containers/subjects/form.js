@@ -58,6 +58,13 @@ export class SubjectForm extends React.Component {
     });
   }
 
+  getCategoryColor() {
+    const { categories } = this.props;
+    const { categoryId } = this.state;
+    const category = categories && categories.find((cat) => cat.id === categoryId);
+    return category && category.color;
+  }
+
   isInputValid() {
     const { name } = this.state;
     return name && name.trim();
@@ -118,20 +125,13 @@ export class SubjectForm extends React.Component {
     });
   }
 
-  findCategoryColor() {
-    const { categories } = this.props;
-    const { categoryId } = this.state;
-    const category = (categories || []).find((cat) => cat.id === categoryId);
-    return category && category.color;
-  }
-
   render() {
     const {
       name, description, categoryId, icon,
     } = this.state;
     const { categories } = this.props;
     const canSubmit = this.isInputValid();
-    const color = this.findCategoryColor();
+    const color = this.getCategoryColor();
 
     return (
       <SubjectFormComponent

@@ -3,7 +3,7 @@ import {
   Text, View, StyleSheet, TouchableOpacity,
 } from 'react-native';
 import SubjectList from './subjectsList';
-import { colors, getStrongColor, getMediumColor } from '../../../shared/styles';
+import { colors, getMediumColor } from '../../../shared/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,14 +11,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     borderBottomWidth: 1,
     borderBottomColor: colors.lighterGray,
-    borderLeftWidth: 8,
-    padding: 5,
-    paddingLeft: 0,
   },
   categoryName: {
-    fontWeight: '500',
+    fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 10,
+    marginVertical: 6,
   },
 });
 
@@ -54,12 +52,7 @@ class CategoryItem extends React.PureComponent {
       <TouchableOpacity
         onPress={() => onPressCategory(category.id)}
       >
-        <View
-          style={[
-            styles.container,
-            { borderLeftColor: getStrongColor(category.color) },
-          ]}
-        >
+        <View style={styles.container}>
           {categoryName}
           {subjectsList}
         </View>

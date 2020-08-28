@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { attr, fk, Model } from 'redux-orm';
 import { isNumber } from '../../shared/utils';
 
-const portingWhiteList = ['name', 'description', 'archived'];
+const portingWhiteList = ['name', 'description', 'archived', 'icon'];
 
 function filterWhiteList(obj) {
   return _.pickBy(obj, (value, key) => portingWhiteList.includes(key) && value);

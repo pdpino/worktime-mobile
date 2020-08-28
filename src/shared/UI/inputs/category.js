@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet, View, Text,
 } from 'react-native';
-import { ModalPicker } from '../pickers';
+import { CategoryPicker } from '../pickers';
 import commonStyles from './common.styles';
 
 const styles = StyleSheet.create({
@@ -26,13 +26,18 @@ const CategoryField = ({
   label, value, onChange, categories,
 }) => (
   <View style={[commonStyles.container, styles.container]}>
-    <Text style={commonStyles.label}>
+    <Text
+      style={[
+        commonStyles.label,
+        { marginBottom: 0, textAlignVertical: 'center' },
+      ]}
+    >
       {label}
     </Text>
-    <ModalPicker
+    <CategoryPicker
       flex={1}
-      items={categories}
-      selectedId={value}
+      categories={categories}
+      categoryId={value}
       buttonStyle={[commonStyles.input, styles.button]}
       textStyle={styles.categoryText}
       onValueChange={onChange}

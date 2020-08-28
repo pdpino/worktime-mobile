@@ -72,7 +72,7 @@ class SubjectItem extends React.PureComponent {
           <AssignableIcon
             name={subject.name}
             icon={subject.icon}
-            size={25}
+            size={26}
             color={getLightColor(categoryColor)}
           />
           {detail}

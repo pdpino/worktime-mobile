@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, TouchableOpacity, View, FlatList, Text,
+  StyleSheet, View, FlatList, Text,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { AssignableIcon, iconsList } from '../icons/assignable';
@@ -30,7 +30,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const IconPicker = ({ icon: iconSelected, onSelect, closeModal }) => {
+const IconPicker = ({
+  icon: iconSelected, color, onSelect, closeModal,
+}) => {
   const renderItem = ({ item }) => {
     const { icons, name } = item;
 
@@ -41,20 +43,17 @@ const IconPicker = ({ icon: iconSelected, onSelect, closeModal }) => {
           {icons.map((icon) => {
             const isSelected = icon.name === iconSelected;
             return (
-              <TouchableOpacity
+              <Icon
                 key={icon.name}
-                style={styles.iconContainer}
+                containerStyle={styles.iconContainer}
                 onPress={() => {
                   closeModal();
                   onSelect(icon.name);
                 }}
-              >
-                <Icon
-                  {...icon.config}
-                  color={isSelected ? colors.mainBlue : 'black'}
-                  size={30}
-                />
-              </TouchableOpacity>
+                {...icon.config}
+                color={isSelected ? (color || colors.mainBlue) : 'black'}
+                size={30}
+              />
             );
           })}
         </View>
