@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
 
 const SubjectsList = ({
   subjects, categoryColor, selectedSubjects, onPressSubject, onLongPressSubject,
+  hideDescription, littleAir,
 }) => {
   const renderSubject = ({ item }) => (
     <SubjectItem
@@ -23,6 +24,8 @@ const SubjectsList = ({
       categoryColor={categoryColor}
       onPress={onPressSubject}
       onLongPress={onLongPressSubject}
+      hideDescription={hideDescription}
+      littleAir={littleAir}
     />
   );
 

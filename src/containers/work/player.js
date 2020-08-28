@@ -8,11 +8,13 @@ import {
   start, resume, pause, stop, stopAndDiscard, selectWorkSubject,
 } from '../../redux/actions';
 import {
-  subjectsForPickerSelector, selectedSubjectSelector,
-  runningSessionSelector, lastRunningSessionSelector,
+  selectedSubjectSelector,
+  runningSessionSelector, lastRunningSessionSelector, subjectsSelector,
+  categoriesSelector,
 } from '../../redux/selectors';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
+import { getCategoriesWithSubjects } from '../../shared/utils/subjects';
 
 export class WorkPlayer extends React.Component {
   constructor(props) {
@@ -72,22 +74,24 @@ export class WorkPlayer extends React.Component {
   render() {
     const status = this.getStatus();
     const {
-      subjectsForPicker, selectedSubject, runningSession, lastRunningSession,
+      subjects, categories, selectedSubject, runningSession, lastRunningSession,
     } = this.props;
-    const selectedSubjectId = selectedSubject ? selectedSubject.id : -1;
+    const selectedSubjectName = selectedSubject && selectedSubject.name;
     const { timeTotal, timeEffective } = (runningSession || {});
     const {
       timeTotal: lastTimeTotal,
       timeEffective: lastTimeEffective,
     } = (lastRunningSession || {});
 
+    const categoriesWithSubjects = getCategoriesWithSubjects(subjects, categories);
+
     return (
       <WorkPlayerComponent>
         <SubjectPickerComponent
-          subjectsForPicker={subjectsForPicker}
-          selectedSubjectId={selectedSubjectId}
+          categoriesWithSubjects={categoriesWithSubjects}
+          selectedSubjectName={selectedSubjectName}
           onValueChange={this.handleSelectSubject}
-          enabled={status === 'stopped'}
+          disabled={status !== 'stopped'}
         />
         <StatusDisplayerComponent
           status={status}
@@ -95,7 +99,7 @@ export class WorkPlayer extends React.Component {
           timeEffective={timeEffective || lastTimeEffective}
         />
         <PlayerButtonsComponent
-          playerEnabled={selectedSubjectId !== -1}
+          playerEnabled={!!selectedSubjectName}
           showPlay={status !== 'playing'}
           stopDisabled={status === 'stopped'}
           onPressPlayPause={this.handlePressPlayPause}
@@ -108,7 +112,8 @@ export class WorkPlayer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  subjectsForPicker: subjectsForPickerSelector(state, { archived: false }),
+  subjects: subjectsSelector(state),
+  categories: categoriesSelector(state),
   selectedSubject: selectedSubjectSelector(state),
   runningSession: runningSessionSelector(state),
   lastRunningSession: lastRunningSessionSelector(state),

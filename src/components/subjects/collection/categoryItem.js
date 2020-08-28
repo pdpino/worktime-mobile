@@ -25,6 +25,7 @@ class CategoryItem extends React.PureComponent {
     const {
       category, selectedSubjects,
       onPressSubject, onLongPressSubject, onPressCategory,
+      hideDescription, littleAir,
     } = this.props;
 
     const categoryName = (
@@ -45,12 +46,15 @@ class CategoryItem extends React.PureComponent {
         categoryColor={category.color}
         onPressSubject={onPressSubject}
         onLongPressSubject={onLongPressSubject}
+        hideDescription={hideDescription}
+        littleAir={littleAir}
       />
     );
 
     return (
       <TouchableOpacity
-        onPress={() => onPressCategory(category.id)}
+        onPress={() => onPressCategory && onPressCategory(category.id)}
+        disabled={!onPressCategory}
       >
         <View style={styles.container}>
           {categoryName}

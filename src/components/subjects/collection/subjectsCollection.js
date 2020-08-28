@@ -14,15 +14,20 @@ const styles = StyleSheet.create({
 const SubjectsCollection = ({
   categoriesWithSubjects, selectedSubjects,
   onPressSubject, onLongPressSubject, onPressCategory,
+  containerStyle, hideDescription, littleAir, hideEmptyCategories,
 }) => {
   const renderCategoryItem = ({ item }) => (
-    <CategoryItem
-      category={item}
-      selectedSubjects={selectedSubjects}
-      onPressSubject={onPressSubject}
-      onLongPressSubject={onLongPressSubject}
-      onPressCategory={onPressCategory}
-    />
+    (!hideEmptyCategories || item.subjects.length > 0) ? (
+      <CategoryItem
+        category={item}
+        selectedSubjects={selectedSubjects}
+        onPressSubject={onPressSubject}
+        onLongPressSubject={onLongPressSubject}
+        onPressCategory={onPressCategory}
+        hideDescription={hideDescription}
+        littleAir={littleAir}
+      />
+    ) : null
   );
 
   const emptyListComponent = (
@@ -33,6 +38,7 @@ const SubjectsCollection = ({
 
   return (
     <FlatList
+      contentContainerStyle={containerStyle}
       data={categoriesWithSubjects}
       renderItem={renderCategoryItem}
       keyExtractor={(item, index) => index.toString()}

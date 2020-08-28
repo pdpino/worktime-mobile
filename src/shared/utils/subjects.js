@@ -1,6 +1,6 @@
 import memoizeOne from 'memoize-one';
 import Category from '../../redux/models/Category';
-import i18n from '../../shared/i18n';
+import i18n from '../i18n';
 
 /* eslint-disable import/prefer-default-export */
 

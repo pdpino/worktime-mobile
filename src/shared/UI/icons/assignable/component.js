@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    margin: CONTAINER_MARGIN,
+    marginHorizontal: CONTAINER_MARGIN,
   },
   initialLetter: {
     textAlign: 'center',
@@ -35,7 +35,7 @@ const getCircleStyle = (size) => {
   return {
     width: circleSize,
     height: circleSize,
-    margin: margin + CONTAINER_MARGIN,
+    marginHorizontal: margin + CONTAINER_MARGIN,
     borderRadius: circleSize / 2,
   };
 };
@@ -43,7 +43,7 @@ const getCircleStyle = (size) => {
 const getFontSize = (size) => Math.floor(size * FONT_FACTOR);
 
 const AssignableIcon = ({
-  name, icon, color, size,
+  name, icon, color, size, containerStyle,
 }) => {
   const iconConfig = icon && iconsConfigByName[icon];
   if (iconConfig) {
@@ -52,6 +52,7 @@ const AssignableIcon = ({
         containerStyle={[
           styles.container,
           { width: size * WIDTH_FACTOR },
+          containerStyle,
         ]}
         size={size}
         color={color || DEFAULT_COLOR}
@@ -66,6 +67,7 @@ const AssignableIcon = ({
         styles.container,
         getCircleStyle(size),
         { backgroundColor: color || DEFAULT_COLOR },
+        containerStyle,
       ]}
     >
       <Text

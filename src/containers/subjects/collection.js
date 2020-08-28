@@ -10,7 +10,7 @@ import withItemSelection from '../../hoc/itemSelection';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 import { colors } from '../../shared/styles';
-import { getCategoriesWithSubjects } from './utils';
+import { getCategoriesWithSubjects } from '../../shared/utils/subjects';
 
 export default function createSubjectsCollection(isArchive) {
   class SubjectsListContainer extends React.Component {

@@ -39,6 +39,7 @@ class SubjectItem extends React.PureComponent {
   render() {
     const {
       subject, isSelected, categoryColor, onPress, onLongPress,
+      hideDescription, littleAir,
     } = this.props;
 
     const detail = (
@@ -46,7 +47,7 @@ class SubjectItem extends React.PureComponent {
         <Text style={styles.name}>
           {subject.name}
         </Text>
-        {subject.description && (
+        {!hideDescription && subject.description && (
           <Text style={styles.description}>
             {subject.description}
           </Text>
@@ -74,6 +75,7 @@ class SubjectItem extends React.PureComponent {
             icon={subject.icon}
             size={26}
             color={getLightColor(categoryColor)}
+            containerStyle={{ marginVertical: littleAir ? 0 : 5 }}
           />
           {detail}
         </View>
