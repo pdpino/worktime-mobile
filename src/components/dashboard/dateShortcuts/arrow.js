@@ -16,6 +16,7 @@ const Arrow = ({ direction, onPress }) => (
     onPress={onPress}
     underlayColor={colors.lightBlue}
     activeOpacity={0.4}
+    delayPressIn={0}
   >
     <Icon
       iconStyle={styles.iconContainer}

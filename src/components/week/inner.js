@@ -11,13 +11,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const eventToIconSize = (size) => Math.floor(size * 0.8);
+const eventToIconSize = (size) => Math.floor(size * 0.7);
 const eventToFontSize = (size) => Math.floor(size * 0.5);
 
 const IconOrText = ({ event, position }) => {
   const { width, height } = position;
   const eventSize = Math.min(height, width);
-  if (eventSize <= 8) {
+  if (eventSize <= 10) {
     return null;
   }
 

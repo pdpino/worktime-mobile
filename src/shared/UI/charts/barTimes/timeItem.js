@@ -100,6 +100,7 @@ const TimeItem = ({
         style={{ flex: 1 }}
         disabled={!pressEnabled}
         onPress={onPress}
+        delayPressIn={0}
       >
         {stats}
       </TouchableOpacity>

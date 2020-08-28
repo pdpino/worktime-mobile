@@ -36,6 +36,7 @@ const FileInput = ({ path, onPressFile }) => (
     <View style={[styles.inputContainer, commonStyles.box]}>
       <TouchableOpacity
         onPress={onPressFile}
+        delayPressIn={0}
       >
         <Text
           style={[

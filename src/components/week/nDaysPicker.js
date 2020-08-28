@@ -45,6 +45,7 @@ const NDaysPicker = ({ isVisible, onValueChange, closeModal }) => {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => onValueChange(item)}
+      delayPressIn={0}
     >
       <View style={styles.itemContainer}>
         <Text style={styles.itemText}>

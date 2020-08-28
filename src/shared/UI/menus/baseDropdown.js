@@ -44,6 +44,7 @@ class BaseDropdownMenu extends React.PureComponent {
       <TouchableOpacity
         style={{ flex: 1 }}
         onPress={this.showMenu}
+        delayPressIn={0}
       >
         <View>
           {buttonComponent}

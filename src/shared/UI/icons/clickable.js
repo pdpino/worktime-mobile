@@ -99,6 +99,7 @@ class ClickableIcon extends React.PureComponent {
       <TouchableOpacity
         style={containerStyle}
         onPress={onPress}
+        delayPressIn={0}
       >
         <Icon
           name={iconDefinition.name}

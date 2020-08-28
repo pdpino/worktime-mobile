@@ -29,6 +29,7 @@ const MenuItem = ({
   <TouchableOpacity
     style={styles.container}
     onPress={onPress}
+    delayPressIn={0}
   >
     <Icon
       name={iconName}

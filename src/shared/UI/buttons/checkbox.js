@@ -27,6 +27,7 @@ const ItemCheckbox = ({
   <TouchableOpacity
     style={[styles.container, containerStyle]}
     onPress={onPress}
+    delayPressIn={0}
   >
     <Icon
       name={checked ? 'check-square' : 'square'}

@@ -28,6 +28,7 @@ class ColorPicker extends React.PureComponent {
       return (
         <TouchableOpacity
           onPress={() => onSelect(item.key)}
+          delayPressIn={0}
         >
           <View
             style={[

@@ -55,6 +55,7 @@ const Picker = ({
           onValueChange(item.id);
         }
       }}
+      delayPressIn={0}
     >
       <View style={styles.itemContainer}>
         <Text style={styles.itemText}>

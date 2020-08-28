@@ -60,6 +60,7 @@ const CategoryPicker = ({
           onValueChange(item.id);
         }
       }}
+      delayPressIn={0}
     >
       <View style={styles.itemContainer}>
         <Text

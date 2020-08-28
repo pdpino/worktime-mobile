@@ -55,6 +55,7 @@ class CategoryItem extends React.PureComponent {
       <TouchableOpacity
         onPress={() => onPressCategory && onPressCategory(category.id)}
         disabled={!onPressCategory}
+        delayPressIn={0}
       >
         <View style={styles.container}>
           {categoryName}

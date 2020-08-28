@@ -59,6 +59,7 @@ class Tabs extends React.PureComponent {
               style={{ flex: 1 }}
               key={index.toString()}
               onPress={() => onPressTab(tabDef.key)}
+              delayPressIn={0}
             >
               <View
                 style={[

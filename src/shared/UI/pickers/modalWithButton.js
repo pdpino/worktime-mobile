@@ -45,6 +45,7 @@ export default function asModalWithButton(ButtonComponent, ModalComponent) {
             style={{ flex: 0 }}
             disabled={disabled}
             onPress={this.openModal}
+            delayPressIn={0}
           >
             <ButtonComponent {...this.props} />
           </TouchableOpacity>

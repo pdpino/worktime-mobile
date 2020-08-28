@@ -40,6 +40,7 @@ const SubmitButton = ({
       style={[styles.button, disabled ? styles.disabled : styles.enabled]}
       disabled={disabled || isLoading}
       onPress={onPress}
+      delayPressIn={0}
     >
       {isLoading ? <ActivityIndicator color="white" /> : (
         <Text style={styles.text}>
