@@ -6,7 +6,9 @@ import WeekViewComponent from '../../components/week';
 import NDaysPicker from '../../components/week/nDaysPicker';
 import { Memoizer } from '../../shared/utils';
 import { workSessionsSelector } from '../../redux/selectors';
-import { getToday, prettyHour, prettyDate } from '../../shared/dates';
+import {
+  getToday, prettyHour, prettyDate, prettyTimespanDuration,
+} from '../../shared/dates';
 import { HeaderActions } from '../../shared/UI/headers';
 import i18n from '../../shared/i18n';
 import { getLightColor } from '../../shared/styles';
@@ -99,9 +101,10 @@ export class WeekView extends React.Component {
     const day = prettyDate(event.startDate);
     const startHour = prettyHour(event.startDate);
     const endHour = prettyHour(event.endDate);
+    const duration = prettyTimespanDuration(event.startDate, event.endDate);
     Alert.alert(
       event.description,
-      `${day}: ${startHour} - ${endHour}`,
+      `${day}\n${startHour} - ${endHour}\n${duration}`,
     );
   }
 

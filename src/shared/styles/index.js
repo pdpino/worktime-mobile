@@ -5,6 +5,7 @@ const colors = {
   orange: '#ef8c00',
   lightGray: '#b3b3b3',
   lighterGray: '#dedede',
+  evenLighterGray: '#f1f1f1',
   boxBackground: '#e8eaf6',
   deletionRedLighter: '#d8463b',
   deletionRed: '#d50000',

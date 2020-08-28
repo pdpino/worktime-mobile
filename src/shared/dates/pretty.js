@@ -84,6 +84,12 @@ export function prettyDuration(totalSeconds, includeSeconds = false) {
   return duration ? duration.trim() : emptyResult;
 }
 
+export function prettyTimespanDuration(startDate, endDate) {
+  const startTimestamp = startDate.getTime();
+  const endTimestamp = endDate.getTime();
+  return prettyDuration((endTimestamp - startTimestamp) / 1000);
+}
+
 export function dateToDateString(date) {
   return isValidDate(date) && format(date, 'yyyy-MM-dd');
 }

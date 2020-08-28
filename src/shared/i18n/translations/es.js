@@ -63,6 +63,7 @@ export default {
     deleted: 'Eliminado',
     elementDeleted: '%{element} eliminado',
     workSessionDeleted: 'Sesión eliminada',
+    clear: 'Remover',
   },
   workPlayer: {
     playing: 'Trabajando',

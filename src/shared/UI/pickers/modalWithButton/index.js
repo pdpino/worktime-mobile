@@ -1,8 +1,13 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
+import asOnlyVisible from './wrapper';
 
-export default function asModalWithButton(ButtonComponent, ModalComponent) {
+export default function asModalWithButton(
+  ButtonComponent, ModalComponent, useVisibleWrapper = false,
+) {
+  const WrappedModel = useVisibleWrapper ? asOnlyVisible(ModalComponent) : ModalComponent;
+
   class AsModalWithButton extends React.Component {
     constructor(props) {
       super(props);
@@ -54,7 +59,8 @@ export default function asModalWithButton(ButtonComponent, ModalComponent) {
             onBackButtonPress={this.closeModal}
             onBackdropPress={this.closeModal}
           >
-            <ModalComponent
+            <WrappedModel
+              isVisible={modalVisible}
               closeModal={this.closeModal}
               {...this.props}
             />

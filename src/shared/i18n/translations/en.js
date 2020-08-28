@@ -63,6 +63,7 @@ export default {
     deleted: 'Deleted',
     elementDeleted: '%{element} deleted',
     workSessionDeleted: 'Work session deleted',
+    clear: 'Clear',
   },
   workPlayer: {
     playing: 'Working', // FIXME: the key is coupled with the WS status

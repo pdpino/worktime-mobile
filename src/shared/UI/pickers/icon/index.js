@@ -3,15 +3,15 @@ import {
   StyleSheet, View, FlatList, Text,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { AssignableIcon, iconsList } from '../icons/assignable';
-import { colors } from '../../styles';
-import asModalWithButton from './modalWithButton';
-import i18n from '../../i18n';
+import { AssignableIcon, iconsList } from '../../icons/assignable';
+import { colors } from '../../../styles';
+import asModalWithButton from '../modalWithButton';
+import i18n from '../../../i18n';
+import SelectedIconHeader from './header';
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    padding: 5,
   },
   categoryContainer: {
     flexDirection: 'column',
@@ -20,13 +20,16 @@ const styles = StyleSheet.create({
   categoryName: {
     color: 'black',
     alignSelf: 'center',
+    marginTop: 5,
+    marginBottom: 3,
   },
   iconsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
   iconContainer: {
-    margin: 10,
+    marginHorizontal: 8,
+    marginVertical: 5,
   },
 });
 
@@ -53,6 +56,7 @@ const IconPicker = ({
                 {...icon.config}
                 color={isSelected ? (color || colors.mainBlue) : 'black'}
                 size={30}
+                delayPressIn={0}
               />
             );
           })}
@@ -61,11 +65,24 @@ const IconPicker = ({
     );
   };
 
+  const header = (
+    <SelectedIconHeader
+      icon={iconSelected}
+      color={color || colors.mainBlue}
+      onPressIcon={() => closeModal()}
+      onPressClear={() => {
+        closeModal();
+        onSelect(null);
+      }}
+    />
+  );
+
   return (
     <FlatList
       style={styles.container}
       data={iconsList}
       renderItem={renderItem}
+      ListHeaderComponent={header}
       keyExtractor={(item, index) => index.toString()}
       horizontal={false}
       extraData={iconSelected}
@@ -73,4 +90,4 @@ const IconPicker = ({
   );
 };
 
-export default asModalWithButton(AssignableIcon, IconPicker);
+export default asModalWithButton(AssignableIcon, IconPicker, true);
