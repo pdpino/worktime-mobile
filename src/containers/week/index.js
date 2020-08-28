@@ -1,11 +1,12 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { sortEventsByDate } from 'react-native-week-view';
 import WeekViewComponent from '../../components/week';
 import NDaysPicker from '../../components/week/nDaysPicker';
 import { Memoizer } from '../../shared/utils';
 import { workSessionsSelector } from '../../redux/selectors';
-import { getToday } from '../../shared/dates';
+import { getToday, prettyHour, prettyDate } from '../../shared/dates';
 import { HeaderActions } from '../../shared/UI/headers';
 import i18n from '../../shared/i18n';
 import { getLightColor } from '../../shared/styles';
@@ -49,6 +50,7 @@ export class WeekView extends React.Component {
     this.handlePressGoToToday = this.handlePressGoToToday.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.processWorkSessions = this.processWorkSessions.bind(this);
+    this.handlePressEvent = this.handlePressEvent.bind(this);
 
     this.props.navigation.setParams({
       handlePressNDaysMenu: this.handlePressNDaysMenu,
@@ -92,6 +94,17 @@ export class WeekView extends React.Component {
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  handlePressEvent(event) {
+    const day = prettyDate(event.startDate);
+    const startHour = prettyHour(event.startDate);
+    const endHour = prettyHour(event.endDate);
+    Alert.alert(
+      event.description,
+      `${day}: ${startHour} - ${endHour}`,
+    );
+  }
+
   closeModal() {
     this.setState({
       nDaysMenuVisible: false,
@@ -123,6 +136,7 @@ export class WeekView extends React.Component {
           startDate: workSession.getLocalStartDate(),
           endDate: workSession.getLocalEndDate(),
           color: getLightColor(color),
+          icon: subject.icon,
         };
       });
       this.setState({
@@ -143,6 +157,7 @@ export class WeekView extends React.Component {
         nDays={nDays}
         selectedDate={selectedDate}
         isProcessing={isProcessing}
+        onPressEvent={this.handlePressEvent}
       >
         <NDaysPicker
           isVisible={nDaysMenuVisible}

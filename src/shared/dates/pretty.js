@@ -39,8 +39,10 @@ export function timeToPrettyDate(timestamp, tzOffset, useNames = true) {
   return prettyDate(date, useNames);
 }
 
-export function prettyHour(timestamp, tzOffset) {
-  const date = toLocalDate(timestamp, tzOffset);
+export function prettyHour(timestampOrDate, tzOffset) {
+  const date = (timestampOrDate instanceof Date)
+    ? timestampOrDate
+    : toLocalDate(timestampOrDate, tzOffset);
   return date ? format(date, 'HH:mm') : '';
 }
 

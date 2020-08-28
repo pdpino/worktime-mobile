@@ -67,12 +67,17 @@ describe('timeToPrettyDate', () => {
 });
 
 describe('prettyHour', () => {
-  describe('Invalid input handling', () => {
-    it('Returns empty string on invalid timestamp', () => {
+  describe('Input/output handling', () => {
+    it('Returns empty string on invalid input', () => {
       expect(prettyHour()).toEqual('');
       expect(prettyHour(null)).toEqual('');
       expect(prettyHour('hello')).toEqual('');
-      expect(prettyHour(new Date())).toEqual('');
+    });
+
+    it('Returns valid hour on valid input', () => {
+      const hourRegex = /\d\d:\d\d/;
+      expect(prettyHour(8141723)).toMatch(hourRegex);
+      expect(prettyHour(new Date())).toMatch(hourRegex);
     });
   });
 });

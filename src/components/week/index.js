@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import WeekViewLib from 'react-native-week-view';
 import { colors } from '../../shared/styles';
+import IconOrText from './inner';
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window');
 // HACK: values hardcoded
@@ -28,10 +29,16 @@ const styles = StyleSheet.create({
 });
 
 const WeekViewWrapper = ({
-  children, nDays, selectedDate, workSessions, isProcessing,
+  children, nDays, selectedDate, workSessions, isProcessing, onPressEvent,
 }) => (
   <View style={styles.container}>
-    {isProcessing && <ActivityIndicator size="large" style={styles.loadingSpinner} />}
+    {isProcessing && (
+      <ActivityIndicator
+        size="large"
+        style={styles.loadingSpinner}
+        color={colors.mainBlue}
+      />
+    )}
     <WeekViewLib
       formatDateHeader="dd D"
       events={workSessions}
@@ -39,9 +46,11 @@ const WeekViewWrapper = ({
       selectedDate={selectedDate}
       headerStyle={styles.header}
       headerTextColor="white"
-      hoursInDisplay={18}
+      hoursInDisplay={12}
       startHour={8}
       locale={null}
+      onEventPress={onPressEvent}
+      InnerComponent={IconOrText}
     />
     {children}
   </View>
