@@ -8,7 +8,7 @@ import {
   start, resume, pause, stop, stopAndDiscard, selectWorkSubject,
 } from '../../redux/actions';
 import {
-  selectedSubjectSelector,
+  selectedSubjectAndCategorySelector,
   runningSessionSelector, lastRunningSessionSelector, subjectsSelector,
   categoriesSelector,
 } from '../../redux/selectors';
@@ -33,15 +33,16 @@ export class WorkPlayer extends React.Component {
   }
 
   handlePressPlayPause() {
-    const { selectedSubject } = this.props;
-    if (!selectedSubject) {
+    const { selected } = this.props;
+    const subject = selected && selected.subject;
+    if (!subject) {
       return;
     }
 
     const status = this.getStatus();
 
     if (status === 'stopped') {
-      this.props.start(selectedSubject);
+      this.props.start(subject);
     } else if (status === 'playing') {
       this.props.pause();
     } else if (status === 'paused') {
@@ -74,9 +75,8 @@ export class WorkPlayer extends React.Component {
   render() {
     const status = this.getStatus();
     const {
-      subjects, categories, selectedSubject, runningSession, lastRunningSession,
+      subjects, categories, selected, runningSession, lastRunningSession,
     } = this.props;
-    const selectedSubjectName = selectedSubject && selectedSubject.name;
     const { timeTotal, timeEffective } = (runningSession || {});
     const {
       timeTotal: lastTimeTotal,
@@ -89,7 +89,7 @@ export class WorkPlayer extends React.Component {
       <WorkPlayerComponent>
         <SubjectPickerComponent
           categoriesWithSubjects={categoriesWithSubjects}
-          selectedSubjectName={selectedSubjectName}
+          selected={selected}
           onValueChange={this.handleSelectSubject}
           disabled={status !== 'stopped'}
         />
@@ -99,7 +99,7 @@ export class WorkPlayer extends React.Component {
           timeEffective={timeEffective || lastTimeEffective}
         />
         <PlayerButtonsComponent
-          playerEnabled={!!selectedSubjectName}
+          playerEnabled={!!selected}
           showPlay={status !== 'playing'}
           stopDisabled={status === 'stopped'}
           onPressPlayPause={this.handlePressPlayPause}
@@ -114,7 +114,7 @@ export class WorkPlayer extends React.Component {
 const mapStateToProps = (state) => ({
   subjects: subjectsSelector(state),
   categories: categoriesSelector(state),
-  selectedSubject: selectedSubjectSelector(state),
+  selected: selectedSubjectAndCategorySelector(state),
   runningSession: runningSessionSelector(state),
   lastRunningSession: lastRunningSessionSelector(state),
 });
