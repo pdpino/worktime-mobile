@@ -29,18 +29,22 @@ export const getCategoriesWithSubjects = memoizeOne((subjects, categories) => {
     [Category.noCategoryId]: [],
   };
 
-  categories.forEach((category) => {
-    categoryToSubjects[category.id] = [];
-  });
+  if (categories) {
+    categories.forEach((category) => {
+      categoryToSubjects[category.id] = [];
+    });
+  }
 
-  subjects.forEach((subject) => {
-    const categoryId = subject.category
-      ? subject.category.id
-      : Category.noCategoryId;
-    categoryToSubjects[categoryId].push(subject);
-  });
+  if (subjects) {
+    subjects.forEach((subject) => {
+      const categoryId = subject.category
+        ? subject.category.id
+        : Category.noCategoryId;
+      categoryToSubjects[categoryId].push(subject);
+    });
+  }
 
-  const categoriesWithSubjects = categories.map((category) => ({
+  const categoriesWithSubjects = (categories || []).map((category) => ({
     id: category.id,
     name: category.name,
     color: category.color,

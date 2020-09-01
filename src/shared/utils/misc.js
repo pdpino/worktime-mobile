@@ -32,9 +32,9 @@ export function extractFilename(filePath) {
 
 export const sortByName = memoizeOne((array) => {
   const getName = (elem) => (elem && elem.name && elem.name.toLowerCase()) || '';
-  return array.sort(
+  return array ? array.sort(
     (elem1, elem2) => (getName(elem1) <= getName(elem2) ? -1 : 1),
-  );
+  ) : [];
 });
 
 export function removeStrAccents(str) {
