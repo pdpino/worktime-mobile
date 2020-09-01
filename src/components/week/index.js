@@ -19,6 +19,8 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: colors.lightBlue,
     elevation: 1,
+    color: 'white',
+    borderColor: colors.mainBlue,
   },
   loadingSpinner: {
     position: 'absolute',
@@ -45,12 +47,12 @@ const WeekViewWrapper = ({
       numberOfDays={nDays}
       selectedDate={selectedDate}
       headerStyle={styles.header}
-      headerTextColor="white"
       hoursInDisplay={12}
       startHour={8}
       locale={null}
       onEventPress={onPressEvent}
       InnerComponent={IconOrText}
+      allowOverlapSeconds={60}
     />
     {children}
   </View>

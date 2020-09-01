@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert } from 'react-native';
 import { connect } from 'react-redux';
-import { sortEventsByDate } from 'react-native-week-view';
+import { sortEventsByDate } from 'react-native-week-view/src/utils';
 import WeekViewComponent from '../../components/week';
 import NDaysPicker from '../../components/week/nDaysPicker';
 import { Memoizer } from '../../shared/utils';

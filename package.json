@@ -42,7 +42,7 @@
     "react-native-screens": "^2.10.1",
     "react-native-share": "^3.7.0",
     "react-native-vector-icons": "^7.0.0",
-    "react-native-week-view": "git://github.com/pdpino/react-native-week-view.git#develop",
+    "react-native-week-view": "git://github.com/pdpino/react-native-week-view.git#develop-2",
     "react-navigation": "^4.4.0",
     "react-navigation-stack": "^2.8.2",
     "react-navigation-tabs": "^2.9.0",

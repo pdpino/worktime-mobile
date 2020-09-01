@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 ### Changed
 * Improve work subject looks
+* Improve week view looks: improve overlapping events, header scrolls with content
 
 
 

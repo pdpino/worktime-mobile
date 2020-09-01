@@ -1,4 +1,4 @@
-import { addLocale, setLocale } from 'react-native-week-view';
+import { addLocale, setLocale } from 'react-native-week-view/src/utils';
 import es from '../calendars/es';
 
 const spanishConfig = {
