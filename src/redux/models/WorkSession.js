@@ -115,7 +115,15 @@ class WorkSession extends Model {
   }
 
   getLocalEndDate() {
-    return toLocalDate(this.timestampEnd, this.tzName);
+    let { timestampEnd } = this;
+    if (this.timestampEnd < this.timestampStart) {
+      // HACK: This solves worktime-py issue for old sessions
+      // For sessions starting in one day and finishing in the next day
+      // (i.e. after 00:00), timestampEnd was generated with the first day,
+      // but should be the next day. Hence, timestamp is behind by 24 hours.
+      timestampEnd += 24 * 3600;
+    }
+    return toLocalDate(timestampEnd, this.tzName);
   }
 
   getPrettyTimezone() {
