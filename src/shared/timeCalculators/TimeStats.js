@@ -1,7 +1,7 @@
 import { smartDivision } from '../utils';
 import {
   isBetween, isBefore, getDateCopy, getStartOfDay, getEndOfDay, getWeeksDiff,
-  dateToDateString,
+  dateToDateString, toLocalDate,
 } from '../dates';
 import i18n from '../i18n';
 
@@ -95,8 +95,8 @@ class TimeStats {
   }
 
   initDates(initialDate, endingDate) {
-    this.initialDate = getStartOfDay(initialDate);
-    this.endingDate = getEndOfDay(endingDate);
+    this.initialDate = toLocalDate(getStartOfDay(initialDate));
+    this.endingDate = toLocalDate(getEndOfDay(endingDate));
   }
 
   updateDates(date) {

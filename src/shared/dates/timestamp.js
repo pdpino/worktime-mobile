@@ -1,5 +1,11 @@
 import { format } from 'date-fns';
-import { isNumber } from '../utils';
+import { utcToZonedTime } from 'date-fns-tz';
+import * as RNLocalize from 'react-native-localize';
+import { isNumber, isValidDate } from '../utils';
+
+export function getTimezoneName() {
+  return RNLocalize.getTimeZone();
+}
 
 export function getTimezoneOffset() {
   // in seconds
@@ -15,12 +21,14 @@ export function getTimestampString() {
   return format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
 }
 
-export function toLocalDate(timestamp, tzOffset) {
-  if (!isNumber(timestamp) || (timestamp instanceof Date)) {
+export function toLocalDate(timestampOrDate, tzName) {
+  const isTimestamp = isNumber(timestampOrDate);
+  if (!isTimestamp && !isValidDate(timestampOrDate)) {
     return null;
   }
-  const currentOffset = getTimezoneOffset();
-  const offsetUsed = tzOffset == null ? currentOffset : tzOffset;
-  const seconds = timestamp + (currentOffset - offsetUsed);
-  return new Date(seconds * 1000);
+  const tzNameUsed = tzName || getTimezoneName();
+  const timeOrDateUsed = isTimestamp
+    ? timestampOrDate * 1000
+    : timestampOrDate;
+  return utcToZonedTime(timeOrDateUsed, tzNameUsed);
 }

@@ -1,5 +1,6 @@
 const OriginalDate = Date;
-const nowDefaultFunction = Date.now;
+let dateSpy;
+let nowSpy;
 
 const mockToday = (fixedDay) => {
   const fixedTimestamp = fixedDay.getTime();
@@ -10,13 +11,13 @@ const mockToday = (fixedDay) => {
     return new OriginalDate(...args);
   };
 
-  global.Date = MockDate;
-  global.Date.now = jest.fn(() => fixedTimestamp);
+  nowSpy = jest.spyOn(global.Date, 'now').mockImplementation(() => fixedTimestamp);
+  dateSpy = jest.spyOn(global, 'Date').mockImplementation((...args) => MockDate(...args));
 };
 
 const restoreMock = () => {
-  global.Date = OriginalDate;
-  global.Date.now = nowDefaultFunction;
+  dateSpy.mockRestore();
+  nowSpy.mockRestore();
 };
 
 const ODate = OriginalDate;

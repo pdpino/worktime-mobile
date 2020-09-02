@@ -39,7 +39,7 @@ class WorkSessionItem extends React.PureComponent {
     const {
       id, nPauses, timeTotal, timeEffective, device,
     } = workSession;
-    const tzOffset = workSession.getPrettyTimezoneOffset();
+    const timezone = workSession.getPrettyTimezone();
 
     const dateTimeItem = (
       <View style={styles.item}>
@@ -52,7 +52,10 @@ class WorkSessionItem extends React.PureComponent {
           {workSession.getPrettyHourEnd()}
         </Text>
         <Text style={[styles.text, styles.textDevice]}>
-          {`${device} (${tzOffset})`}
+          {device}
+        </Text>
+        <Text style={[styles.text, styles.textDevice]}>
+          {timezone}
         </Text>
       </View>
     );

@@ -10,7 +10,7 @@ import I18N from './src/shared/i18n';
 import './src/shared/errors';
 
 let store;
-const storeVersionNeeded = 4;
+const storeVersionNeeded = 5;
 
 class App extends React.Component {
   constructor(props) {

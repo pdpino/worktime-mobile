@@ -2,7 +2,7 @@ import {
   runningSessionIdSelector, lastWorkSessionSelector, selectedSubjectSelector,
   profileSelector,
 } from '../selectors';
-import { getTimestamp, getTimezoneOffset } from '../../shared/dates';
+import { getTimestamp, getTimezoneOffset, getTimezoneName } from '../../shared/dates';
 
 const createActionForRunningSession = (
   type,
@@ -33,6 +33,7 @@ export const start = (subject) => (dispatch, getState) => {
     payload: {
       timestamp: getTimestamp(),
       tzOffset: getTimezoneOffset(),
+      tzName: getTimezoneName(),
       subject,
       deviceName: profileSelector(getState()).deviceName,
     },

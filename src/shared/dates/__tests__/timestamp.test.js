@@ -1,3 +1,4 @@
+import mockTimezone from 'timezone-mock';
 import { toLocalDate } from '../timestamp';
 
 const createTests = {
@@ -5,6 +6,7 @@ const createTests = {
     {
       timestamp: 1572816420,
       offset: 10800,
+      tzName: 'America/Santiago',
       outcome: {
         year: 2019,
         month: 11,
@@ -17,6 +19,7 @@ const createTests = {
     {
       timestamp: 1573159271,
       offset: 10800,
+      tzName: 'America/Santiago',
       outcome: {
         year: 2019,
         month: 11,
@@ -30,36 +33,39 @@ const createTests = {
   positiveOffset: () => [
     {
       timestamp: 1572816420,
-      offset: 25200,
+      offset: 5 * 3600,
+      tzName: 'America/New_York',
       outcome: {
         year: 2019,
         month: 11,
         day: 3,
-        hours: 14,
+        hours: 16,
         minutes: 27,
         seconds: 0,
       },
     },
     {
       timestamp: 1572816420,
-      offset: 14400,
+      offset: 8 * 3600,
+      tzName: 'America/Los_Angeles',
       outcome: {
         year: 2019,
         month: 11,
         day: 3,
-        hours: 17,
+        hours: 13,
         minutes: 27,
         seconds: 0,
       },
     },
     {
       timestamp: 1573159271,
-      offset: 21600,
+      offset: 8 * 3600,
+      tzName: 'America/Los_Angeles',
       outcome: {
         year: 2019,
         month: 11,
         day: 7,
-        hours: 14,
+        hours: 12,
         minutes: 41,
         seconds: 11,
       },
@@ -68,24 +74,26 @@ const createTests = {
   negativeOffset: () => [
     {
       timestamp: 1572816420,
-      offset: -25200,
+      offset: -1 * 3600,
+      tzName: 'Europe/Madrid',
       outcome: {
         year: 2019,
         month: 11,
-        day: 4,
-        hours: 4,
+        day: 3,
+        hours: 22,
         minutes: 27,
         seconds: 0,
       },
     },
     {
       timestamp: 1572816420,
-      offset: -14400,
+      offset: -2 * 3600,
+      tzName: 'Europe/Kiev',
       outcome: {
         year: 2019,
         month: 11,
-        day: 4,
-        hours: 1,
+        day: 3,
+        hours: 23,
         minutes: 27,
         seconds: 0,
       },
@@ -94,31 +102,21 @@ const createTests = {
   nearZero: () => [
     {
       timestamp: 0,
-      offset: 7200,
+      offset: -1 * 3600,
+      tzName: 'Europe/London',
       outcome: {
-        year: 1969,
-        month: 12,
-        day: 31,
-        hours: 22,
+        year: 1970,
+        month: 1,
+        day: 1,
+        hours: 1,
         minutes: 0,
         seconds: 0,
       },
     },
     {
       timestamp: 0,
-      offset: 10800,
-      outcome: {
-        year: 1969,
-        month: 12,
-        day: 31,
-        hours: 21,
-        minutes: 0,
-        seconds: 0,
-      },
-    },
-    {
-      timestamp: 0,
-      offset: -10800,
+      offset: -3 * 3600,
+      tzName: 'Europe/Moscow',
       outcome: {
         year: 1970,
         month: 1,
@@ -128,33 +126,48 @@ const createTests = {
         seconds: 0,
       },
     },
+    {
+      timestamp: 0,
+      offset: 3 * 3600,
+      tzName: 'America/Santiago',
+      outcome: {
+        year: 1969,
+        month: 12,
+        day: 31,
+        hours: 21,
+        minutes: 0,
+        seconds: 0,
+      },
+    },
   ],
 };
 
 describe('toLocalDate', () => {
-  describe('Invalid input handling', () => {
-    it('Returns a date on empty offset', () => {
+  describe('Input handling', () => {
+    it('Returns a date on empty timezone name', () => {
       expect(toLocalDate(0)).toBeValidDate();
       expect(toLocalDate(1000, null)).toBeValidDate();
+      expect(toLocalDate(new Date())).toBeValidDate();
     });
 
-    it('Returns null on empty timestamp', () => {
+    it('Returns null on empty timestamp or date', () => {
       expect(toLocalDate()).toBeNull();
       expect(toLocalDate(null)).toBeNull();
-      expect(toLocalDate(null, 1080)).toBeNull();
+      expect(toLocalDate(null, 'America/Santiago')).toBeNull();
     });
 
     it('Returns null on invalid timestamp', () => {
       expect(toLocalDate('hello')).toBeNull();
-      expect(toLocalDate('world', 300)).toBeNull();
-      expect(toLocalDate(new Date())).toBeNull();
+      expect(toLocalDate('world', 'Europe/London')).toBeNull();
     });
   });
 
-  describe('Calculates date correctly from the offset', () => {
-    const testCases = (cases) => cases.forEach((testCase) => {
-      const { timestamp, offset, outcome } = testCase;
-      const date = toLocalDate(timestamp, offset);
+  describe('Calculates date correctly from the timezone', () => {
+    const runTestsCases = (cases) => cases.forEach((testCase) => {
+      const {
+        timestamp, tzName, outcome,
+      } = testCase;
+      const date = toLocalDate(timestamp, tzName);
 
       expect(date.getFullYear()).toEqual(outcome.year);
       expect(date.getMonth()).toEqual(outcome.month - 1);
@@ -164,9 +177,22 @@ describe('toLocalDate', () => {
       expect(date.getHours()).toEqual(outcome.hours);
     });
 
-    it('With a base offset', () => testCases(createTests.baseOffset()));
-    it('With positive offsets', () => testCases(createTests.positiveOffset()));
-    it('With negative offsets', () => testCases(createTests.negativeOffset()));
-    it('With near zero timestamps', () => testCases(createTests.nearZero()));
+    const runCasesWithTimezone = (timezone) => {
+      if (timezone) {
+        mockTimezone.register(timezone);
+      }
+      runTestsCases(createTests.baseOffset());
+      runTestsCases(createTests.positiveOffset());
+      runTestsCases(createTests.negativeOffset());
+      runTestsCases(createTests.nearZero());
+      if (timezone) {
+        mockTimezone.unregister();
+      }
+    };
+
+    it('In current timezone', () => runCasesWithTimezone());
+    it('In timezone US/Pacific', () => runCasesWithTimezone('US/Pacific'));
+    it('In timezone Europe/London', () => runCasesWithTimezone('Europe/London'));
+    it('In timezone Australia/Adelaide', () => runCasesWithTimezone('Australia/Adelaide'));
   });
 });

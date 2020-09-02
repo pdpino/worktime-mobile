@@ -6,12 +6,12 @@ import i18n from '../i18n';
 import { toLocalDate, getTimezoneOffset } from './timestamp';
 import getCurrentLocale from './locales';
 
-export function prettyDate(date, useNames = true) {
-  const dateYear = date && date.getFullYear && date.getFullYear();
-  if (!dateYear) {
+export function prettyDate(date, useNames = true, tzName = null) {
+  if (!isValidDate(date)) {
     return '';
   }
 
+  const dateYear = date.getFullYear();
   const today = new Date();
   const diffDays = differenceInCalendarDays(today, date);
   const diffYears = today.getFullYear() - dateYear;
@@ -27,30 +27,37 @@ export function prettyDate(date, useNames = true) {
   }
 
   const locale = getCurrentLocale(i18n.currentLocale);
+  const config = { locale };
+  if (tzName) {
+    config.timezone = tzName;
+  }
 
   if (diffYears === 0) {
-    return format(date, 'E d MMM', { locale });
+    return format(date, 'E d MMM', config);
   }
-  return format(date, 'E d MMM yyyy', { locale });
+  return format(date, 'E d MMM yyyy', config);
 }
 
-export function timeToPrettyDate(timestamp, tzOffset, useNames = true) {
-  const date = toLocalDate(timestamp, tzOffset);
-  return prettyDate(date, useNames);
+export function timeToPrettyDate(timestamp, tzName, useNames = true) {
+  if (!isNumber(timestamp)) {
+    return '';
+  }
+  const date = new Date(timestamp * 1000);
+  return prettyDate(date, useNames, tzName);
 }
 
-export function prettyHour(timestampOrDate, tzOffset) {
-  const date = (timestampOrDate instanceof Date)
+export function prettyHour(timestampOrDate, tzName) {
+  const date = isValidDate(timestampOrDate)
     ? timestampOrDate
-    : toLocalDate(timestampOrDate, tzOffset);
+    : toLocalDate(timestampOrDate, tzName);
   return date ? format(date, 'HH:mm') : '';
 }
 
 export function prettyDaysAgo(timestamp) {
-  const date = toLocalDate(timestamp);
-  if (!date) {
+  if (!isNumber(timestamp)) {
     return i18n.t('never');
   }
+  const date = new Date(timestamp * 1000);
   return formatDistanceStrict(date, new Date(), {
     unit: 'day',
     roundingMethod: 'ceil',
@@ -101,4 +108,8 @@ export function prettyTimezoneOffset(tzOffset) {
   if (offsetUsed > 0) return `+${offsetHours}`;
 
   return offsetHours.toString();
+}
+
+export function prettyTimezone(tzOffset, tzName) {
+  return `${tzName} (${prettyTimezoneOffset(tzOffset)})`;
 }

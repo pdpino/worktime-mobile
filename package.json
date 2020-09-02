@@ -20,6 +20,7 @@
     "@react-native-community/netinfo": "^5.9.6",
     "@redux-offline/redux-offline": "^2.6.0-native.0",
     "date-fns": "^2.6.0",
+    "date-fns-tz": "^1.0.10",
     "i18n-js": "^3.5.0",
     "lodash": "^4.17.19",
     "memoize-one": "^5.0.4",
@@ -68,10 +69,12 @@
     "eslint-plugin-react-hooks": "^4",
     "factory-girl": "^5.0.4",
     "jest": "^25.1.0",
+    "jest-chain": "^1.1.5",
     "jest-extended": "^0.11.2",
     "metro-react-native-babel-preset": "^0.59.0",
     "react-test-renderer": "16.13.1",
-    "redux-mock-store": "^1.5.3"
+    "redux-mock-store": "^1.5.3",
+    "timezone-mock": "^1.1.1"
   },
   "jest": {
     "preset": "react-native",
@@ -80,7 +83,8 @@
       "./node_modules/react-native-gesture-handler/jestSetup.js"
     ],
     "setupFilesAfterEnv": [
-      "jest-extended"
+      "jest-extended",
+      "jest-chain"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-navigation|react-navigation-redux-helpers)"

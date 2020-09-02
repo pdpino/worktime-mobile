@@ -1,3 +1,4 @@
+import { mockToday, restoreMock } from '../../dates/__tests__/dateMock';
 import { isNumber, isValidDate } from '../types';
 
 describe('isNumber', () => {
@@ -10,10 +11,13 @@ describe('isNumber', () => {
     expect(isNumber(new Date())).toBeFalsy();
   });
 
-  it('Returns truthy on inputs that can be parsed to number', () => {
+  it('Returns truthy on numbers', () => {
     expect(isNumber(3)).toBeTruthy();
     expect(isNumber(-2)).toBeTruthy();
     expect(isNumber(0)).toBeTruthy();
+  });
+
+  it('Returns truthy on strings that can be parsed to number', () => {
     expect(isNumber('0')).toBeTruthy();
     expect(isNumber('1000')).toBeTruthy();
   });
@@ -28,6 +32,7 @@ describe('isValidDate', () => {
     expect(isValidDate({})).toBeFalse();
     expect(isValidDate(-3)).toBeFalse();
     expect(isValidDate(3)).toBeFalse();
+    expect(isValidDate('2020/03/24')).toBeFalse();
   });
 
   it('Returns false on invalid dates', () => {
@@ -38,5 +43,11 @@ describe('isValidDate', () => {
     expect(isValidDate(new Date())).toBeTrue();
     expect(isValidDate(new Date(100000))).toBeTrue();
     expect(isValidDate(new Date(2019, 1, 10, 22, 15, 30))).toBeTrue();
+  });
+
+  it('Returns true with mocked dates', () => {
+    mockToday(new Date(2020, 8, 4));
+    expect(isValidDate(new Date())).toBeTrue();
+    restoreMock();
   });
 });

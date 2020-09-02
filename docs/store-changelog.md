@@ -5,6 +5,12 @@ production.
 Irrelevant changes may also be documented, but only a relevant change triggers
 a new store version.
 
+## 5 - with version 1.15.0
+* In `WorkSession`:
+  * Add `tzName` attribute, and use that instead of `tzOffset`.
+  * `tzOffset` is kept
+
+
 ## 4 - with version 1.10.0
 * In `WorkSession`:
   - Add `tzOffset` attribute

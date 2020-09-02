@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import { fk, attr, Model } from 'redux-orm';
 import {
-  toLocalDate, prettyTimezoneOffset, timeToPrettyDate, prettyHour,
+  toLocalDate, prettyTimezone, timeToPrettyDate, prettyHour,
 } from '../../shared/dates';
 
 const portingWhiteList = [
-  'device', 'timestampStart', 'timestampEnd', 'tzOffset',
+  'device', 'timestampStart', 'timestampEnd', 'tzOffset', 'tzName',
   'timeTotal', 'timeEffective', 'nPauses', 'status',
 ];
 
@@ -28,13 +28,14 @@ class WorkSession extends Model {
         .import(workSession, importableSprint));
   }
 
-  static start(timestamp, tzOffset, subjectId, deviceName) {
+  static start(timestamp, tzOffset, tzName, subjectId, deviceName) {
     // eslint-disable-next-line no-shadow
     const { Subject, WorkSession } = this.session;
     const props = {
       timestampStart: timestamp,
       timestampEnd: timestamp,
       tzOffset,
+      tzName,
       timeTotal: 0,
       timeEffective: 0,
       nPauses: 0,
@@ -110,27 +111,27 @@ class WorkSession extends Model {
   }
 
   getLocalStartDate() {
-    return toLocalDate(this.timestampStart, this.tzOffset);
+    return toLocalDate(this.timestampStart, this.tzName);
   }
 
   getLocalEndDate() {
-    return toLocalDate(this.timestampEnd, this.tzOffset);
+    return toLocalDate(this.timestampEnd, this.tzName);
   }
 
-  getPrettyTimezoneOffset() {
-    return prettyTimezoneOffset(this.tzOffset);
+  getPrettyTimezone() {
+    return prettyTimezone(this.tzOffset, this.tzName);
   }
 
   getPrettyDate() {
-    return timeToPrettyDate(this.timestampStart, this.tzOffset);
+    return timeToPrettyDate(this.timestampStart, this.tzName);
   }
 
   getPrettyHourStart() {
-    return prettyHour(this.timestampStart, this.tzOffset);
+    return prettyHour(this.timestampStart, this.tzName);
   }
 
   getPrettyHourEnd() {
-    return prettyHour(this.timestampEnd, this.tzOffset);
+    return prettyHour(this.timestampEnd, this.tzName);
   }
 
   getSprints() {
@@ -164,6 +165,7 @@ WorkSession.fields = {
   timestampStart: attr(),
   timestampEnd: attr(),
   tzOffset: attr(),
+  tzName: attr(),
   timeTotal: attr(),
   timeEffective: attr(),
   nPauses: attr(),

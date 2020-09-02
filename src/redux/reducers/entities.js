@@ -1,4 +1,4 @@
-import { getTimezoneOffset } from '../../shared/dates';
+import { getTimezoneOffset, getTimezoneName } from '../../shared/dates';
 
 function updateWorkSessionDevice(WorkSession, device) {
   WorkSession.all().update({ device });
@@ -17,6 +17,11 @@ function addArchivedAttr(Subject) {
 function addTimezoneOffset(WorkSession) {
   const tzOffset = getTimezoneOffset();
   WorkSession.all().update({ tzOffset });
+}
+
+function addTimezoneName(WorkSession) {
+  const tzName = getTimezoneName();
+  WorkSession.all().update({ tzName });
 }
 
 const entities = (orm) => (state, action) => {
@@ -64,9 +69,15 @@ const entities = (orm) => (state, action) => {
       break;
     case 'PLAYER/STARTING': {
       const {
-        timestamp, tzOffset, subject, deviceName,
+        timestamp, tzOffset, tzName, subject, deviceName,
       } = action.payload;
-      WorkSession.start(timestamp, tzOffset, subject.id, deviceName);
+      WorkSession.start(
+        timestamp,
+        tzOffset,
+        tzName,
+        subject.id,
+        deviceName,
+      );
       break;
     }
     case 'PLAYER/STARTED':
@@ -122,6 +133,9 @@ const entities = (orm) => (state, action) => {
       break;
     case 'APP/UPDATE_STORE_3_4':
       addTimezoneOffset(WorkSession);
+      break;
+    case 'APP/UPDATE_STORE_4_5':
+      addTimezoneName(WorkSession);
       break;
     default:
   }

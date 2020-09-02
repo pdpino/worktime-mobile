@@ -5,13 +5,20 @@ import {
 import i18n from '../../i18n';
 import { mockToday, restoreMock, ODate } from './dateMock';
 
+const HOUR_REGEX = /\d\d:\d\d/;
+
 describe('prettyDate', () => {
-  describe('Invalid date handling', () => {
+  describe('Input handling', () => {
     it('Returns empty string on invalid date', () => {
       expect(prettyDate(null)).toEqual('');
       expect(prettyDate()).toEqual('');
       expect(prettyDate(3)).toEqual('');
       expect(prettyDate(new Date('asdf'))).toEqual('');
+    });
+
+    it('Returns non-empty string on valid date', () => {
+      expect(prettyDate(new Date(2020, 8, 3))).toBeString().toBeTruthy();
+      expect(prettyDate(new Date())).toBeString().toBeTruthy();
     });
   });
 
@@ -75,9 +82,8 @@ describe('prettyHour', () => {
     });
 
     it('Returns valid hour on valid input', () => {
-      const hourRegex = /\d\d:\d\d/;
-      expect(prettyHour(8141723)).toMatch(hourRegex);
-      expect(prettyHour(new Date())).toMatch(hourRegex);
+      expect(prettyHour(8141723)).toMatch(HOUR_REGEX);
+      expect(prettyHour(new Date())).toMatch(HOUR_REGEX);
     });
   });
 });

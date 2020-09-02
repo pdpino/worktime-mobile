@@ -6,9 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 ### Fixed
-* Add air in work subject picker
+* Fix timezone handling. Now a string the timezone name is saved
 * Broken activity indicators in dashboard and subject show
-  
+* Minor UI: Add air in work subject picker
+
 
 
 ## 1.14.3 - 2020-08-31

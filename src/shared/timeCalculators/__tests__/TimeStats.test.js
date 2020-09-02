@@ -1,5 +1,8 @@
+import * as RNLocalize from 'react-native-localize';
 import { getFactory } from '../../../redux/__tests__';
 import TimeStats from '../TimeStats';
+
+const tzName = RNLocalize.getTimeZone();
 
 const getWorkSessionData = ({ dateStart, timeTotal, ...rest }) => {
   const timestampStart = dateStart.getTime() / 1000;
@@ -7,6 +10,7 @@ const getWorkSessionData = ({ dateStart, timeTotal, ...rest }) => {
     timestampStart,
     timestampEnd: timestampStart + timeTotal,
     timeTotal,
+    tzName,
     ...rest,
   };
 };
@@ -24,14 +28,12 @@ describe('sumSubjectTimes', () => {
       getWorkSessionData({
         subject: subject.id,
         dateStart: new Date(2019, 10, 8, 13, 45),
-        tzOffset: 0,
         timeTotal: 1000,
         timeEffective: 1000,
       }),
       getWorkSessionData({
         subject: subject.id,
         dateStart: new Date(2019, 10, 8, 14, 45),
-        tzOffset: 0,
         timeTotal: 1000,
         timeEffective: 500,
       }),
@@ -88,28 +90,24 @@ describe('sumTimes', () => {
         getWorkSessionData({
           subject: subject1.id,
           dateStart: new Date(2019, 10, 8, 13, 45),
-          tzOffset: 0,
           timeTotal: 1000,
           timeEffective: 1000,
         }),
         getWorkSessionData({
           subject: subject1.id,
           dateStart: new Date(2019, 10, 3, 14, 45),
-          tzOffset: 0,
           timeTotal: 1000,
           timeEffective: 500,
         }),
         getWorkSessionData({
           subject: subject2.id,
           dateStart: new Date(2019, 9, 4, 19, 45),
-          tzOffset: 0,
           timeTotal: 3000,
           timeEffective: 800,
         }),
         getWorkSessionData({
           subject: subject3.id,
           dateStart: new Date(2019, 9, 1, 0, 45),
-          tzOffset: 0,
           timeTotal: 7000,
           timeEffective: 3000,
         }),
