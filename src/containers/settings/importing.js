@@ -1,5 +1,4 @@
 import React from 'react';
-import { InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { importFromJson } from '../../redux/actions';
@@ -130,19 +129,19 @@ export class Importing extends React.Component {
       return;
     }
 
-    const handle = InteractionManager.createInteractionHandle();
-
-    this.setState({ isImporting: true });
-
-    InteractionManager.runAfterInteractions(() => {
-      const importableSubjects = getImportableSubjects(
-        processedSubjects,
-        subjectsSelection,
-      );
-      this.props.importFromJson(device, importableSubjects);
-      this.props.navigation.goBack();
-    });
-    InteractionManager.clearInteractionHandle(handle);
+    // HACK: not working properly with runAfterInteractions,
+    // only with setTimeout
+    this.setState(
+      { isImporting: true },
+      () => setTimeout(() => {
+        const importableSubjects = getImportableSubjects(
+          processedSubjects,
+          subjectsSelection,
+        );
+        this.props.importFromJson(device, importableSubjects);
+        this.props.navigation.goBack();
+      }, 0),
+    );
   }
 
   render() {

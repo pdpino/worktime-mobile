@@ -1,11 +1,13 @@
 import React from 'react';
-import { Alert, InteractionManager } from 'react-native';
+import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { sortEventsByDate } from 'react-native-week-view/src/utils';
 import WeekViewComponent from '../../components/week';
 import NDaysPicker from '../../components/week/nDaysPicker';
 import { Memoizer } from '../../shared/utils';
-import { workSessionsSelector } from '../../redux/selectors';
+import {
+  workSessionsSelector, subjectsByIdSelector, categoriesByIdSelector,
+} from '../../redux/selectors';
 import {
   getToday, prettyHour, prettyDate, prettyTimespanDuration,
 } from '../../shared/dates';
@@ -115,38 +117,41 @@ export class WeekView extends React.Component {
   }
 
   processWorkSessions() {
-    const { workSessions } = this.props;
+    const {
+      workSessions, subjectsById, categoriesById,
+    } = this.props;
 
-    if (!this.memoizer.hasChanged(workSessions)) {
+    if (!this.memoizer.hasChanged(workSessions, subjectsById, categoriesById)) {
       this.setState({
         isProcessing: false,
       });
       return;
     }
 
-    this.setState({
-      isProcessing: true,
-    });
-
-    InteractionManager.runAfterInteractions(() => {
-      const events = workSessions.map((workSession) => {
-        const { subject } = workSession;
-        const { category } = subject;
-        const color = category ? category.color : 'gray'; // HACK: default hardcoded
-        return {
-          id: workSession.id,
-          description: subject.name,
-          startDate: workSession.getLocalStartDate(),
-          endDate: workSession.getLocalEndDate(),
-          color: getLightColor(color),
-          icon: subject.icon,
-        };
-      });
-      this.setState({
-        workSessionsByDate: sortEventsByDate(events),
-        isProcessing: false,
-      });
-    });
+    // HACK: not working properly with runAfterInteractions,
+    // working with setTimeout(..., 0) for now.
+    this.setState(
+      { isProcessing: true },
+      () => setTimeout(() => {
+        const events = workSessions.map((workSession) => {
+          const subject = subjectsById[workSession.subject.id];
+          const category = subject.category && categoriesById[subject.category.id];
+          const color = category ? category.color : 'gray'; // HACK: default hardcoded
+          return {
+            id: workSession.id,
+            description: subject.name,
+            startDate: workSession.getLocalStartDate(),
+            endDate: workSession.getLocalEndDate(),
+            color: getLightColor(color),
+            icon: subject.icon,
+          };
+        });
+        this.setState({
+          workSessionsByDate: sortEventsByDate(events),
+          isProcessing: false,
+        });
+      }, 0),
+    );
   }
 
   render() {
@@ -174,6 +179,8 @@ export class WeekView extends React.Component {
 
 const mapStateToProps = (state) => ({
   workSessions: workSessionsSelector(state),
+  subjectsById: subjectsByIdSelector(state),
+  categoriesById: categoriesByIdSelector(state),
 });
 
 export default connect(mapStateToProps)(WeekView);

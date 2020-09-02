@@ -15,6 +15,17 @@ export const subjectsSelector = createOrmSelector(
   },
 );
 
+export const subjectsByIdSelector = createOrmSelector(
+  (ormSession) => {
+    const subjects = ormSession.Subject.all().toModelArray();
+    const subjectsById = {};
+    subjects.forEach((subject) => {
+      subjectsById[subject.id] = subject;
+    });
+    return subjectsById;
+  },
+);
+
 export const subjectSelector = createOrmSelector(
   (_, props) => props.subjectId,
   (ormSession, id) => ormSession.Subject.withId(id),
