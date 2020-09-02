@@ -15,6 +15,7 @@ const colors = {
   mainBlue: '#3B84B5',
   lightBlue: '#71b3e7',
   enabledSubmitButton: '#2196F3',
+  spinner: '#e48a0b',
 };
 
 const timeColors = {

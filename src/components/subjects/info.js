@@ -72,7 +72,7 @@ const SubjectInfo = ({
 
   const loadingWheel = (
     <View style={styles.loading}>
-      <ActivityIndicator color={colors.mainBlue} />
+      <ActivityIndicator color={colors.spinner} />
     </View>
   );
 

@@ -7,7 +7,7 @@ const LoadingView = ({ isLoadingPreview }) => (
   isLoadingPreview ? (
     <View style={commonStyles.row}>
       <ActivityIndicator
-        color={colors.mainBlue}
+        color={colors.spinner}
         size="large"
       />
     </View>

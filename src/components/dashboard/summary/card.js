@@ -34,7 +34,7 @@ const SummaryCard = ({
   >
     {isLoading ? (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator color={colors.mainBlue} />
+        <ActivityIndicator color={colors.spinner} />
       </View>
     ) : children}
   </View>

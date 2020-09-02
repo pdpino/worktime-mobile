@@ -38,7 +38,7 @@ const WeekViewWrapper = ({
       <ActivityIndicator
         size="large"
         style={styles.loadingSpinner}
-        color={colors.mainBlue}
+        color={colors.spinner}
       />
     )}
     <WeekViewLib
