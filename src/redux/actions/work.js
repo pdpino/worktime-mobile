@@ -23,8 +23,8 @@ const createActionForRunningSession = (
 
 export const resume = createActionForRunningSession('PLAYER/RESUME', true);
 export const pause = createActionForRunningSession('PLAYER/PAUSE', true);
-export const stop = createActionForRunningSession('PLAYER/STOP', false);
-export const stopAndDiscard = createActionForRunningSession('PLAYER/STOP_DISCARD', false);
+export const stop = createActionForRunningSession('PLAYER/STOP', true);
+export const stopAndDiscard = createActionForRunningSession('PLAYER/STOP_DISCARD', true);
 export const updateWorkTimes = createActionForRunningSession('PLAYER/UPDATE_TIMES', false);
 
 export const start = (subject) => (dispatch, getState) => {

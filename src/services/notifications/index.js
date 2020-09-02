@@ -1,5 +1,6 @@
 import PushNotification from 'react-native-push-notification';
 import i18n from '../../shared/i18n';
+import { colors } from '../../shared/styles';
 import ActionsHandler from './actions';
 
 let actionsHandler;
@@ -32,6 +33,7 @@ class Notifications {
   }
 
   static parseActions(actions) {
+    if (!actions) return [];
     return actions.map(
       (actionName) => actionsHandler.nameToLabel(actionName),
     );
@@ -45,7 +47,7 @@ class Notifications {
       message: i18n.t('notif.tapToGoToWorktime'),
       largeIcon: icon,
       smallIcon: icon,
-      color: 'red',
+      color: colors.mainBlue,
       autoCancel: false,
       vibrate: false,
       ongoing: false,
@@ -76,8 +78,11 @@ class Notifications {
     });
   }
 
-  static stop() {
-    PushNotification.cancelAllLocalNotifications();
+  static stop(subject) {
+    Notifications.sendLocal({
+      title: i18n.t('workPlayer.subjectStopped', { subject: subject.name }),
+      icon: 'stop',
+    });
   }
 }
 

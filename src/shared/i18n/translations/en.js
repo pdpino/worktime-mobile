@@ -72,6 +72,7 @@ export default {
     chooseSubject: 'Choose subject',
     workingOnSubject: 'Working on %{subject}',
     subjectPaused: '%{subject} paused',
+    subjectStopped: '%{subject} stopped',
   },
   porting: {
     import: 'Import',
@@ -88,7 +89,7 @@ export default {
     },
   },
   notif: {
-    tapToGoToWorktime: 'Tap to go to worktime',
+    tapToGoToWorktime: 'Tap to open',
     actions: {
       pause: 'Pause',
       stop: 'Stop',
