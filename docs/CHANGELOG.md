@@ -5,7 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
-
+### Fixed
+* Add air in work subject picker
+* Broken activity indicators in dashboard and subject show
+  
 
 
 ## 1.14.3 - 2020-08-31

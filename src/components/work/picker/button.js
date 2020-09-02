@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
   containerWithSelection: {
     flexDirection: 'row',
     paddingVertical: 10,
+    paddingRight: 10,
     minWidth: 200,
   },
   containerWithoutSelection: {

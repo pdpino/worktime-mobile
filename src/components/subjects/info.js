@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { prettyDaysAgo, prettyDuration } from '../../shared/dates';
 import i18n from '../../shared/i18n';
+import { colors } from '../../shared/styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -71,7 +72,7 @@ const SubjectInfo = ({
 
   const loadingWheel = (
     <View style={styles.loading}>
-      <ActivityIndicator />
+      <ActivityIndicator color={colors.mainBlue} />
     </View>
   );
 
