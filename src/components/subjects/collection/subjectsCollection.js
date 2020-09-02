@@ -11,10 +11,16 @@ const styles = StyleSheet.create({
   },
 });
 
+const EmptyListComponent = () => (
+  <Text style={styles.emptyList}>
+    {i18n.t('entities.noSubjects')}
+  </Text>
+);
+
 const SubjectsCollection = ({
   categoriesWithSubjects, selectedSubjects,
   onPressSubject, onLongPressSubject, onPressCategory,
-  containerStyle, hideDescription, littleAir, hideEmptyCategories,
+  listStyle, hideDescription, littleAir, hideEmptyCategories,
 }) => {
   const renderCategoryItem = ({ item }) => (
     (!hideEmptyCategories || item.subjects.length > 0) ? (
@@ -30,19 +36,13 @@ const SubjectsCollection = ({
     ) : null
   );
 
-  const emptyListComponent = (
-    <Text style={styles.emptyList}>
-      {i18n.t('entities.noSubjects')}
-    </Text>
-  );
-
   return (
     <FlatList
-      contentContainerStyle={containerStyle}
+      style={listStyle}
       data={categoriesWithSubjects}
       renderItem={renderCategoryItem}
       keyExtractor={(item, index) => index.toString()}
-      ListEmptyComponent={emptyListComponent}
+      ListEmptyComponent={EmptyListComponent}
     />
   );
 };

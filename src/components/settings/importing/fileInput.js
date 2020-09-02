@@ -28,27 +28,37 @@ const styles = StyleSheet.create({
   },
 });
 
-const FileInput = ({ path, onPressFile }) => (
-  <View style={commonStyles.row}>
-    <Text style={styles.label}>
-      {i18n.t('file')}
-    </Text>
-    <View style={[styles.inputContainer, commonStyles.box]}>
-      <TouchableOpacity
-        onPress={onPressFile}
-        delayPressIn={0}
-      >
-        <Text
-          style={[
-            styles.inputText,
-            path ? styles.inputTextPresent : styles.inputTextPlaceholder,
-          ]}
-        >
-          {path ? extractFilename(path) : i18n.t('porting.selectFile')}
+class FileInput extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return this.props.path !== nextProps.path;
+  }
+
+  render() {
+    const { path, onPressFile } = this.props;
+
+    return (
+      <View style={commonStyles.row}>
+        <Text style={styles.label}>
+          {i18n.t('file')}
         </Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-);
+        <View style={[styles.inputContainer, commonStyles.box]}>
+          <TouchableOpacity
+            onPress={onPressFile}
+            delayPressIn={0}
+          >
+            <Text
+              style={[
+                styles.inputText,
+                path ? styles.inputTextPresent : styles.inputTextPlaceholder,
+              ]}
+            >
+              {path ? extractFilename(path) : i18n.t('porting.selectFile')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+}
 
 export default FileInput;

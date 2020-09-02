@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ScrollView } from 'react-native';
+import { ScrollView, InteractionManager } from 'react-native';
 import WorkSessionsListComponent from '../../components/workSessions/list';
 import SubjectInfoComponent from '../../components/subjects/info';
 import { subjectSelector } from '../../redux/selectors';
@@ -98,11 +98,13 @@ export class SubjectShow extends React.Component {
       this.setState({ isLoading: true });
     }
 
-    sumSubjectTimesCalc(subject, null, null)
-      .then((timeStats) => this.setState({
-        isLoading: false,
-        timeStats,
-      }));
+    InteractionManager.runAfterInteractions(() => {
+      sumSubjectTimesCalc(subject, null, null)
+        .then((timeStats) => this.setState({
+          isLoading: false,
+          timeStats,
+        }));
+    });
   }
 
   goEditSubject() {

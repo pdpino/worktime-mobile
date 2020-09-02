@@ -7,6 +7,7 @@ import { archiveSubjects, deleteSubjects } from '../../redux/actions';
 import { MultipleNewButton } from '../../shared/UI/buttons';
 import { HeaderActions } from '../../shared/UI/headers';
 import withItemSelection from '../../hoc/itemSelection';
+import afterInteractions from '../../hoc/afterInteractions';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 import { colors } from '../../shared/styles';
@@ -247,6 +248,8 @@ export default function createSubjectsCollection(isArchive) {
   }, dispatch);
 
   return withItemSelection(
-    connect(mapStateToProps, mapDispatchToProps)(SubjectsListContainer),
+    connect(mapStateToProps, mapDispatchToProps)(
+      afterInteractions(SubjectsListContainer),
+    ),
   );
 }

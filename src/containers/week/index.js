@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert } from 'react-native';
+import { Alert, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
 import { sortEventsByDate } from 'react-native-week-view/src/utils';
 import WeekViewComponent from '../../components/week';
@@ -128,7 +128,7 @@ export class WeekView extends React.Component {
       isProcessing: true,
     });
 
-    requestAnimationFrame(() => {
+    InteractionManager.runAfterInteractions(() => {
       const events = workSessions.map((workSession) => {
         const { subject } = workSession;
         const { category } = subject;

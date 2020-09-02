@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 * Notification for stop, to provide feedback
 
+### Fixed
+* Improve some slow views
+  * Subjects lists
+  * Calendar closing in dashboard view
+
 
 
 ## 1.15.0 - 2020-09-01

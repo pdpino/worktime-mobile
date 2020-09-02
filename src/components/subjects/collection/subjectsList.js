@@ -13,6 +13,12 @@ const styles = StyleSheet.create({
   },
 });
 
+const EmptyListComponent = () => (
+  <Text style={styles.emptyList}>
+    {i18n.t('empty')}
+  </Text>
+);
+
 const SubjectsList = ({
   subjects, categoryColor, selectedSubjects, onPressSubject, onLongPressSubject,
   hideDescription, littleAir,
@@ -29,18 +35,12 @@ const SubjectsList = ({
     />
   );
 
-  const emptyListComponent = (
-    <Text style={styles.emptyList}>
-      {i18n.t('empty')}
-    </Text>
-  );
-
   return (
     <FlatList
       data={subjects}
       renderItem={renderSubject}
       keyExtractor={(item, index) => index.toString()}
-      ListEmptyComponent={emptyListComponent}
+      ListEmptyComponent={EmptyListComponent}
     />
   );
 };

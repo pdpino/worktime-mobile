@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { InteractionManager } from 'react-native';
 import share from '../../services/sharing';
 import { subjectsSetSelector, profileSelector } from '../../redux/selectors';
 import ExportingComponent from '../../components/settings/exporting';
@@ -21,14 +22,17 @@ export class Exporting extends React.Component {
     const device = this.props.profile.deviceName;
     const filename = getExportFilename(device);
 
-    this.setState({ isPreparingData: true }, () => {
-      getExportableObject({
-        timestamp: getTimestampString(),
-        device,
-        subjectsSet: this.props.subjectsSet,
-      }).then((exportObject) => share(filename, exportObject))
-        .finally(() => this.setState({ isPreparingData: false }));
-    });
+    this.setState(
+      { isPreparingData: true },
+      () => InteractionManager.runAfterInteractions(() => {
+        getExportableObject({
+          timestamp: getTimestampString(),
+          device,
+          subjectsSet: this.props.subjectsSet,
+        }).then((exportObject) => share(filename, exportObject))
+          .finally(() => this.setState({ isPreparingData: false }));
+      }),
+    );
   }
 
   render() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BackHandler, ScrollView } from 'react-native';
+import { BackHandler, ScrollView, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
 import {
   SummaryComponent, TimeDetailsComponent, DateFilterComponent,
@@ -280,11 +280,13 @@ export class Dashboard extends React.Component {
       return;
     }
 
-    sumTimesCalc(...params).then((timeStats) => this.setState({
-      isLoading: false,
-      isReloading: false,
-      timeStats,
-    }));
+    InteractionManager.runAfterInteractions(() => {
+      sumTimesCalc(...params).then((timeStats) => this.setState({
+        isLoading: false,
+        isReloading: false,
+        timeStats,
+      }));
+    });
   }
 
   handleToggleItem(itemId) {

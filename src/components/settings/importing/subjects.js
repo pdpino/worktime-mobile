@@ -110,4 +110,4 @@ const SubjectsPreview = ({
   ) : null;
 };
 
-export default SubjectsPreview;
+export default React.memo(SubjectsPreview);

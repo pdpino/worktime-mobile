@@ -1,4 +1,5 @@
 import React from 'react';
+import { InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { importFromJson } from '../../redux/actions';
@@ -129,7 +130,11 @@ export class Importing extends React.Component {
       return;
     }
 
-    this.setState({ isImporting: true }, () => {
+    const handle = InteractionManager.createInteractionHandle();
+
+    this.setState({ isImporting: true });
+
+    InteractionManager.runAfterInteractions(() => {
       const importableSubjects = getImportableSubjects(
         processedSubjects,
         subjectsSelection,
@@ -137,6 +142,7 @@ export class Importing extends React.Component {
       this.props.importFromJson(device, importableSubjects);
       this.props.navigation.goBack();
     });
+    InteractionManager.clearInteractionHandle(handle);
   }
 
   render() {
