@@ -13,9 +13,7 @@ const WorkStack = createStackNavigator({
 },
 {
   initialRouteName: 'work',
-  defaultNavigationOptions: {
-    ...headerOptions,
-  },
+  ...headerOptions,
 });
 
 export default WorkStack;

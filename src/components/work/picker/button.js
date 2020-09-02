@@ -8,6 +8,7 @@ import { getLightColor } from '../../../shared/styles';
 const styles = StyleSheet.create({
   containerWithSelection: {
     flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: 10,
     paddingRight: 10,
     minWidth: 200,

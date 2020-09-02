@@ -5,7 +5,7 @@ import i18n from '../../../shared/i18n';
 
 const styles = StyleSheet.create({
   emptyList: {
-    marginTop: 5,
+    marginVertical: 5,
     marginLeft: 25,
     color: 'black',
     fontSize: 15,

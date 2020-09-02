@@ -16,9 +16,7 @@ const SubjectsStack = createStackNavigator({
 },
 {
   initialRouteName: 'subjectsCollection',
-  defaultNavigationOptions: {
-    ...headerOptions,
-  },
+  ...headerOptions,
 });
 
 export default SubjectsStack;

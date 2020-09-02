@@ -13,9 +13,7 @@ const DashboardStack = createStackNavigator({
 },
 {
   initialRouteName: 'main',
-  defaultNavigationOptions: {
-    ...headerOptions,
-  },
+  ...headerOptions,
 });
 
 export default DashboardStack;

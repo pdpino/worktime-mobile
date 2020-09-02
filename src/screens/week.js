@@ -7,9 +7,7 @@ const WeekStack = createStackNavigator({
 },
 {
   initialRouteName: 'weekView',
-  defaultNavigationOptions: {
-    ...headerOptions,
-  },
+  ...headerOptions,
 });
 
 export default WeekStack;

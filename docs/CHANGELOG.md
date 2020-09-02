@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Fix timezone handling. Now a string the timezone name is saved
 * Hotfix: Fix session spanning in more than one day (due to worktime-py error)
 * Broken activity indicators in dashboard and subject show
-* Minor UI: Add air in work subject picker
+* Tab icon press area
+* Minor UI: Add air in work subject picker, in subjects collection, header looks in transtiions
 
 
 

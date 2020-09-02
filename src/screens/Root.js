@@ -7,6 +7,7 @@ import WorkStack from './work';
 import DashboardStack from './dashboard';
 import SettingsStack from './settings';
 import WeekStack from './week';
+import TouchableWithoutFeedbackWrapper from './bar-button';
 import i18n from '../shared/i18n';
 
 const iconConfiguration = {
@@ -75,6 +76,8 @@ const Root = createBottomTabNavigator({
         <Icon color={tintColor} size={22} {...iconConfiguration[routeName]} />
       );
     },
+    // NOTE: this fixes the weird press area in the icons
+    tabBarButtonComponent: TouchableWithoutFeedbackWrapper,
   }),
 });
 

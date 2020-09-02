@@ -34,9 +34,7 @@ const SettingsStack = createStackNavigator({
 },
 {
   initialRouteName: 'menu',
-  defaultNavigationOptions: {
-    ...headerOptions,
-  },
+  ...headerOptions,
 });
 
 export default SettingsStack;
