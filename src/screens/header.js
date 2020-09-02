@@ -1,12 +1,8 @@
-import { TransitionSpecs } from 'react-navigation-stack';
+import { TransitionPresets } from 'react-navigation-stack';
 import { colors } from '../shared/styles';
 
 const headerOptions = {
   defaultNavigationOptions: {
-    transitionSpec: {
-      open: TransitionSpecs.FadeInFromBottomAndroidSpec,
-      close: TransitionSpecs.FadeOutToBottomAndroidSpec,
-    },
     headerStyle: {
       backgroundColor: colors.mainBlue,
       // NOTE: height must be set to avoid header displacement glitch
@@ -15,9 +11,10 @@ const headerOptions = {
     headerTintColor: 'white',
     // NOTE: this avoids text displacement glitch
     headerStatusBarHeight: 0,
+    // NOTE: Use this to avoid weird elastic behavior on android >= 9
+    ...TransitionPresets.FadeFromBottomAndroid,
   },
-  headerMode: 'float',
-  mode: 'modal',
+  headerMode: 'screen',
 };
 
 export default headerOptions;

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   * Subjects lists
   * Calendar closing in dashboard view
 * Week view update icons and colors bug
+* Fix stack go-back elastic transition bug
 
 
 
