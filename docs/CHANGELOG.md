@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+
+
+## 1.15.0 - 2020-09-01
 ### Fixed
 * Fix timezone handling. Now a string the timezone name is saved
 * Hotfix: Fix session spanning in more than one day (due to worktime-py error)
