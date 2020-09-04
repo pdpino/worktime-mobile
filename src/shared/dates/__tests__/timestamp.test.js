@@ -2,38 +2,82 @@ import mockTimezone from 'timezone-mock';
 import { toLocalDate } from '../timestamp';
 
 const createTests = {
-  baseOffset: () => [
+  utcOffset: () => [
     {
       timestamp: 1572816420,
-      offset: 10800,
-      tzName: 'America/Santiago',
+      tzOffset: 0,
+      tzName: 'UTC',
       outcome: {
         year: 2019,
         month: 11,
         day: 3,
-        hours: 18,
+        hours: 21,
         minutes: 27,
         seconds: 0,
       },
     },
     {
-      timestamp: 1573159271,
-      offset: 10800,
-      tzName: 'America/Santiago',
+      timestamp: 1521693421,
+      tzOffset: 0,
+      tzName: 'UTC',
       outcome: {
-        year: 2019,
-        month: 11,
-        day: 7,
-        hours: 17,
-        minutes: 41,
-        seconds: 11,
+        year: 2018,
+        month: 3,
+        day: 22,
+        hours: 4,
+        minutes: 37,
+        seconds: 1,
       },
     },
   ],
-  positiveOffset: () => [
+  dstRuleChange: () => [
+    // DST rules may change over the years
+    // One year may be winter time
+    {
+      timestamp: 1599261637,
+      tzOffset: 4 * 3600,
+      tzName: 'America/Santiago',
+      outcome: {
+        year: 2020,
+        month: 9,
+        day: 4,
+        hours: 19,
+        minutes: 20,
+        seconds: 37,
+      },
+    },
+    // Other year may be summer time (notice the offset!)
+    {
+      timestamp: 1599261637,
+      tzOffset: 3 * 3600,
+      tzName: 'America/Santiago',
+      outcome: {
+        year: 2020,
+        month: 9,
+        day: 4,
+        hours: 20,
+        minutes: 20,
+        seconds: 37,
+      },
+    },
+  ],
+  winterOffset: () => [
+    {
+      timestamp: 1561115420,
+      tzOffset: 4 * 3600,
+      tzName: 'America/Santiago',
+      outcome: {
+        year: 2019,
+        month: 6,
+        day: 21,
+        hours: 7,
+        minutes: 10,
+        seconds: 20,
+      },
+    },
     {
       timestamp: 1572816420,
-      offset: 5 * 3600,
+      tzOffset: 5 * 3600,
       tzName: 'America/New_York',
       outcome: {
         year: 2019,
@@ -46,7 +90,7 @@ const createTests = {
     },
     {
       timestamp: 1572816420,
-      offset: 8 * 3600,
+      tzOffset: 8 * 3600,
       tzName: 'America/Los_Angeles',
       outcome: {
         year: 2019,
@@ -58,23 +102,8 @@ const createTests = {
       },
     },
     {
-      timestamp: 1573159271,
-      offset: 8 * 3600,
-      tzName: 'America/Los_Angeles',
-      outcome: {
-        year: 2019,
-        month: 11,
-        day: 7,
-        hours: 12,
-        minutes: 41,
-        seconds: 11,
-      },
-    },
-  ],
-  negativeOffset: () => [
-    {
       timestamp: 1572816420,
-      offset: -1 * 3600,
+      tzOffset: -1 * 3600,
       tzName: 'Europe/Madrid',
       outcome: {
         year: 2019,
@@ -87,7 +116,7 @@ const createTests = {
     },
     {
       timestamp: 1572816420,
-      offset: -2 * 3600,
+      tzOffset: -2 * 3600,
       tzName: 'Europe/Kiev',
       outcome: {
         year: 2019,
@@ -99,10 +128,77 @@ const createTests = {
       },
     },
   ],
-  nearZero: () => [
+  summerOffset: () => [
+    {
+      timestamp: 1572816420,
+      tzOffset: 3 * 3600,
+      tzName: 'America/Santiago',
+      outcome: {
+        year: 2019,
+        month: 11,
+        day: 3,
+        hours: 18,
+        minutes: 27,
+        seconds: 0,
+      },
+    },
+    {
+      timestamp: 1573159271,
+      tzOffset: 3 * 3600,
+      tzName: 'America/Santiago',
+      outcome: {
+        year: 2019,
+        month: 11,
+        day: 7,
+        hours: 17,
+        minutes: 41,
+        seconds: 11,
+      },
+    },
+    {
+      timestamp: 1561059271,
+      tzOffset: 7 * 3600,
+      tzName: 'America/Los_Angeles',
+      outcome: {
+        year: 2019,
+        month: 6,
+        day: 20,
+        hours: 12,
+        minutes: 34,
+        seconds: 31,
+      },
+    },
+    {
+      timestamp: 1560816423,
+      tzOffset: -2 * 3600,
+      tzName: 'Europe/Madrid',
+      outcome: {
+        year: 2019,
+        month: 6,
+        day: 18,
+        hours: 2,
+        minutes: 7,
+        seconds: 3,
+      },
+    },
+    {
+      timestamp: 1561725931, // FIXME
+      tzOffset: -3 * 3600,
+      tzName: 'Europe/Kiev',
+      outcome: {
+        year: 2019,
+        month: 6,
+        day: 28,
+        hours: 15,
+        minutes: 45,
+        seconds: 31,
+      },
+    },
+  ],
+  nearZeroTimestamp: () => [
     {
       timestamp: 0,
-      offset: -1 * 3600,
+      tzOffset: -1 * 3600,
       tzName: 'Europe/London',
       outcome: {
         year: 1970,
@@ -115,7 +211,7 @@ const createTests = {
     },
     {
       timestamp: 0,
-      offset: -3 * 3600,
+      tzOffset: -3 * 3600,
       tzName: 'Europe/Moscow',
       outcome: {
         year: 1970,
@@ -128,7 +224,7 @@ const createTests = {
     },
     {
       timestamp: 0,
-      offset: 3 * 3600,
+      tzOffset: 3 * 3600,
       tzName: 'America/Santiago',
       outcome: {
         year: 1969,
@@ -144,7 +240,7 @@ const createTests = {
 
 describe('toLocalDate', () => {
   describe('Input handling', () => {
-    it('Returns a date on empty timezone name', () => {
+    it('Returns a date on empty timezone data', () => {
       expect(toLocalDate(0)).toBeValidDate();
       expect(toLocalDate(1000, null)).toBeValidDate();
       expect(toLocalDate(new Date())).toBeValidDate();
@@ -165,9 +261,9 @@ describe('toLocalDate', () => {
   describe('Calculates date correctly from the timezone', () => {
     const runTestsCases = (cases) => cases.forEach((testCase) => {
       const {
-        timestamp, tzName, outcome,
+        timestamp, tzOffset, outcome,
       } = testCase;
-      const date = toLocalDate(timestamp, tzName);
+      const date = toLocalDate(timestamp, tzOffset);
 
       expect(date.getFullYear()).toEqual(outcome.year);
       expect(date.getMonth()).toEqual(outcome.month - 1);
@@ -181,10 +277,11 @@ describe('toLocalDate', () => {
       if (timezone) {
         mockTimezone.register(timezone);
       }
-      runTestsCases(createTests.baseOffset());
-      runTestsCases(createTests.positiveOffset());
-      runTestsCases(createTests.negativeOffset());
-      runTestsCases(createTests.nearZero());
+      runTestsCases(createTests.utcOffset());
+      runTestsCases(createTests.dstRuleChange());
+      runTestsCases(createTests.winterOffset());
+      runTestsCases(createTests.summerOffset());
+      runTestsCases(createTests.nearZeroTimestamp());
       if (timezone) {
         mockTimezone.unregister();
       }

@@ -6,7 +6,7 @@ import i18n from '../i18n';
 import { toLocalDate, getTimezoneOffset } from './timestamp';
 import getCurrentLocale from './locales';
 
-export function prettyDate(date, useNames = true, tzName = null) {
+export function prettyDate(date, useNames = true) {
   if (!isValidDate(date)) {
     return '';
   }
@@ -28,9 +28,6 @@ export function prettyDate(date, useNames = true, tzName = null) {
 
   const locale = getCurrentLocale(i18n.currentLocale);
   const config = { locale };
-  if (tzName) {
-    config.timezone = tzName;
-  }
 
   if (diffYears === 0) {
     return format(date, 'E d MMM', config);
@@ -38,18 +35,18 @@ export function prettyDate(date, useNames = true, tzName = null) {
   return format(date, 'E d MMM yyyy', config);
 }
 
-export function timeToPrettyDate(timestamp, tzName, useNames = true) {
+export function timeToPrettyDate(timestamp, tzOffset, useNames = true) {
   if (!isNumber(timestamp)) {
     return '';
   }
-  const date = new Date(timestamp * 1000);
-  return prettyDate(date, useNames, tzName);
+  const date = toLocalDate(timestamp, tzOffset);
+  return prettyDate(date, useNames);
 }
 
-export function prettyHour(timestampOrDate, tzName) {
+export function prettyHour(timestampOrDate, tzOffset) {
   const date = isValidDate(timestampOrDate)
     ? timestampOrDate
-    : toLocalDate(timestampOrDate, tzName);
+    : toLocalDate(timestampOrDate, tzOffset);
   return date ? format(date, 'HH:mm') : '';
 }
 

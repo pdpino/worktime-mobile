@@ -111,7 +111,7 @@ class WorkSession extends Model {
   }
 
   getLocalStartDate() {
-    return toLocalDate(this.timestampStart, this.tzName);
+    return toLocalDate(this.timestampStart, this.tzOffset);
   }
 
   getLocalEndDate() {
@@ -123,7 +123,7 @@ class WorkSession extends Model {
       // but should be the next day. Hence, timestamp is behind by 24 hours.
       timestampEnd += 24 * 3600;
     }
-    return toLocalDate(timestampEnd, this.tzName);
+    return toLocalDate(timestampEnd, this.tzOffset);
   }
 
   getPrettyTimezone() {
@@ -131,15 +131,15 @@ class WorkSession extends Model {
   }
 
   getPrettyDate() {
-    return timeToPrettyDate(this.timestampStart, this.tzName);
+    return timeToPrettyDate(this.timestampStart, this.tzOffset);
   }
 
   getPrettyHourStart() {
-    return prettyHour(this.timestampStart, this.tzName);
+    return prettyHour(this.timestampStart, this.tzOffset);
   }
 
   getPrettyHourEnd() {
-    return prettyHour(this.timestampEnd, this.tzName);
+    return prettyHour(this.timestampEnd, this.tzOffset);
   }
 
   getSprints() {
