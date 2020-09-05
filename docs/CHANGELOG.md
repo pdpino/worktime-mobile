@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 ### Fixed
 * Timezone issue for daylight saving times
+* Better size for stop icon
 
 
 
