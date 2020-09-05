@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 * Timezone issue for daylight saving times
 * Better size for stop icon
-
+* 'All' button in dashboard
+* 'No category' item disappearing in dashboard
 
 
 ## 1.15.1 - 2020-09-02

@@ -21,6 +21,9 @@ class TimeStats {
     this.initialDate = null;
     this.endingDate = null;
 
+    // HACK: fix 'no category' item disappearing from list
+    this.noCategoryHasSubjects = false;
+
     /* Overall stats calculated in the process and returned */
     this.stats = {
       itemsSummaries: [],
@@ -118,6 +121,10 @@ class TimeStats {
     let timeTotal = 0;
     let timeEffective = 0;
 
+    if (categoryId === -1) {
+      this.noCategoryHasSubjects = true;
+    }
+
     const isSubjectSelected = this.isSubjectSelected(subjectId);
     const isCategorySelected = this.isCategorySelected(categoryId);
     if (!(isSubjectSelected && isCategorySelected)) {
@@ -199,7 +206,11 @@ class TimeStats {
   }
 
   removeEmptyNoCategoryInPlace(itemsSummaries) {
+    // 'No category' should not be removed if it has subjects
+    if (this.noCategoryHasSubjects) return;
+
     const noCategoryIdx = this.categoryIdToIdx[-1];
+    if (noCategoryIdx == null) return;
     const { children } = itemsSummaries[noCategoryIdx];
     const nChildren = Object.keys(children).length;
     if (nChildren === 0) {

@@ -45,7 +45,7 @@ const BarTimes = ({
   const renderItem = ({ item }) => (
     <TimeItem
       item={item}
-      checked={idsSelection[item.id]}
+      checked={!idsSelection || idsSelection[item.id]}
       widthMultiplier={widthMultiplier}
       allItemsTotal={allItemsTotal}
       pressEnabled={itemPressEnabled}

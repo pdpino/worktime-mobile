@@ -37,10 +37,13 @@ export class Dashboard extends React.Component {
     return idsSelection;
   }
 
-  static getAllSelection(key, subjects, categories) {
+  static getAllSelection(key, selectedId, subjects, categories) {
     if (key === 'subjects') {
       return Dashboard.getAllSubjectsSelection(subjects);
     } if (key === 'categories') {
+      if (selectedId != null) {
+        return Dashboard.getFromCategorySelection(subjects, selectedId);
+      }
       return Dashboard.getAllCategoriesSelection(categories);
     }
     return {};
@@ -310,7 +313,7 @@ export class Dashboard extends React.Component {
 
     const idsSelection = allSelected
       ? {}
-      : Dashboard.getAllSelection(tab.key, subjects, categories);
+      : Dashboard.getAllSelection(tab.key, tab.selectedId, subjects, categories);
 
     this.setStateAndSumTimes({
       idsSelection,
@@ -326,6 +329,7 @@ export class Dashboard extends React.Component {
     const { subjects, categories } = this.props;
     const idsSelection = Dashboard.getAllSelection(
       newKey,
+      null,
       subjects,
       categories,
     );
