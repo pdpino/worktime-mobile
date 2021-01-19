@@ -1,5 +1,5 @@
 ## Post-build script
-## 
+##
 ## 1. Sends the generated apk through Telegram
 ## 2. Applies git commit and git tag
 
@@ -18,7 +18,7 @@ WORKING_DIR=$(pwd)
 APK_FNAME="${WORKING_DIR}/android/app/build/outputs/apk/release/app-release.apk"
 
 # Send through telegram
-tg-send-file ${APK_FNAME} -t "worktime v${VERSION}"
+tg-send-file ${APK_FNAME} -t "worktime v${VERSION}" -to 1000
 
 
 ## Commit and tag stuff
