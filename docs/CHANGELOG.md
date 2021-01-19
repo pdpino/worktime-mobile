@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## 1.15.3 - 2021-01-18
+### Fixed
+* In week view
+  * Improve scrolling behavior
+  * Display small bottom-border for events that are too close to each other
+
+
 ## 1.15.2 - 2020-09-04
 ### Fixed
 * Timezone issue for daylight saving times

@@ -40,14 +40,9 @@ export class WeekView extends React.Component {
     this.state = {
       nDays: 7,
       nDaysMenuVisible: false,
-      selectedDate: getToday(),
       workSessionsByDate: {},
       isProcessing: true,
     };
-    // NOTE: the selectedDate value won't be updated with the current selectedDate,
-    // as the event handlers from react-native-week-view are not connected.
-    // If they were connected (onSwipePrev/Next), on each call, a setState() should
-    // be called, which would trigger an un-necessary re-render.
 
     this.handlePressNDaysMenu = this.handlePressNDaysMenu.bind(this);
     this.handleChangeNDays = this.handleChangeNDays.bind(this);
@@ -55,6 +50,7 @@ export class WeekView extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.processWorkSessions = this.processWorkSessions.bind(this);
     this.handlePressEvent = this.handlePressEvent.bind(this);
+    this.saveWeekRef = this.saveWeekRef.bind(this);
 
     this.props.navigation.setParams({
       handlePressNDaysMenu: this.handlePressNDaysMenu,
@@ -62,6 +58,8 @@ export class WeekView extends React.Component {
     });
 
     this.memoizer = Memoizer();
+
+    this.today = getToday();
   }
 
   componentDidMount() {
@@ -93,9 +91,9 @@ export class WeekView extends React.Component {
   }
 
   handlePressGoToToday() {
-    this.setState({
-      selectedDate: getToday(),
-    });
+    if (this.weekViewRef) {
+      this.weekViewRef.goToDate(getToday());
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -154,18 +152,23 @@ export class WeekView extends React.Component {
     );
   }
 
+  saveWeekRef(ref) {
+    this.weekViewRef = ref;
+  }
+
   render() {
     const {
-      nDays, nDaysMenuVisible, selectedDate, workSessionsByDate, isProcessing,
+      nDays, nDaysMenuVisible, workSessionsByDate, isProcessing,
     } = this.state;
 
     return (
       <WeekViewComponent
         workSessions={workSessionsByDate}
         nDays={nDays}
-        selectedDate={selectedDate}
+        selectedDate={this.today}
         isProcessing={isProcessing}
         onPressEvent={this.handlePressEvent}
+        ref={this.saveWeekRef}
       >
         <NDaysPicker
           isVisible={nDaysMenuVisible}

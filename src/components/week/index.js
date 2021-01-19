@@ -28,11 +28,15 @@ const styles = StyleSheet.create({
     right: CONTAINER_WIDTH / 2,
     zIndex: 1,
   },
+  eventContainer: {
+    borderBottomColor: 'white',
+    borderBottomWidth: 1,
+  },
 });
 
-const WeekViewWrapper = ({
+const WeekViewWrapper = React.forwardRef(({
   children, nDays, selectedDate, workSessions, isProcessing, onPressEvent,
-}) => (
+}, ref) => (
   <View style={styles.container}>
     {isProcessing && (
       <ActivityIndicator
@@ -42,20 +46,23 @@ const WeekViewWrapper = ({
       />
     )}
     <WeekViewLib
+      ref={ref}
       formatDateHeader="dd D"
       events={workSessions}
       numberOfDays={nDays}
       selectedDate={selectedDate}
       headerStyle={styles.header}
-      hoursInDisplay={12}
+      hoursInDisplay={16}
       startHour={8}
       locale={null}
       onEventPress={onPressEvent}
       InnerComponent={IconOrText}
       allowOverlapSeconds={60}
+      prependMostRecent
+      eventContainerStyle={styles.eventContainer}
     />
     {children}
   </View>
-);
+));
 
 export default WeekViewWrapper;
