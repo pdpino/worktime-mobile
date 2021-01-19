@@ -6,7 +6,7 @@ on: push
 jobs:
   # Set the job key. The key is displayed as the job name
   # when a job name is not provided
-  super-lint: 
+  super-lint:
     # Name the Job
     name: Lint code base
     # Set the type of machine to run on
@@ -17,9 +17,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: npm install
+        run: npm ci
+
       # Runs the Super-Linter action
       - name: Run Super-Linter
         uses: github/super-linter@v3
         env:
-          DEFAULT_BRANCH: main
+          DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_JAVASCRIPT_ES: true
+          # VALIDATE_BASH: false
+          # VALIDATE_JAVASCRIPT_STANDARD: false
+          # VALIDATE_MARKDOWN: false
+          # VALIDATE_XML: false
+          # VALIDATE_YAML: false
+          # VALIDATE_JSON: false

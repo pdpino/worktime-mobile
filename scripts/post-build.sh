@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ## Post-build script
 ##
 ## 1. Sends the generated apk through Telegram
