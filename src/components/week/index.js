@@ -56,7 +56,7 @@ const WeekViewWrapper = React.forwardRef(({
       startHour={8}
       locale={null}
       onEventPress={onPressEvent}
-      InnerComponent={IconOrText}
+      EventComponent={IconOrText}
       allowOverlapSeconds={60}
       prependMostRecent
       eventContainerStyle={styles.eventContainer}
