@@ -13,46 +13,29 @@ import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 
 export class SubjectShow extends React.Component {
-  static navigationOptions({ navigation }) {
-    const { subjectName } = navigation.state.params;
-
-    const actions = [
-      {
-        icon: 'edit',
-        handlePress: navigation.getParam('goEditSubject'),
-      },
-    ];
-
-    return {
-      title: subjectName,
-      headerRight: () => <HeaderActions actions={actions} />,
-    };
+  state = {
+    isLoading: true,
+    timeStats: getEmptyStats(),
   }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: true,
-      timeStats: getEmptyStats(),
-    };
-
-    this.handleDeleteWorkSession = this.handleDeleteWorkSession.bind(this);
-    this.sumTimes = this.sumTimes.bind(this);
-    this.memoizer = Memoizer();
-
-    this.goEditSubject = this.goEditSubject.bind(this);
-
-    this.props.navigation.setParams({
-      goEditSubject: this.goEditSubject,
-    });
-  }
+  memoizer = Memoizer();
 
   componentDidMount() {
-    this.willFocusListener = this.props.navigation.addListener(
-      'willFocus',
+    this.sumTimesOnFocusListener = this.props.navigation.addListener(
+      'focus',
       this.sumTimes,
     );
+
+    const { subjectName } = this.props.route.params;
+
+    const editSubjectAction = {
+      icon: 'edit',
+      handlePress: this.goEditSubject,
+    };
+
+    this.props.navigation.setOptions({
+      title: subjectName,
+      headerRight: () => <HeaderActions actions={[editSubjectAction]} />,
+    });
   }
 
   shouldComponentUpdate(nextProps) {
@@ -73,10 +56,12 @@ export class SubjectShow extends React.Component {
   }
 
   componentWillUnmount() {
-    this.willFocusListener.remove();
+    if (this.sumTimesOnFocusListener) {
+      this.sumTimesOnFocusListener();
+    }
   }
 
-  handleDeleteWorkSession(id) {
+  handleDeleteWorkSession = (id) => {
     alertDelete({
       title: i18n.t('deletion.deleteWorkSessionQuestion'),
       toastMessage: i18n.t('deletion.workSessionDeleted'),
@@ -87,7 +72,7 @@ export class SubjectShow extends React.Component {
     });
   }
 
-  sumTimes() {
+  sumTimes = () => {
     const { subject } = this.props;
 
     if (!this.memoizer.hasChanged(subject)) {
@@ -107,7 +92,7 @@ export class SubjectShow extends React.Component {
     });
   }
 
-  goEditSubject() {
+  goEditSubject = () => {
     const { subject } = this.props;
     this.props.navigation.navigate('editSubject', { subject });
   }
@@ -141,7 +126,7 @@ export class SubjectShow extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
   subject: subjectSelector(state, {
-    subjectId: ownProps.navigation.getParam('subjectId'),
+    subjectId: ownProps.route.params && ownProps.route.params.subjectId,
   }),
 });
 

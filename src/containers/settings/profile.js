@@ -14,17 +14,14 @@ export class Profile extends React.Component {
     this.state = {
       deviceName,
     };
-
-    this.handleChangeDeviceName = this.handleChangeDeviceName.bind(this);
-    this.handleSave = this.handleSave.bind(this);
   }
 
-  handleChangeDeviceName(value) {
+  handleChangeDeviceName = (value) => {
     const deviceNameNoSpaces = value.replace(/\s/g, '');
     this.setState({ deviceName: deviceNameNoSpaces });
   }
 
-  handleSave() {
+  handleSave = () => {
     const { deviceName } = this.state;
 
     if (deviceName !== this.props.deviceName) {

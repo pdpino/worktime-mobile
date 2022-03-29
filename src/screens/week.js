@@ -1,13 +1,19 @@
-import { createStackNavigator } from 'react-navigation-stack';
+import React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import WeekView from '../containers/week';
 import headerOptions from './header';
+import i18n from '../shared/i18n';
 
-const WeekStack = createStackNavigator({
-  weekView: WeekView,
-},
-{
-  initialRouteName: 'weekView',
-  ...headerOptions,
-});
+const Stack = createNativeStackNavigator();
 
-export default WeekStack;
+export default function WeekStack() {
+  return (
+    <Stack.Navigator initialRouteName='base-weekView' {...headerOptions}>
+      <Stack.Screen
+        name='base-weekView'
+        component={WeekView}
+        options={{ title: i18n.t('week') }}
+      />
+    </Stack.Navigator>
+  );
+}

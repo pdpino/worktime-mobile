@@ -12,61 +12,38 @@ import {
   getToday, prettyHour, prettyDate, prettyTimespanDuration,
 } from '../../shared/dates';
 import { HeaderActions } from '../../shared/UI/headers';
-import i18n from '../../shared/i18n';
 import { getLightColor } from '../../shared/styles';
 
 export class WeekView extends React.Component {
-  static navigationOptions({ navigation }) {
+  state = {
+    nDays: 7,
+    nDaysMenuVisible: false,
+    workSessionsByDate: {},
+    isProcessing: true,
+  }
+  today = getToday()
+  memoizer = Memoizer()
+
+  componentDidMount() {
+    this.focusListener = this.props.navigation.addListener(
+      'focus',
+      () => this.processWorkSessions(),
+    );
+
     const actions = [
       {
         icon: 'today',
-        handlePress: navigation.getParam('handlePressGoToToday'),
+        handlePress: this.handlePressGoToToday,
       },
       {
         icon: 'columns',
-        handlePress: navigation.getParam('handlePressNDaysMenu'),
+        handlePress: this.handlePressNDaysMenu,
       },
     ];
 
-    return {
-      title: i18n.t('week'),
-      headerRight: () => <HeaderActions actions={actions} />,
-    };
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      nDays: 7,
-      nDaysMenuVisible: false,
-      workSessionsByDate: {},
-      isProcessing: true,
-    };
-
-    this.handlePressNDaysMenu = this.handlePressNDaysMenu.bind(this);
-    this.handleChangeNDays = this.handleChangeNDays.bind(this);
-    this.handlePressGoToToday = this.handlePressGoToToday.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.processWorkSessions = this.processWorkSessions.bind(this);
-    this.handlePressEvent = this.handlePressEvent.bind(this);
-    this.saveWeekRef = this.saveWeekRef.bind(this);
-
-    this.props.navigation.setParams({
-      handlePressNDaysMenu: this.handlePressNDaysMenu,
-      handlePressGoToToday: this.handlePressGoToToday,
+    this.props.navigation.setOptions({
+      headerRight: () => <HeaderActions actions={actions} />
     });
-
-    this.memoizer = Memoizer();
-
-    this.today = getToday();
-  }
-
-  componentDidMount() {
-    this.didFocusListener = this.props.navigation.addListener(
-      'didFocus',
-      () => this.processWorkSessions(),
-    );
   }
 
   shouldComponentUpdate(nextProps) {
@@ -74,30 +51,30 @@ export class WeekView extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.didFocusListener) this.didFocusListener.remove();
+    if (this.focusListener) this.focusListener();
   }
 
-  handlePressNDaysMenu() {
+  handlePressNDaysMenu = () => {
     this.setState((state) => ({
       nDaysMenuVisible: !state.nDaysMenuVisible,
     }));
   }
 
-  handleChangeNDays(nDays) {
+  handleChangeNDays = (nDays) => {
     this.setState({
       nDays,
       nDaysMenuVisible: false,
     });
   }
 
-  handlePressGoToToday() {
+  handlePressGoToToday = () => {
     if (this.weekViewRef) {
       this.weekViewRef.goToDate(getToday());
     }
   }
 
   // eslint-disable-next-line class-methods-use-this
-  handlePressEvent(event) {
+  handlePressEvent = (event) => {
     const day = prettyDate(event.startDate);
     const startHour = prettyHour(event.startDate);
     const endHour = prettyHour(event.endDate);
@@ -108,13 +85,13 @@ export class WeekView extends React.Component {
     );
   }
 
-  closeModal() {
+  closeModal = () => {
     this.setState({
       nDaysMenuVisible: false,
     });
   }
 
-  processWorkSessions() {
+  processWorkSessions = () => {
     const {
       workSessions, subjectsById, categoriesById,
     } = this.props;
@@ -152,7 +129,7 @@ export class WeekView extends React.Component {
     );
   }
 
-  saveWeekRef(ref) {
+  saveWeekRef = (ref) => {
     this.weekViewRef = ref;
   }
 

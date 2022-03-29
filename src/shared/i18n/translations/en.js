@@ -35,6 +35,8 @@ export default {
     categories: 'Categories',
     category: 'Category',
     noCategory: 'No category',
+    newCategory: 'New Category',
+    editCategory: 'Edit Category',
     subject: 'Subject',
     subjects: 'Subjects',
     subjectsSelected: 'Subjects selected',

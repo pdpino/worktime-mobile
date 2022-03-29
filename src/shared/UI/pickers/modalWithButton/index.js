@@ -9,27 +9,19 @@ export default function asModalWithButton(
   const WrappedModel = useVisibleWrapper ? asOnlyVisible(ModalComponent) : ModalComponent;
 
   class AsModalWithButton extends React.Component {
-    constructor(props) {
-      super(props);
+    state = {
+      modalVisible: false,
+    };
 
-      this.state = {
-        modalVisible: false,
-      };
-
-      this.setModalVisible = this.setModalVisible.bind(this);
-      this.closeModal = this.closeModal.bind(this);
-      this.openModal = this.openModal.bind(this);
-    }
-
-    setModalVisible(modalVisible) {
+    setModalVisible = (modalVisible) => {
       this.setState({ modalVisible });
     }
 
-    closeModal() {
+    closeModal = () => {
       this.setModalVisible(false);
     }
 
-    openModal() {
+    openModal = () => {
       this.setModalVisible(true);
     }
 

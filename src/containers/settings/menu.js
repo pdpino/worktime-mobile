@@ -15,13 +15,7 @@ const menuItems = [
 ];
 
 export class SettingsMenu extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handlePressItem = this.handlePressItem.bind(this);
-  }
-
-  handlePressItem(key) {
+  handlePressItem = (key) => {
     this.props.navigation.navigate(key);
   }
 

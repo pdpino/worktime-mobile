@@ -8,17 +8,11 @@ export default function asCollapsible(
   startCollapsed = true,
 ) {
   class AsCollapsible extends React.Component {
-    constructor(props) {
-      super(props);
+    state = {
+      isCollapsed: startCollapsed,
+    };
 
-      this.state = {
-        isCollapsed: startCollapsed,
-      };
-
-      this.toggleCollapse = this.toggleCollapse.bind(this);
-    }
-
-    toggleCollapse() {
+    toggleCollapse = () => {
       this.setState(({ isCollapsed }) => ({
         isCollapsed: !isCollapsed,
       }));

@@ -11,27 +11,6 @@ export class CategoryForm extends React.Component {
   // HACK: default-color hardcoded
   static defaultColor = 'gray';
 
-  static navigationOptions({ navigation }) {
-    const category = navigation.getParam('category');
-    if (category) {
-      const actions = [
-        {
-          icon: 'delete',
-          handlePress: navigation.getParam('handleDeleteCategory'),
-        },
-      ];
-
-      return {
-        title: category.name,
-        headerRight: () => <HeaderActions actions={actions} />,
-      };
-    }
-
-    return {
-      title: 'New Category',
-    };
-  }
-
   constructor(props) {
     super(props);
 
@@ -45,33 +24,36 @@ export class CategoryForm extends React.Component {
       description,
       color: color || CategoryForm.defaultColor,
     };
+  }
 
-    this.handleChangeName = this.getChangeHandler('name');
-    this.handleChangeAlias = this.getChangeHandler('alias');
-    this.handleChangeDescription = this.getChangeHandler('description');
-    this.handleChangeColor = this.getChangeHandler('color');
+  componentDidMount() {
+    const deleteCategoryAction = {
+      icon: 'delete',
+      handlePress: this.handleDeleteCategory,
+    };
 
-    this.handleSubmitCategory = this.handleSubmitCategory.bind(this);
-
-    this.handleDeleteCategory = this.handleDeleteCategory.bind(this);
-
-    this.props.navigation.setParams({
-      handleDeleteCategory: this.handleDeleteCategory,
+    this.props.navigation.setOptions({
+      headerRight: () => <HeaderActions actions={[deleteCategoryAction]} />,
     });
   }
 
-  getChangeHandler(key) {
+  getChangeHandler = (key) => {
     return (value) => {
       this.setState({ [key]: value });
     };
   }
 
-  isInputValid() {
+  handleChangeName = this.getChangeHandler('name');
+  handleChangeAlias = this.getChangeHandler('alias');
+  handleChangeDescription = this.getChangeHandler('description');
+  handleChangeColor = this.getChangeHandler('color');
+
+  isInputValid = () => {
     const { name } = this.state;
     return name && name.trim();
   }
 
-  handleSubmitCategory() {
+  handleSubmitCategory = () => {
     if (!this.isInputValid()) {
       return;
     }
@@ -94,7 +76,7 @@ export class CategoryForm extends React.Component {
     this.props.navigation.goBack();
   }
 
-  handleDeleteCategory() {
+  handleDeleteCategory = () => {
     const { category } = this.props;
     if (!category) {
       return;
@@ -107,7 +89,7 @@ export class CategoryForm extends React.Component {
         element: category.name,
       }),
       onDelete: () => {
-        this.props.navigation.navigate('subjectsCollection');
+        this.props.navigation.navigate('base-subjectsCollection');
         this.props.deleteCategory(category.id);
       },
     });
@@ -137,7 +119,7 @@ export class CategoryForm extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  category: ownProps.navigation.getParam('category'),
+  category: ownProps.route.params && ownProps.route.params.category,
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

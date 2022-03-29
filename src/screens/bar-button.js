@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, TouchableWithoutFeedback } from 'react-native';
 
+// DEPRECATED: deleteme (after upgrade to react-navigation v6)
+
 // NOTE: This component is (almost) copied from
 // react-navigation-tabs/src/views/BottomTabBar
 // It changes the `hitSlop` prop in `TouchableWithoutFeedback`,

@@ -14,17 +14,15 @@ class I18NHandler {
     i18n.translations = { ...translations };
     i18n.fallbacks = true;
 
-    this.handleLocalizationChange = this.handleLocalizationChange.bind(this);
-
     this.t = this.translate; // shortcut
   }
 
-  listenLocaleChanges(callback) {
+  listenLocaleChanges = (callback) => {
     RNLocalize.addEventListener('change', this.handleLocalizationChange);
     this.callback = callback;
   }
 
-  setup() {
+  setup = () => {
     const { languageTag } = RNLocalize.findBestAvailableLanguage(
       this.availableLocales,
     );
@@ -40,19 +38,19 @@ class I18NHandler {
     return changed;
   }
 
-  handleLocalizationChange() {
+  handleLocalizationChange = () => {
     const changed = this.setup();
     if (this.callback && changed) {
       this.callback();
     }
   }
 
-  removeListeners() {
+  removeListeners = () => {
     RNLocalize.removeEventListener('change', this.handleLocalizationChange);
   }
 
   // eslint-disable-next-line class-methods-use-this
-  translate(key, options) {
+  translate = (key, options) => {
     return i18n.t(key, options);
   }
 }

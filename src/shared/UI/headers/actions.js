@@ -1,32 +1,28 @@
 import React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ClickableIcon } from '../icons';
 import commonStyles from './styles';
 
 const styles = StyleSheet.create({
-  list: {
+  container: {
+    flexDirection: 'row',
     paddingRight: 5,
     alignItems: 'center',
   },
 });
 
 const HeaderActions = ({ actions }) => (
-  <FlatList
-    horizontal
-    contentContainerStyle={styles.list}
-    data={actions}
-    renderItem={({ item }) => (
-      !item.disabled ? (
-        <ClickableIcon
-          containerStyle={commonStyles.iconContainer}
-          icon={item.icon}
-          color={item.color}
-          onPress={item.handlePress}
-        />
-      ) : null
-    )}
-    keyExtractor={(item, index) => index.toString()}
-  />
+  <View style={styles.container}>
+    {actions.map((action, index) => action.disabled ? null : (
+      <ClickableIcon
+        key={index.toString()}
+        containerStyle={commonStyles.iconContainer}
+        icon={action.icon}
+        color={action.color}
+        onPress={action.handlePress}
+      />
+    ))}
+  </View>
 );
 
 export default HeaderActions;

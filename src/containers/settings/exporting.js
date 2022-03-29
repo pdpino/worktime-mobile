@@ -8,17 +8,11 @@ import { getExportableObject, getExportFilename } from '../../shared/porting';
 import { getTimestampString } from '../../shared/dates';
 
 export class Exporting extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isPreparingData: false,
-    };
-
-    this.handlePressExport = this.handlePressExport.bind(this);
+  state = {
+    isPreparingData: false,
   }
 
-  handlePressExport() {
+  handlePressExport = () => {
     const device = this.props.profile.deviceName;
     const filename = getExportFilename(device);
 

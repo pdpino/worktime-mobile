@@ -7,28 +7,15 @@ import { categoriesSelector } from '../../redux/selectors';
 import i18n from '../../shared/i18n';
 
 export class BulkSubjectForm extends React.Component {
-  static navigationOptions() {
-    return {
-      title: i18n.t('entities.editSubjects'),
-    };
-  }
+  state = {
+    categoryId: -1,
+  };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      categoryId: -1,
-    };
-
-    this.handleChangeCategory = this.handleChangeCategory.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChangeCategory(categoryId) {
+  handleChangeCategory = (categoryId) => {
     this.setState({ categoryId });
   }
 
-  handleSubmit() {
+  handleSubmit = () => {
     const { subjects } = this.props;
     const { categoryId } = this.state;
 
@@ -55,7 +42,7 @@ export class BulkSubjectForm extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  subjects: ownProps.navigation.getParam('subjects'),
+  subjects: ownProps.route.params && ownProps.route.params.subjects,
   categories: categoriesSelector(state),
 });
 

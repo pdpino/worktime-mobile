@@ -1,13 +1,12 @@
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import SubjectsStack from './subjects';
 import WorkStack from './work';
 import DashboardStack from './dashboard';
 import SettingsStack from './settings';
 import WeekStack from './week';
-import TouchableWithoutFeedbackWrapper from './bar-button';
 import i18n from '../shared/i18n';
 
 const iconConfiguration = {
@@ -34,51 +33,55 @@ const iconConfiguration = {
   },
 };
 
-const Root = createBottomTabNavigator({
-  subjects: {
-    screen: SubjectsStack,
-    navigationOptions: () => ({
-      tabBarLabel: i18n.t('entities.subjects'),
-    }),
-  },
-  work: {
-    screen: WorkStack,
-    navigationOptions: () => ({
-      tabBarLabel: i18n.t('work'),
-    }),
-  },
-  dashboard: {
-    screen: DashboardStack,
-    navigationOptions: () => ({
-      tabBarLabel: i18n.t('dashboard'),
-    }),
-  },
-  week: {
-    screen: WeekStack,
-    navigationOptions: () => ({
-      tabBarLabel: i18n.t('week'),
-    }),
-  },
-  settings: {
-    screen: SettingsStack,
-    navigationOptions: () => ({
-      tabBarLabel: i18n.t('settings'),
-    }),
-  },
-},
-{
-  initialRouteName: 'work',
-  defaultNavigationOptions: ({ navigation }) => ({
-    tabBarVisible: navigation.state.index === 0,
-    tabBarIcon: ({ tintColor }) => {
-      const { routeName } = navigation.state;
-      return (
-        <Icon color={tintColor} size={22} {...iconConfiguration[routeName]} />
-      );
-    },
-    // NOTE: this fixes the weird press area in the icons
-    tabBarButtonComponent: TouchableWithoutFeedbackWrapper,
-  }),
-});
+const Tab = createBottomTabNavigator();
 
-export default createAppContainer(Root);
+export default function Root() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName="work"
+        screenOptions={({ route }) => {
+          const stackRoute = getFocusedRouteNameFromRoute(route);
+          return {
+            headerShown: false,
+            tabBarIcon: ({ focused, color, size }) => {
+              return (
+                <Icon color={color} size={22} {...iconConfiguration[route.name]} />
+              );
+            },
+            // hacky way to only display tab in the first screen of the stack
+            tabBarStyle: !stackRoute || stackRoute.includes('base-')
+              ? {} : { display: 'none' },
+            headerStyle: { height: 0 },
+          };
+        }}
+      >
+        <Tab.Screen
+          name="subjects"
+          component={SubjectsStack}
+          options={{ tabBarLabel: i18n.t('entities.subjects') }}
+        />
+        <Tab.Screen
+          name="work"
+          component={WorkStack}
+          options={{ tabBarLabel: i18n.t('work') }}
+        />
+        <Tab.Screen
+          name="dashboard"
+          component={DashboardStack}
+          options={{ tabBarLabel: i18n.t('dashboard') }}
+        />
+        <Tab.Screen
+          name="week"
+          component={WeekStack}
+          options={{ tabBarLabel: i18n.t('week') }}
+        />
+        <Tab.Screen
+          name="settings"
+          component={SettingsStack}
+          options={{ tabBarLabel: i18n.t('settings') }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}

@@ -17,22 +17,13 @@ import i18n from '../../shared/i18n';
 import { getCategoriesWithSubjects } from '../../shared/utils/subjects';
 
 export class WorkPlayer extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleSelectSubject = this.handleSelectSubject.bind(this);
-    this.handlePressPlayPause = this.handlePressPlayPause.bind(this);
-    this.handlePressStop = this.handlePressStop.bind(this);
-    this.handleLongPressStop = this.handleLongPressStop.bind(this);
-  }
-
   getStatus() {
     const { runningSession } = this.props;
     return runningSession ? runningSession.status : 'stopped';
     // HACK: 'stopped' copied from model
   }
 
-  handlePressPlayPause() {
+  handlePressPlayPause = () => {
     const { selected } = this.props;
     const subject = selected && selected.subject;
     if (!subject) {
@@ -50,13 +41,13 @@ export class WorkPlayer extends React.Component {
     }
   }
 
-  handlePressStop() {
+  handlePressStop = () => {
     if (this.getStatus() !== 'stopped') {
       this.props.stop();
     }
   }
 
-  handleLongPressStop() {
+  handleLongPressStop = () => {
     if (this.getStatus() === 'stopped') {
       return;
     }
@@ -68,7 +59,7 @@ export class WorkPlayer extends React.Component {
     });
   }
 
-  handleSelectSubject(selectedSubjectId) {
+  handleSelectSubject = (selectedSubjectId) => {
     this.props.selectWorkSubject(selectedSubjectId);
   }
 

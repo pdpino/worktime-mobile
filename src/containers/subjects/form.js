@@ -9,28 +9,6 @@ import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 
 export class SubjectForm extends React.Component {
-  static navigationOptions({ navigation }) {
-    const subject = navigation.getParam('subject');
-
-    if (!subject) {
-      return {
-        title: i18n.t('entities.newSubject'),
-      };
-    }
-
-    const actions = [
-      {
-        icon: 'delete',
-        handlePress: navigation.getParam('handleDeleteSubject'),
-      },
-    ];
-
-    return {
-      title: i18n.t('entities.editSubject'),
-      headerRight: () => <HeaderActions actions={actions} />,
-    };
-  }
-
   constructor(props) {
     super(props);
 
@@ -44,39 +22,45 @@ export class SubjectForm extends React.Component {
       categoryId: category ? category.id : -1,
       icon,
     };
+  }
 
-    this.handleChangeName = this.handleChange('name');
-    this.handleChangeDescription = this.handleChange('description');
-    this.handleChangeCategory = this.handleChange('categoryId');
-    this.handleChangeIcon = this.handleChange('icon');
+  componentDidMount() {
+    if (!this.props.subject) return;
 
-    this.handleSubmitSubject = this.handleSubmitSubject.bind(this);
-    this.handleDeleteSubject = this.handleDeleteSubject.bind(this);
+    const deleteSubjectAction = {
+      icon: 'delete',
+      handlePress: this.handleDeleteSubject,
+    };
 
-    this.props.navigation.setParams({
-      handleDeleteSubject: this.handleDeleteSubject,
+    return this.props.navigation.setOptions({
+      headerRight: () => <HeaderActions actions={[deleteSubjectAction]} />,
     });
   }
 
-  getCategoryColor() {
+  getCategoryColor = () => {
     const { categories } = this.props;
     const { categoryId } = this.state;
     const category = categories && categories.find((cat) => cat.id === categoryId);
     return category && category.color;
   }
 
-  isInputValid() {
+  isInputValid = () => {
     const { name } = this.state;
     return name && name.trim();
   }
 
-  handleChange(key) {
+  handleChange = (key) => {
     return (value) => {
       this.setState({ [key]: value });
     };
-  }
+  };
 
-  handleSubmitSubject() {
+  handleChangeName = this.handleChange('name');
+  handleChangeDescription = this.handleChange('description');
+  handleChangeCategory = this.handleChange('categoryId');
+  handleChangeIcon = this.handleChange('icon');
+
+  handleSubmitSubject = () => {
     if (!this.isInputValid()) {
       return;
     }
@@ -102,7 +86,7 @@ export class SubjectForm extends React.Component {
     this.props.navigation.goBack();
   }
 
-  handleDeleteSubject() {
+  handleDeleteSubject = () => {
     const { subject } = this.props;
 
     if (!subject) {
@@ -119,7 +103,7 @@ export class SubjectForm extends React.Component {
         // NOTE: the navigation has to be before the deletion.
         // If the deletion goes first, the component may try to update,
         // and will fail since the props.subject will be null
-        this.props.navigation.navigate('subjectsCollection');
+        this.props.navigation.navigate('base-subjectsCollection');
         this.props.deleteSubjects([subject.id]);
       },
     });
@@ -153,7 +137,7 @@ export class SubjectForm extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  subject: ownProps.navigation.getParam('subject'),
+  subject: ownProps.route.params && ownProps.route.params.subject,
   categories: categoriesSelector(state),
 });
 

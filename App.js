@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import 'react-native-gesture-handler';
 import RootContainer from './src/screens/Root';
 import configureStore from './src/redux/store';
 import { SplashScreen } from './src/shared/UI/screens';
@@ -20,7 +21,7 @@ class App extends React.Component {
       storeReady: false,
     };
 
-    store = configureStore(this.finishRehydrating.bind(this));
+    store = configureStore(this.finishRehydrating);
     this.appState = new AppStateListener();
     I18N.setup();
   }
@@ -42,7 +43,7 @@ class App extends React.Component {
     I18N.removeListeners();
   }
 
-  finishRehydrating() {
+  finishRehydrating = () => {
     store.dispatch(checkStoreVersion(storeVersionNeeded)).then(() => {
       this.setState({ storeReady: true });
       store.dispatch(onAppActivate()); // HACK

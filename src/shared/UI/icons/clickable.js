@@ -86,7 +86,7 @@ const rnIconDefinitions = {
 class ClickableIcon extends React.PureComponent {
   render() {
     const {
-      icon, size, color, containerStyle, onPress,
+      icon, size, color, containerStyle, onPress, ...otherProps
     } = this.props;
 
     const iconDefinition = rnIconDefinitions[icon] || rnIconDefinitions.error;
@@ -100,6 +100,7 @@ class ClickableIcon extends React.PureComponent {
         style={containerStyle}
         onPress={onPress}
         delayPressIn={0}
+        {...otherProps}
       >
         <Icon
           name={iconDefinition.name}

@@ -2,56 +2,52 @@ import React from 'react';
 import { BackHandler, Vibration } from 'react-native';
 import { getSelectionHeaderParams } from '../shared/UI/headers';
 
+// FIXME:
+// since react-navigation v6 upgrade (and all other libraries),
+// this does not work as a hoc.
+// It needs access to the array of "selectionActions" in the inner component **instance**,
+// but can only access static properties of the inner component.
+//
+// Idea: transform this to a hook, to reuse all of this!
+//
+// In the meantime, copy this code into the inner component
 export default function withItemSelection(Component) {
   class WithItemSelection extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-      const amountSelected = navigation.getParam('amountSelected', 0);
-      if (amountSelected) {
-        const actions = Component.getSelectionActions(
-          navigation,
-          amountSelected,
-        );
-        const handleUnselection = navigation.getParam('handleUnselection');
+    // static navigationOptions = ({ navigation }) => {
+    //   const amountSelected = navigation.getParam('amountSelected', 0);
+    //   if (amountSelected) {
+    //     const actions = Component.getSelectionActions(
+    //       navigation,
+    //       amountSelected,
+    //     );
+    //     const handleUnselection = navigation.getParam('handleUnselection');
 
-        return getSelectionHeaderParams({
-          amountSelected,
-          actions,
-          handleUnselection,
-        });
-      }
+    //     return getSelectionHeaderParams({
+    //       amountSelected,
+    //       actions,
+    //       handleUnselection,
+    //     });
+    //   }
 
-      return Component.navigationOptions({ navigation });
+    //   return Component.navigationOptions({ navigation });
+    // }
+
+    state = {
+      selectedIds: {},
+      amountSelected: 0,
     }
 
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        selectedIds: {},
-        amountSelected: 0,
-      };
-
-      this.getSelectionArray = this.getSelectionArray.bind(this);
-      this.toggleSelection = this.toggleSelection.bind(this);
-      this.handleUnselection = this.handleUnselection.bind(this);
-      this.handleBackPress = this.handleBackPress.bind(this);
-
-      this.props.navigation.setParams({
-        handleUnselection: this.handleUnselection,
-      });
-
-      this.didFocusListener = props.navigation.addListener(
-        'didFocus',
+    componentDidMount() {
+      this.addBackHandlerListener = this.props.navigation.addListener(
+        'focus',
         () => BackHandler.addEventListener(
           'hardwareBackPress',
           this.handleBackPress,
         ),
       );
-    }
 
-    componentDidMount() {
-      this.willBlurListener = this.props.navigation.addListener(
-        'willBlur',
+      this.removeBackHandlerListener = this.props.navigation.addListener(
+        'blur',
         () => BackHandler.removeEventListener(
           'hardwareBackPress',
           this.handleBackPress,
@@ -59,29 +55,39 @@ export default function withItemSelection(Component) {
       );
     }
 
-    componentWillUnmount() {
-      if (this.didFocusListener) {
-        this.didFocusListener.remove();
-      }
-      if (this.willBlurListener) {
-        this.willBlurListener.remove();
+    componentDidUpdate(_prevProps, prevState) {
+      const { amountSelected } = this.state;
+      if (amountSelected && prevState.amountSelected === 0) {
+        this.props.navigation.setOptions(getSelectionHeaderParams({
+          amountSelected,
+          actions: this.selectionActions, // required in child
+          handleUnselection: this.handleUnselection,
+        }));
       }
     }
 
-    getSelectionArray() {
+    componentWillUnmount() {
+      if (this.addBackHandlerListener) {
+        this.addBackHandlerListener();
+      }
+      if (this.removeBackHandlerListener) {
+        this.removeBackHandlerListener();
+      }
+    }
+
+    getSelectionArray = () => {
       const { selectedIds } = this.state;
       return Object.keys(selectedIds).filter((id) => selectedIds[id]);
     }
 
-    updateSelection(selectedIds, amountSelected) {
+    updateSelection = (selectedIds, amountSelected) => {
       this.setState({
         selectedIds,
         amountSelected,
       });
-      this.props.navigation.setParams({ amountSelected });
     }
 
-    toggleSelection(id) {
+    toggleSelection = (id) => {
       const { selectedIds, amountSelected } = this.state;
       const isSelected = selectedIds[id];
       const newAmountSelected = amountSelected + (isSelected ? -1 : 1);
@@ -96,11 +102,11 @@ export default function withItemSelection(Component) {
       }, newAmountSelected);
     }
 
-    handleUnselection() {
+    handleUnselection = () => {
       this.updateSelection({}, 0);
     }
 
-    handleBackPress() {
+    handleBackPress = () => {
       if (this.state.amountSelected > 0) {
         this.handleUnselection();
         return true;

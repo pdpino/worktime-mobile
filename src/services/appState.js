@@ -5,24 +5,22 @@ class AppStateListener {
     this.listenOnActivate(() => {});
     this.listenOnDeactivate(() => {});
 
-    this.handleAppStateChange = this.handleAppStateChange.bind(this);
-
     AppState.addEventListener('change', this.handleAppStateChange);
   }
 
-  listenOnActivate(callback) {
+  listenOnActivate = (callback) => {
     this.onActivate = callback;
   }
 
-  listenOnDeactivate(callback) {
+  listenOnDeactivate = (callback) => {
     this.onDeactivate = callback;
   }
 
-  removeListeners() {
+  removeListeners = () => {
     AppState.removeEventListener('change', this.handleAppStateChange);
   }
 
-  handleAppStateChange(nextAppState) {
+  handleAppStateChange = (nextAppState) => {
     if (this.appState === 'active') {
       this.onDeactivate();
     } else if (nextAppState === 'active') {

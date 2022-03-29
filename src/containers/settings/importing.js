@@ -12,28 +12,20 @@ import { alertError } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 
 export class Importing extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    path: null,
+    isLoadingPreview: false,
+    device: null,
+    exportedTimestamp: null,
+    importStats: null,
+    processedSubjects: null,
+    subjectsSelection: null,
+    isImporting: false,
+  };
 
-    this.state = {
-      path: null,
-      isLoadingPreview: false,
-      device: null,
-      exportedTimestamp: null,
-      importStats: null,
-      processedSubjects: null,
-      subjectsSelection: null,
-      isImporting: false,
-    };
+  incomingRawSubjects = null;
 
-    this.incomingRawSubjects = null;
-
-    this.handlePressFile = this.handlePressFile.bind(this);
-    this.handlePressSubject = this.handlePressSubject.bind(this);
-    this.handlePressImport = this.handlePressImport.bind(this);
-  }
-
-  displayPreviewError(errorText) {
+  displayPreviewError = (errorText) => {
     alertError({ message: errorText });
     this.setState({
       path: null,
@@ -46,7 +38,7 @@ export class Importing extends React.Component {
     });
   }
 
-  handlePressFile() {
+  handlePressFile = () => {
     const { subjects } = this.props;
 
     openFileSelector(i18n.t('files')).then((path) => {
@@ -91,7 +83,7 @@ export class Importing extends React.Component {
     });
   }
 
-  handlePressSubject(subjectName) {
+  handlePressSubject = (subjectName) => {
     if (!this.incomingRawSubjects) {
       return;
     }
@@ -122,7 +114,7 @@ export class Importing extends React.Component {
     });
   }
 
-  handlePressImport() {
+  handlePressImport = () => {
     const { device, processedSubjects, subjectsSelection } = this.state;
 
     if (!processedSubjects || !device) {

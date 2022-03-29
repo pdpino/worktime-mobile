@@ -1,19 +1,19 @@
-import { createStackNavigator } from 'react-navigation-stack';
+import React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import WorkPlayer from '../containers/work/player';
 import headerOptions from './header';
 import i18n from '../shared/i18n';
 
-const WorkStack = createStackNavigator({
-  work: {
-    screen: WorkPlayer,
-    navigationOptions: () => ({
-      title: i18n.t('work'),
-    }),
-  },
-},
-{
-  initialRouteName: 'work',
-  ...headerOptions,
-});
+const Stack = createNativeStackNavigator();
 
-export default WorkStack;
+export default function WorkStack() {
+  return (
+    <Stack.Navigator initialRouteName='base-workPlayer' {...headerOptions}>
+      <Stack.Screen
+        name='base-workPlayer'
+        component={WorkPlayer}
+        options={{ title: i18n.t('work') }}
+      />
+    </Stack.Navigator>
+  );
+}

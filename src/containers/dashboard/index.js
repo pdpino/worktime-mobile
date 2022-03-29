@@ -77,41 +77,31 @@ export class Dashboard extends React.Component {
       },
     };
 
-    this.handleChangeInitialDate = this.handleChangeDate('initialDate');
-    this.handleChangeEndingDate = this.handleChangeDate('endingDate');
-    this.handleChangeDates = this.handleChangeDates.bind(this);
-    this.handleShiftDate = this.handleShiftDate.bind(this);
-    this.handleToggleItem = this.handleToggleItem.bind(this);
-    this.handleToggleAllItems = this.handleToggleAllItems.bind(this);
-    this.handlePressTab = this.handlePressTab.bind(this);
-    this.handlePressItem = this.handlePressItem.bind(this);
-    this.handlePressClearItem = this.handlePressClearItem.bind(this);
-    this.handleBackPress = this.handleBackPress.bind(this);
+    this.handleChangeInitialDate = (date) => this.handleChangeDate('initialDate', date);
+    this.handleChangeEndingDate = (date) => this.handleChangeDate('endingDate', date);
 
     this.handlePressLeft = () => this.handleShiftDate('left');
     this.handlePressRight = () => this.handleShiftDate('right');
 
-    this.sumTimes = this.sumTimes.bind(this);
     this.memoizer = Memoizer();
 
     this.createShortcuts();
+  }
 
-    this.didFocusListener = props.navigation.addListener(
-      'didFocus',
+  componentDidMount() {
+    this.addBackHandlerListener = this.props.navigation.addListener(
+      'focus',
       () => BackHandler.addEventListener(
         'hardwareBackPress',
         this.handleBackPress,
       ),
     );
-  }
-
-  componentDidMount() {
-    this.willFocusListener = this.props.navigation.addListener(
-      'willFocus',
+    this.sumTimesWhenFocusListener = this.props.navigation.addListener(
+      'focus',
       this.sumTimes,
     );
-    this.willBlurListener = this.props.navigation.addListener(
-      'willBlur',
+    this.removeBackHandlerListener = this.props.navigation.addListener(
+      'blur',
       () => BackHandler.removeEventListener(
         'hardwareBackPress',
         this.handleBackPress,
@@ -124,9 +114,9 @@ export class Dashboard extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.didFocusListener) this.didFocusListener.remove();
-    if (this.willFocusListener) this.willFocusListener.remove();
-    if (this.willBlurListener) this.willBlurListener.remove();
+    if (this.addBackHandlerListener) this.addBackHandlerListener();
+    if (this.sumTimesWhenFocusListener) this.sumTimesWhenFocusListener();
+    if (this.removeBackHandlerListener) this.removeBackHandlerListener();
   }
 
   setStateAndSumTimes(params) {
@@ -135,7 +125,7 @@ export class Dashboard extends React.Component {
     }, () => this.sumTimes());
   }
 
-  handleBackPress() {
+  handleBackPress = () => {
     if (this.state.tab.selectedId != null) {
       this.handlePressClearItem();
       return true;
@@ -143,7 +133,7 @@ export class Dashboard extends React.Component {
     return false;
   }
 
-  createShortcuts() {
+  createShortcuts = () => {
     const getDayShifter = (amount) => (initialDate, endingDate, shift) => ({
       initialDate: subtractDays(initialDate, -shift * amount),
       endingDate: subtractDays(endingDate, -shift * amount),
@@ -199,20 +189,18 @@ export class Dashboard extends React.Component {
     });
   }
 
-  handleChangeDate(key) {
-    return (date) => {
-      if (Dashboard.isSameDay(this.state[key], date)) {
-        return;
-      }
-      this.setStateAndSumTimes({
-        [key]: date,
-        dateShortcutSelection: null,
-        isReloading: true,
-      });
-    };
+  handleChangeDate = (key, date) => {
+    if (Dashboard.isSameDay(this.state[key], date)) {
+      return;
+    }
+    this.setStateAndSumTimes({
+      [key]: date,
+      dateShortcutSelection: null,
+      isReloading: true,
+    });
   }
 
-  handleChangeDates(newInitialDate, newEndingDate, shortcutKey) {
+  handleChangeDates = (newInitialDate, newEndingDate, shortcutKey) => {
     const { initialDate, endingDate } = this.state;
     if (Dashboard.isSameDay(initialDate, newInitialDate)
       && Dashboard.isSameDay(endingDate, newEndingDate)) {
@@ -229,7 +217,7 @@ export class Dashboard extends React.Component {
     });
   }
 
-  handleShiftDate(direction) {
+  handleShiftDate = (direction) => {
     const { dateShortcutSelection, initialDate, endingDate } = this.state;
     const rightShift = direction === 'right' ? 1 : -1;
 
@@ -260,7 +248,7 @@ export class Dashboard extends React.Component {
     });
   }
 
-  sumTimes() {
+  sumTimes = () => {
     const { subjects, categories } = this.props;
     const {
       initialDate, endingDate, idsSelection, tab,
@@ -292,7 +280,7 @@ export class Dashboard extends React.Component {
     });
   }
 
-  handleToggleItem(itemId) {
+  handleToggleItem = (itemId) => {
     const idsSelection = {
       ...this.state.idsSelection,
       [itemId]: !this.state.idsSelection[itemId],
@@ -307,7 +295,7 @@ export class Dashboard extends React.Component {
     });
   }
 
-  handleToggleAllItems() {
+  handleToggleAllItems = () => {
     const { subjects, categories } = this.props;
     const { tab, allSelected } = this.state;
 
@@ -322,7 +310,7 @@ export class Dashboard extends React.Component {
     });
   }
 
-  handlePressTab(newKey) {
+  handlePressTab = (newKey) => {
     const { key } = this.state.tab;
     if (key === newKey) return;
 
@@ -345,7 +333,7 @@ export class Dashboard extends React.Component {
     });
   }
 
-  handlePressItem(itemId) {
+  handlePressItem = (itemId) => {
     const { key, selectedId } = this.state.tab;
     if (key === 'subjects'
       || (key === 'categories' && selectedId != null)) {
@@ -366,7 +354,7 @@ export class Dashboard extends React.Component {
     });
   }
 
-  handlePressClearItem() {
+  handlePressClearItem = () => {
     this.setStateAndSumTimes({
       tab: {
         key: 'categories',

@@ -1,108 +1,132 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { BackHandler, Vibration } from 'react-native';
 import SubjectsCollectionComponent from '../../components/subjects/collection';
 import { subjectsSelector, categoriesSelector } from '../../redux/selectors';
 import { archiveSubjects, deleteSubjects } from '../../redux/actions';
 import { MultipleNewButton } from '../../shared/UI/buttons';
-import { HeaderActions } from '../../shared/UI/headers';
-import withItemSelection from '../../hoc/itemSelection';
+import { HeaderActions, getSelectionHeaderParams } from '../../shared/UI/headers';
 import afterInteractions from '../../hoc/afterInteractions';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 import { colors } from '../../shared/styles';
 import { getCategoriesWithSubjects } from '../../shared/utils/subjects';
 
-export default function createSubjectsCollection(isArchive) {
+function createSubjectsCollection(isArchive) {
   class SubjectsListContainer extends React.Component {
-    static getSelectionActions(navigation) {
-      return [
-        {
-          icon: 'edit',
-          handlePress: navigation.getParam('handleEditSelected'),
-        },
-        {
-          icon: isArchive ? 'unarchive' : 'archive',
-          handlePress: navigation.getParam('handleArchiveSelected'),
-        },
-        {
-          icon: 'delete',
-          color: colors.deletionRedLighter,
-          handlePress: navigation.getParam('handleDeleteSelected'),
-        },
-      ];
+    state = {
+      // NOTE: in selection-related methods, selectedIds is referred to an object;
+      // in the other methods, selectedIds is usually an array of ids
+      // (due to coupling of withSelection behavior)
+      selectedIds: {},
+      amountSelected: 0,
     }
 
-    static navigationOptions({ navigation }) {
-      if (isArchive) {
-        return {
-          title: i18n.t('archive'),
+    componentDidMount() {
+      this.addBackHandlerListener = this.props.navigation.addListener(
+        'focus',
+        () => BackHandler.addEventListener(
+          'hardwareBackPress',
+          this.handleBackPress,
+        ),
+      );
+
+      this.removeBackHandlerListener = this.props.navigation.addListener(
+        'blur',
+        () => BackHandler.removeEventListener(
+          'hardwareBackPress',
+          this.handleBackPress,
+        ),
+      );
+
+      if (!isArchive) {
+        const goToArchiveAction = {
+          icon: 'archivedFolder',
+          handlePress: this.handlePressArchive,
         };
+
+        this.props.navigation.setOptions({
+          headerRight: () => <HeaderActions actions={[goToArchiveAction]} />,
+        });
+      }
+    }
+
+    componentDidUpdate(_prevProps, prevState) {
+      const { amountSelected } = this.state;
+      if (amountSelected && prevState.amountSelected === 0) {
+        this.props.navigation.setOptions(getSelectionHeaderParams({
+          amountSelected,
+          actions: this.selectionActions,
+          handleUnselection: this.handleUnselection,
+        }));
+      }
+    }
+
+    componentWillUnmount() {
+      if (this.addBackHandlerListener) {
+        this.addBackHandlerListener();
+      }
+      if (this.removeBackHandlerListener) {
+        this.removeBackHandlerListener();
+      }
+    }
+
+    /* Selection methods */
+    getSelectionArray = () => {
+      const { selectedIds } = this.state;
+      return Object.keys(selectedIds).filter((id) => selectedIds[id]);
+    }
+
+    updateSelection = (selectedIds, amountSelected) => {
+      this.setState({
+        selectedIds,
+        amountSelected,
+      });
+    }
+
+    toggleSelection = (id) => {
+      const { selectedIds, amountSelected } = this.state;
+      const isSelected = selectedIds[id];
+      const newAmountSelected = amountSelected + (isSelected ? -1 : 1);
+
+      if (amountSelected === 0 && newAmountSelected === 1) {
+        Vibration.vibrate(40);
       }
 
-      const actions = [
-        {
-          icon: 'archivedFolder',
-          handlePress: navigation.getParam('handlePressArchive'),
-        },
-      ];
-
-      return {
-        title: i18n.t('entities.subjects'),
-        headerRight: () => <HeaderActions actions={actions} />,
-      };
+      this.updateSelection({
+        ...selectedIds,
+        [id]: !isSelected,
+      }, newAmountSelected);
     }
 
-    constructor(props) {
-      super(props);
-
-      this.handlePressSubject = this.handlePressSubject.bind(this);
-      this.handleLongPressSubject = this.handleLongPressSubject.bind(this);
-      this.handlePressCategory = this.handlePressCategory.bind(this);
-
-      this.handlePressNewSubject = this.handlePressNewSubject.bind(this);
-      this.handlePressNewCategory = this.handlePressNewCategory.bind(this);
-      this.handlePressArchive = this.handlePressArchive.bind(this);
-
-      this.handleEditSelected = this.handleEditSelected.bind(this);
-      this.handleArchiveSelected = this.handleArchiveSelected.bind(this);
-      this.handleDeleteSelected = this.handleDeleteSelected.bind(this);
-
-      this.props.navigation.setParams({
-        handleEditSelected: this.handleEditSelected,
-        handleArchiveSelected: this.handleArchiveSelected,
-        handleDeleteSelected: this.handleDeleteSelected,
-        handlePressArchive: this.handlePressArchive,
-      });
-
-      this.newActions = [
-        {
-          title: i18n.t('entities.category'),
-          handlePress: this.handlePressNewCategory,
-          color: colors.red,
-        },
-        {
-          title: i18n.t('entities.subject'),
-          handlePress: this.handlePressNewSubject,
-          color: colors.orange,
-        },
-      ];
+    handleUnselection = () => {
+      this.updateSelection({}, 0);
     }
 
-    findSubject(id) {
+    handleBackPress = () => {
+      if (this.state.amountSelected > 0) {
+        this.handleUnselection();
+        return true;
+      }
+      return false;
+    }
+    /* End of selection stuff */
+
+    findSubject = (id) => {
       const numericId = Number(id);
       return this.props.subjects.find((subj) => subj.id === numericId);
     }
 
-    findCategory(id) {
+    findCategory = (id) => {
       const numericId = Number(id);
       return this.props.categories.find((category) => category.id === numericId);
     }
 
-    handlePressSubject(id) {
-      const { amountSelected } = this.props;
+    handlePressSubject = (id) => {
+      const { amountSelected } = this.state;
       if (amountSelected) {
-        this.props.toggleSelection(id);
+        this.toggleSelection(id);
       } else {
         const subject = this.findSubject(id);
         if (subject) {
@@ -114,66 +138,66 @@ export default function createSubjectsCollection(isArchive) {
       }
     }
 
-    handleLongPressSubject(id) {
-      this.props.toggleSelection(id);
+    handleLongPressSubject = (id) => {
+      this.toggleSelection(id);
     }
 
-    handlePressCategory(id) {
-      if (this.props.amountSelected) {
+    handlePressCategory = (id) => {
+      if (this.state.amountSelected) {
         return;
       }
       const category = this.findCategory(id);
       if (category) {
-        this.props.navigation.navigate('categoryForm', { category });
+        this.props.navigation.navigate('editCategory', { category });
       }
     }
 
-    handlePressNewSubject() {
-      if (isArchive || this.props.amountSelected) {
+    handlePressNewSubject = () => {
+      if (isArchive || this.state.amountSelected) {
         return;
       }
       this.props.navigation.navigate('newSubject');
     }
 
-    handlePressNewCategory() {
-      if (isArchive || this.props.amountSelected) {
+    handlePressNewCategory = () => {
+      if (isArchive || this.state.amountSelected) {
         return;
       }
-      this.props.navigation.navigate('categoryForm');
+      this.props.navigation.navigate('newCategory');
     }
 
-    handleEditSelected() {
-      const selectedIds = this.props.getSelectionArray();
+    handleEditSelected = () => {
+      const selectedIds = this.getSelectionArray();
       if (selectedIds.length > 1) {
         const { subjects, selection } = this.props;
         const selectedSubjects = subjects.filter((subj) => selection[subj.id]);
 
-        this.props.clearSelection();
+        this.handleUnselection();
         this.props.navigation.navigate('bulkEditSubject', {
           subjects: selectedSubjects,
         });
       } else {
         const subject = this.findSubject(selectedIds[0]);
         if (subject) {
-          this.props.clearSelection();
+          this.handleUnselection();
           this.props.navigation.navigate('editSubject', { subject });
         }
       }
     }
 
-    handleArchiveSelected() {
-      const selectedIds = this.props.getSelectionArray();
+    handleArchiveSelected = () => {
+      const selectedIds = this.getSelectionArray();
       if (selectedIds.length === 0) {
         return;
       }
 
       const archiving = !isArchive;
       this.props.archiveSubjects(selectedIds, archiving);
-      this.props.clearSelection();
+      this.handleUnselection();
     }
 
-    handleDeleteSelected() {
-      const selectedIds = this.props.getSelectionArray();
+    handleDeleteSelected = () => {
+      const selectedIds = this.getSelectionArray();
       if (selectedIds.length === 0) {
         return;
       }
@@ -195,23 +219,51 @@ export default function createSubjectsCollection(isArchive) {
         }),
         onDelete: () => {
           this.props.deleteSubjects(selectedIds);
-          this.props.clearSelection();
+          this.handleUnselection();
         },
       });
     }
 
-    handlePressArchive() {
+    handlePressArchive = () => {
       if (isArchive) {
         return;
       }
-      this.props.clearSelection();
+      this.handleUnselection();
       this.props.navigation.navigate('subjectsArchiveCollection');
     }
 
+    selectionActions = [
+      {
+        icon: 'edit',
+        handlePress: this.handleEditSelected,
+      },
+      {
+        icon: isArchive ? 'unarchive' : 'archive',
+        handlePress: this.handleArchiveSelected,
+      },
+      {
+        icon: 'delete',
+        color: colors.deletionRedLighter,
+        handlePress: this.handleDeleteSelected,
+      },
+    ];
+
+    creationActions = [
+      {
+        title: i18n.t('entities.category'),
+        handlePress: this.handlePressNewCategory,
+        color: colors.red,
+      },
+      {
+        title: i18n.t('entities.subject'),
+        handlePress: this.handlePressNewSubject,
+        color: colors.orange,
+      },
+    ];
+
     render() {
-      const {
-        subjects, categories, selection, amountSelected,
-      } = this.props;
+      const { subjects, categories } = this.props;
+      const { amountSelected, selectedIds } = this.state;
 
       const categoriesWithSubjects = getCategoriesWithSubjects(
         subjects,
@@ -221,7 +273,7 @@ export default function createSubjectsCollection(isArchive) {
       return (
         <SubjectsCollectionComponent
           categoriesWithSubjects={categoriesWithSubjects}
-          selectedSubjects={selection}
+          selectedSubjects={selectedIds}
           onPressSubject={this.handlePressSubject}
           onLongPressSubject={this.handleLongPressSubject}
           onPressCategory={this.handlePressCategory}
@@ -229,7 +281,7 @@ export default function createSubjectsCollection(isArchive) {
           {!isArchive && (
             <MultipleNewButton
               disabled={amountSelected > 0}
-              actions={this.newActions}
+              actions={this.creationActions}
             />
           )}
         </SubjectsCollectionComponent>
@@ -247,9 +299,10 @@ export default function createSubjectsCollection(isArchive) {
     deleteSubjects,
   }, dispatch);
 
-  return withItemSelection(
-    connect(mapStateToProps, mapDispatchToProps)(
-      afterInteractions(SubjectsListContainer),
-    ),
+  return connect(mapStateToProps, mapDispatchToProps)(
+    afterInteractions(SubjectsListContainer),
   );
 }
+
+export const NonArchivedSubjects = createSubjectsCollection(false);
+export const ArchivedSubjects = createSubjectsCollection(true);
