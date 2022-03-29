@@ -32,9 +32,7 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-
-      <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_name"
+      <!-- <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_name"
                   android:value="player-state"/>
       <meta-data  android:name="com.dieam.reactnativepushnotification.notification_channel_description"
                   android:value="Display player notifications"/>
@@ -43,7 +41,7 @@
       <meta-data  android:name="com.dieam.reactnativepushnotification.channel_create_default"
                     android:value="false"/>
       <meta-data  android:name="com.dieam.reactnativepushnotification.notification_color"
-                  android:resource="@android:color/white"/>
+                  android:resource="@android:color/white"/> -->
 
       <receiver
           android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -54,20 +52,20 @@
               <category android:name="${applicationId}" />
           </intent-filter>
       </receiver>
-      <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" />
+      <!-- <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" />
       <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
       <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver">
           <intent-filter>
               <action android:name="android.intent.action.BOOT_COMPLETED" />
           </intent-filter>
-      </receiver>
-      <service
+      </receiver> -->
+      <!-- <service
           android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
           android:exported="false" >
           <intent-filter>
               <action android:name="com.google.firebase.MESSAGING_EVENT" />
           </intent-filter>
-      </service>
+      </service> -->
 
       <provider
         android:name="androidx.core.content.FileProvider"
