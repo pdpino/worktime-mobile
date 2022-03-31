@@ -9,9 +9,13 @@ export default function asModalWithButton(
   const WrappedModel = useVisibleWrapper ? asOnlyVisible(ModalComponent) : ModalComponent;
 
   class AsModalWithButton extends React.Component {
-    state = {
-      modalVisible: false,
-    };
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        modalVisible: false,
+      };
+    }
 
     setModalVisible = (modalVisible) => {
       this.setState({ modalVisible });

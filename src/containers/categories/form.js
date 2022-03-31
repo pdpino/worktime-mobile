@@ -24,6 +24,11 @@ export class CategoryForm extends React.Component {
       description,
       color: color || CategoryForm.defaultColor,
     };
+
+    this.handleChangeName = this.getChangeHandler('name');
+    this.handleChangeAlias = this.getChangeHandler('alias');
+    this.handleChangeDescription = this.getChangeHandler('description');
+    this.handleChangeColor = this.getChangeHandler('color');
   }
 
   componentDidMount() {
@@ -37,16 +42,9 @@ export class CategoryForm extends React.Component {
     });
   }
 
-  getChangeHandler = (key) => {
-    return (value) => {
-      this.setState({ [key]: value });
-    };
+  getChangeHandler = (key) => (value) => {
+    this.setState({ [key]: value });
   }
-
-  handleChangeName = this.getChangeHandler('name');
-  handleChangeAlias = this.getChangeHandler('alias');
-  handleChangeDescription = this.getChangeHandler('description');
-  handleChangeColor = this.getChangeHandler('color');
 
   isInputValid = () => {
     const { name } = this.state;

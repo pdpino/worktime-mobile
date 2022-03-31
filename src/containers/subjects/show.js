@@ -13,11 +13,16 @@ import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 
 export class SubjectShow extends React.Component {
-  state = {
-    isLoading: true,
-    timeStats: getEmptyStats(),
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoading: true,
+      timeStats: getEmptyStats(),
+    };
+
+    this.memoizer = Memoizer();
   }
-  memoizer = Memoizer();
 
   componentDidMount() {
     this.sumTimesOnFocusListener = this.props.navigation.addListener(

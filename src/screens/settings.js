@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 
 export default function SettingsStack() {
   return (
-    <Stack.Navigator initialRouteName='base-menu' {...headerOptions}>
+    <Stack.Navigator initialRouteName="base-menu" {...headerOptions}>
       <Stack.Screen
         name="base-menu"
         component={SettingsMenu}

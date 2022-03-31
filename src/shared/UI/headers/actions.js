@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 
 const HeaderActions = ({ actions }) => (
   <View style={styles.container}>
-    {actions.map((action, index) => action.disabled ? null : (
+    {actions.map((action, index) => (action.disabled ? null : (
       <ClickableIcon
         key={index.toString()}
         containerStyle={commonStyles.iconContainer}
@@ -21,7 +21,7 @@ const HeaderActions = ({ actions }) => (
         color={action.color}
         onPress={action.handlePress}
       />
-    ))}
+    )))}
   </View>
 );
 

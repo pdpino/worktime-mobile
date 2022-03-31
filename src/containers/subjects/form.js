@@ -22,6 +22,11 @@ export class SubjectForm extends React.Component {
       categoryId: category ? category.id : -1,
       icon,
     };
+
+    this.handleChangeName = this.getChangeHandler('name');
+    this.handleChangeDescription = this.getChangeHandler('description');
+    this.handleChangeCategory = this.getChangeHandler('categoryId');
+    this.handleChangeIcon = this.getChangeHandler('icon');
   }
 
   componentDidMount() {
@@ -32,10 +37,14 @@ export class SubjectForm extends React.Component {
       handlePress: this.handleDeleteSubject,
     };
 
-    return this.props.navigation.setOptions({
+    this.props.navigation.setOptions({
       headerRight: () => <HeaderActions actions={[deleteSubjectAction]} />,
     });
   }
+
+  getChangeHandler = (key) => (value) => {
+    this.setState({ [key]: value });
+  };
 
   getCategoryColor = () => {
     const { categories } = this.props;
@@ -48,17 +57,6 @@ export class SubjectForm extends React.Component {
     const { name } = this.state;
     return name && name.trim();
   }
-
-  handleChange = (key) => {
-    return (value) => {
-      this.setState({ [key]: value });
-    };
-  };
-
-  handleChangeName = this.handleChange('name');
-  handleChangeDescription = this.handleChange('description');
-  handleChangeCategory = this.handleChange('categoryId');
-  handleChangeIcon = this.handleChange('icon');
 
   handleSubmitSubject = () => {
     if (!this.isInputValid()) {

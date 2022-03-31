@@ -15,12 +15,45 @@ import { getCategoriesWithSubjects } from '../../shared/utils/subjects';
 
 function createSubjectsCollection(isArchive) {
   class SubjectsListContainer extends React.Component {
-    state = {
-      // NOTE: in selection-related methods, selectedIds is referred to an object;
-      // in the other methods, selectedIds is usually an array of ids
-      // (due to coupling of withSelection behavior)
-      selectedIds: {},
-      amountSelected: 0,
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        // NOTE: in selection-related methods, selectedIds is referred to an object;
+        // in the other methods, selectedIds is usually an array of ids
+        // (due to coupling of withSelection behavior)
+        selectedIds: {},
+        amountSelected: 0,
+      };
+
+      this.selectionActions = [
+        {
+          icon: 'edit',
+          handlePress: this.handleEditSelected,
+        },
+        {
+          icon: isArchive ? 'unarchive' : 'archive',
+          handlePress: this.handleArchiveSelected,
+        },
+        {
+          icon: 'delete',
+          color: colors.deletionRedLighter,
+          handlePress: this.handleDeleteSelected,
+        },
+      ];
+
+      this.creationActions = [
+        {
+          title: i18n.t('entities.category'),
+          handlePress: this.handlePressNewCategory,
+          color: colors.red,
+        },
+        {
+          title: i18n.t('entities.subject'),
+          handlePress: this.handlePressNewSubject,
+          color: colors.orange,
+        },
+      ];
     }
 
     componentDidMount() {
@@ -231,35 +264,6 @@ function createSubjectsCollection(isArchive) {
       this.handleUnselection();
       this.props.navigation.navigate('subjectsArchiveCollection');
     }
-
-    selectionActions = [
-      {
-        icon: 'edit',
-        handlePress: this.handleEditSelected,
-      },
-      {
-        icon: isArchive ? 'unarchive' : 'archive',
-        handlePress: this.handleArchiveSelected,
-      },
-      {
-        icon: 'delete',
-        color: colors.deletionRedLighter,
-        handlePress: this.handleDeleteSelected,
-      },
-    ];
-
-    creationActions = [
-      {
-        title: i18n.t('entities.category'),
-        handlePress: this.handlePressNewCategory,
-        color: colors.red,
-      },
-      {
-        title: i18n.t('entities.subject'),
-        handlePress: this.handlePressNewSubject,
-        color: colors.orange,
-      },
-    ];
 
     render() {
       const { subjects, categories } = this.props;

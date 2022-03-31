@@ -15,14 +15,20 @@ import { HeaderActions } from '../../shared/UI/headers';
 import { getLightColor } from '../../shared/styles';
 
 export class WeekView extends React.Component {
-  state = {
-    nDays: 7,
-    nDaysMenuVisible: false,
-    workSessionsByDate: {},
-    isProcessing: true,
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      nDays: 7,
+      nDaysMenuVisible: false,
+      workSessionsByDate: {},
+      isProcessing: true,
+    };
+
+    this.today = getToday();
+
+    this.memoizer = Memoizer();
   }
-  today = getToday()
-  memoizer = Memoizer()
 
   componentDidMount() {
     this.focusListener = this.props.navigation.addListener(
@@ -42,7 +48,7 @@ export class WeekView extends React.Component {
     ];
 
     this.props.navigation.setOptions({
-      headerRight: () => <HeaderActions actions={actions} />
+      headerRight: () => <HeaderActions actions={actions} />,
     });
   }
 

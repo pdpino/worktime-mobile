@@ -1,6 +1,6 @@
 // import PushNotification from 'react-native-push-notification';
 import i18n from '../../shared/i18n';
-import { colors } from '../../shared/styles';
+// import { colors } from '../../shared/styles';
 import ActionsHandler from './actions';
 
 let actionsHandler;
@@ -41,8 +41,8 @@ class Notifications {
     );
   }
 
-  static sendLocal(options) {
-    const { title, icon, actions } = options;
+  static sendLocal() { // options
+    // const { title, icon, actions } = options;
     // PushNotification.localNotification({
     //   id: '0',
     //   title,

@@ -8,9 +8,9 @@ const Stack = createNativeStackNavigator();
 
 export default function WorkStack() {
   return (
-    <Stack.Navigator initialRouteName='base-workPlayer' {...headerOptions}>
+    <Stack.Navigator initialRouteName="base-workPlayer" {...headerOptions}>
       <Stack.Screen
-        name='base-workPlayer'
+        name="base-workPlayer"
         component={WorkPlayer}
         options={{ title: i18n.t('work') }}
       />

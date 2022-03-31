@@ -31,10 +31,13 @@ export default function withItemSelection(Component) {
 
     //   return Component.navigationOptions({ navigation });
     // }
+    constructor(props) {
+      super(props);
 
-    state = {
-      selectedIds: {},
-      amountSelected: 0,
+      this.state = {
+        selectedIds: {},
+        amountSelected: 0,
+      };
     }
 
     componentDidMount() {

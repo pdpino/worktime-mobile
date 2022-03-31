@@ -44,11 +44,9 @@ export default function Root() {
           const stackRoute = getFocusedRouteNameFromRoute(route);
           return {
             headerShown: false,
-            tabBarIcon: ({ focused, color, size }) => {
-              return (
-                <Icon color={color} size={22} {...iconConfiguration[route.name]} />
-              );
-            },
+            tabBarIcon: ({ color }) => (
+              <Icon color={color} size={22} {...iconConfiguration[route.name]} />
+            ),
             // hacky way to only display tab in the first screen of the stack
             tabBarStyle: !stackRoute || stackRoute.includes('base-')
               ? {} : { display: 'none' },

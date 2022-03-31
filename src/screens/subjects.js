@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 
 export default function SubjectsStack() {
   return (
-    <Stack.Navigator initialRouteName='base-subjectsCollection' {...headerOptions}>
+    <Stack.Navigator initialRouteName="base-subjectsCollection" {...headerOptions}>
       <Stack.Screen
         name="base-subjectsCollection"
         component={NonArchivedSubjects}

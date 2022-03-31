@@ -4,12 +4,15 @@ import { bindActionCreators } from 'redux';
 import BulkSubjectFormComponent from '../../components/subjects/bulkForm';
 import { updateSubjects } from '../../redux/actions';
 import { categoriesSelector } from '../../redux/selectors';
-import i18n from '../../shared/i18n';
 
 export class BulkSubjectForm extends React.Component {
-  state = {
-    categoryId: -1,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      categoryId: -1,
+    };
+  }
 
   handleChangeCategory = (categoryId) => {
     this.setState({ categoryId });

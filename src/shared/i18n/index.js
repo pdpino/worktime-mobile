@@ -50,9 +50,7 @@ class I18NHandler {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  translate = (key, options) => {
-    return i18n.t(key, options);
-  }
+  translate = (key, options) => i18n.t(key, options)
 }
 
 const i18nSingleton = new I18NHandler();

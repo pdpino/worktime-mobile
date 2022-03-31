@@ -12,18 +12,22 @@ import { alertError } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
 
 export class Importing extends React.Component {
-  state = {
-    path: null,
-    isLoadingPreview: false,
-    device: null,
-    exportedTimestamp: null,
-    importStats: null,
-    processedSubjects: null,
-    subjectsSelection: null,
-    isImporting: false,
-  };
+  constructor(props) {
+    super(props);
 
-  incomingRawSubjects = null;
+    this.state = {
+      path: null,
+      isLoadingPreview: false,
+      device: null,
+      exportedTimestamp: null,
+      importStats: null,
+      processedSubjects: null,
+      subjectsSelection: null,
+      isImporting: false,
+    };
+
+    this.incomingRawSubjects = null;
+  }
 
   displayPreviewError = (errorText) => {
     alertError({ message: errorText });
