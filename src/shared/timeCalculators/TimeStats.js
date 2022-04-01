@@ -5,6 +5,8 @@ import {
 } from '../dates';
 import i18n from '../i18n';
 
+// DEPRECATED: do not use this for new stuff
+
 class TimeStats {
   constructor() {
     /* Internal variables */

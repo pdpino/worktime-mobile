@@ -7,7 +7,9 @@ const calculatorCreator = (action) => makeFunctionAsync((...params) => {
   return timeStats.getStats();
 });
 
-export const sumTimesCalc = calculatorCreator('sumTimes');
-export const sumSubjectTimesCalc = calculatorCreator('sumSubjectTimes');
+export const sumTimesCalc = calculatorCreator('sumTimes'); // DEPRECATED
+export const sumSubjectTimesCalc = calculatorCreator('sumSubjectTimes'); // DEPRECATED
 
-export const getEmptyStats = () => (new TimeStats()).getStats();
+export const getEmptyStats = () => (new TimeStats()).getStats(); // DEPRECATED
+
+export * from './TimeBySpan';
