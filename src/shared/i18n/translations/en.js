@@ -19,6 +19,8 @@ export default {
   status: 'Status',
   summary: 'Summary',
   week: 'Week',
+  trend: 'Trend',
+  timeChart: 'Time chart',
   worktimeVersion: 'Worktime version %{version}',
   work: 'Work',
   formFields: {

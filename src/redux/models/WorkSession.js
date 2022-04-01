@@ -14,6 +14,11 @@ function filterWhiteList(obj) {
 }
 
 class WorkSession extends Model {
+  static getLocalStartDate(queryObj) {
+    // Needed for QuerySet objects (before exporting to model object)
+    return toLocalDate(queryObj.timestampStart, queryObj.tzOffset);
+  }
+
   static import(subject, importableWorkSession) {
     // eslint-disable-next-line no-shadow
     const { WorkSession, Sprint } = this.session;

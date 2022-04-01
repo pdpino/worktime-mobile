@@ -6,7 +6,8 @@ import SubjectsStack from './subjects';
 import WorkStack from './work';
 import DashboardStack from './dashboard';
 import SettingsStack from './settings';
-import WeekStack from './week';
+// import WeekStack from './week';
+import TimeChartStack from './timeChart';
 import i18n from '../shared/i18n';
 
 const iconConfiguration = {
@@ -31,6 +32,10 @@ const iconConfiguration = {
     name: 'settings',
     type: 'material',
   },
+  timeChart: {
+    name: 'linechart',
+    type: 'antdesign',
+  },
 };
 
 const Tab = createBottomTabNavigator();
@@ -39,7 +44,7 @@ export default function Root() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="work"
+        initialRouteName="timeChart"
         screenOptions={({ route }) => {
           const stackRoute = getFocusedRouteNameFromRoute(route);
           return {
@@ -70,9 +75,9 @@ export default function Root() {
           options={{ tabBarLabel: i18n.t('dashboard') }}
         />
         <Tab.Screen
-          name="week"
-          component={WeekStack}
-          options={{ tabBarLabel: i18n.t('week') }}
+          name="timeChart"
+          component={TimeChartStack}
+          options={{ tabBarLabel: i18n.t('trend') }}
         />
         <Tab.Screen
           name="settings"
@@ -83,3 +88,11 @@ export default function Root() {
     </NavigationContainer>
   );
 }
+
+/* FOR NOW:
+        <Tab.Screen
+          name="week"
+          component={WeekStack}
+          options={{ tabBarLabel: i18n.t('week') }}
+        />
+        */

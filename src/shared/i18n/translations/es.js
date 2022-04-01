@@ -19,6 +19,8 @@ export default {
   status: 'Estado',
   summary: 'Resumen',
   week: 'Semana',
+  trend: 'Historia',
+  timeChart: 'Historia',
   worktimeVersion: 'Version Worktime %{version}',
   work: 'Trabajar',
   formFields: {

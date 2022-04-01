@@ -50,16 +50,19 @@ export function prettyHour(timestampOrDate, tzOffset) {
   return date ? format(date, 'HH:mm') : '';
 }
 
-export function prettyDaysAgo(timestamp, options = {}) {
-  if (!isNumber(timestamp)) {
-    return i18n.t('never');
+export function prettyDaysAgo(timestampOrDate, options = {}) {
+  let date = null;
+  if (isValidDate(timestampOrDate)) {
+    date = timestampOrDate;
+  } else if (isNumber(timestampOrDate)) {
+    date = new Date(timestampOrDate * 1000);
   }
-  const date = new Date(timestamp * 1000);
-  return formatDistanceStrict(date, new Date(), {
+
+  return (date != null) ? formatDistanceStrict(date, new Date(), {
     unit: 'day',
     roundingMethod: 'ceil',
     ...options,
-  });
+  }) : i18n.t('never');
 }
 
 export function prettyDuration(totalSeconds, includeSeconds = false) {
