@@ -7,7 +7,7 @@
     "gradle-clean": "cd android && ./gradlew clean",
     "android": "react-native run-android",
     "log": "react-native log-android",
-    "lint": "eslint .",
+    "lint": "eslint src",
     "test": "jest",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "release": "react-native run-android --variant=release",
