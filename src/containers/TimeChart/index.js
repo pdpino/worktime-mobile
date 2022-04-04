@@ -34,6 +34,7 @@ const TimeChartContainer = ({ route }) => {
     <View style={styles.container}>
       <TimeChart
         data={chartData}
+        timeSpan={timeSpan}
       />
       <SpanSelector
         spanSelected={timeSpan}

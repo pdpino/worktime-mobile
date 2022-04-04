@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  Svg, Path, Text, G as Group,
+  Svg, Path, Text, G as Group, Rect,
 } from 'react-native-svg';
-import { format } from 'date-fns';
+import { format, getYear } from 'date-fns';
 import styles from './styles';
 
 // // dummy debug data
@@ -51,7 +51,33 @@ const AXIS_COLOR = 'black';
 const TICK_SIZE = 5;
 const MAX_TICKS = 4;
 
-const TimeChart = ({ data }) => {
+const formatXTick = (date, timeSpan) => {
+  // TODO: improve this function further?
+  // ticks may overlap!
+  const isSameYear = getYear(date) === getYear(new Date());
+
+  switch (timeSpan) {
+    case 'years':
+      return format(date, 'y');
+    case 'months':
+      if (isSameYear) {
+        return format(date, 'MMM');
+      }
+      return format(date, 'y-MMM');
+    case 'weeks':
+    case 'days':
+      if (isSameYear) {
+        return format(date, 'MMM-dd');
+      }
+      return format(date, 'y-MMM-dd');
+    default:
+      throw Error(`Wrong timeSpan in formatXTick: ${timeSpan}, ${date}`);
+  }
+};
+
+const TimeChart = ({
+  data, timeSpan,
+}) => {
   // In chart coordinates
   const bandwidth = CHART_WIDTH / data.length;
   const limX = data.length;
@@ -130,7 +156,7 @@ const TimeChart = ({ data }) => {
         textAnchor="middle"
         rotate={0}
       >
-        {format(data[index].date, 'd MMM')}
+        {formatXTick(data[index].date, timeSpan)}
       </Text>,
     ]);
   }
