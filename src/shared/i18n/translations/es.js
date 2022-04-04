@@ -216,4 +216,10 @@ export default {
     transport: 'Transporte',
     others: 'Otros',
   },
+  timeSpans: {
+    days: 'Días',
+    weeks: 'Semanas',
+    months: 'Meses',
+    years: 'Años',
+  },
 };
