@@ -108,5 +108,9 @@ export function prettyTimezoneOffset(tzOffset) {
 }
 
 export function prettyTimezone(tzOffset, tzName) {
-  return `${tzName} (${prettyTimezoneOffset(tzOffset)})`;
+  const prettyOffset = prettyTimezoneOffset(tzOffset);
+  if (tzName != null) {
+    return `${tzName} (${prettyOffset})`;
+  }
+  return `GMT ${prettyOffset}`;
 }

@@ -9,7 +9,7 @@ import {
   workSessionsSelector, subjectsByIdSelector, categoriesByIdSelector,
 } from '../../redux/selectors';
 import {
-  getToday, prettyHour, prettyDate, prettyTimespanDuration,
+  getToday, prettyHour, prettyDate, prettyDuration,
 } from '../../shared/dates';
 import { HeaderActions } from '../../shared/UI/headers';
 import { getLightColor } from '../../shared/styles';
@@ -84,10 +84,16 @@ export class WeekView extends React.Component {
     const day = prettyDate(event.startDate);
     const startHour = prettyHour(event.startDate);
     const endHour = prettyHour(event.endDate);
-    const duration = prettyTimespanDuration(event.startDate, event.endDate);
+    const {
+      timeTotal, timeEffective, timezone, device,
+    } = event;
+    const percentage = ((timeEffective / timeTotal) * 100).toFixed(1);
+    const line1 = `${day} - ${timezone}\n${startHour} - ${endHour}`;
+    const line2 = `Total: ${prettyDuration(timeTotal)}\nEffective: ${prettyDuration(timeEffective)} (${percentage}%)`;
+    const line3 = `Device: ${device}`;
     Alert.alert(
       event.description,
-      `${day}\n${startHour} - ${endHour}\n${duration}`,
+      `${line1}\n\n${line2}\n\n${line3}`,
     );
   }
 
@@ -125,6 +131,10 @@ export class WeekView extends React.Component {
             endDate: workSession.getLocalEndDate(),
             color: getLightColor(color),
             icon: subject.icon,
+            timezone: workSession.getPrettyTimezone(),
+            device: workSession.device,
+            timeTotal: workSession.timeTotal,
+            timeEffective: workSession.timeEffective,
           };
         });
         this.setState({
