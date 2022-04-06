@@ -41,6 +41,7 @@ export default {
     subjects: 'Subjects',
     subjectsSelected: 'Subjects selected',
     noSubjects: 'No subjects',
+    createASubjectToBegin: 'Create a subject to begin',
     nSubjects: '%{count} subjects',
     editSubject: 'Edit subject',
     editSubjects: 'Edit subjects',

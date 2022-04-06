@@ -14,7 +14,7 @@ import {
 } from '../../redux/selectors';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
-import { getCategoriesWithSubjects } from '../../shared/utils/subjects';
+import { getCategoriesWithSubjects, keepOnlyNonEmptyCategories } from '../../shared/utils/subjects';
 
 export class WorkPlayer extends React.Component {
   getStatus() {
@@ -74,7 +74,9 @@ export class WorkPlayer extends React.Component {
       timeEffective: lastTimeEffective,
     } = (lastRunningSession || {});
 
-    const categoriesWithSubjects = getCategoriesWithSubjects(subjects, categories);
+    const categoriesWithSubjects = keepOnlyNonEmptyCategories(
+      getCategoriesWithSubjects(subjects, categories),
+    );
 
     return (
       <WorkPlayerComponent>

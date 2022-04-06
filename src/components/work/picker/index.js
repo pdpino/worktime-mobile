@@ -33,7 +33,6 @@ class SubjectsList extends React.Component {
         onPressCategory={null}
         hideDescription
         littleAir
-        hideEmptyCategories
       />
     );
   }

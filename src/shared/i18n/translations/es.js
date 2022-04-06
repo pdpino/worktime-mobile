@@ -41,6 +41,7 @@ export default {
     subjects: 'Temas',
     subjectsSelected: 'Temas seleccionados',
     noSubjects: 'Sin temas',
+    createASubjectToBegin: 'Crea un tema para empezar',
     nSubjects: '%{count} temas',
     editSubject: 'Editar tema',
     editSubjects: 'Editar temas',

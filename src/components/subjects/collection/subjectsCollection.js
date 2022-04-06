@@ -13,27 +13,25 @@ const styles = StyleSheet.create({
 
 const EmptyListComponent = () => (
   <Text style={styles.emptyList}>
-    {i18n.t('entities.noSubjects')}
+    {i18n.t('entities.createASubjectToBegin')}
   </Text>
 );
 
 const SubjectsCollection = ({
   categoriesWithSubjects, selectedSubjects,
   onPressSubject, onLongPressSubject, onPressCategory,
-  listStyle, hideDescription, littleAir, hideEmptyCategories,
+  listStyle, hideDescription, littleAir,
 }) => {
   const renderCategoryItem = ({ item }) => (
-    (!hideEmptyCategories || item.subjects.length > 0) ? (
-      <CategoryItem
-        category={item}
-        selectedSubjects={selectedSubjects}
-        onPressSubject={onPressSubject}
-        onLongPressSubject={onLongPressSubject}
-        onPressCategory={onPressCategory}
-        hideDescription={hideDescription}
-        littleAir={littleAir}
-      />
-    ) : null
+    <CategoryItem
+      category={item}
+      selectedSubjects={selectedSubjects}
+      onPressSubject={onPressSubject}
+      onLongPressSubject={onLongPressSubject}
+      onPressCategory={onPressCategory}
+      hideDescription={hideDescription}
+      littleAir={littleAir}
+    />
   );
 
   return (

@@ -40,7 +40,12 @@ export const getCategoriesWithSubjects = memoizeOne((subjects, categories) => {
       const categoryId = subject.category
         ? subject.category.id
         : Category.noCategoryId;
-      categoryToSubjects[categoryId].push(subject);
+      const categoryList = categoryToSubjects[categoryId];
+      if (!categoryList) {
+        // (internal) error: a subject points to a non-existent category
+        return;
+      }
+      categoryList.push(subject);
     });
   }
 
@@ -66,20 +71,20 @@ export const getCategoriesWithSubjects = memoizeOne((subjects, categories) => {
     const length1 = category1.subjects.length;
     const length2 = category2.subjects.length;
     if (length1 === 0 && length2 > 0) {
-      // 2 goes first
+      // cat2 goes first
       return 1;
     }
     if (length1 > 0 && length2 === 0) {
-      // 1 goes first
+      // cat1 goes first
       return -1;
     }
 
     if (category1.id === -1) {
-      // 2 goes first ("No category" is last)
+      // cat2 goes first ("No category" is last)
       return 1;
     }
     if (category2.id === -1) {
-      // 1 goes first ("No category" is last)
+      // cat1 goes first ("No category" is last)
       return -1;
     }
     const name1 = category1.name.toLowerCase();
@@ -87,3 +92,7 @@ export const getCategoriesWithSubjects = memoizeOne((subjects, categories) => {
     return name1 <= name2 ? -1 : 1;
   });
 });
+
+export const keepOnlyNonEmptyCategories = (
+  categoriesWithSubjects,
+) => categoriesWithSubjects.filter((cat) => cat.subjects.length > 0);
