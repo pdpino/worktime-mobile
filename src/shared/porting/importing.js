@@ -111,7 +111,31 @@ export const processSubjects = makeFunctionAsync((
 
   return {
     metadata: allMetadata,
-    processedSubjects,
+    processedSubjects: processedSubjects.sort((subj1, subj2) => {
+      // -1 if subj1 first
+      // 0 if equal
+      // 1 if subj2 first
+
+      const { metadata: meta1 } = subj1;
+      const { metadata: meta2 } = subj2;
+
+      // Always new subjects first
+      if (!meta1.exists && meta2.exists) return -1;
+      if (meta1.exists && !meta2.exists) return 1;
+
+      // Subjects with more work-sessions first
+      if (meta1.accepted > meta2.accepted) return -1;
+      if (meta1.accepted < meta2.accepted) return 1;
+
+      // Subjects with most recent work-sessions
+      if (meta1.maxTimestamp > meta2.maxTimestamp) return -1;
+      if (meta1.maxTimestamp < meta2.maxTimestamp) return 1;
+
+      // Lastly, by name
+      const name1 = simplifyName(subj1.data.name);
+      const name2 = simplifyName(subj2.data.name);
+      return name1 <= name2 ? -1 : 1;
+    }),
   };
 });
 
