@@ -1,19 +1,15 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SettingsMenu from '../containers/settings/menu';
 import Profile from '../containers/settings/profile';
 import Exporting from '../containers/settings/exporting';
 import Importing from '../containers/settings/importing';
-import headerOptions from './header';
 import i18n from '../shared/i18n';
 
-const Stack = createNativeStackNavigator();
-
-export default function SettingsStack() {
+export default function createSettingsStack(Stack) {
   return (
-    <Stack.Navigator initialRouteName="base-menu" {...headerOptions}>
+    <Stack.Group>
       <Stack.Screen
-        name="base-menu"
+        name="settings-menu"
         component={SettingsMenu}
         options={{ title: i18n.t('settings') }}
       />
@@ -32,6 +28,6 @@ export default function SettingsStack() {
         component={Importing}
         options={{ title: i18n.t('porting.importData') }}
       />
-    </Stack.Navigator>
+    </Stack.Group>
   );
 }

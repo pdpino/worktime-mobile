@@ -5,8 +5,7 @@ import { Icon } from 'react-native-elements';
 import SubjectsStack from './subjects';
 import WorkStack from './work';
 import DashboardStack from './dashboard';
-import SettingsStack from './settings';
-// import WeekStack from './week';
+import WeekStack from './week';
 import TimeChartStack from './timeChart';
 import i18n from '../shared/i18n';
 
@@ -75,24 +74,17 @@ export default function Root() {
           options={{ tabBarLabel: i18n.t('dashboard') }}
         />
         <Tab.Screen
-          name="timeChart"
-          component={TimeChartStack}
-          options={{ tabBarLabel: i18n.t('trend') }}
-        />
-        <Tab.Screen
-          name="settings"
-          component={SettingsStack}
-          options={{ tabBarLabel: i18n.t('settings') }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
-}
-
-/* FOR NOW:
-        <Tab.Screen
           name="week"
           component={WeekStack}
           options={{ tabBarLabel: i18n.t('week') }}
         />
-        */
+        <Tab.Screen
+          name="timeChart"
+          component={TimeChartStack}
+          options={{ tabBarLabel: i18n.t('trend') }}
+        />
+
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
