@@ -30,17 +30,13 @@ class App extends React.Component {
     this.appState.listenOnActivate(() => store.dispatch(onAppActivate()));
     this.appState.listenOnDeactivate(() => store.dispatch(onAppDeactivate()));
 
-    I18N.listenLocaleChanges(() => {
-      NotificationsService.updateTranslations();
-      if (this.state.storeReady) {
-        this.forceUpdate();
-      }
-    });
+    NotificationsService.listenForegroundEvents();
   }
 
   componentWillUnmount() {
     this.appState.removeListeners();
     I18N.removeListeners();
+    NotificationsService.removeListeners();
   }
 
   finishRehydrating = () => {
