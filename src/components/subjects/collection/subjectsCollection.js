@@ -22,9 +22,9 @@ const SubjectsCollection = ({
   onPressSubject, onLongPressSubject, onPressCategory,
   listStyle, hideDescription, littleAir,
 }) => {
-  const renderCategoryItem = ({ item }) => (
+  const renderCategoryItem = ({ item: category }) => (
     <CategoryItem
-      category={item}
+      category={category}
       selectedSubjects={selectedSubjects}
       onPressSubject={onPressSubject}
       onLongPressSubject={onLongPressSubject}

@@ -12,14 +12,14 @@ import i18n from '../i18n';
  * [
  *   {
  *     name: 'Work',
- *     subjects: [
+ *     data: [
  *       { id: '1', name: 'subj 1' },
  *       { id: '2', name: 'subj 2', description: 'do this and that' },
  *     ],
  *   },
- *   { name: 'other', subjects: [] },
- *   { name: 'Personal stuff', subjects: [{ id: '5', name: 'subj 5' }] },
- *   { name: 'No Category', subjects: [{ id: '6', name: 'subj 6' }] },
+ *   { name: 'other', data: [] },
+ *   { name: 'Personal stuff', data: [{ id: '5', name: 'subj 5' }] },
+ *   { name: 'No Category', data: [{ id: '6', name: 'subj 6' }] },
  * ];
  * Subjects returned are from the Subject Model, but categories are plain
  * objects.
@@ -53,7 +53,7 @@ export const getCategoriesWithSubjects = memoizeOne((subjects, categories) => {
     id: category.id,
     name: category.name,
     color: category.color,
-    subjects: categoryToSubjects[category.id],
+    data: categoryToSubjects[category.id],
   }));
 
   const orphanSubjects = categoryToSubjects[Category.noCategoryId];
@@ -62,14 +62,14 @@ export const getCategoriesWithSubjects = memoizeOne((subjects, categories) => {
       id: Category.noCategoryId,
       name: i18n.t('entities.noCategory'),
       color: Category.noCategoryColor,
-      subjects: orphanSubjects,
+      data: orphanSubjects,
     });
   }
 
   // OPTIMIZE: do this more efficiently?
   return categoriesWithSubjects.sort((category1, category2) => {
-    const length1 = category1.subjects.length;
-    const length2 = category2.subjects.length;
+    const length1 = category1.data.length;
+    const length2 = category2.data.length;
     if (length1 === 0 && length2 > 0) {
       // cat2 goes first
       return 1;
@@ -95,4 +95,4 @@ export const getCategoriesWithSubjects = memoizeOne((subjects, categories) => {
 
 export const keepOnlyNonEmptyCategories = (
   categoriesWithSubjects,
-) => categoriesWithSubjects.filter((cat) => cat.subjects.length > 0);
+) => categoriesWithSubjects.filter((cat) => cat.data.length > 0);

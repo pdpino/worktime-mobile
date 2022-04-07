@@ -41,7 +41,7 @@ class CategoryItem extends React.PureComponent {
 
     const subjectsList = (
       <SubjectList
-        subjects={category.subjects}
+        subjects={category.data}
         selectedSubjects={selectedSubjects}
         categoryColor={category.color}
         onPressSubject={onPressSubject}
