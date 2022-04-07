@@ -221,17 +221,22 @@ function createSubjectsCollection(isArchive) {
     }
 
     handleEditSelected = () => {
-      const selectedIds = this.getSelectionArray();
-      if (selectedIds.length > 1) {
-        const { subjects, selection } = this.props;
-        const selectedSubjects = subjects.filter((subj) => selection[subj.id]);
+      // FIXME: selectedIdsArray vs selectedIdsObj, naming mess!
+      // probably fixed by out-sourcing selection logic
+      const selectedIdsArray = this.getSelectionArray();
+      if (selectedIdsArray.length > 1) {
+        const { subjects } = this.props;
+        const { selectedIds: selectedIdsObj } = this.state;
+        const selectedSubjects = subjects.filter(
+          (subj) => selectedIdsObj[subj.id],
+        );
 
         this.handleUnselection();
         this.props.navigation.navigate('bulkEditSubject', {
           subjects: selectedSubjects,
         });
-      } else {
-        const subject = this.findSubject(selectedIds[0]);
+      } else if (selectedIdsArray.length === 1) {
+        const subject = this.findSubject(selectedIdsArray[0]);
         if (subject) {
           this.handleUnselection();
           this.props.navigation.navigate('editSubject', { subject });
