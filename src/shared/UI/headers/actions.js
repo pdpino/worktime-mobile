@@ -1,28 +1,45 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ClickableIcon } from '../icons';
-import commonStyles from './styles';
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    paddingRight: 5,
     alignItems: 'center',
+  },
+  iconContainer: {
+    marginLeft: 10,
   },
 });
 
-const HeaderActions = ({ actions }) => (
-  <View style={styles.container}>
-    {actions.map((action, index) => (action.disabled ? null : (
+const HeaderActions = ({ actions }) => {
+  if (actions.length === 0) {
+    return null;
+  }
+  if (actions.length === 1) {
+    const action = actions[0];
+    return action.disabled ? null : (
       <ClickableIcon
-        key={index.toString()}
-        containerStyle={commonStyles.iconContainer}
+        containerStyle={styles.iconContainer}
         icon={action.icon}
         color={action.color}
         onPress={action.handlePress}
       />
-    )))}
-  </View>
-);
+    );
+  }
+  return (
+    <View style={styles.container}>
+      {actions.map((action, index) => (action.disabled ? null : (
+        <ClickableIcon
+          key={index.toString()}
+          containerStyle={styles.iconContainer}
+          icon={action.icon}
+          color={action.color}
+          onPress={action.handlePress}
+        />
+      )))}
+    </View>
+  );
+};
 
 export default HeaderActions;

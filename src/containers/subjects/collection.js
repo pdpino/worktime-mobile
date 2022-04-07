@@ -6,7 +6,9 @@ import SubjectsCollectionComponent from '../../components/subjects/collection';
 import { subjectsSelector, categoriesSelector } from '../../redux/selectors';
 import { archiveSubjects, deleteSubjects } from '../../redux/actions';
 import { MultipleNewButton } from '../../shared/UI/buttons';
-import { HeaderActions, getSelectionHeaderParams } from '../../shared/UI/headers';
+import {
+  HeaderActions, getSelectionHeaderParams, revertHeaderParams,
+} from '../../shared/UI/headers';
 import afterInteractions from '../../hoc/afterInteractions';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
@@ -54,6 +56,18 @@ function createSubjectsCollection(isArchive) {
           color: colors.orange,
         },
       ];
+
+      if (!isArchive) {
+        const goToArchiveAction = {
+          icon: 'archivedFolder',
+          handlePress: this.handlePressArchive,
+        };
+        this.titleKey = 'entities.subjects'; // HACK: Titles copied from routes
+        this.basicActions = [goToArchiveAction];
+      } else {
+        this.titleKey = 'archive';
+        this.basicActions = null;
+      }
     }
 
     componentDidMount() {
@@ -73,25 +87,32 @@ function createSubjectsCollection(isArchive) {
         ),
       );
 
-      if (!isArchive) {
-        const goToArchiveAction = {
-          icon: 'archivedFolder',
-          handlePress: this.handlePressArchive,
-        };
-
+      if (this.basicActions) {
         this.props.navigation.setOptions({
-          headerRight: () => <HeaderActions actions={[goToArchiveAction]} />,
+          headerRight: () => <HeaderActions actions={this.basicActions} />,
         });
       }
     }
 
     componentDidUpdate(_prevProps, prevState) {
       const { amountSelected } = this.state;
-      if (amountSelected && prevState.amountSelected === 0) {
+      if (amountSelected === prevState.amountSelected) {
+        return;
+      }
+
+      if (amountSelected) {
         this.props.navigation.setOptions(getSelectionHeaderParams({
           amountSelected,
           actions: this.selectionActions,
           handleUnselection: this.handleUnselection,
+        }));
+      } else {
+        const { route } = this.props;
+        const back = !route.name.includes('base-'); // HACK copied from routes
+        this.props.navigation.setOptions(revertHeaderParams({
+          title: i18n.t(this.titleKey),
+          actions: this.basicActions,
+          back,
         }));
       }
     }

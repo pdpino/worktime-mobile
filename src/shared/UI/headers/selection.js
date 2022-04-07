@@ -1,16 +1,23 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { CrossIcon } from '../icons';
 import HeaderActions from './actions';
-import commonStyles from './styles';
 import { colors } from '../../styles';
 
-const getSelectionHeaderParams = ({
+const styles = StyleSheet.create({
+  iconContainer: {
+    marginRight: 25,
+  },
+});
+
+export const getSelectionHeaderParams = ({
   amountSelected, actions, handleUnselection,
 }) => ({
   title: amountSelected.toString(),
+  headerBackVisible: false,
   headerLeft: () => (
     <CrossIcon
-      containerStyle={commonStyles.iconContainer}
+      containerStyle={styles.iconContainer}
       onPress={handleUnselection}
     />
   ),
@@ -20,4 +27,16 @@ const getSelectionHeaderParams = ({
   },
 });
 
-export default getSelectionHeaderParams;
+export const revertHeaderParams = ({
+  title, actions, back,
+}) => ({
+  title,
+  headerBackVisible: !!back,
+  headerLeft: () => null,
+  headerRight: actions && (() => <HeaderActions actions={actions} />),
+  // HACK: copied from screens/header.js // FIXME!!
+  headerStyle: {
+    backgroundColor: colors.mainBlue,
+  },
+  headerTintColor: 'white',
+});
