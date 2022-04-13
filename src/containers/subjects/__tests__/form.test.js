@@ -4,11 +4,7 @@ import renderer from 'react-test-renderer';
 import { getFactory } from '../../../redux/__tests__';
 import { SubjectForm } from '../form';
 
-const navigation = {
-  navigate: jest.fn(),
-  setParams: jest.fn(),
-  addListener: jest.fn(),
-};
+/* global helperMockBuilders */
 
 const factory = getFactory();
 
@@ -27,7 +23,7 @@ describe('<SubjectForm>', () => {
     it('renders with basic props', async () => {
       renderer.create(
         <SubjectForm
-          navigation={navigation}
+          {...helperMockBuilders.NavigationProps()}
           subject={subject}
           categories={categories}
         />,
@@ -37,7 +33,7 @@ describe('<SubjectForm>', () => {
     it('renders with no categories', async () => {
       renderer.create(
         <SubjectForm
-          navigation={navigation}
+          {...helperMockBuilders.NavigationProps()}
           subject={subject}
         />,
       );
@@ -48,7 +44,7 @@ describe('<SubjectForm>', () => {
     it('renders with basic props', async () => {
       renderer.create(
         <SubjectForm
-          navigation={navigation}
+          {...helperMockBuilders.NavigationProps()}
           categories={categories}
         />,
       );
@@ -57,7 +53,7 @@ describe('<SubjectForm>', () => {
     it('renders with no categories', async () => {
       renderer.create(
         <SubjectForm
-          navigation={navigation}
+          {...helperMockBuilders.NavigationProps()}
         />,
       );
     });

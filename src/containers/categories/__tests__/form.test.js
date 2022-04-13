@@ -4,11 +4,7 @@ import renderer from 'react-test-renderer';
 import { getFactory } from '../../../redux/__tests__';
 import { CategoryForm } from '../form';
 
-const navigation = {
-  navigate: jest.fn(),
-  setParams: jest.fn(),
-  addListener: jest.fn(),
-};
+/* global helperMockBuilders */
 
 const factory = getFactory();
 
@@ -22,7 +18,7 @@ describe('<CategoryForm>', () => {
     it('renders with basic props', async () => {
       renderer.create(
         <CategoryForm
-          navigation={navigation}
+          {...helperMockBuilders.NavigationProps()}
           category={category}
         />,
       );
@@ -33,7 +29,7 @@ describe('<CategoryForm>', () => {
     it('renders with basic props', async () => {
       renderer.create(
         <CategoryForm
-          navigation={navigation}
+          {...helperMockBuilders.NavigationProps()}
         />,
       );
     });

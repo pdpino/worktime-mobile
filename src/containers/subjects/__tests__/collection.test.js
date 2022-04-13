@@ -5,13 +5,12 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { FactoryHandler } from '../../../redux/__tests__';
-import createSubjectsCollection from '../collection';
+import {
+  NonArchivedSubjects as SubjectsCollection,
+  ArchivedSubjects as ArchivedSubjectsCollection,
+} from '../collection';
 
-const navigation = {
-  navigate: jest.fn(),
-  setParams: jest.fn(),
-  addListener: jest.fn(),
-};
+/* global helperMockBuilders */
 
 const factoryHandler = new FactoryHandler();
 
@@ -23,8 +22,6 @@ beforeEach(() => {
 });
 
 describe('<SubjectsCollection>', () => {
-  const SubjectsCollection = createSubjectsCollection(false);
-
   it('renders with basic props', async () => {
     await factoryHandler.factory.createMany('Subject', 3);
 
@@ -33,7 +30,7 @@ describe('<SubjectsCollection>', () => {
     });
     renderer.create(
       <Provider store={store}>
-        <SubjectsCollection navigation={navigation} />
+        <SubjectsCollection {...helperMockBuilders.NavigationProps()} />
       </Provider>,
     );
   });
@@ -44,15 +41,13 @@ describe('<SubjectsCollection>', () => {
     });
     renderer.create(
       <Provider store={store}>
-        <SubjectsCollection navigation={navigation} />
+        <SubjectsCollection {...helperMockBuilders.NavigationProps()} />
       </Provider>,
     );
   });
 });
 
 describe('<ArchivedSubjectsCollection>', () => {
-  const ArchivedSubjectsCollection = createSubjectsCollection(true);
-
   it('renders with basic props', async () => {
     await factoryHandler.factory.createMany('Subject', 3);
     store = mockStore({
@@ -61,7 +56,7 @@ describe('<ArchivedSubjectsCollection>', () => {
 
     renderer.create(
       <Provider store={store}>
-        <ArchivedSubjectsCollection navigation={navigation} />
+        <ArchivedSubjectsCollection {...helperMockBuilders.NavigationProps()} />
       </Provider>,
     );
   });
@@ -72,7 +67,7 @@ describe('<ArchivedSubjectsCollection>', () => {
     });
     renderer.create(
       <Provider store={store}>
-        <ArchivedSubjectsCollection navigation={navigation} />
+        <ArchivedSubjectsCollection {...helperMockBuilders.NavigationProps()} />
       </Provider>,
     );
   });

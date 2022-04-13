@@ -87,7 +87,7 @@
       "jest-chain"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-navigation|react-navigation-redux-helpers)"
+      "node_modules/(?!(jest-)?react-native|@react-native|@react-navigation)"
     ],
     "testRegex": "(/__tests__/.*|\\.|/)(test|spec)\\.[jt]sx?$"
   }

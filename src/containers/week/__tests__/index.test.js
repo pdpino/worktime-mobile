@@ -3,23 +3,19 @@ import renderer from 'react-test-renderer';
 
 import { WeekView } from '../index';
 
-const navigation = {
-  navigate: jest.fn(),
-  setParams: jest.fn(),
-  addListener: jest.fn(),
-};
+/* global helperMockBuilders */
 
 describe('<WeekView>', () => {
   it('renders with no props', async () => {
     renderer.create(
-      <WeekView navigation={navigation} />,
+      <WeekView {...helperMockBuilders.NavigationProps()} />,
     );
   });
 
   it('renders with empty work sessions', async () => {
     renderer.create(
       <WeekView
-        navigation={navigation}
+        {...helperMockBuilders.NavigationProps()}
         workSessions={[]}
       />,
     );

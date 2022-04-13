@@ -4,11 +4,7 @@ import renderer from 'react-test-renderer';
 import { getFactory } from '../../../redux/__tests__';
 import { WorkPlayer } from '../player';
 
-const navigation = {
-  navigate: jest.fn(),
-  setParams: jest.fn(),
-  addListener: jest.fn(),
-};
+/* global helperMockBuilders */
 
 const factory = getFactory();
 
@@ -20,7 +16,7 @@ describe('<WorkPlayer>', () => {
 
     renderer.create(
       <WorkPlayer
-        navigation={navigation}
+        {...helperMockBuilders.NavigationProps()}
         runningSession={runningSession}
       />,
     );
@@ -29,7 +25,7 @@ describe('<WorkPlayer>', () => {
   it('renders with fresh installation props', async () => {
     renderer.create(
       <WorkPlayer
-        navigation={navigation}
+        {...helperMockBuilders.NavigationProps()}
         subjectsForPicker={[]}
         selectedSubject={null}
         runningSession={null}
@@ -41,7 +37,7 @@ describe('<WorkPlayer>', () => {
   it('renders with no props present', async () => {
     renderer.create(
       <WorkPlayer
-        navigation={navigation}
+        {...helperMockBuilders.NavigationProps()}
       />,
     );
   });

@@ -4,11 +4,7 @@ import renderer from 'react-test-renderer';
 import { getFactory } from '../../../redux/__tests__';
 import { BulkSubjectForm } from '../bulkForm';
 
-const navigation = {
-  navigate: jest.fn(),
-  setParams: jest.fn(),
-  addListener: jest.fn(),
-};
+/* global helperMockBuilders */
 
 const factory = getFactory();
 
@@ -23,7 +19,7 @@ describe('<BulkSubjectForm>', () => {
   it('renders with basic props', async () => {
     renderer.create(
       <BulkSubjectForm
-        navigation={navigation}
+        {...helperMockBuilders.NavigationProps()}
         subjects={subjects}
         categories={categories}
       />,
@@ -33,7 +29,7 @@ describe('<BulkSubjectForm>', () => {
   it('renders with only 1 subject', async () => {
     renderer.create(
       <BulkSubjectForm
-        navigation={navigation}
+        {...helperMockBuilders.NavigationProps()}
         subjects={subjects.slice(0, 1)}
         categories={categories}
       />,
@@ -43,7 +39,7 @@ describe('<BulkSubjectForm>', () => {
   it('renders with 0 categories', async () => {
     renderer.create(
       <BulkSubjectForm
-        navigation={navigation}
+        {...helperMockBuilders.NavigationProps()}
         subjects={subjects}
         categories={[]}
       />,
@@ -53,7 +49,7 @@ describe('<BulkSubjectForm>', () => {
   it('renders with no categories prop', async () => {
     renderer.create(
       <BulkSubjectForm
-        navigation={navigation}
+        {...helperMockBuilders.NavigationProps()}
         subjects={subjects}
       />,
     );

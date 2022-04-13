@@ -4,11 +4,7 @@ import renderer from 'react-test-renderer';
 import { getFactory } from '../../../redux/__tests__';
 import { Dashboard } from '../index';
 
-const navigation = {
-  navigate: jest.fn(),
-  setParams: jest.fn(),
-  addListener: jest.fn(),
-};
+/* global helperMockBuilders */
 
 const factory = getFactory();
 
@@ -19,7 +15,7 @@ describe('<Dashboard>', () => {
 
     renderer.create(
       <Dashboard
-        navigation={navigation}
+        {...helperMockBuilders.NavigationProps()}
         subjects={subjects}
         categories={categories}
       />,
@@ -29,7 +25,7 @@ describe('<Dashboard>', () => {
   it('renders with empty props', async () => {
     renderer.create(
       <Dashboard
-        navigation={navigation}
+        {...helperMockBuilders.NavigationProps()}
         subjects={[]}
         categories={[]}
       />,

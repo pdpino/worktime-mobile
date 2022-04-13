@@ -4,12 +4,7 @@ import renderer from 'react-test-renderer';
 import { getFactory } from '../../../redux/__tests__';
 import { SubjectShow } from '../show';
 
-// TODO: reuse navigation mock
-const navigation = {
-  navigate: jest.fn(),
-  setParams: jest.fn(),
-  addListener: jest.fn(),
-};
+/* global helperMockBuilders */
 
 const factory = getFactory();
 
@@ -19,7 +14,7 @@ describe('<SubjectShow>', () => {
 
     renderer.create(
       <SubjectShow
-        navigation={navigation}
+        {...helperMockBuilders.NavigationProps()}
         subject={subject}
       />,
     );
