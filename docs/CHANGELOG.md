@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## 1.16.0 - 2022-04-13
+### Added
+* Application icon
+
+### Changed
+* Upgraded react and react-native versions (17 and 0.64)
+* Upgrade other dependencies
+
+
 ## 1.15.4 - 2021-01-19
 ### Fixed
 * Icon was not showing in week-view
