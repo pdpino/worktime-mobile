@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 
 
+## 1.16.1 - 2022-04-21
+### Changed
+* Improve default/empty messages:
+  * _"Create a subject to begin"_
+  * The subject form icon should be more intuitive
+* Importing view
+  * Sort processed subjects
+  * Display last imported dates
+* Alert night-theme is replaced by a light-theme
+* Include archived subjects in Dashboard
+* Display more info in week-view modal
+
 
 ## 1.16.0 - 2022-04-13
 ### Added
