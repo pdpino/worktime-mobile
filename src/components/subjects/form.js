@@ -38,6 +38,7 @@ const SubjectForm = ({
         size={30}
         color={getLightColor(color)}
         onSelect={onChangeIcon}
+        defaultToIcon
       />
       <TextField
         containerStyle={styles.nameContainer}

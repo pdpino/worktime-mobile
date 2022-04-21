@@ -337,6 +337,12 @@ const iconsConfigByCategory = {
   },
 };
 
+const DEFAULT_ICON_CONFIG = {
+  name: 'image-search',
+  type: 'material-community',
+  size: 32,
+};
+
 const iconsConfigByName = {};
 
 const iconsList = Object.keys(iconsConfigByCategory).map((categoryName) => {
@@ -359,4 +365,5 @@ const iconsList = Object.keys(iconsConfigByCategory).map((categoryName) => {
 export {
   iconsList,
   iconsConfigByName,
+  DEFAULT_ICON_CONFIG,
 };

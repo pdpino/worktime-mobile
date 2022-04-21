@@ -76,6 +76,7 @@ class SubjectItem extends React.PureComponent {
             size={26}
             color={getLightColor(categoryColor)}
             containerStyle={{ marginVertical: littleAir ? 0 : 5 }}
+            defaultToIcon={false}
           />
           {detail}
         </View>

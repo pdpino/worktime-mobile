@@ -3,7 +3,7 @@ import {
   StyleSheet, View, Text,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { iconsConfigByName } from './list';
+import { iconsConfigByName, DEFAULT_ICON_CONFIG } from './list';
 import { colors } from '../../../styles';
 
 const CONTAINER_MARGIN = 8;
@@ -43,9 +43,11 @@ const getCircleStyle = (size) => {
 const getFontSize = (size) => Math.floor(size * FONT_FACTOR);
 
 const AssignableIcon = ({
-  name, icon, color, size, containerStyle,
+  name, icon, color, size, containerStyle, defaultToIcon,
 }) => {
-  const iconConfig = icon && iconsConfigByName[icon];
+  const iconConfig = (icon && iconsConfigByName[icon])
+    || (defaultToIcon ? DEFAULT_ICON_CONFIG : null);
+
   if (iconConfig) {
     return (
       <Icon

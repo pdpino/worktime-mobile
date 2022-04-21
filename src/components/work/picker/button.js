@@ -83,6 +83,7 @@ class PickerButton extends React.Component {
           icon={subject.icon}
           color={color}
           size={30}
+          defaultToIcon={false}
         />
         <View style={styles.namesContainer}>
           <Text style={[styles.categoryName, { color }]}>
