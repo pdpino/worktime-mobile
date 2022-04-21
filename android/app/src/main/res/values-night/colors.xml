@@ -1,0 +1,10 @@
+<resources>
+    <!--
+        For now, there is no dark theme, thus use the same colors as light theme.
+    This is a somewhat hacky way to change the colors of the alert, see issues:
+        https://github.com/facebook/react-native/issues/28502 and
+        https://github.com/facebook/react-native/issues/31345
+    -->
+    <color name="alert_background">#ffffff</color>
+    <color name="alert_text">#000000</color>
+</resources>
