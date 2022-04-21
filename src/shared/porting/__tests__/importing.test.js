@@ -403,6 +403,12 @@ describe('processSubjects', () => {
   });
 
   describe('Specific metadata', () => {
+    // Subjects in processedSubjects must be found by name
+    const getMetadataByName = (procSubjects, name) => {
+      const subj = procSubjects.find((s) => s.data.name === name);
+      return subj ? subj.metadata : {};
+    };
+
     it('Sets exists correctly', async () => {
       const incomingSubjects = [
         { name: 'old subject', description: '' },
@@ -415,9 +421,11 @@ describe('processSubjects', () => {
         null,
         'laptop',
       );
-      const metadatas = processedSubjects.map((s) => s.metadata);
-      expect(metadatas[0].exists).toBeTruthy();
-      expect(metadatas[1].exists).toBeFalsy();
+      const metaS1 = getMetadataByName(processedSubjects, 'old subject');
+      const metaS2 = getMetadataByName(processedSubjects, 'new subject');
+
+      expect(metaS1.exists).toBeTruthy();
+      expect(metaS2.exists).toBeFalsy();
     });
 
     it('Counts ignored and accepted', async () => {
@@ -453,12 +461,14 @@ describe('processSubjects', () => {
         null,
         'laptop',
       );
-      const metadatas = processedSubjects.map((s) => s.metadata);
-      expect(metadatas[0].ignored).toEqual(1);
-      expect(metadatas[0].accepted).toEqual(2);
+      const metaS1 = getMetadataByName(processedSubjects, 'old subject');
+      const metaS2 = getMetadataByName(processedSubjects, 'new subject');
 
-      expect(metadatas[1].ignored).toEqual(0);
-      expect(metadatas[1].accepted).toEqual(5);
+      expect(metaS1.ignored).toEqual(1);
+      expect(metaS1.accepted).toEqual(2);
+
+      expect(metaS2.ignored).toEqual(0);
+      expect(metaS2.accepted).toEqual(5);
     });
 
     it('Extracts max and min timestamp', async () => {
@@ -492,12 +502,13 @@ describe('processSubjects', () => {
         null,
         'laptop',
       );
-      const metadatas = processedSubjects.map((s) => s.metadata);
-      expect(metadatas[0].minTimestamp).toEqual(20001);
-      expect(metadatas[0].maxTimestamp).toEqual(20002);
+      const metaS1 = getMetadataByName(processedSubjects, 'old subject');
+      const metaS2 = getMetadataByName(processedSubjects, 'new subject');
+      expect(metaS1.minTimestamp).toEqual(20001);
+      expect(metaS1.maxTimestamp).toEqual(20002);
 
-      expect(metadatas[1].minTimestamp).toEqual(20001);
-      expect(metadatas[1].maxTimestamp).toEqual(20003);
+      expect(metaS2.minTimestamp).toEqual(20001);
+      expect(metaS2.maxTimestamp).toEqual(20003);
     });
   });
 });
