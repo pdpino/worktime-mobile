@@ -1,5 +1,6 @@
 import {
   startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth,
+  subWeeks,
 } from 'date-fns';
 
 export function getDateCopy(date) {
@@ -23,8 +24,8 @@ export function getEndOfDay(date) {
   return date && endOfDay(date);
 }
 
-export function getStartOfWeek() {
-  return startOfWeek(new Date(), {
+export function getStartOfWeek(date = null) {
+  return startOfWeek((date || new Date()), {
     weekStartsOn: 1,
   });
 }
@@ -41,4 +42,8 @@ export function getStartOfMonth() {
 
 export function getEndOfMonth() {
   return endOfMonth(new Date());
+}
+
+export function getNWeeksBefore(nWeeks, date = null) {
+  return subWeeks(getStartOfWeek(date), nWeeks);
 }

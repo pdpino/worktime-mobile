@@ -20,3 +20,7 @@ export const workSessionsSelectorByRange = createOrmSelector(
     return filteredSessions.toModelArray();
   },
 );
+
+export const workSessionsQuerySelector = createOrmSelector(
+  (ormSession) => ormSession.WorkSession.all(),
+);

@@ -23,9 +23,9 @@ export function getTimezoneOffset() {
   return (new Date()).getTimezoneOffset() * 60;
 }
 
-export function getTimestamp() {
+export function getTimestamp(date = null) {
   // in seconds
-  return Date.now() / 1000;
+  return (date || Date.now()) / 1000;
 }
 
 export function getTimestampString() {

@@ -1,18 +1,26 @@
 import React from 'react';
 import { Alert } from 'react-native';
 import { connect } from 'react-redux';
-import { sortEventsByDate } from 'react-native-week-view/src/utils';
-import WeekViewComponent from '../../components/week';
-import NDaysPicker from '../../components/week/nDaysPicker';
+import { bucketEventsByDate } from 'react-native-week-view/src/utils';
+import { differenceInWeeks } from 'date-fns';
+import {
+  WeekViewComponent, Week, NDaysPicker,
+} from '../../components/week';
 import { Memoizer } from '../../shared/utils';
 import {
-  workSessionsSelector, subjectsByIdSelector, categoriesByIdSelector,
+  workSessionsQuerySelector, subjectsByIdSelector, categoriesByIdSelector,
 } from '../../redux/selectors';
 import {
-  getToday, prettyHour, prettyDate, prettyDuration,
+  getToday, prettyHour, prettyDate, prettyDuration, getTimestamp,
+  getNWeeksBefore,
 } from '../../shared/dates';
 import { HeaderActions } from '../../shared/UI/headers';
 import { getLightColor } from '../../shared/styles';
+
+const WEEKS_BUFFER = {
+  size: 4,
+  threshold: 2,
+};
 
 export class WeekView extends React.Component {
   constructor(props) {
@@ -25,6 +33,7 @@ export class WeekView extends React.Component {
       isProcessing: true,
     };
 
+    this.oldestTimestamp = getTimestamp(getNWeeksBefore(WEEKS_BUFFER.size));
     this.today = getToday();
 
     this.memoizer = Memoizer();
@@ -41,10 +50,11 @@ export class WeekView extends React.Component {
         icon: 'today',
         handlePress: this.handlePressGoToToday,
       },
-      {
-        icon: 'columns',
-        handlePress: this.handlePressNDaysMenu,
-      },
+      // FIXME: Changing n-days has bugs
+      // {
+      //   icon: 'columns',
+      //   handlePress: this.handlePressNDaysMenu,
+      // },
     ];
 
     this.props.navigation.setOptions({
@@ -105,8 +115,12 @@ export class WeekView extends React.Component {
 
   processWorkSessions = () => {
     const {
-      workSessions, subjectsById, categoriesById,
+      workSessionsQuery, subjectsById, categoriesById,
     } = this.props;
+
+    const workSessions = workSessionsQuery
+      .filter((workSession) => (workSession.timestampStart > this.oldestTimestamp))
+      .toModelArray();
 
     if (!this.memoizer.hasChanged(workSessions, subjectsById, categoriesById)) {
       this.setState({
@@ -138,7 +152,7 @@ export class WeekView extends React.Component {
           };
         });
         this.setState({
-          workSessionsByDate: sortEventsByDate(events),
+          workSessionsByDate: bucketEventsByDate(events),
           isProcessing: false,
         });
       }, 0),
@@ -149,20 +163,34 @@ export class WeekView extends React.Component {
     this.weekViewRef = ref;
   }
 
+  onSwipe = (newDate) => {
+    const nWeeksToLimit = differenceInWeeks(newDate, this.oldestTimestamp * 1000);
+    if (nWeeksToLimit < WEEKS_BUFFER.threshold) {
+      const temp = getNWeeksBefore(WEEKS_BUFFER.size, newDate);
+      this.oldestTimestamp = getTimestamp(temp);
+
+      this.setState({
+        isProcessing: true,
+      }, () => this.processWorkSessions());
+    }
+  }
+
   render() {
     const {
       nDays, nDaysMenuVisible, workSessionsByDate, isProcessing,
     } = this.state;
 
     return (
-      <WeekViewComponent
-        workSessions={workSessionsByDate}
-        nDays={nDays}
-        selectedDate={this.today}
-        isProcessing={isProcessing}
-        onPressEvent={this.handlePressEvent}
-        ref={this.saveWeekRef}
-      >
+      <WeekViewComponent>
+        <Week
+          workSessions={workSessionsByDate}
+          nDays={nDays}
+          selectedDate={this.today}
+          isProcessing={isProcessing}
+          onPressEvent={this.handlePressEvent}
+          ref={this.saveWeekRef}
+          onSwipePrev={this.onSwipe}
+        />
         <NDaysPicker
           isVisible={nDaysMenuVisible}
           onValueChange={this.handleChangeNDays}
@@ -174,7 +202,7 @@ export class WeekView extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  workSessions: workSessionsSelector(state),
+  workSessionsQuery: workSessionsQuerySelector(state),
   subjectsById: subjectsByIdSelector(state),
   categoriesById: categoriesByIdSelector(state),
 });
