@@ -50,7 +50,7 @@ export function prettyHour(timestampOrDate, tzOffset) {
   return date ? format(date, 'HH:mm') : '';
 }
 
-export function prettyDaysAgo(timestamp) {
+export function prettyDaysAgo(timestamp, options = {}) {
   if (!isNumber(timestamp)) {
     return i18n.t('never');
   }
@@ -58,6 +58,7 @@ export function prettyDaysAgo(timestamp) {
   return formatDistanceStrict(date, new Date(), {
     unit: 'day',
     roundingMethod: 'ceil',
+    ...options,
   });
 }
 

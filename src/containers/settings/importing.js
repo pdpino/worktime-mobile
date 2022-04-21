@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { importFromJson } from '../../redux/actions';
 import { subjectsSelector, profileSelector } from '../../redux/selectors';
 import {
-  ImportingComponent, FileInput, LoadingPreview, ImportPreview, SubjectsPreview,
+  ImportingComponent, FileInput, LoadingPreview, ImportPreview, SubjectsPreview, KnownDevices,
+  ImportButton,
 } from '../../components/settings/importing';
 import { openFileSelector, openJsonFile } from '../../services/sharing';
 import { processSubjects, getImportableSubjects } from '../../shared/porting';
@@ -147,12 +148,10 @@ export class Importing extends React.Component {
     } = this.state;
     const { knownDevices } = this.props.profile;
 
+    const shouldShowKnownDevices = !device && !processedSubjects;
+
     return (
-      <ImportingComponent
-        isImporting={isImporting}
-        onPressImport={this.handlePressImport}
-        canPressImport={path && device}
-      >
+      <ImportingComponent>
         <FileInput
           path={path}
           onPressFile={this.handlePressFile}
@@ -171,6 +170,14 @@ export class Importing extends React.Component {
           subjectsSelection={subjectsSelection}
           onPressSubject={this.handlePressSubject}
         />
+        <ImportButton
+          isImporting={isImporting}
+          onPressImport={this.handlePressImport}
+          canPressImport={path && device}
+        />
+        {shouldShowKnownDevices && (
+          <KnownDevices knownDevices={knownDevices} />
+        )}
       </ImportingComponent>
     );
   }

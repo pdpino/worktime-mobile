@@ -48,6 +48,9 @@ const styles = StyleSheet.create({
 const SubjectsPreview = ({
   processedSubjects, subjectsSelection, onPressSubject,
 }) => {
+  if (!processedSubjects) {
+    return null;
+  }
   const subjectsAmount = processedSubjects && processedSubjects.length;
   const title = (
     <Text style={styles.title}>
@@ -96,7 +99,7 @@ const SubjectsPreview = ({
     );
   };
 
-  return processedSubjects ? (
+  return (
     <View style={[commonStyles.box, styles.container]}>
       {title}
       <FlatList
@@ -104,10 +107,9 @@ const SubjectsPreview = ({
         renderItem={renderSubjectPreview}
         keyExtractor={(item, index) => index.toString()}
         extraData={subjectsSelection}
-        scrollEnabled={false}
       />
     </View>
-  ) : null;
+  );
 };
 
 export default React.memo(SubjectsPreview);

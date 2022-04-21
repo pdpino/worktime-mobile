@@ -32,6 +32,10 @@ const styles = StyleSheet.create({
 const ImportPreview = ({
   device, importStats, lastImportedTimestamp, exportedTimestamp,
 }) => {
+  if (!device) {
+    return null;
+  }
+
   const getPreviewLabel = (label, value) => (
     <View style={styles.fieldContainer}>
       <Text style={styles.fieldLabel}>
@@ -55,7 +59,7 @@ const ImportPreview = ({
     period = `${fromDate} -- ${toDate}`;
   }
 
-  return device ? (
+  return (
     <View style={commonStyles.row}>
       <View style={[styles.innerContainer, commonStyles.box]}>
         {getPreviewLabel(i18n.t('porting.exportedOn'), exportedTimestamp)}
@@ -64,7 +68,7 @@ const ImportPreview = ({
         {getPreviewLabel(i18n.t('times.period'), period)}
       </View>
     </View>
-  ) : null;
+  );
 };
 
 export default ImportPreview;
