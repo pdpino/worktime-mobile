@@ -4,15 +4,15 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "gradle-clean": "cd android && ./gradlew clean",
+    "android:clean": "cd android && ./gradlew clean",
     "android": "react-native run-android",
     "log": "react-native log-android",
     "lint": "eslint src",
     "test": "jest",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
-    "release": "react-native run-android --variant=release",
-    "build-release": "cd android && ./gradlew assembleRelease",
-    "post-build": "./scripts/post-build.sh"
+    "release:deprecated": "react-native run-android --variant=release",
+    "release:build": "cd android && ./gradlew assembleRelease",
+    "release:send": "./scripts/post-build.sh"
   },
   "dependencies": {
     "@notifee/react-native": "^5.1.0",
