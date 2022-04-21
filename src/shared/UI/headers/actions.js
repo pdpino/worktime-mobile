@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconContainer: {
-    marginLeft: 10,
+    marginLeft: 20,
   },
 });
 
