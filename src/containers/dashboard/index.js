@@ -431,7 +431,7 @@ export class Dashboard extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  subjects: subjectsSelector(state, { archived: false }),
+  subjects: subjectsSelector(state, { archived: 'all' }),
   categories: categoriesSelector(state),
 });
 
