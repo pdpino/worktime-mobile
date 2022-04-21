@@ -12,7 +12,9 @@
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "release:deprecated": "react-native run-android --variant=release",
     "release:build": "cd android && ./gradlew assembleRelease",
-    "release:send": "./scripts/post-build.sh"
+    "release:send": "./scripts/tg.sh",
+    "release:git": "./scripts/git.sh",
+    "release": "npm run release:build && npm run release:git && npm run release:send"
   },
   "dependencies": {
     "@notifee/react-native": "^5.1.0",
