@@ -1,5 +1,4 @@
 import unorm from 'unorm';
-import memoizeOne from 'memoize-one';
 
 export function smartDivision(divide, by, percentage = false, decimals = 1) {
   const perc = percentage ? 100 : 1;
@@ -29,13 +28,6 @@ export function extractFilename(filePath) {
   const splitted = filePath.split('/');
   return splitted[splitted.length - 1];
 }
-
-export const sortByName = memoizeOne((array) => {
-  const getName = (elem) => (elem && elem.name && elem.name.toLowerCase()) || '';
-  return array ? array.sort(
-    (elem1, elem2) => (getName(elem1) <= getName(elem2) ? -1 : 1),
-  ) : [];
-});
 
 export function removeStrAccents(str) {
   return unorm.nfd(str).replace(/[\u0300-\u036f]/g, '');

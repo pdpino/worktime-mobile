@@ -1,8 +1,11 @@
 import { createOrmSelector } from './orm';
-import { sortByName } from '../../shared/utils';
+
+const getCategoryName = (elem) => (
+  elem && elem.name && elem.name.toLowerCase && elem.name.toLowerCase())
+  || '';
 
 export const categoriesSelector = createOrmSelector(
-  (ormSession) => sortByName(ormSession.Category.all().toModelArray()),
+  (ormSession) => ormSession.Category.all().orderBy(getCategoryName).toModelArray(),
 );
 
 export const categorySelector = createOrmSelector(
