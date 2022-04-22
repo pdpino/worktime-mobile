@@ -4,6 +4,7 @@ import ColorPicker from './color';
 import IconPicker from './icon';
 import Picker from './picker';
 import ModalPicker from './modalPicker';
+import TabsPicker from './tabs';
 
 export {
   CalendarPicker,
@@ -12,4 +13,5 @@ export {
   IconPicker,
   Picker,
   ModalPicker,
+  TabsPicker,
 };

@@ -1,16 +1,21 @@
+/**
+ * Looks like horizontal tabs, though should not be used as tabs!
+ * (to avoid confusion with bottomBarNavigator)
+ *
+ * Maybe rename? HorizontalSelector? similar?
+ */
 import React from 'react';
 import {
   View, StyleSheet, Text, TouchableOpacity,
 } from 'react-native';
-import i18n from '../../../shared/i18n';
-import { colors } from '../../../shared/styles';
+import { colors } from '../../styles';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    backgroundColor: colors.lighterGray,
+    backgroundColor: colors.lighterGray, // appears behind when you press
   },
   tabContainer: {
     flex: 1,
@@ -35,24 +40,22 @@ const styles = StyleSheet.create({
   },
 });
 
-const tabsDefinition = [
-  {
-    key: 'categories',
-    getLabel: () => i18n.t('entities.categories'),
-  },
-  {
-    key: 'subjects',
-    getLabel: () => i18n.t('entities.subjects'),
-  },
-];
+class Tabs extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    // NOTE: the component does not support modifying props,
+    // only selectedTabKey
+    return nextProps.selectedTabKey !== this.props.selectedTabKey;
+  }
 
-class Tabs extends React.PureComponent {
   render() {
-    const { selectedTabKey, onPressTab } = this.props;
+    const {
+      tabs, selectedTabKey, onPressTab,
+      containerStyle, tabContainerStyle,
+    } = this.props;
 
     return (
-      <View style={styles.container}>
-        {tabsDefinition.map((tabDef, index) => {
+      <View style={[styles.container, containerStyle]}>
+        {tabs.map((tabDef, index) => {
           const isSelected = tabDef.key === selectedTabKey;
           return (
             <TouchableOpacity
@@ -65,6 +68,7 @@ class Tabs extends React.PureComponent {
                 style={[
                   styles.tabContainer,
                   isSelected && styles.tabContainerSelected,
+                  tabContainerStyle,
                 ]}
               >
                 <Text

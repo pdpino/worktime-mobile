@@ -1,22 +1,17 @@
 import React from 'react';
 import {
-  StyleSheet, FlatList, Text, TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 import i18n from '../../shared/i18n';
+import { colors } from '../../shared/styles';
+import { TabsPicker } from '../../shared/UI/pickers';
 
 const styles = StyleSheet.create({
-  spanSelectorButton: {
-    alignSelf: 'flex-start',
-    borderColor: 'black',
-    borderWidth: 1,
-    padding: 10,
+  container: {
+    flex: 0,
   },
-  text: {
-    color: 'black',
-  },
-  selected: {
-    color: 'blue',
-    fontStyle: 'italic',
+  tabContainer: {
+    backgroundColor: colors.lighterGray,
   },
 });
 
@@ -27,30 +22,21 @@ const AVAILABLE_SPANS = [
   'years',
 ];
 
+const spansAsTabs = AVAILABLE_SPANS.map((span) => ({
+  key: span,
+  getLabel: () => i18n.t(`timeSpans.${span}`),
+}));
+
 const SpanSelector = ({
   spanSelected, changeTimeSpan,
-  // eslint-disable-next-line arrow-body-style
-}) => {
-  return (
-    <FlatList
-      data={AVAILABLE_SPANS}
-      horizontal
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          style={styles.spanSelectorButton}
-          onPress={() => changeTimeSpan(item)}
-        >
-          <Text
-            style={[styles.text, item === spanSelected ? styles.selected : {}]}
-          >
-            {i18n.t(`timeSpans.${item}`)}
-          </Text>
-        </TouchableOpacity>
-      )}
-      extraData={spanSelected}
-      keyExtractor={(item) => item}
-    />
-  );
-};
+}) => (
+  <TabsPicker
+    tabs={spansAsTabs}
+    selectedTabKey={spanSelected}
+    onPressTab={changeTimeSpan}
+    containerStyle={styles.container}
+    tabContainerStyle={styles.tabContainer}
+  />
+);
 
 export default SpanSelector;

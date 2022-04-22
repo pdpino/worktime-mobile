@@ -4,8 +4,9 @@ import {
 } from 'react-native';
 import { BarTimesChart } from '../../../shared/UI/charts';
 import { BackIcon } from '../../../shared/UI/icons';
+import { TabsPicker } from '../../../shared/UI/pickers';
 import { colors } from '../../../shared/styles';
-import Tabs from './tabs';
+import i18n from '../../../shared/i18n';
 import SubHeader from './subHeader';
 import { colorPalette } from '../legend';
 
@@ -40,6 +41,17 @@ const styles = StyleSheet.create({
   },
 });
 
+const tabsDefinition = [
+  {
+    key: 'categories',
+    getLabel: () => i18n.t('entities.categories'),
+  },
+  {
+    key: 'subjects',
+    getLabel: () => i18n.t('entities.subjects'),
+  },
+];
+
 const TimeDetails = ({
   itemsSummaries, selectedTab, title, idsSelection, allSelected, allItemsTotal,
   onPressTab, onToggleItem, onPressItem, onToggleAll, onPressClearItem,
@@ -66,7 +78,8 @@ const TimeDetails = ({
 
   return (
     <View style={styles.container}>
-      <Tabs
+      <TabsPicker
+        tabs={tabsDefinition}
         selectedTabKey={key}
         onPressTab={onPressTab}
       />
