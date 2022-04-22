@@ -95,7 +95,8 @@ const getBucketStamp = (date, span) => {
       formatter = 'y';
       break;
     default:
-      throw Error(`Incorrect span: ${span}`);
+      console.warn(`Incorrect span: ${span}`);
+      return '';
   }
   return format(stampDate, formatter);
 };

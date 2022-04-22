@@ -219,4 +219,8 @@ export default {
     months: 'Months',
     years: 'Years',
   },
+  chartEmptyCases: {
+    noPeriodSelected: 'No period selected',
+    noTimeWorked: 'No time worked',
+  },
 };
