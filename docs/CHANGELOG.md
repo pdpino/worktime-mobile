@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 
 
+## 1.16.2 - 2022-04-22
+### Fixed
+* Avoid issues with non-serializable data in navigation
+
+
 ## 1.16.1 - 2022-04-21
 ### Changed
 * Improve default/empty messages:
