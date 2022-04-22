@@ -3,6 +3,17 @@ import subSeconds from 'date-fns/subSeconds';
 import * as RNLocalize from 'react-native-localize';
 import { isNumber, isValidDate } from '../utils';
 
+// eslint-disable-next-line no-underscore-dangle
+export const _sanitizeTimestampOrDate = (timestampOrDate) => {
+  let date = null;
+  if (isValidDate(timestampOrDate)) {
+    date = timestampOrDate;
+  } else if (isNumber(timestampOrDate)) {
+    date = new Date(timestampOrDate * 1000);
+  }
+  return date;
+};
+
 export function getTimezoneName() {
   return RNLocalize.getTimeZone();
 }
@@ -22,13 +33,10 @@ export function getTimestampString() {
 }
 
 export function toLocalDate(timestampOrDate, tzOffset) {
-  const isTimestamp = isNumber(timestampOrDate);
-  if (!isTimestamp && !isValidDate(timestampOrDate)) {
+  const date = _sanitizeTimestampOrDate(timestampOrDate);
+  if (!date) {
     return null;
   }
-  const date = isTimestamp
-    ? new Date(timestampOrDate * 1000)
-    : timestampOrDate;
 
   const utcDate = new Date(
     date.getUTCFullYear(),

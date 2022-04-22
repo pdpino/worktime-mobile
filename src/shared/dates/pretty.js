@@ -3,7 +3,7 @@ import {
 } from 'date-fns';
 import { isNumber, isValidDate } from '../utils';
 import i18n from '../i18n';
-import { toLocalDate, getTimezoneOffset } from './timestamp';
+import { toLocalDate, getTimezoneOffset, _sanitizeTimestampOrDate } from './timestamp';
 import getCurrentLocale from './locales';
 
 export function prettyDate(date, useNames = true) {
@@ -51,12 +51,7 @@ export function prettyHour(timestampOrDate, tzOffset) {
 }
 
 export function prettyDaysAgo(timestampOrDate, options = {}) {
-  let date = null;
-  if (isValidDate(timestampOrDate)) {
-    date = timestampOrDate;
-  } else if (isNumber(timestampOrDate)) {
-    date = new Date(timestampOrDate * 1000);
-  }
+  const date = _sanitizeTimestampOrDate(timestampOrDate);
 
   return (date != null) ? formatDistanceStrict(date, new Date(), {
     unit: 'day',
