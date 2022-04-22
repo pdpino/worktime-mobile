@@ -30,7 +30,7 @@ export class SubjectShow extends React.Component {
       this.sumTimes,
     );
 
-    const { subjectName } = this.props.route.params;
+    const { subject } = this.props;
 
     const editSubjectAction = {
       icon: 'edit',
@@ -38,7 +38,7 @@ export class SubjectShow extends React.Component {
     };
 
     this.props.navigation.setOptions({
-      title: subjectName,
+      title: subject.name,
       headerRight: () => <HeaderActions actions={[editSubjectAction]} />,
     });
   }
@@ -50,13 +50,13 @@ export class SubjectShow extends React.Component {
   componentDidUpdate(prevProps) {
     // HACK:
     // From this view u can navigate to 'editSubject', change the subject name,
-    // and comeback to this view. If that happens, the header title must be
+    // and come back to this view. In that case, the header title must be
     // updated
     const { subject } = this.props;
     const prevName = prevProps.subject && prevProps.subject.name;
     const newName = subject && subject.name;
     if (prevName !== newName) {
-      this.props.navigation.setParams({ subjectName: newName });
+      this.props.navigation.setOptions({ title: newName });
     }
   }
 
@@ -99,7 +99,7 @@ export class SubjectShow extends React.Component {
 
   goEditSubject = () => {
     const { subject } = this.props;
-    this.props.navigation.navigate('editSubject', { subject });
+    this.props.navigation.navigate('editSubject', { subjectId: subject.id });
   }
 
   render() {
@@ -129,9 +129,9 @@ export class SubjectShow extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, { route }) => ({
   subject: subjectSelector(state, {
-    subjectId: ownProps.route.params && ownProps.route.params.subjectId,
+    subjectId: route.params && route.params.subjectId,
   }),
 });
 

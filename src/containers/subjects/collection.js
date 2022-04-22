@@ -186,7 +186,6 @@ function createSubjectsCollection(isArchive) {
         if (subject) {
           this.props.navigation.navigate('showSubject', {
             subjectId: subject.id,
-            subjectName: subject.name,
           });
         }
       }
@@ -202,7 +201,7 @@ function createSubjectsCollection(isArchive) {
       }
       const category = this.findCategory(id);
       if (category) {
-        this.props.navigation.navigate('editCategory', { category });
+        this.props.navigation.navigate('editCategory', { categoryId: category.id });
       }
     }
 
@@ -226,20 +225,20 @@ function createSubjectsCollection(isArchive) {
       const selectedIdsArray = this.getSelectionArray();
       if (selectedIdsArray.length > 1) {
         const { subjects } = this.props;
-        const { selectedIds: selectedIdsObj } = this.state;
-        const selectedSubjects = subjects.filter(
-          (subj) => selectedIdsObj[subj.id],
-        );
+        const { selectedIds: isSelected } = this.state;
+        const selectedIds = subjects.filter(
+          (subj) => isSelected[subj.id],
+        ).map((subj) => subj.id);
 
         this.handleUnselection();
         this.props.navigation.navigate('bulkEditSubject', {
-          subjects: selectedSubjects,
+          subjectsIds: selectedIds,
         });
       } else if (selectedIdsArray.length === 1) {
         const subject = this.findSubject(selectedIdsArray[0]);
         if (subject) {
           this.handleUnselection();
-          this.props.navigation.navigate('editSubject', { subject });
+          this.props.navigation.navigate('editSubject', { subjectId: subject.id });
         }
       }
     }

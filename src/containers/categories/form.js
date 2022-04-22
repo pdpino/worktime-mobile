@@ -6,6 +6,7 @@ import { upsertCategory, deleteCategory } from '../../redux/actions';
 import { HeaderActions } from '../../shared/UI/headers';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
+import { categorySelector } from '../../redux/selectors';
 
 export class CategoryForm extends React.Component {
   // HACK: default-color hardcoded
@@ -116,8 +117,10 @@ export class CategoryForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  category: ownProps.route.params && ownProps.route.params.category,
+const mapStateToProps = (state, { route }) => ({
+  category: categorySelector(state, {
+    categoryId: route.params && route.params.categoryId,
+  }),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

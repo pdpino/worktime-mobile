@@ -5,6 +5,11 @@ export const categoriesSelector = createOrmSelector(
   (ormSession) => sortByName(ormSession.Category.all().toModelArray()),
 );
 
+export const categorySelector = createOrmSelector(
+  (state, props) => props.categoryId,
+  (ormSession, id) => ormSession.Category.withId(id),
+);
+
 export const categoriesByIdSelector = createOrmSelector(
   (ormSession) => {
     const categories = ormSession.Category.all().toModelArray();

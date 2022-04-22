@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import BulkSubjectFormComponent from '../../components/subjects/bulkForm';
 import { updateSubjects } from '../../redux/actions';
-import { categoriesSelector } from '../../redux/selectors';
+import { subjectsSliceSelector, categoriesSelector } from '../../redux/selectors';
 
 export class BulkSubjectForm extends React.Component {
   constructor(props) {
@@ -44,8 +44,10 @@ export class BulkSubjectForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  subjects: ownProps.route.params && ownProps.route.params.subjects,
+const mapStateToProps = (state, { route }) => ({
+  subjects: subjectsSliceSelector(state, {
+    ids: route.params && route.params.subjectsIds,
+  }),
   categories: categoriesSelector(state),
 });
 

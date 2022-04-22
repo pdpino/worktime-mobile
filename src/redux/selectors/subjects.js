@@ -1,6 +1,10 @@
 import { createOrmSelector, ormSessionUnMemoized } from './orm';
 import { sortByName } from '../../shared/utils';
 
+const getSubjName = (elem) => (
+  elem && elem.name && elem.name.toLowerCase && elem.name.toLowerCase())
+  || '';
+
 export const subjectsSetSelector = (state) => ormSessionUnMemoized(state).Subject.all();
 
 export const subjectsSelector = createOrmSelector(
@@ -23,6 +27,16 @@ export const subjectsByIdSelector = createOrmSelector(
       subjectsById[subject.id] = subject;
     });
     return subjectsById;
+  },
+);
+
+export const subjectsSliceSelector = createOrmSelector(
+  (state, props) => props.ids,
+  (ormSession, ids) => {
+    const isSelected = new Set(ids);
+    return ormSession.Subject.all().filter(
+      (subj) => isSelected.has(subj.id),
+    ).orderBy(getSubjName).toModelArray();
   },
 );
 

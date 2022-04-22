@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SubjectFormComponent from '../../components/subjects/form';
 import { upsertSubject, deleteSubjects } from '../../redux/actions';
-import { categoriesSelector } from '../../redux/selectors';
+import { categoriesSelector, subjectSelector } from '../../redux/selectors';
 import { HeaderActions } from '../../shared/UI/headers';
 import { alertDelete } from '../../shared/alerts';
 import i18n from '../../shared/i18n';
@@ -134,8 +134,10 @@ export class SubjectForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  subject: ownProps.route.params && ownProps.route.params.subject,
+const mapStateToProps = (state, { route }) => ({
+  subject: subjectSelector(state, {
+    subjectId: route.params && route.params.subjectId,
+  }),
   categories: categoriesSelector(state),
 });
 
