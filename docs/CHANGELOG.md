@@ -6,7 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
-## 1.16.3 - 2022-04-23
+## 1.17.0-dev - 2022-04-22
+### Added
+* Time chart view (first version, still dev)
+
+
+## 1.16.3 - 2022-04-22
 ### Fixed
 * Importing view: last imported overlapped text
 * TextInput invisible text
