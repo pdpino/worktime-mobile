@@ -3,6 +3,7 @@ import {
   View, Text, TextInput,
 } from 'react-native';
 import commonStyles from './common.styles';
+import { colors } from '../../styles';
 
 const TextField = ({
   containerStyle, label, value, placeholder, onChange, multiline,
@@ -17,6 +18,7 @@ const TextField = ({
       }]}
       value={value}
       placeholder={placeholder}
+      placeholderTextColor={colors.lightGray}
       onChangeText={onChange}
       multiline={multiline}
     />

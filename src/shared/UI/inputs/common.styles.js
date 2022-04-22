@@ -18,6 +18,7 @@ const commonStyles = StyleSheet.create({
     backgroundColor: 'white',
     textAlignVertical: 'top',
     padding: 10,
+    color: 'black',
   },
 });
 

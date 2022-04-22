@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     marginVertical: 10,
   },
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontSize: 18,
     fontStyle: 'italic',
+    textAlign: 'center',
   },
 });
 
@@ -62,10 +63,10 @@ const KnownDevices = ({ knownDevices }) => {
     const date = `${timeToPrettyDate(lastImported)} (${daysAgo})`;
     return (
       <View style={styles.row}>
-        <Text style={styles.text}>
+        <Text style={[styles.text, { flex: 1 }]}>
           {device}
         </Text>
-        <Text style={styles.text}>
+        <Text style={[styles.text, { flex: 3 }]}>
           {date}
         </Text>
       </View>
