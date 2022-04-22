@@ -43,7 +43,7 @@ export default function Root() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="timeChart"
+        initialRouteName="work"
         screenOptions={({ route }) => {
           const stackRoute = getFocusedRouteNameFromRoute(route);
           return {

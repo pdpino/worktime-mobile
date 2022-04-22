@@ -59,9 +59,7 @@ export const endOfSpan = (date, span) => {
  * @param {string} span
  * @returns
  */
-const increaseBySpan = (date, span) => {
-  return add(date, { [span]: 1 });
-};
+const increaseBySpan = (date, span) => add(date, { [span]: 1 });
 
 /**
  *
@@ -71,7 +69,7 @@ const increaseBySpan = (date, span) => {
  */
 const getBucketStamp = (date, span) => {
   if (!isValidDate(date)) {
-    console.error('INVALID BUCKET DATE: ', date, span);
+    // console.error('INVALID BUCKET DATE: ', date, span);
     return null;
   }
   let stampDate;
@@ -95,7 +93,7 @@ const getBucketStamp = (date, span) => {
       formatter = 'y';
       break;
     default:
-      console.warn(`Incorrect span: ${span}`);
+      // console.warn(`Incorrect span: ${span}`);
       return '';
   }
   return format(stampDate, formatter);
@@ -117,7 +115,9 @@ class Accumulator {
   }
 
   reduce() {
-    const { date, stamp, timeTotal, timeEffective } = this;
+    const {
+      date, stamp, timeTotal, timeEffective,
+    } = this;
     return {
       date,
       stamp,
@@ -152,17 +152,17 @@ export const accumulateBySpan = (workSessions, startDate, endDate, span) => {
   const lastStamp = getBucketStamp(endDate, span);
   if (!lastStamp) {
     // endDate should not be none!
-    console.log('Last stamp failed: ', endDate, span);
+    // console.log('Last stamp failed: ', endDate, span);
     return [];
   }
 
-  // console.log('CC: ', lastStamp);
+  // // console.log('CC: ', lastStamp);
   // Build span-stamps and accumulators
   const spanStamps = [];
   const accumulatorByStamp = {};
   for (let timer = startOfSpan(startDate, span); ; timer = increaseBySpan(timer, span)) {
     if (!isValidDate(timer)) {
-      console.log('INCREASE failed: ', timer);
+      // console.log('INCREASE failed: ', timer);
       return [];
     }
     const stamp = getBucketStamp(timer, span);

@@ -1,44 +1,44 @@
 import React from 'react';
 import {
-  Svg, Path, Text, G as Group, Rect,
+  Svg, Path, Text, G as Group,
 } from 'react-native-svg';
 import { format, getYear } from 'date-fns';
 import styles from './styles';
 import i18n from '../../shared/i18n';
 
 // // dummy debug data
-const DUMMY_DATA = [
-  {
-    date: new Date(2022, 3, 17),
-    totalTime: 3,
-    effectiveTime: 2.5,
-  },
-  {
-    date: new Date(2022, 3, 18),
-    totalTime: 0,
-    effectiveTime: 0,
-  },
-  {
-    date: new Date(2022, 3, 19),
-    totalTime: 0,
-    effectiveTime: 0,
-  },
-  {
-    date: new Date(2022, 3, 20),
-    totalTime: 7,
-    effectiveTime: 5,
-  },
-  {
-    date: new Date(2022, 3, 21),
-    totalTime: 3,
-    effectiveTime: 1,
-  },
-  {
-    date: new Date(2022, 3, 22),
-    totalTime: 5,
-    effectiveTime: 4,
-  },
-];
+// const DUMMY_DATA = [
+//   {
+//     date: new Date(2022, 3, 17),
+//     totalTime: 3,
+//     effectiveTime: 2.5,
+//   },
+//   {
+//     date: new Date(2022, 3, 18),
+//     totalTime: 0,
+//     effectiveTime: 0,
+//   },
+//   {
+//     date: new Date(2022, 3, 19),
+//     totalTime: 0,
+//     effectiveTime: 0,
+//   },
+//   {
+//     date: new Date(2022, 3, 20),
+//     totalTime: 7,
+//     effectiveTime: 5,
+//   },
+//   {
+//     date: new Date(2022, 3, 21),
+//     totalTime: 3,
+//     effectiveTime: 1,
+//   },
+//   {
+//     date: new Date(2022, 3, 22),
+//     totalTime: 5,
+//     effectiveTime: 4,
+//   },
+// ];
 
 const HEIGHT = 200;
 const WIDTH = 300;
