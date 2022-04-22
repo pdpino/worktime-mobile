@@ -38,7 +38,8 @@
     "max-len": "warn",
     "prefer-destructuring": "warn",
     "class-methods-use-this": "warn",
-    "operator-linebreak": "warn"
+    "operator-linebreak": "warn",
+    "indent": "warn"
   },
   "globals": {
     "requestAnimationFrame": "readonly"
