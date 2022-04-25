@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## 1.17.1-dev - 2022-04-25
+### Changed
+* Improve week-view
+  * Upgrade library with performance improvements
+  * Load data on demand
+
+
 ## 1.17.0-dev - 2022-04-22
 ### Added
 * Time chart view (first version, still dev)
