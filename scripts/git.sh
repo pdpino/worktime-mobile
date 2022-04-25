@@ -8,9 +8,9 @@ source "${PWD}/scripts/version.sh"
 
 VERSION=$(get-version)
 
-if [[ $1 == "--notag" ]]; then
+if [[ $1 == "--tag" ]]; then
   shift
-  skiptag="true"
+  tag="true"
 fi
 
 ## Commit and tag stuff
@@ -26,7 +26,7 @@ fi
 git commit -m "${commit_msg}"
 
 # Tag
-if [ -z $skiptag ]; then
+if [ -n "$tag" ]; then
   tag_msg="$extra"
   if [ -z "${tag_msg}" ]; then
     tag_msg="Version $VERSION"
