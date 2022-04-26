@@ -41,7 +41,8 @@
     "operator-linebreak": "warn",
     "indent": "warn",
     "space-infix-ops": "warn",
-    "quotes": "warn"
+    "quotes": "warn",
+    "import/prefer-default-export": "warn"
   },
   "globals": {
     "requestAnimationFrame": "readonly"
