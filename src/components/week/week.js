@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   headerText: {
     color: 'white',
     textAlign: 'center',
+    textAlignVertical: 'center',
   },
   eventContainer: {
     borderBottomColor: 'white',
@@ -23,15 +24,11 @@ const styles = StyleSheet.create({
   },
   todayContainer: {
     flex: 1,
-    paddingTop: 4,
     borderColor: colors.darkBlue,
-    borderBottomWidth: 3,
-    borderWidth: 1,
+    borderWidth: 2,
   },
   todayText: {
     flex: 1,
-    textAlign: 'center',
-    color: 'white',
     fontWeight: 'bold',
   },
 });
@@ -44,9 +41,9 @@ const Spinner = ({ style }) => (
   />
 );
 
-const TodayHeader = ({ formattedDate }) => (
+const TodayHeader = ({ textStyle, formattedDate }) => (
   <View style={styles.todayContainer}>
-    <Text style={styles.todayText}>{formattedDate}</Text>
+    <Text style={[textStyle, styles.todayText]}>{formattedDate}</Text>
   </View>
 );
 
