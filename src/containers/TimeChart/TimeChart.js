@@ -1,10 +1,13 @@
 import React from 'react';
 import {
-  Svg, Path, Text, G as Group,
+  Svg, Path, Text, G as Group, Rect,
 } from 'react-native-svg';
 import { format, getYear } from 'date-fns';
 import styles from './styles';
 import i18n from '../../shared/i18n';
+import { colors, timeColors } from '../../shared/styles';
+import { isNumber } from '../../shared/utils';
+import { useChartDimensions, useHeightPercentage } from './useDimensions';
 
 // // dummy debug data
 // const DUMMY_DATA = [
@@ -40,17 +43,37 @@ import i18n from '../../shared/i18n';
 //   },
 // ];
 
-const HEIGHT = 200;
-const WIDTH = 300;
-const MARGIN = {
-  top: 10, right: 30, bottom: 30, left: 30,
-};
-const CHART_WIDTH = WIDTH - MARGIN.left - MARGIN.right;
-const CHART_HEIGHT = HEIGHT - MARGIN.top - MARGIN.bottom;
-
 const AXIS_COLOR = 'black';
 const TICK_SIZE = 5;
 const MAX_TICKS = 4;
+
+const SPAN_BUTTON_HEIGHT = 20;
+
+const TARGET_TO_EXTRACTOR = {
+  total: (x) => x.totalTime,
+  effective: (x) => x.effectiveTime,
+  paused: (x) => x.totalTime - x.effectiveTime,
+};
+
+// TODO: move to utils
+const amountToThousands = (amount) => {
+  if (!isNumber(amount) || amount <= 0) {
+    return '0';
+  }
+
+  const milestones = [
+    { step: 1000000, abrev: 'm' },
+    { step: 1000, abrev: 'k' },
+  ];
+
+  const milestone = milestones.find(({ step }) => amount > step);
+  if (!milestone) {
+    return amount.toString();
+  }
+  const { step, abrev } = milestone;
+  const thousands = (amount / step).toFixed(1);
+  return `${thousands}${abrev}`;
+};
 
 const formatXTick = (date, timeSpan) => {
   // TODO: improve this function further?
@@ -76,25 +99,21 @@ const formatXTick = (date, timeSpan) => {
   }
 };
 
-const XAxis = ({
-  xOrigin, yOrigin, data, timeSpan, indexToX,
+const XTicks = ({
+  y, data, timeSpan, indexToX, xOffset,
 }) => {
-  const xAxisPath = `M ${xOrigin} ${yOrigin} H ${MARGIN.left + CHART_WIDTH}`;
-  const xAxis = <Path d={xAxisPath} stroke={AXIS_COLOR} />;
-
   const xTicks = [];
   const xStep = Math.ceil(data.length / MAX_TICKS);
   for (let index = 0; index < data.length; index += xStep) {
-    const x1 = MARGIN.left + indexToX(index);
-    const y1 = MARGIN.top + CHART_HEIGHT;
-    const path = `M ${x1} ${y1} v ${TICK_SIZE}`;
+    const x1 = xOffset + indexToX(index);
+    const path = `M ${x1} ${y} v ${TICK_SIZE}`;
 
     xTicks.push(...[
       <Path key={`xtick-${index.toString()}`} d={path} stroke={AXIS_COLOR} />,
       <Text
         key={`xticklabel-${index.toString()}`}
         x={x1}
-        y={y1 + TICK_SIZE * 3}
+        y={y + TICK_SIZE * 3}
         fill="black"
         textAnchor="middle"
         rotate={0}
@@ -104,24 +123,17 @@ const XAxis = ({
     ]);
   }
 
-  return (
-    <Group>
-      {xAxis}
-      {xTicks}
-    </Group>
-  );
+  return xTicks;
 };
 
-const YAxis = ({
-  xOrigin, yOrigin, timeToY, maxY,
+const YTicks = ({
+  x, timeToY, maxY, yOffset,
 }) => {
-  const yAxisPath = `M ${xOrigin} ${yOrigin} V ${MARGIN.top}`;
-  const yAxis = <Path d={yAxisPath} stroke={AXIS_COLOR} />;
   const yTicks = [];
   const yStep = Math.ceil(maxY / MAX_TICKS);
   for (let yValue = 0; yValue < maxY; yValue += yStep) {
-    const x1 = MARGIN.left;
-    const y1 = MARGIN.top + timeToY(yValue);
+    const x1 = x;
+    const y1 = yOffset + timeToY(yValue);
     const path = `M ${x1} ${y1} h -${TICK_SIZE}`;
     yTicks.push(...[
       <Path key={`ytick-${yValue.toString()}`} d={path} stroke={AXIS_COLOR} />,
@@ -133,128 +145,214 @@ const YAxis = ({
         textAnchor="end"
         rotate={0}
       >
-        {`${Math.floor(yValue)}h`}
+        {`${amountToThousands(yValue)}`}
       </Text>,
     ]);
   }
 
+  return yTicks;
+};
+
+const EmptyChartMessage = ({ dimensions, message }) => {
+  const { height, width } = dimensions;
   return (
-    <Group>
-      {yAxis}
-      {yTicks}
+    <Text
+      x={width / 2}
+      y={height / 2}
+      fill="black"
+      textAnchor="middle"
+      fontSize={20}
+    >
+      {message}
+    </Text>
+  );
+};
+
+const Chart = ({
+  margins, data, target, indexToX, timeToY,
+}) => {
+  const valueExtractor = TARGET_TO_EXTRACTOR[target];
+  const color = timeColors[target];
+  const label = i18n.t(`chartLegend.${target}`);
+
+  const path = ['M', indexToX(0), timeToY(0)];
+
+  data.forEach((point, index) => {
+    const timeValue = valueExtractor(point);
+
+    const cx = indexToX(index);
+    const cyTotal = timeToY(timeValue);
+
+    if (!isNumber(cyTotal)) {
+      // TODO: log this somewhere? throw error?
+      return;
+    }
+
+    path.push(...['L', cx, cyTotal]);
+  });
+
+  // Place text next to the last point
+  const textX = path[path.length - 2] + 5; // Give some margin
+  const textY = path[path.length - 1];
+
+  // Close the path
+  path.push(...[
+    'L', indexToX(data.length - 1), timeToY(0), // To xAxis
+    'L', indexToX(0), timeToY(0), // To origin
+  ]);
+
+  return (
+    <Group x={margins.left} y={margins.top} preserveAspectRatio="none">
+      <Path d={path.join(' ')} fill={color} />
+      <Text x={textX} y={textY} textAnchor="start" fill={color}>
+        {label}
+      </Text>
     </Group>
   );
 };
 
 const TimeChart = ({
-  data, timeSpan,
+  data, timeSpan, target, circleThroughSpans,
 }) => {
+  const [
+    dimensions,
+    margins,
+    chartDimensions,
+    onLayoutSvg,
+  ] = useChartDimensions(data);
+
+  const svgHeight = useHeightPercentage();
+
+  const { height, width } = dimensions;
+  const { height: chartHeight, width: chartWidth } = chartDimensions;
+
   // In original coordinates
-  const xOrigin = MARGIN.left;
-  const yOrigin = MARGIN.top + CHART_HEIGHT;
+  const xOrigin = margins.left;
+  const yOrigin = margins.top + chartHeight;
 
   // In chart coordinates
-  const bandwidth = CHART_WIDTH / data.length;
   const limX = data.length;
   const maxY = Math.max(...data.map((d) => d.totalTime));
   const limY = maxY * 1.1;
 
-  const indexToX = (index) => Math.floor((index / limX) * CHART_WIDTH + bandwidth / 2);
-  const timeToY = (time) => Math.floor(CHART_HEIGHT - (time / limY) * CHART_HEIGHT);
+  const indexToX = (index) => Math.floor((index / limX) * chartWidth);
+  const timeToY = (time) => Math.floor(chartHeight - (time / limY) * chartHeight);
 
   const xAxis = (
-    <XAxis
-      xOrigin={xOrigin}
-      yOrigin={yOrigin}
-      data={data}
-      timeSpan={timeSpan}
-      indexToX={indexToX}
+    <Path
+      d={`M ${xOrigin} ${yOrigin} H ${width - margins.right - 10}`}
+      stroke={AXIS_COLOR}
+    />
+  );
+  const yAxis = (
+    <Path
+      d={`M ${xOrigin} ${yOrigin} V ${margins.top}`}
+      stroke={AXIS_COLOR}
     />
   );
 
-  const emptyPeriod = data.length === 0;
-  const noTimeWorked = maxY === 0;
-  if (emptyPeriod || noTimeWorked) {
-    // No data case
+  const yUnit = (
+    <Text
+      x={margins.left}
+      y={margins.top - 5}
+      textAnchor="middle"
+      fill="black"
+    >
+      hrs
+    </Text>
+  );
 
-    const message = emptyPeriod
-      ? i18n.t('chartEmptyCases.noPeriodSelected')
-      : i18n.t('chartEmptyCases.noTimeWorked');
-    return (
-      <Svg x={0} y={0} width={WIDTH} height={HEIGHT} style={styles.svg}>
-        <Text
-          x={WIDTH / 2}
-          y={HEIGHT / 2}
-          fill="black"
-          textAnchor="middle"
-          fontSize={20}
-        >
-          {message}
-        </Text>
-        {noTimeWorked ? xAxis : null}
-      </Svg>
-    );
-  }
+  const xTicks = (
+    <XTicks
+      y={yOrigin}
+      data={data}
+      timeSpan={timeSpan}
+      indexToX={indexToX}
+      xOffset={margins.left}
+    />
+  );
 
-  // TODO: Check that there are no NaN --> svg will fail in an awful way!!
-  const smoothingCurve = 'L';
-  const totalPath = [];
-  const effPath = [];
-
-  data.forEach((point, index) => {
-    const { totalTime, effectiveTime } = point;
-
-    const cx = indexToX(index);
-    const cyTotal = timeToY(totalTime);
-    const cyEff = timeToY(effectiveTime);
-    // const r = 2;
-    // totalPoints.push((
-    //   <Circle key={`tot-${index.toString()}`} cx={cx} cy={cyTotal} r={r} fill="blue" />
-    // ));
-    // effPoints.push((
-    //   <Circle key={`eff-${index.toString()}`} cx={cx} cy={cyEff} r={r} fill="green" />
-    // ));
-
-    totalPath.push(...[index === 0 ? 'M' : smoothingCurve, cx, cyTotal]);
-    effPath.push(...[index === 0 ? 'M' : smoothingCurve, cx, cyEff]);
-  });
-
-  const buildTextForPath = (path, label, color) => {
-    if (path.length <= 2) {
-      return null;
-    }
-    const lastPointX = path[path.length - 2];
-    const lastPointY = path[path.length - 1];
-
-    return (
-      <Text x={lastPointX + 5} y={lastPointY} textAnchor="start" fill={color}>
-        {label}
+  const spanSelector = (
+    <Group
+      x={width - margins.right}
+      y={margins.top + chartHeight}
+    >
+      <Rect
+        width={45}
+        height={SPAN_BUTTON_HEIGHT}
+        y={-SPAN_BUTTON_HEIGHT / 2}
+        fill={colors.lightBlue}
+        strokeWidth={1}
+        stroke="black"
+        onPress={circleThroughSpans}
+      />
+      <Text
+        x={5}
+        fill="black"
+        pointerEvents="none"
+        alignmentBaseline="middle"
+      >
+        {i18n.t(`timeSpans.${timeSpan}`)}
       </Text>
-    );
-  };
+    </Group>
+  );
 
-  const path1 = totalPath.join(' ');
-  const path2 = effPath.join(' ');
-
-  const yAxis = (
-    <YAxis
-      xOrigin={xOrigin}
-      yOrigin={yOrigin}
+  const yTicks = (
+    <YTicks
+      x={margins.left}
       timeToY={timeToY}
       maxY={maxY}
+      yOffset={margins.top}
+    />
+  );
+
+  let chartFailedWithMessage = null;
+  if (!TARGET_TO_EXTRACTOR[target]) {
+    chartFailedWithMessage = i18n.t('chartEmptyCases.wrongTarget', { target });
+  } else if (data.length === 0) {
+    chartFailedWithMessage = i18n.t('chartEmptyCases.noPeriodSelected');
+  } else if (maxY === 0) {
+    chartFailedWithMessage = i18n.t('chartEmptyCases.noTimeWorked');
+  }
+
+  const chart = chartFailedWithMessage ? (
+    <EmptyChartMessage
+      dimensions={dimensions}
+      message={chartFailedWithMessage}
+    />
+  ) : (
+    <Chart
+      data={data}
+      margins={margins}
+      target={target}
+      indexToX={indexToX}
+      timeToY={timeToY}
     />
   );
 
   return (
-    <Svg x={0} y={0} width={WIDTH} height={HEIGHT} style={styles.svg}>
-      <Group x={MARGIN.left} y={MARGIN.top}>
-        <Path d={path1} stroke="blue" />
-        <Path d={path2} stroke="green" />
-        {buildTextForPath(totalPath, 'Total', 'blue')}
-        {buildTextForPath(effPath, 'Effective', 'green')}
+    <Svg
+      x={0}
+      y={0}
+      width="100%"
+      height={svgHeight}
+      style={styles.svg}
+      viewBox={`0 0 ${width} ${height}`}
+      onLayout={onLayoutSvg}
+    >
+      {chart}
+      <Group>
+        {xAxis}
+        {xTicks}
       </Group>
-      {xAxis}
-      {yAxis}
+      <Group>
+        {yAxis}
+        {yTicks}
+      </Group>
+      <Group>
+        {yUnit}
+      </Group>
+      {spanSelector}
     </Svg>
   );
 };

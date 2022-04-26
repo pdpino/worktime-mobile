@@ -225,5 +225,11 @@ export default {
   chartEmptyCases: {
     noPeriodSelected: 'Periodo de tiempo no válido',
     noTimeWorked: 'Nada',
+    wrongTarget: 'Error interno: target no existe %{target}',
+  },
+  chartLegend: {
+    total: 'total',
+    effective: 'efectivo',
+    paused: 'pausa',
   },
 };

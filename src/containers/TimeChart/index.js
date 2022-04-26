@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo, useReducer } from 'react';
 import { useSelector } from 'react-redux';
 import { View } from 'react-native';
 import { sub } from 'date-fns';
@@ -7,9 +7,14 @@ import { workSessionsSelectorByRange } from '../../redux/selectors';
 import { accumulateBySpan, endOfSpan } from '../../shared/timeCalculators';
 import TimeChart from './TimeChart';
 import styles from './styles';
-import SpanSelector from './SpanSelector';
 
-const DEFAULT_SPAN = 'days';
+const AVAILABLE_SPANS = [
+  'days',
+  'weeks',
+  'months',
+  'years',
+];
+const DEFAULT_SPAN = 'years';
 
 const getDefaultDates = (timeSpan) => {
   // For now, start and end dates are hard-coded,
@@ -37,7 +42,20 @@ const getDefaultDates = (timeSpan) => {
 };
 
 const TimeChartContainer = () => {
-  const [timeSpan, changeTimeSpan] = useState(DEFAULT_SPAN);
+  const [timeSpan, circleThroughSpans] = useReducer(
+    (currentSpan) => {
+      const currentIndex = AVAILABLE_SPANS.findIndex(
+        (span) => span === currentSpan,
+      );
+      if (currentIndex === -1) {
+        // internal error
+        return currentSpan;
+      }
+      const nextIndex = (currentIndex + 1) % AVAILABLE_SPANS.length;
+      return AVAILABLE_SPANS[nextIndex];
+    },
+    DEFAULT_SPAN,
+  );
 
   const { startDate, endDate } = useMemo(() => getDefaultDates(timeSpan), [timeSpan]);
 
@@ -55,10 +73,8 @@ const TimeChartContainer = () => {
       <TimeChart
         data={chartData}
         timeSpan={timeSpan}
-      />
-      <SpanSelector
-        spanSelected={timeSpan}
-        changeTimeSpan={changeTimeSpan}
+        target="total"
+        circleThroughSpans={circleThroughSpans}
       />
     </View>
   );

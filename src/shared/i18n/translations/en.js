@@ -222,5 +222,11 @@ export default {
   chartEmptyCases: {
     noPeriodSelected: 'No period selected',
     noTimeWorked: 'No time worked',
+    wrongTarget: 'Internal: wrong target %{target}',
+  },
+  chartLegend: {
+    total: 'total',
+    effective: 'effective',
+    paused: 'paused',
   },
 };
