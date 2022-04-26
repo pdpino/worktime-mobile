@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## 1.17.3 - 2022-04-26
+### Changed
+* Time chart outlook
+  * Improve x-ticks format
+  * Add year marks
+  * Move line text-label
+  * Add gray background
+
+
 ## 1.17.2 - 2022-04-26
 ### Changed
 * Time chart view
