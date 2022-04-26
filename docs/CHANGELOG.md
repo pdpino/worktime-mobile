@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## 1.17.2 - 2022-04-26
+### Changed
+* Time chart view
+  * Compute width dynamically
+  * Use fill instead of only stroke
+  * Move span selector to right of the chart
+  * Plot only total time
+
+### Fixed
+* Today component in week-view
+
+
+
 ## 1.17.1-dev - 2022-04-25
 ### Changed
 * Improve week-view

@@ -134,8 +134,8 @@ android {
         applicationId "com.worktime"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 59
-        versionName "1.17.1-dev"
+        versionCode 60
+        versionName "1.17.2"
 
         configurations.all {
             resolutionStrategy {

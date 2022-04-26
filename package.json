@@ -1,6 +1,6 @@
 {
   "name": "worktime",
-  "version": "1.17.1-dev",
+  "version": "1.17.2",
   "private": true,
   "scripts": {
     "start": "react-native start",
