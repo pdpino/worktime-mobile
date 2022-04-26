@@ -39,7 +39,9 @@
     "prefer-destructuring": "warn",
     "class-methods-use-this": "warn",
     "operator-linebreak": "warn",
-    "indent": "warn"
+    "indent": "warn",
+    "space-infix-ops": "warn",
+    "quotes": "warn"
   },
   "globals": {
     "requestAnimationFrame": "readonly"
