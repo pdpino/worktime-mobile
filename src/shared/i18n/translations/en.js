@@ -8,6 +8,7 @@ export default {
   error: 'Error',
   files: 'Files',
   file: 'File',
+  hoursAbrev: 'Hrs',
   never: 'Never',
   new: 'new',
   none: 'None',
@@ -18,9 +19,9 @@ export default {
   settings: 'Settings',
   status: 'Status',
   summary: 'Summary',
-  week: 'Week',
-  trend: 'Trend',
   timeChart: 'Time chart',
+  trend: 'Trend',
+  week: 'Week',
   worktimeVersion: 'Worktime version %{version}',
   work: 'Work',
   formFields: {
@@ -226,7 +227,7 @@ export default {
   },
   chartLegend: {
     total: 'total',
-    effective: 'effective',
+    effective: 'effect.',
     paused: 'paused',
   },
 };

@@ -5,6 +5,7 @@ export * from './intervals';
 export * from './pretty';
 export * from './semesters';
 export * from './timestamp';
+export * from './differences';
 
 export {
   isSameDay,

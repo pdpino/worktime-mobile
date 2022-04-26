@@ -14,7 +14,7 @@ const AVAILABLE_SPANS = [
   'months',
   'years',
 ];
-const DEFAULT_SPAN = 'years';
+const DEFAULT_SPAN = 'days';
 
 const getDefaultDates = (timeSpan) => {
   // For now, start and end dates are hard-coded,

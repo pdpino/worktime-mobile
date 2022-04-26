@@ -8,7 +8,7 @@ const HEIGHT_FACTOR_PORTRAIT = 60;
 const HEIGHT_FACTOR_LANDSCAPE = 80;
 
 const DEFAULT_MARGIN = {
-  left: 50, top: 20, right: 50, bottom: 25,
+  left: 50, top: 20, right: 50, bottom: 45,
 };
 
 const getFactorByOrientation = () => {

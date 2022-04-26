@@ -115,24 +115,24 @@ describe('prettyDuration', () => {
 
     it('Returns zero seconds on non-number duration and includeSeconds', () => {
       const zeroSeconds = '0s';
-      expect(prettyDuration(undefined, true)).toEqual(zeroSeconds);
-      expect(prettyDuration(null, true)).toEqual(zeroSeconds);
-      expect(prettyDuration('2019-11-09', true)).toEqual(zeroSeconds);
-      expect(prettyDuration(new Date('hello'), true)).toEqual(zeroSeconds);
+      expect(prettyDuration(undefined, { includeSeconds: true })).toEqual(zeroSeconds);
+      expect(prettyDuration(null, { includeSeconds: true })).toEqual(zeroSeconds);
+      expect(prettyDuration('2019-11-09', { includeSeconds: true })).toEqual(zeroSeconds);
+      expect(prettyDuration(new Date('hello'), { includeSeconds: true })).toEqual(zeroSeconds);
     });
   });
 
   describe('Result correctness', () => {
     it('Returns seconds correctly', () => {
-      expect(prettyDuration(0, true)).toEqual('0s');
-      expect(prettyDuration(10, true)).toEqual('10s');
-      expect(prettyDuration(59, true)).toEqual('59s');
+      expect(prettyDuration(0, { includeSeconds: true })).toEqual('0s');
+      expect(prettyDuration(10, { includeSeconds: true })).toEqual('10s');
+      expect(prettyDuration(59, { includeSeconds: true })).toEqual('59s');
     });
 
     it('Returns minutes with seconds', () => {
-      expect(prettyDuration(60, true)).toEqual('1m');
-      expect(prettyDuration(90, true)).toEqual('1m 30s');
-      expect(prettyDuration(3599, true)).toEqual('59m 59s');
+      expect(prettyDuration(60, { includeSeconds: true })).toEqual('1m');
+      expect(prettyDuration(90, { includeSeconds: true })).toEqual('1m 30s');
+      expect(prettyDuration(3599, { includeSeconds: true })).toEqual('59m 59s');
     });
 
     it('Returns minutes without seconds', () => {
@@ -150,9 +150,9 @@ describe('prettyDuration', () => {
     });
 
     it('Returns hours with seconds', () => {
-      expect(prettyDuration(3600, true)).toEqual('1h');
-      expect(prettyDuration(8201, true)).toEqual('2h 16m 41s');
-      expect(prettyDuration(36220, true)).toEqual('10h 3m 40s');
+      expect(prettyDuration(3600, { includeSeconds: true })).toEqual('1h');
+      expect(prettyDuration(8201, { includeSeconds: true })).toEqual('2h 16m 41s');
+      expect(prettyDuration(36220, { includeSeconds: true })).toEqual('10h 3m 40s');
     });
   });
 });

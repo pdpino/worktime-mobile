@@ -60,7 +60,12 @@ export function prettyDaysAgo(timestampOrDate, options = {}) {
   }) : i18n.t('never');
 }
 
-export function prettyDuration(totalSeconds, includeSeconds = false) {
+export function prettyDuration(totalSeconds, options = {}) {
+  const {
+    includeSeconds = false,
+    truncate = false,
+  } = options;
+
   let duration = '';
   const emptyResult = includeSeconds ? '0s' : '0m';
   if (!isNumber(totalSeconds) || totalSeconds <= 0) {
@@ -84,7 +89,18 @@ export function prettyDuration(totalSeconds, includeSeconds = false) {
     duration = `${hours}h ${duration}`;
   }
 
-  return duration ? duration.trim() : emptyResult;
+  if (duration) {
+    duration = duration.trim();
+  }
+
+  if (truncate) {
+    const units = duration.split(' ');
+    if (units.length > 0) {
+      [duration] = units;
+    }
+  }
+
+  return duration || emptyResult;
 }
 
 export function prettyTimespanDuration(startDate, endDate) {

@@ -3,6 +3,7 @@ export * from './palette';
 const colors = {
   red: '#d50000',
   orange: '#ef8c00',
+  darkGray: '#1f1f1f',
   lightGray: '#b3b3b3',
   lighterGray: '#dedede',
   evenLighterGray: '#f1f1f1',

@@ -2,11 +2,14 @@ import React from 'react';
 import {
   Svg, Path, Text, G as Group, Rect,
 } from 'react-native-svg';
-import { format, getYear } from 'date-fns';
+import {
+  format, getYear, add, endOfYear, isBefore,
+} from 'date-fns';
 import styles from './styles';
 import i18n from '../../shared/i18n';
 import { colors, timeColors } from '../../shared/styles';
 import { isNumber } from '../../shared/utils';
+import { prettyDuration, differenceBySpan } from '../../shared/dates';
 import { useChartDimensions, useHeightPercentage } from './useDimensions';
 
 // // dummy debug data
@@ -44,10 +47,11 @@ import { useChartDimensions, useHeightPercentage } from './useDimensions';
 // ];
 
 const AXIS_COLOR = 'black';
+const YEAR_COLOR = colors.darkGray;
 const TICK_SIZE = 5;
 const MAX_TICKS = 4;
 
-const SPAN_BUTTON_HEIGHT = 20;
+const SPAN_BUTTON_HEIGHT = 24;
 
 const TARGET_TO_EXTRACTOR = {
   total: (x) => x.totalTime,
@@ -55,45 +59,17 @@ const TARGET_TO_EXTRACTOR = {
   paused: (x) => x.totalTime - x.effectiveTime,
 };
 
-// TODO: move to utils
-const amountToThousands = (amount) => {
-  if (!isNumber(amount) || amount <= 0) {
-    return '0';
-  }
-
-  const milestones = [
-    { step: 1000000, abrev: 'm' },
-    { step: 1000, abrev: 'k' },
-  ];
-
-  const milestone = milestones.find(({ step }) => amount > step);
-  if (!milestone) {
-    return amount.toString();
-  }
-  const { step, abrev } = milestone;
-  const thousands = (amount / step).toFixed(1);
-  return `${thousands}${abrev}`;
-};
-
 const formatXTick = (date, timeSpan) => {
-  // TODO: improve this function further?
+  // TODO: improve this function further? calculate format only once?
   // ticks may overlap!
-  const isSameYear = getYear(date) === getYear(new Date());
-
   switch (timeSpan) {
     case 'years':
       return format(date, 'y');
     case 'months':
-      if (isSameYear) {
-        return format(date, 'MMM');
-      }
-      return format(date, 'y-MMM');
+      return format(date, 'MMM');
     case 'weeks':
     case 'days':
-      if (isSameYear) {
-        return format(date, 'MMM-dd');
-      }
-      return format(date, 'y-MMM-dd');
+      return format(date, 'dd MMM');
     default:
       throw Error(`Wrong timeSpan in formatXTick: ${timeSpan}, ${date}`);
   }
@@ -145,7 +121,7 @@ const YTicks = ({
         textAnchor="end"
         rotate={0}
       >
-        {`${amountToThousands(yValue)}`}
+        {`${prettyDuration(yValue, { truncate: true })}`}
       </Text>,
     ]);
   }
@@ -168,12 +144,10 @@ const EmptyChartMessage = ({ dimensions, message }) => {
   );
 };
 
-const Chart = ({
-  margins, data, target, indexToX, timeToY,
+const FilledPath = ({
+  chartDimensions, margins, data, target, indexToX, timeToY, color,
 }) => {
   const valueExtractor = TARGET_TO_EXTRACTOR[target];
-  const color = timeColors[target];
-  const label = i18n.t(`chartLegend.${target}`);
 
   const path = ['M', indexToX(0), timeToY(0)];
 
@@ -191,24 +165,92 @@ const Chart = ({
     path.push(...['L', cx, cyTotal]);
   });
 
-  // Place text next to the last point
-  const textX = path[path.length - 2] + 5; // Give some margin
-  const textY = path[path.length - 1];
-
   // Close the path
   path.push(...[
     'L', indexToX(data.length - 1), timeToY(0), // To xAxis
     'L', indexToX(0), timeToY(0), // To origin
   ]);
 
+  const { height: chartHeight, width: chartWidth } = chartDimensions;
+
   return (
     <Group x={margins.left} y={margins.top} preserveAspectRatio="none">
+      <Rect height={chartHeight} width={chartWidth} fill={colors.evenLighterGray} />
       <Path d={path.join(' ')} fill={color} />
-      <Text x={textX} y={textY} textAnchor="start" fill={color}>
-        {label}
-      </Text>
     </Group>
   );
+};
+
+const YearMarks = ({
+  data, margins, timeSpan, indexToX, chartDimensions,
+}) => {
+  const yearLines = [];
+  if (timeSpan !== 'years' && data.length >= 2) {
+    const startDate = data[0].date;
+    const endDate = data[data.length - 1].date;
+    const deltaYears = getYear(endDate) - getYear(startDate);
+    if (deltaYears === 0) {
+      yearLines.push({
+        index: data.length / 2,
+        yearLeft: getYear(startDate),
+        hideLine: true,
+        hideRight: true,
+      });
+    } else if (deltaYears > 0) {
+      const slope = differenceBySpan(endDate, startDate, timeSpan);
+      for (
+        let timer = endOfYear(startDate);
+        isBefore(timer, endDate);
+        timer = add(timer, { years: 1 })
+      ) {
+        const index = (differenceBySpan(timer, startDate, timeSpan) / slope) * data.length;
+        yearLines.push({
+          index,
+          yearLeft: getYear(timer),
+        });
+        if (yearLines.length >= 10) {
+          // error, avoid infinite loop
+          break;
+        }
+      }
+    }
+  }
+
+  const { height: chartHeight } = chartDimensions;
+
+  return yearLines.map(({
+    index, yearLeft, hideLine, hideRight,
+  }) => {
+    const x = margins.left + indexToX(index);
+    const y = margins.top + chartHeight + margins.bottom;
+    const path = `M ${x} ${margins.top + chartHeight} V ${y}`;
+    const textY = y - 8;
+    return (
+      <Group key={yearLeft}>
+        {!hideLine && <Path d={path} stroke={YEAR_COLOR} strokeDasharray="5,5" />}
+        <Text
+          x={x - 5}
+          y={textY}
+          fill={YEAR_COLOR}
+          textAnchor={hideRight ? 'middle' : 'end'}
+          alignmentBaseline="bottom"
+        >
+          {yearLeft}
+        </Text>
+        {!hideRight && (
+          <Text
+            x={x + 5}
+            y={textY}
+            fill={YEAR_COLOR}
+            textAnchor="start"
+            alignmentBaseline="bottom"
+          >
+            {yearLeft + 1}
+          </Text>
+        )}
+      </Group>
+    );
+  });
 };
 
 const TimeChart = ({
@@ -258,7 +300,7 @@ const TimeChart = ({
       textAnchor="middle"
       fill="black"
     >
-      hrs
+      {i18n.t('hoursAbrev')}
     </Text>
   );
 
@@ -276,15 +318,15 @@ const TimeChart = ({
     <Group
       x={width - margins.right}
       y={margins.top + chartHeight}
+      onPress={circleThroughSpans}
     >
       <Rect
-        width={45}
+        width={48}
         height={SPAN_BUTTON_HEIGHT}
         y={-SPAN_BUTTON_HEIGHT / 2}
         fill={colors.lightBlue}
         strokeWidth={1}
         stroke="black"
-        onPress={circleThroughSpans}
       />
       <Text
         x={5}
@@ -306,8 +348,10 @@ const TimeChart = ({
     />
   );
 
+  const targetIsValid = !!TARGET_TO_EXTRACTOR[target];
+
   let chartFailedWithMessage = null;
-  if (!TARGET_TO_EXTRACTOR[target]) {
+  if (!targetIsValid) {
     chartFailedWithMessage = i18n.t('chartEmptyCases.wrongTarget', { target });
   } else if (data.length === 0) {
     chartFailedWithMessage = i18n.t('chartEmptyCases.noPeriodSelected');
@@ -315,18 +359,44 @@ const TimeChart = ({
     chartFailedWithMessage = i18n.t('chartEmptyCases.noTimeWorked');
   }
 
+  const color = timeColors[target];
+
   const chart = chartFailedWithMessage ? (
     <EmptyChartMessage
       dimensions={dimensions}
       message={chartFailedWithMessage}
     />
   ) : (
-    <Chart
+    <FilledPath
       data={data}
+      chartDimensions={chartDimensions}
       margins={margins}
       target={target}
       indexToX={indexToX}
       timeToY={timeToY}
+      color={color}
+    />
+  );
+
+  const label = targetIsValid && (
+    <Text
+      x={width - margins.right}
+      y={margins.top}
+      textAnchor="start"
+      fill={color}
+      fontSize={15}
+    >
+      {i18n.t(`chartLegend.${target}`)}
+    </Text>
+  );
+
+  const yearMarks = (
+    <YearMarks
+      data={data}
+      margins={margins}
+      timeSpan={timeSpan}
+      indexToX={indexToX}
+      chartDimensions={chartDimensions}
     />
   );
 
@@ -341,6 +411,8 @@ const TimeChart = ({
       onLayout={onLayoutSvg}
     >
       {chart}
+      {label}
+      {yearMarks}
       <Group>
         {xAxis}
         {xTicks}
