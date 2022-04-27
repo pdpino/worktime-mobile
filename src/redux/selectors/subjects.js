@@ -49,6 +49,7 @@ export const subjectWithCategoryInfoSelector = createOrmSelector(
   (_, props) => props.subjectId,
   (ormSession, id) => {
     const subject = ormSession.Subject.withId(id);
+    if (!subject) return null;
     let color = null;
     let categoryName = null;
     let categoryId = -1;

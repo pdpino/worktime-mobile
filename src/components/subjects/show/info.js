@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 const SubjectInfo = ({ subject }) => {
   const {
     name, icon, color, description, categoryName, categoryId,
-  } = subject;
+  } = (subject || {});
 
   // FIXME: gray is hardcoded
   const categoryText = categoryId === -1 ? (
