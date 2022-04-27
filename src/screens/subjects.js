@@ -4,6 +4,7 @@ import {
   NonArchivedSubjects, ArchivedSubjects,
   SubjectForm, SubjectShow, BulkSubjectForm,
 } from '../containers/subjects';
+import { WorkSessionList } from '../containers/workSessions';
 import { CategoryForm } from '../containers/categories';
 import headerOptions from './header';
 import i18n from '../shared/i18n';
@@ -33,7 +34,16 @@ export default function SubjectsStack() {
         component={SubjectForm}
         options={{ title: i18n.t('entities.editSubject') }}
       />
-      <Stack.Screen name="showSubject" component={SubjectShow} />
+      <Stack.Screen
+        name="showSubject"
+        component={SubjectShow}
+        options={{ title: i18n.t('entities.subject') }}
+      />
+      <Stack.Screen
+        name="listWorkSessions"
+        component={WorkSessionList}
+        options={{ title: i18n.t('entities.workSessions') }}
+      />
       <Stack.Screen
         name="bulkEditSubject"
         component={BulkSubjectForm}

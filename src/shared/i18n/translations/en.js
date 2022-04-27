@@ -38,6 +38,7 @@ export default {
     categories: 'Categories',
     category: 'Category',
     noCategory: 'No category',
+    noCategoryLower: 'no category', // FIXME: duplicated lower
     newCategory: 'New Category',
     editCategory: 'Edit Category',
     subject: 'Subject',
@@ -54,6 +55,11 @@ export default {
     nSessions: {
       one: '%{count} session',
       other: '%{count} sessions',
+    },
+    nWorkSessions: {
+      zero: 'No work sessions',
+      one: '%{count} work session',
+      other: '%{count} work sessions',
     },
     noItems: 'No items',
   },

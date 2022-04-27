@@ -5,6 +5,7 @@ import {
 import { Icon } from 'react-native-elements';
 import { iconsConfigByName, DEFAULT_ICON_CONFIG } from './list';
 import { colors } from '../../../styles';
+import { isNumber } from '../../../utils';
 
 const CONTAINER_MARGIN = 8;
 
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
 });
 
 const DEFAULT_COLOR = colors.lightGray;
+const DEFAULT_SIZE = 30;
 // NOTE: values manually set
 const FONT_FACTOR = 0.6;
 const WIDTH_FACTOR = 1.4;
@@ -43,8 +45,13 @@ const getCircleStyle = (size) => {
 const getFontSize = (size) => Math.floor(size * FONT_FACTOR);
 
 const AssignableIcon = ({
-  name, icon, color, size, containerStyle, defaultToIcon,
+  name, icon, color, size = DEFAULT_SIZE, containerStyle, defaultToIcon = false,
 }) => {
+  if (!isNumber(size)) {
+    // eslint-disable-next-line no-console
+    console.error('AssignableIcon: size provided is not a number');
+    return null;
+  }
   const iconConfig = (icon && iconsConfigByName[icon])
     || (defaultToIcon ? DEFAULT_ICON_CONFIG : null);
 

@@ -1,143 +1,66 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { ScrollView, InteractionManager } from 'react-native';
-import WorkSessionsListComponent from '../../components/workSessions/list';
-import SubjectInfoComponent from '../../components/subjects/info';
-import { subjectSelector } from '../../redux/selectors';
-import { deleteWorkSession, deleteSubjects } from '../../redux/actions';
-import { Memoizer } from '../../shared/utils';
-import { sumSubjectTimesCalc, getEmptyStats } from '../../shared/timeCalculators';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSelector } from 'react-redux';
+import {
+  SubjectTimesSummary, SubjectInfo, SubjectShowComponent, GoToWorkSessions,
+} from '../../components/subjects/show';
+import {
+  subjectWithCategoryInfoSelector, wsSetBySubjectSelector,
+} from '../../redux/selectors';
 import { HeaderActions } from '../../shared/UI/headers';
-import { alertDelete } from '../../shared/alerts';
-import i18n from '../../shared/i18n';
 
-export class SubjectShow extends React.Component {
-  constructor(props) {
-    super(props);
+import { sumWSSetTimes } from '../../shared/timeCalculators';
 
-    this.state = {
-      isLoading: true,
-      timeStats: getEmptyStats(),
-    };
+const SubjectShow = ({ navigation, route }) => {
+  const [timeStats, setTimeStats] = useState(null);
 
-    this.memoizer = Memoizer();
-  }
+  const subjectId = route.params && route.params.subjectId;
+  const params = { subjectId };
 
-  componentDidMount() {
-    this.sumTimesOnFocusListener = this.props.navigation.addListener(
-      'focus',
-      this.sumTimes,
-    );
+  const subject = useSelector((state) => subjectWithCategoryInfoSelector(state, params));
 
-    const { subject } = this.props;
+  const wsSet = useSelector((state) => wsSetBySubjectSelector(state, params));
 
+  const lastSession = wsSet && wsSet.last();
+  const nWorkSessions = wsSet ? wsSet.count() : 0;
+
+  const { timeTotal, timeEffective } = timeStats || { timeTotal: 0, timeEffective: 0 };
+
+  const goWorkSessionList = useCallback(() => {
+    navigation.navigate('listWorkSessions', { subjectId: subject.id });
+  }, [subject]);
+
+  useEffect(async () => {
+    setTimeStats(null);
+    const newTimeStats = await sumWSSetTimes(wsSet);
+    setTimeStats(newTimeStats);
+  }, [wsSet]);
+
+  useEffect(() => {
     const editSubjectAction = {
       icon: 'edit',
-      handlePress: this.goEditSubject,
+      handlePress: () => navigation.navigate('editSubject', { subjectId: subject.id }),
     };
 
-    this.props.navigation.setOptions({
-      title: subject.name,
+    navigation.setOptions({
       headerRight: () => <HeaderActions actions={[editSubjectAction]} />,
     });
-  }
+  }, [subject]);
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.navigation.isFocused();
-  }
+  return (
+    <SubjectShowComponent>
+      <SubjectInfo subject={subject} />
+      <SubjectTimesSummary
+        lastSession={lastSession}
+        timeTotal={timeTotal}
+        timeEffective={timeEffective}
+        isLoading={timeStats == null}
+      />
+      <GoToWorkSessions
+        count={nWorkSessions}
+        onPress={goWorkSessionList}
+      />
+    </SubjectShowComponent>
+  );
+};
 
-  componentDidUpdate(prevProps) {
-    // HACK:
-    // From this view u can navigate to 'editSubject', change the subject name,
-    // and come back to this view. In that case, the header title must be
-    // updated
-    const { subject } = this.props;
-    const prevName = prevProps.subject && prevProps.subject.name;
-    const newName = subject && subject.name;
-    if (prevName !== newName) {
-      this.props.navigation.setOptions({ title: newName });
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.sumTimesOnFocusListener) {
-      this.sumTimesOnFocusListener();
-    }
-  }
-
-  handleDeleteWorkSession = (id) => {
-    alertDelete({
-      title: i18n.t('deletion.deleteWorkSessionQuestion'),
-      toastMessage: i18n.t('deletion.workSessionDeleted'),
-      onDelete: () => {
-        this.props.deleteWorkSession(id);
-        this.sumTimes();
-      },
-    });
-  }
-
-  sumTimes = () => {
-    const { subject } = this.props;
-
-    if (!this.memoizer.hasChanged(subject)) {
-      return;
-    }
-
-    if (!this.state.isLoading) {
-      this.setState({ isLoading: true });
-    }
-
-    InteractionManager.runAfterInteractions(() => {
-      sumSubjectTimesCalc(subject, null, null)
-        .then((timeStats) => this.setState({
-          isLoading: false,
-          timeStats,
-        }));
-    });
-  }
-
-  goEditSubject = () => {
-    const { subject } = this.props;
-    this.props.navigation.navigate('editSubject', { subjectId: subject.id });
-  }
-
-  render() {
-    const { subject } = this.props;
-    const workSessions = subject.getWorkSessions({ sorted: true }); // REVIEW: make this call async?
-    const lastSession = workSessions[0];
-
-    const { timeStats, isLoading } = this.state;
-    const { timeTotal, timeEffective, nDaysWorked } = timeStats;
-
-    return (
-      <ScrollView>
-        <SubjectInfoComponent
-          lastSession={lastSession}
-          timeTotal={timeTotal}
-          timeEffective={timeEffective}
-          nDaysWorked={nDaysWorked}
-          isLoading={isLoading}
-        />
-        <WorkSessionsListComponent
-          subject={subject}
-          workSessions={workSessions}
-          onPressDelete={this.handleDeleteWorkSession}
-        />
-      </ScrollView>
-    );
-  }
-}
-
-const mapStateToProps = (state, { route }) => ({
-  subject: subjectSelector(state, {
-    subjectId: route.params && route.params.subjectId,
-  }),
-});
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deleteSubjects,
-  deleteWorkSession,
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(SubjectShow);
+export default SubjectShow;

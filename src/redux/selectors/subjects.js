@@ -45,6 +45,31 @@ export const subjectSelector = createOrmSelector(
   (ormSession, id) => ormSession.Subject.withId(id),
 );
 
+export const subjectWithCategoryInfoSelector = createOrmSelector(
+  (_, props) => props.subjectId,
+  (ormSession, id) => {
+    const subject = ormSession.Subject.withId(id);
+    let color = null;
+    let categoryName = null;
+    let categoryId = -1;
+    if (subject.category) {
+      color = subject.category.color;
+      categoryName = subject.category.name;
+      categoryId = subject.category.id;
+    }
+    const info = {
+      id: subject.id,
+      name: subject.name,
+      icon: subject.icon,
+      description: subject.description,
+      color,
+      categoryName,
+      categoryId,
+    };
+    return info;
+  },
+);
+
 export const subjectsForPickerSelector = createOrmSelector(
   subjectsSelector,
   (ormSession, subjects) => {

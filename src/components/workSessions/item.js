@@ -41,6 +41,10 @@ class WorkSessionItem extends React.PureComponent {
     } = workSession;
     const timezone = workSession.getPrettyTimezone();
 
+    const isRunning = workSession.status !== 'stopped';
+
+    // HACK: device and timezone are hidden if isRunning,
+    // only to avoid out-of-bounds stuff
     const dateTimeItem = (
       <View style={styles.item}>
         <Text style={styles.text}>
@@ -51,12 +55,16 @@ class WorkSessionItem extends React.PureComponent {
           {' - '}
           {workSession.getPrettyHourEnd()}
         </Text>
-        <Text style={[styles.text, styles.textDevice]}>
-          {device}
-        </Text>
-        <Text style={[styles.text, styles.textDevice]}>
-          {timezone}
-        </Text>
+        {!isRunning && (
+          <Text style={[styles.text, styles.textDevice]}>
+            {device}
+          </Text>
+        )}
+        {!isRunning && (
+          <Text style={[styles.text, styles.textDevice]}>
+            {timezone}
+          </Text>
+        )}
       </View>
     );
 
@@ -86,7 +94,7 @@ class WorkSessionItem extends React.PureComponent {
       <View style={styles.container}>
         {dateTimeItem}
         {timesItem}
-        {workSession.status !== 'stopped' ? statusItem : (
+        {isRunning ? statusItem : (
           <View style={styles.moreButtonContainer}>
             <MoreDropdownMenu
               items={[

@@ -38,6 +38,7 @@ export default {
     categories: 'Categorías',
     category: 'Categoría',
     noCategory: 'Sin categoría',
+    noCategoryLower: 'sin categoría',
     newCategory: 'Nueva categoría',
     editCategory: 'Editar categoría',
     subject: 'Tema',
@@ -54,6 +55,11 @@ export default {
     nSessions: {
       one: '%{count} sesión',
       other: '%{count} sesiones',
+    },
+    nWorkSessions: {
+      zero: 'No hay sesiones',
+      one: '%{count} sesión trabajada',
+      other: '%{count} sesiones trabajadas',
     },
     noItems: 'Sin items',
   },

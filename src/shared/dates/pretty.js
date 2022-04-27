@@ -51,6 +51,7 @@ export function prettyHour(timestampOrDate, tzOffset) {
 }
 
 export function prettyDaysAgo(timestampOrDate, options = {}) {
+  // use option addSuffix: true for suffix "ago"
   const date = _sanitizeTimestampOrDate(timestampOrDate);
 
   return (date != null) ? formatDistanceStrict(date, new Date(), {

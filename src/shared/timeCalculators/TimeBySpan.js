@@ -5,11 +5,11 @@ import {
   add,
 } from 'date-fns';
 import { isValidDate } from '../utils';
+import WSTimeAccumulator from './accumulator';
 
 const AVAILABLE_SPANS = new Set(['days', 'weeks', 'months', 'years']);
 
 /**
- * TODO: documentation
  * TODO: decide whether to move these date functions!
  *
  * @param {Date} date
@@ -32,10 +32,11 @@ const startOfSpan = (date, span) => {
 };
 
 /**
+ * Returns the end of the span of type <span> containing <date>
  *
  * @param {Date} date
  * @param {string} span
- * @returns
+ * @returns Date object
  */
 export const endOfSpan = (date, span) => {
   switch (span) {
@@ -99,45 +100,20 @@ const getBucketStamp = (date, span) => {
   return format(stampDate, formatter);
 };
 
-class Accumulator {
-  constructor(date, stamp) {
-    this.date = date;
-    this.stamp = stamp;
-    // REVIEW: customize the keys that can be retrieved??
-    // use a creational pattern?
-    this.timeTotal = 0;
-    this.timeEffective = 0;
-  }
-
-  accumulate(workSession) {
-    this.timeTotal += workSession.timeTotal;
-    this.timeEffective += workSession.timeEffective;
-  }
-
-  reduce() {
-    const {
-      date, stamp, timeTotal, timeEffective,
-    } = this;
-    return {
-      date,
-      stamp,
-      // FIXME: swapping names is a mess!
-      totalTime: timeTotal,
-      effectiveTime: timeEffective,
-    };
-  }
-}
-
-const MAX_STAMPS = 20;
+const MAX_STAMPS = 1000; // Avoid infinite-loops
 
 /**
- * Accumulate time worked by time-periods (spans).
+ * Accumulate time worked by time-spans.
+ *
+ * Each session in the period startDate and endDate is placed into a bucket,
+ * representing a span of time (e.g. a month). Times worked are accumulated
+ * (timeTotal, timeEffective).
  *
  * @param {WorkSession array} workSessions
  * @param {Date} startDate
  * @param {Date} endDate
  * @param {string} span one of day|week|month|year
- * @returns array of { date, totalTime, effectiveTime }
+ * @returns array of { date, timeTotal, timeEffective }
  */
 export const accumulateBySpan = (workSessions, startDate, endDate, span) => {
   if (workSessions.length === 0) {
@@ -151,26 +127,21 @@ export const accumulateBySpan = (workSessions, startDate, endDate, span) => {
   // TODO: only build the function/object once? (creational pattern?)
   const lastStamp = getBucketStamp(endDate, span);
   if (!lastStamp) {
-    // endDate should not be none!
-    // console.log('Last stamp failed: ', endDate, span);
+    // console.error('lastStamp wrong: ', endDate, span);
     return [];
   }
 
-  // // console.log('CC: ', lastStamp);
   // Build span-stamps and accumulators
   const spanStamps = [];
   const accumulatorByStamp = {};
   for (let timer = startOfSpan(startDate, span); ; timer = increaseBySpan(timer, span)) {
-    if (!isValidDate(timer)) {
-      // console.log('INCREASE failed: ', timer);
-      return [];
-    }
     const stamp = getBucketStamp(timer, span);
     if (!stamp) {
+      // console.error('increase timer failed: ', timer, span);
       return [];
     }
     spanStamps.push(stamp);
-    accumulatorByStamp[stamp] = new Accumulator(timer, stamp);
+    accumulatorByStamp[stamp] = new WSTimeAccumulator({ date: timer, stamp });
 
     if (stamp === lastStamp || spanStamps.length >= MAX_STAMPS) break;
   }
@@ -190,5 +161,3 @@ export const accumulateBySpan = (workSessions, startDate, endDate, span) => {
 
   return spanStamps.map((stamp) => accumulatorByStamp[stamp].reduce());
 };
-
-// export default accumulateBySpan;

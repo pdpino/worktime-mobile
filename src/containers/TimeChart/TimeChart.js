@@ -16,33 +16,33 @@ import { useChartDimensions, useHeightPercentage } from './useDimensions';
 // const DUMMY_DATA = [
 //   {
 //     date: new Date(2022, 3, 17),
-//     totalTime: 3,
-//     effectiveTime: 2.5,
+//     timeTotal: 3,
+//     timeEffective: 2.5,
 //   },
 //   {
 //     date: new Date(2022, 3, 18),
-//     totalTime: 0,
-//     effectiveTime: 0,
+//     timeTotal: 0,
+//     timeEffective: 0,
 //   },
 //   {
 //     date: new Date(2022, 3, 19),
-//     totalTime: 0,
-//     effectiveTime: 0,
+//     timeTotal: 0,
+//     timeEffective: 0,
 //   },
 //   {
 //     date: new Date(2022, 3, 20),
-//     totalTime: 7,
-//     effectiveTime: 5,
+//     timeTotal: 7,
+//     timeEffective: 5,
 //   },
 //   {
 //     date: new Date(2022, 3, 21),
-//     totalTime: 3,
-//     effectiveTime: 1,
+//     timeTotal: 3,
+//     timeEffective: 1,
 //   },
 //   {
 //     date: new Date(2022, 3, 22),
-//     totalTime: 5,
-//     effectiveTime: 4,
+//     timeTotal: 5,
+//     timeEffective: 4,
 //   },
 // ];
 
@@ -54,9 +54,9 @@ const MAX_TICKS = 4;
 const SPAN_BUTTON_HEIGHT = 24;
 
 const TARGET_TO_EXTRACTOR = {
-  total: (x) => x.totalTime,
-  effective: (x) => x.effectiveTime,
-  paused: (x) => x.totalTime - x.effectiveTime,
+  total: (x) => x.timeTotal,
+  effective: (x) => x.timeEffective,
+  paused: (x) => x.timeTotal - x.timeEffective,
 };
 
 const formatXTick = (date, timeSpan) => {
@@ -274,7 +274,7 @@ const TimeChart = ({
 
   // In chart coordinates
   const limX = data.length;
-  const maxY = Math.max(...data.map((d) => d.totalTime));
+  const maxY = Math.max(...data.map((d) => d.timeTotal));
   const limY = maxY * 1.1;
 
   const indexToX = (index) => Math.floor((index / limX) * chartWidth);
