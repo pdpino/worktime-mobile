@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## 1.17.4 - 2022-04-27
+### Changed
+* Do over SubjectShow view
+  * show subject name, category name, description and icon
+  * show time summary, and number of sessions
+  * Separate view to work-session list
+
+
 ## 1.17.3 - 2022-04-26
 ### Changed
 * Time chart outlook
